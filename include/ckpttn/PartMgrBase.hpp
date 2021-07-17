@@ -13,8 +13,7 @@
 #include <xnetwork/classes/graph.hpp>
 
 // forward declare
-template <typename graph_t>
-struct Netlist;
+template <typename graph_t> struct Netlist;
 // using RngIter = decltype(py::range(1));
 // //using graph_t = xn::SimpleGraph;
 using SimpleNetlist = Netlist<xn::SimpleGraph>;
@@ -47,10 +46,8 @@ enum class LegalCheck;
  * Optimization Problems and Their Approximability Properties, Section 10.3.2.
  */
 template <typename GainMgr, typename ConstrMgr,
-    template <typename _gainMgr, typename _constrMgr> class Derived> //
-class PartMgrBase
-{
-
+          template <typename _gainMgr, typename _constrMgr> class Derived>  //
+class PartMgrBase {
   public:
     using GainCalc_ = typename GainMgr::GainCalc_;
     using GainMgr_ = GainMgr;
@@ -69,7 +66,7 @@ class PartMgrBase
     // std::vector<std::uint8_t> part;
 
   public:
-    int totalcost {};
+    int totalcost{};
 
     /*!
      * @brief Construct a new FDPartMgr object
@@ -78,14 +75,8 @@ class PartMgrBase
      * @param[in,out] gainMgr
      * @param[in,out] constrMgr
      */
-    PartMgrBase(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr,
-        size_t K)
-        : H {H}
-        , gainMgr {gainMgr}
-        , validator {constrMgr}
-        , K {K}
-    {
-    }
+    PartMgrBase(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
+        : H{H}, gainMgr{gainMgr}, validator{constrMgr}, K{K} {}
 
     /*!
      * @brief

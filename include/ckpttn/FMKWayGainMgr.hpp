@@ -1,8 +1,9 @@
 #pragma once
 
+#include <gsl/span>
+
 #include "FMGainMgr.hpp"
 #include "FMKWayGainCalc.hpp"
-#include <gsl/span>
 // #include <range/v3/view/zip.hpp>
 
 // using namespace ranges;
@@ -13,8 +14,7 @@
  * @brief FMKWayGainMgr
  *
  */
-class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>
-{
+class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr> {
   private:
     robin<std::uint8_t> RR;
 
@@ -29,11 +29,7 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>
      * @param[in] H
      * @param[in] K
      */
-    FMKWayGainMgr(const SimpleNetlist& H, std::uint8_t K)
-        : Base {H, K}
-        , RR {K}
-    {
-    }
+    FMKWayGainMgr(const SimpleNetlist& H, std::uint8_t K) : Base{H, K}, RR{K} {}
 
     /*!
      * @brief
@@ -49,13 +45,9 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>
      * @param[in] part_w
      * @param[in] keys
      */
-    auto modify_key(
-        const node_t& w, std::uint8_t part_w, gsl::span<const int> keys) -> void
-    {
-        for (auto k : this->RR.exclude(part_w))
-        {
-            this->gainbucket[k].modify_key(
-                this->gainCalc.vertex_list[k][w], keys[k]);
+    auto modify_key(const node_t& w, std::uint8_t part_w, gsl::span<const int> keys) -> void {
+        for (auto k : this->RR.exclude(part_w)) {
+            this->gainbucket[k].modify_key(this->gainCalc.vertex_list[k][w], keys[k]);
         }
     }
 
@@ -73,8 +65,7 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>
      * @param[in] whichPart
      * @param[in] v
      */
-    auto lock(uint8_t whichPart, const node_t& v) -> void
-    {
+    auto lock(uint8_t whichPart, const node_t& v) -> void {
         auto& vlink = this->gainCalc.vertex_list[whichPart][v];
         this->gainbucket[whichPart].detach(vlink);
         vlink.lock();
@@ -86,16 +77,14 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>
      * @param[in] fromPart
      * @param[in] v
      */
-    auto lock_all(uint8_t /*fromPart*/, const node_t& v) -> void
-    {
+    auto lock_all(uint8_t /*fromPart*/, const node_t& v) -> void {
         // for (const auto& [vlist, bckt] :
         //     views::zip(this->gainCalc.vertex_list, this->gainbucket))
         auto bckt_it = this->gainbucket.begin();
-        for (auto& vlist : this->gainCalc.vertex_list)
-        {
+        for (auto& vlist : this->gainCalc.vertex_list) {
             auto& vlink = vlist[v];
             bckt_it->detach(vlink);
-            vlink.lock(); // lock
+            vlink.lock();  // lock
             ++bckt_it;
         }
     }
@@ -108,9 +97,7 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>
      * @param[in] v
      * @param[in] key
      */
-    auto _set_key(uint8_t whichPart, const node_t& v, int key) -> void
-    {
-        this->gainbucket[whichPart].set_key(
-            this->gainCalc.vertex_list[whichPart][v], key);
+    auto _set_key(uint8_t whichPart, const node_t& v, int key) -> void {
+        this->gainbucket[whichPart].set_key(this->gainCalc.vertex_list[whichPart][v], key);
     }
 };

@@ -11,21 +11,18 @@
  * @param[in] net
  * @param[in] part
  */
-void FMBiGainCalc::_init_gain( //
-    const node_t& net, gsl::span<const std::uint8_t> part)
-{
+void FMBiGainCalc::_init_gain(  //
+    const node_t& net, gsl::span<const std::uint8_t> part) {
     const auto degree = this->H.G.degree(net);
-    if (degree < 2 || degree > FM_MAX_DEGREE) // [[unlikely]]
+    if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
-        return; // does not provide any gain when moving
+        return;  // does not provide any gain when moving
     }
-    if (!special_handle_2pin_nets)
-    {
+    if (!special_handle_2pin_nets) {
         this->_init_gain_general_net(net, part);
         return;
     }
-    switch (degree)
-    {
+    switch (degree) {
         case 2:
             this->_init_gain_2pin_net(net, part);
             break;
@@ -43,21 +40,17 @@ void FMBiGainCalc::_init_gain( //
  * @param[in] net
  * @param[in] part
  */
-void FMBiGainCalc::_init_gain_2pin_net( //
-    const node_t& net, gsl::span<const std::uint8_t> part)
-{
+void FMBiGainCalc::_init_gain_2pin_net(  //
+    const node_t& net, gsl::span<const std::uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
 
     const auto weight = this->H.get_net_weight(net);
-    if (part[w] != part[v])
-    {
+    if (part[w] != part[v]) {
         this->totalcost += weight;
         this->_modify_gain_va(weight, w, v);
-    }
-    else
-    {
+    } else {
         this->_modify_gain_va(-weight, w, v);
     }
 }
@@ -68,30 +61,22 @@ void FMBiGainCalc::_init_gain_2pin_net( //
  * @param[in] net
  * @param[in] part
  */
-void FMBiGainCalc::_init_gain_3pin_net(
-    const node_t& net, gsl::span<const std::uint8_t> part)
-{
+void FMBiGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const std::uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
     const auto u = *++netCur;
 
     const auto weight = this->H.get_net_weight(net);
-    if (part[u] == part[v])
-    {
-        if (part[w] == part[v])
-        {
+    if (part[u] == part[v]) {
+        if (part[w] == part[v]) {
             this->_modify_gain_va(-weight, u, v, w);
             return;
         }
         this->_modify_gain_va(weight, w);
-    }
-    else if (part[w] == part[v])
-    {
+    } else if (part[w] == part[v]) {
         this->_modify_gain(u, weight);
-    }
-    else
-    {
+    } else {
         this->_modify_gain(v, weight);
     }
     this->totalcost += weight;
@@ -103,32 +88,22 @@ void FMBiGainCalc::_init_gain_3pin_net(
  * @param[in] net
  * @param[in] part
  */
-void FMBiGainCalc::_init_gain_general_net(
-    const node_t& net, gsl::span<const std::uint8_t> part)
-{
-    auto num = std::array<size_t, 2> {0U, 0U};
-    for (const auto& w : this->H.G[net])
-    {
+void FMBiGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const std::uint8_t> part) {
+    auto num = std::array<size_t, 2>{0U, 0U};
+    for (const auto& w : this->H.G[net]) {
         num[part[w]] += 1;
     }
     const auto weight = this->H.get_net_weight(net);
 
     // #pragma unroll
-    for (const auto& k : {0U, 1U})
-    {
-        if (num[k] == 0)
-        {
-            for (const auto& w : this->H.G[net])
-            {
+    for (const auto& k : {0U, 1U}) {
+        if (num[k] == 0) {
+            for (const auto& w : this->H.G[net]) {
                 this->_modify_gain(w, -weight);
             }
-        }
-        else if (num[k] == 1)
-        {
-            for (const auto& w : this->H.G[net])
-            {
-                if (part[w] == k)
-                {
+        } else if (num[k] == 1) {
+            for (const auto& w : this->H.G[net]) {
+                if (part[w] == k) {
                     this->_modify_gain(w, weight);
                     break;
                 }
@@ -136,8 +111,7 @@ void FMBiGainCalc::_init_gain_general_net(
         }
     }
 
-    if (num[0] > 0 && num[1] > 0)
-    {
+    if (num[0] > 0 && num[1] > 0) {
         this->totalcost += weight;
     }
 }
@@ -151,8 +125,7 @@ void FMBiGainCalc::_init_gain_general_net(
  * @return int
  */
 auto FMBiGainCalc::update_move_2pin_net(gsl::span<const std::uint8_t> part,
-    const MoveInfo<node_t>& move_info) -> FMBiGainCalc::node_t
-{
+                                        const MoveInfo<node_t>& move_info) -> FMBiGainCalc::node_t {
     auto netCur = this->H.G[move_info.net].begin();
     auto w = (*netCur != move_info.v) ? *netCur : *++netCur;
     const auto weight = this->H.get_net_weight(move_info.net);
@@ -168,8 +141,7 @@ auto FMBiGainCalc::update_move_2pin_net(gsl::span<const std::uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-void FMBiGainCalc::init_IdVec(const node_t& v, const node_t& net)
-{
+void FMBiGainCalc::init_IdVec(const node_t& v, const node_t& net) {
     // auto rng = this->H.G[net] |
     //         ranges::views::remove_if([&](auto w) { return w == v; });
     // using namespace transrangers;
@@ -179,10 +151,8 @@ void FMBiGainCalc::init_IdVec(const node_t& v, const node_t& net)
     this->IdVec.clear();
     auto&& rng = this->H.G[net];
     this->IdVec.reserve(rng.size() - 1);
-    for (const auto& w : rng)
-    {
-        if (w == v)
-        {
+    for (const auto& w : rng) {
+        if (w == v) {
             continue;
         }
         this->IdVec.push_back(w);
@@ -197,12 +167,10 @@ void FMBiGainCalc::init_IdVec(const node_t& v, const node_t& net)
  * @return ret_info
  */
 auto FMBiGainCalc::update_move_3pin_net(gsl::span<const std::uint8_t> part,
-    const MoveInfo<node_t>& move_info) -> std::vector<int>
-{
+                                        const MoveInfo<node_t>& move_info) -> std::vector<int> {
     // const auto& [net, v, fromPart, _] = move_info;
-    auto num = std::array<size_t, 2> {0U, 0U};
-    for (const auto& w : this->IdVec)
-    {
+    auto num = std::array<size_t, 2>{0U, 0U};
+    for (const auto& w : this->IdVec) {
         num[part[w]] += 1;
     }
     // for (const auto& w : this->H.G[move_info.net])
@@ -214,21 +182,17 @@ auto FMBiGainCalc::update_move_3pin_net(gsl::span<const std::uint8_t> part,
     //     num[part[w]] += 1;
     //     IdVec.push_back(w);
     // }
-    auto deltaGain = std::vector<int> {0, 0};
+    auto deltaGain = std::vector<int>{0, 0};
     auto weight = this->H.get_net_weight(move_info.net);
     const auto part_w = part[this->IdVec[0]];
 
-    if (part_w != move_info.fromPart)
-    {
+    if (part_w != move_info.fromPart) {
         weight = -weight;
     }
-    if (part_w == part[this->IdVec[1]])
-    {
+    if (part_w == part[this->IdVec[1]]) {
         deltaGain[0] += weight;
         deltaGain[1] += weight;
-    }
-    else
-    {
+    } else {
         deltaGain[0] += weight;
         deltaGain[1] -= weight;
     }
@@ -243,13 +207,11 @@ auto FMBiGainCalc::update_move_3pin_net(gsl::span<const std::uint8_t> part,
  * @return ret_info
  */
 auto FMBiGainCalc::update_move_general_net(gsl::span<const std::uint8_t> part,
-    const MoveInfo<node_t>& move_info) -> std::vector<int>
-{
+                                           const MoveInfo<node_t>& move_info) -> std::vector<int> {
     // const auto& [net, v, fromPart, toPart] = move_info;
-    auto num = std::array<std::uint8_t, 2> {0, 0};
+    auto num = std::array<std::uint8_t, 2>{0, 0};
     // auto IdVec = std::vector<node_t> {};
-    for (const auto& w : this->IdVec)
-    {
+    for (const auto& w : this->IdVec) {
         num[part[w]] += 1;
     }
 
@@ -267,22 +229,15 @@ auto FMBiGainCalc::update_move_general_net(gsl::span<const std::uint8_t> part,
     auto weight = this->H.get_net_weight(move_info.net);
 
     // #pragma unroll
-    for (const auto& l : {move_info.fromPart, move_info.toPart})
-    {
-        if (num[l] == 0)
-        {
-            for (size_t index = 0U; index != degree; ++index)
-            {
+    for (const auto& l : {move_info.fromPart, move_info.toPart}) {
+        if (num[l] == 0) {
+            for (size_t index = 0U; index != degree; ++index) {
                 deltaGain[index] -= weight;
             }
-        }
-        else if (num[l] == 1)
-        {
-            for (size_t index = 0U; index != degree; ++index)
-            {
+        } else if (num[l] == 1) {
+            for (size_t index = 0U; index != degree; ++index) {
                 auto part_w = part[this->IdVec[index]];
-                if (part_w == l)
-                {
+                if (part_w == l) {
                     deltaGain[index] += weight;
                     break;
                 }

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "FMPmrConfig.hpp"
-#include "dllist.hpp"  // import dllink
-#include "netlist.hpp" // import Netlist
 #include <gsl/span>
+
+#include "FMPmrConfig.hpp"
+#include "dllist.hpp"   // import dllink
+#include "netlist.hpp"  // import Netlist
 
 // struct FMBiGainMgr;
 
@@ -11,8 +12,7 @@
  * @brief FMBiGainCalc
  *
  */
-class FMBiGainCalc
-{
+class FMBiGainCalc {
     friend class FMBiGainMgr;
 
   public:
@@ -22,14 +22,14 @@ class FMBiGainCalc
   private:
     const SimpleNetlist& H;
     std::vector<Item> vertex_list;
-    int totalcost {0};
-    std::byte StackBuf[8192]; // ???
+    int totalcost{0};
+    std::byte StackBuf[8192];  // ???
     FMPmr::monotonic_buffer_resource rsrc;
 
   public:
-    int deltaGainW {};
+    int deltaGainW{};
     FMPmr::vector<node_t> IdVec;
-    bool special_handle_2pin_nets {true};
+    bool special_handle_2pin_nets{true};
 
     /*!
      * @brief Construct a new FMBiGainCalc object
@@ -38,14 +38,9 @@ class FMBiGainCalc
      * @param[in] K
      */
     explicit FMBiGainCalc(const SimpleNetlist& H, std::uint8_t /*K*/)
-        : H {H}
-        , vertex_list(H.number_of_modules())
-        , rsrc(StackBuf, sizeof StackBuf)
-        , IdVec(&rsrc)
-    {
-        for (const auto& v : this->H)
-        {
-            this->vertex_list[v].data = std::pair {v, int32_t(0)};
+        : H{H}, vertex_list(H.number_of_modules()), rsrc(StackBuf, sizeof StackBuf), IdVec(&rsrc) {
+        for (const auto& v : this->H) {
+            this->vertex_list[v].data = std::pair{v, int32_t(0)};
         }
     }
 
@@ -54,15 +49,12 @@ class FMBiGainCalc
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int
-    {
+    auto init(gsl::span<const std::uint8_t> part) -> int {
         this->totalcost = 0;
-        for (auto& vlink : this->vertex_list)
-        {
+        for (auto& vlink : this->vertex_list) {
             vlink.data.second = 0;
         }
-        for (const auto& net : this->H.nets)
-        {
+        for (const auto& net : this->H.nets) {
             this->_init_gain(net, part);
         }
         return this->totalcost;
@@ -72,8 +64,7 @@ class FMBiGainCalc
      * @brief update move init
      *
      */
-    auto update_move_init() -> void
-    {
+    auto update_move_init() -> void {
         // nothing to do in 2-way partitioning
     }
 
@@ -87,8 +78,8 @@ class FMBiGainCalc
      * @param[out] w
      * @return int
      */
-    auto update_move_2pin_net(gsl::span<const std::uint8_t> part,
-        const MoveInfo<node_t>& move_info) -> node_t;
+    auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> node_t;
 
     /*!
      * @brief update move 3-pin net
@@ -97,8 +88,8 @@ class FMBiGainCalc
      * @param[in] move_info
      * @return ret_info
      */
-    auto update_move_3pin_net(gsl::span<const std::uint8_t> part,
-        const MoveInfo<node_t>& move_info) -> std::vector<int>;
+    auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> std::vector<int>;
 
     /*!
      * @brief update move general net
@@ -108,7 +99,7 @@ class FMBiGainCalc
      * @return ret_info
      */
     auto update_move_general_net(gsl::span<const std::uint8_t> part,
-        const MoveInfo<node_t>& move_info) -> std::vector<int>;
+                                 const MoveInfo<node_t>& move_info) -> std::vector<int>;
 
   private:
     /*!
@@ -117,8 +108,7 @@ class FMBiGainCalc
      * @param[in] w
      * @param[in] weight
      */
-    auto _modify_gain(const node_t& w, unsigned int weight) -> void
-    {
+    auto _modify_gain(const node_t& w, unsigned int weight) -> void {
         this->vertex_list[w].data.second += weight;
     }
 
@@ -129,9 +119,7 @@ class FMBiGainCalc
      * @param weight
      * @param w
      */
-    template <typename... Ts>
-    auto _modify_gain_va(unsigned int weight, Ts... w) -> void
-    {
+    template <typename... Ts> auto _modify_gain_va(unsigned int weight, Ts... w) -> void {
         ((this->vertex_list[w].data.second += weight), ...);
     }
 
@@ -182,8 +170,7 @@ class FMBiGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain(const node_t& net, gsl::span<const std::uint8_t> part)
-        -> void;
+    auto _init_gain(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
     /*!
      * @brief
@@ -191,8 +178,7 @@ class FMBiGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain_2pin_net(
-        const node_t& net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_2pin_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
     /*!
      * @brief
@@ -200,8 +186,7 @@ class FMBiGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain_3pin_net(
-        const node_t& net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_3pin_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
     /*!
      * @brief
@@ -209,6 +194,5 @@ class FMBiGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain_general_net(
-        const node_t& net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_general_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 };

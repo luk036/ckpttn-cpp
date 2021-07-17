@@ -1,37 +1,32 @@
 #pragma once
 
-#include "netlist.hpp"
 #include <cinttypes>
 #include <cmath>
 #include <gsl/span>
 #include <vector>
 
+#include "netlist.hpp"
+
 /*!
  * @brief Check if the move of v can satisfied, getbetter, or notsatisfied
  *
  */
-enum class LegalCheck
-{
-    notsatisfied,
-    getbetter,
-    allsatisfied
-};
+enum class LegalCheck { notsatisfied, getbetter, allsatisfied };
 
 /*!
  * @brief FM Partition Constraint Manager
  *
  */
-class FMConstrMgr
-{
+class FMConstrMgr {
   private:
     const SimpleNetlist& H;
     double BalTol;
-    unsigned int totalweight {0};
-    unsigned int weight {}; // cache value
+    unsigned int totalweight{0};
+    unsigned int weight{};  // cache value
 
   protected:
     std::vector<unsigned int> diff;
-    unsigned int lowerbound {};
+    unsigned int lowerbound{};
     std::uint8_t K;
 
     /*!
@@ -40,10 +35,7 @@ class FMConstrMgr
      * @param[in] H
      * @param[in] BalTol
      */
-    FMConstrMgr(const SimpleNetlist& H, double BalTol)
-        : FMConstrMgr(H, BalTol, 2)
-    {
-    }
+    FMConstrMgr(const SimpleNetlist& H, double BalTol) : FMConstrMgr(H, BalTol, 2) {}
 
     /*!
      * @brief Construct a new FMConstrMgr object

@@ -8,7 +8,7 @@
 #include <cassert>
 #include <ckpttn/HierNetlist.hpp>
 #include <gsl/span>
-#include <memory> // std::unique_ptr
+#include <memory>  // std::unique_ptr
 // #include <ckpttn/FMConstrMgr.hpp>   // import LegalCheck
 
 // forward declare
@@ -18,8 +18,8 @@
 // using SimpleNetlist = Netlist<RngIter, RngIter>;
 
 using node_t = typename SimpleNetlist::node_t;
-extern auto create_contraction_subgraph(const SimpleNetlist&,
-    const py::set<node_t>&) -> std::unique_ptr<SimpleHierNetlist>;
+extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node_t>&)
+    -> std::unique_ptr<SimpleHierNetlist>;
 
 enum class LegalCheck;
 
@@ -27,25 +27,21 @@ enum class LegalCheck;
  * @brief Multilevel Partition Manager
  *
  */
-class MLPartMgr
-{
+class MLPartMgr {
   private:
     double BalTol;
     std::uint8_t K;
-    size_t limitsize {7U};
+    size_t limitsize{7U};
 
   public:
-    int totalcost {};
+    int totalcost{};
 
     /*!
      * @brief Construct a new MLPartMgr object
      *
      * @param[in] BalTol
      */
-    explicit MLPartMgr(double BalTol)
-        : MLPartMgr(BalTol, 2)
-    {
-    }
+    explicit MLPartMgr(double BalTol) : MLPartMgr(BalTol, 2) {}
 
     /*!
      * @brief Construct a new MLPartMgr object
@@ -53,17 +49,10 @@ class MLPartMgr
      * @param[in] BalTol
      * @param[in] K
      */
-    MLPartMgr(double BalTol, std::uint8_t K)
-        : BalTol {BalTol}
-        , K {K}
-    {
-    }
+    MLPartMgr(double BalTol, std::uint8_t K) : BalTol{BalTol}, K{K} {}
 
-    void set_limitsize(size_t limit)
-    {
-        this->limitsize = limit;
-    }
-    
+    void set_limitsize(size_t limit) { this->limitsize = limit; }
+
     /*!
      * @brief run_Partition
      *
@@ -75,5 +64,4 @@ class MLPartMgr
      */
     template <typename PartMgr>
     auto run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
-
 };

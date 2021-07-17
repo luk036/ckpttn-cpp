@@ -1,24 +1,22 @@
-#include <array>
 #include <doctest/doctest.h>
+
+#include <array>
 #include <py2cpp/py2cpp.hpp>
 // #include <range/v3/view/all.hpp>
 // #include <range/v3/view/remove_if.hpp>
-#include <transrangers.hpp>
 #include <transranger_view.hpp>
+#include <transrangers.hpp>
 #include <unordered_set>
 #include <vector>
 
-TEST_CASE("Test Range")
-{
+TEST_CASE("Test Range") {
     using namespace transrangers;
-
 
     auto S = std::vector<int>{1, 2, 3, 4};
     auto is_odd = [](int a) { return a % 2 == 1; };
     auto rng = filter(is_odd, all(S));
     auto total = accumulate(rng, 0);
-    for (const auto& e : input_view(rng))
-    {
+    for (const auto& e : input_view(rng)) {
         total += e;
     }
 
@@ -29,15 +27,13 @@ TEST_CASE("Test Range")
     // CHECK(R[3] == 3);
 
     auto count = 0;
-    for ([[maybe_unused]] auto a : R)
-    {
+    for ([[maybe_unused]] auto a : R) {
         ++count;
     }
     CHECK(count == R.size());
 }
 
-TEST_CASE("Test Range2")
-{
+TEST_CASE("Test Range2") {
     const auto R = py::range(-10, 10);
 
     CHECK(!R.empty());
@@ -45,15 +41,13 @@ TEST_CASE("Test Range2")
     // CHECK(R[3] == -7);
 
     auto count = 0;
-    for ([[maybe_unused]] auto a : R)
-    {
+    for ([[maybe_unused]] auto a : R) {
         ++count;
     }
     CHECK(count == R.size());
 }
 
-TEST_CASE("Test Range (char)")
-{
+TEST_CASE("Test Range (char)") {
     const auto R = py::range('A', 'W');
 
     // CHECK(!R.empty());
@@ -61,8 +55,7 @@ TEST_CASE("Test Range (char)")
     // CHECK(R[3] == 'D');
 
     auto count = 0;
-    for ([[maybe_unused]] auto a : R)
-    {
+    for ([[maybe_unused]] auto a : R) {
         ++count;
     }
     CHECK(count == R.size());

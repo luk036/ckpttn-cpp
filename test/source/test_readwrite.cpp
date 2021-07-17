@@ -1,14 +1,14 @@
 // -*- coding: utf-8 -*-
-#include <ckpttn/netlist.hpp>
 #include <doctest/doctest.h>
+
+#include <ckpttn/netlist.hpp>
 #include <string_view>
 
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist& H, std::string_view areFileName);
 extern void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H);
 
-TEST_CASE("Test Read Dwarf")
-{
+TEST_CASE("Test Read Dwarf") {
     auto H = readNetD("../../testcases/dwarf1.netD");
     readAre(H, "../../testcases/dwarf1.are");
 
@@ -21,8 +21,7 @@ TEST_CASE("Test Read Dwarf")
     CHECK(H.get_module_weight(1) == 2);
 }
 
-TEST_CASE("Test Read p1")
-{
+TEST_CASE("Test Read p1") {
     const auto H = readNetD("../../testcases/p1.net");
 
     CHECK(H.number_of_modules() == 833);
@@ -34,8 +33,7 @@ TEST_CASE("Test Read p1")
     CHECK(H.get_module_weight(1) == 1);
 }
 
-TEST_CASE("Test Read ibm01")
-{
+TEST_CASE("Test Read ibm01") {
     const auto H = readNetD("../../testcases/ibm01.net");
 
     CHECK(H.number_of_modules() == 12752);
@@ -47,8 +45,7 @@ TEST_CASE("Test Read ibm01")
     CHECK(H.get_module_weight(1) == 1);
 }
 
-TEST_CASE("Test Read ibm18")
-{
+TEST_CASE("Test Read ibm18") {
     const auto H = readNetD("../../testcases/ibm18.net");
 
     CHECK(H.number_of_modules() == 210613);
@@ -60,8 +57,7 @@ TEST_CASE("Test Read ibm18")
     CHECK(H.get_module_weight(1) == 1);
 }
 
-TEST_CASE("Test Write Dwarf")
-{
+TEST_CASE("Test Write Dwarf") {
     auto H = readNetD("../../testcases/dwarf1.netD");
     readAre(H, "../../testcases/dwarf1.are");
     writeJSON("../../testcases/dwarf1.json", H);
@@ -71,8 +67,7 @@ TEST_CASE("Test Write Dwarf")
     // CHECK(H.number_of_pins() == 13);
 }
 
-TEST_CASE("Test Write p1")
-{
+TEST_CASE("Test Write p1") {
     const auto H = readNetD("../../testcases/p1.net");
     writeJSON("../../testcases/p1.json", H);
 }

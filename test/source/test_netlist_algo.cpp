@@ -1,14 +1,13 @@
-#include <ckpttn/netlist.hpp>      // import Netlist
-#include <ckpttn/netlist_algo.hpp> // import Netlist
 #include <doctest/doctest.h>
+
+#include <ckpttn/netlist.hpp>       // import Netlist
+#include <ckpttn/netlist_algo.hpp>  // import Netlist
 // #include <memory> //std::unique_ptr
 #include <py2cpp/py2cpp.hpp>
 #include <string_view>
 
-
-extern auto create_test_netlist()
-    -> SimpleNetlist;                        // import create_test_netlist
-extern auto create_dwarf() -> SimpleNetlist; // import create_dwarf
+extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
+extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist& H, std::string_view areFileName);
 // extern std::tuple<py::set<node_t>, int>
@@ -16,13 +15,11 @@ extern void readAre(SimpleNetlist& H, std::string_view areFileName);
 
 using node_t = SimpleNetlist::node_t;
 
-TEST_CASE("Test min_vertex_cover dwarf")
-{
+TEST_CASE("Test min_vertex_cover dwarf") {
     const auto H = create_dwarf();
-    auto weight = py::dict<node_t, int> {};
-    auto covset = py::set<node_t> {};
-    for (auto node : H)
-    {
+    auto weight = py::dict<node_t, int>{};
+    auto covset = py::set<node_t>{};
+    for (auto node : H) {
         weight[node] = 1;
         // covset[node] = false;
     }
@@ -33,16 +30,13 @@ TEST_CASE("Test min_vertex_cover dwarf")
 // Primal-dual algorithm for minimum vertex cover problem
 //
 
-
-TEST_CASE("Test min_maximal_matching dwarf")
-{
+TEST_CASE("Test min_maximal_matching dwarf") {
     const auto H = create_dwarf();
     // const auto N = H.number_of_nets();
-    auto weight = py::dict<node_t, int> {};
-    auto matchset = py::set<node_t> {};
-    auto dep = py::set<node_t> {};
-    for (auto net : H.nets)
-    {
+    auto weight = py::dict<node_t, int>{};
+    auto matchset = py::set<node_t>{};
+    auto dep = py::set<node_t>{};
+    for (auto net : H.nets) {
         // matchset[net] = false;
         weight[net] = 1;
     }

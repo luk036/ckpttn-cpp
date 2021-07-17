@@ -1,20 +1,20 @@
-#include <ckpttn/bpqueue.hpp> // import bpqueue
-#include <ckpttn/dllist.hpp>  // import dllink
 #include <doctest/doctest.h>
+
+#include <ckpttn/bpqueue.hpp>  // import bpqueue
+#include <ckpttn/dllist.hpp>   // import dllink
 #include <gsl/span>
 
-TEST_CASE("Test BPQueue")
-{
+TEST_CASE("Test BPQueue") {
     constexpr auto PMAX = 10;
 
-    auto bpq1 = bpqueue<int, int32_t> {-PMAX, PMAX};
-    auto bpq2 = bpqueue<int, int32_t> {-PMAX, PMAX};
+    auto bpq1 = bpqueue<int, int32_t>{-PMAX, PMAX};
+    auto bpq2 = bpqueue<int, int32_t>{-PMAX, PMAX};
 
     CHECK(bpq1.is_empty());
 
-    auto d = dllink {std::pair {0, uint32_t(0)}};
-    auto e = dllink {std::pair {0, uint32_t(0)}};
-    auto f = dllink {std::pair {0, uint32_t(0)}};
+    auto d = dllink{std::pair{0, uint32_t(0)}};
+    auto e = dllink{std::pair{0, uint32_t(0)}};
+    auto f = dllink{std::pair{0, uint32_t(0)}};
 
     CHECK(d.data.second == 0);
 
@@ -22,7 +22,7 @@ TEST_CASE("Test BPQueue")
     bpq1.append(f, -PMAX);
     bpq1.append(d, 5);
 
-    bpq2.append(bpq1.popleft(), -6); // d
+    bpq2.append(bpq1.popleft(), -6);  // d
     bpq2.append(bpq1.popleft(), 3);
     bpq2.append(bpq1.popleft(), 0);
 
@@ -34,8 +34,7 @@ TEST_CASE("Test BPQueue")
     auto nodelist = std::vector<dllink<std::pair<int, uint32_t>>>(10);
 
     auto i = 0U;
-    for (auto& it : nodelist)
-    {
+    for (auto& it : nodelist) {
         it.data.second = 2 * i - 10;
         i += 1;
     }

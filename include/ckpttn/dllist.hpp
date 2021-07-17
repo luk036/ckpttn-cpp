@@ -2,11 +2,10 @@
 
 #include <cassert>
 // #include <cstdint>
-#include <utility> // import std::move()
+#include <utility>  // import std::move()
 
 // Forward declaration for begin() end()
-template <typename T>
-class dll_iterator;
+template <typename T> class dll_iterator;
 
 /*!
  * @brief doubly linked node (that may also be a "head" a list)
@@ -20,17 +19,15 @@ class dll_iterator;
  * are supplied by the caller in order to better reuse the nodes.
  */
 #pragma pack(push, 1)
-template <typename T>
-class dllink
-{
+template <typename T> class dllink {
     friend dll_iterator<T>;
 
   private:
-    dllink* next {this}; /*!< pointer to the next node */
-    dllink* prev {this}; /*!< pointer to the previous node */
+    dllink* next{this}; /*!< pointer to the next node */
+    dllink* prev{this}; /*!< pointer to the previous node */
 
   public:
-    T data {}; /*!< data */
+    T data{}; /*!< data */
     // Int key{}; /*!< key */
 
     /*!
@@ -38,9 +35,7 @@ class dllink
      *
      * @param[in] data the data
      */
-    constexpr explicit dllink(T data) noexcept
-        : data {std::move(data)}
-    {
+    constexpr explicit dllink(T data) noexcept : data{std::move(data)} {
         static_assert(sizeof(dllink) <= 24, "keep this class small");
     }
 
@@ -50,20 +45,16 @@ class dllink
      */
     constexpr dllink() = default;
     ~dllink() = default;
-    dllink(const dllink&) = delete;                              // don't copy
-    constexpr auto operator=(const dllink&) -> dllink& = delete; // don't assign
+    dllink(const dllink&) = delete;                               // don't copy
+    constexpr auto operator=(const dllink&) -> dllink& = delete;  // don't assign
     constexpr dllink(dllink&&) noexcept = default;
-    constexpr auto operator=(dllink&&) noexcept
-        -> dllink& = default; // don't assign
+    constexpr auto operator=(dllink&&) noexcept -> dllink& = default;  // don't assign
 
     /*!
      * @brief lock the node (and don't append it to any list)
      *
      */
-    constexpr auto lock() noexcept -> void
-    {
-        this->next = nullptr;
-    }
+    constexpr auto lock() noexcept -> void { this->next = nullptr; }
 
     /*!
      * @brief whether the node is locked
@@ -71,8 +62,7 @@ class dllink
      * @return true
      * @return false
      */
-    [[nodiscard]] constexpr auto is_locked() const noexcept -> bool
-    {
+    [[nodiscard]] constexpr auto is_locked() const noexcept -> bool {
         return this->next == nullptr;
     }
 
@@ -82,26 +72,19 @@ class dllink
      * @return true
      * @return false
      */
-    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool
-    {
-        return this->next == this;
-    }
+    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->next == this; }
 
     /*!
      * @brief reset the list
      *
      */
-    constexpr auto clear() noexcept -> void
-    {
-        this->next = this->prev = this;
-    }
+    constexpr auto clear() noexcept -> void { this->next = this->prev = this; }
 
     /*!
      * @brief detach from a list
      *
      */
-    constexpr auto detach() noexcept -> void
-    {
+    constexpr auto detach() noexcept -> void {
         assert(!this->is_locked());
         const auto n = this->next;
         const auto p = this->prev;
@@ -114,8 +97,7 @@ class dllink
      *
      * @param[in,out] node
      */
-    constexpr auto appendleft(dllink& node) noexcept -> void
-    {
+    constexpr auto appendleft(dllink& node) noexcept -> void {
         node.next = this->next;
         this->next->prev = &node;
         this->next = &node;
@@ -127,8 +109,7 @@ class dllink
      *
      * @param[in,out] node
      */
-    constexpr auto append(dllink& node) noexcept -> void
-    {
+    constexpr auto append(dllink& node) noexcept -> void {
         node.prev = this->prev;
         this->prev->next = &node;
         this->prev = &node;
@@ -142,8 +123,7 @@ class dllink
      *
      * Precondition: list is not empty
      */
-    constexpr auto popleft() noexcept -> dllink&
-    {
+    constexpr auto popleft() noexcept -> dllink& {
         auto res = this->next;
         this->next = res->next;
         this->next->prev = this;
@@ -157,8 +137,7 @@ class dllink
      *
      * Precondition: list is not empty
      */
-    constexpr auto pop() noexcept -> dllink&
-    {
+    constexpr auto pop() noexcept -> dllink& {
         auto res = this->prev;
         this->prev = res->prev;
         this->prev->next = this;
@@ -210,9 +189,7 @@ class dllink
  * List iterator. Traverse the list from the first item. Usually it is
  * safe to attach/detach list items during the iterator is active.
  */
-template <typename T>
-class dll_iterator
-{
+template <typename T> class dll_iterator {
   private:
     dllink<T>* cur; /*!< pointer to the current item */
 
@@ -222,18 +199,14 @@ class dll_iterator
      *
      * @param[in] cur
      */
-    constexpr explicit dll_iterator(dllink<T>* cur) noexcept
-        : cur {cur}
-    {
-    }
+    constexpr explicit dll_iterator(dllink<T>* cur) noexcept : cur{cur} {}
 
     /*!
      * @brief move to the next item
      *
      * @return dllink&
      */
-    constexpr auto operator++() noexcept -> dll_iterator&
-    {
+    constexpr auto operator++() noexcept -> dll_iterator& {
         this->cur = this->cur->next;
         return *this;
     }
@@ -243,10 +216,7 @@ class dll_iterator
      *
      * @return dllink&
      */
-    constexpr auto operator*() noexcept -> dllink<T>&
-    {
-        return *this->cur;
-    }
+    constexpr auto operator*() noexcept -> dllink<T>& { return *this->cur; }
 
     /*!
      * @brief eq operator
@@ -255,9 +225,7 @@ class dll_iterator
      * @return true
      * @return false
      */
-    friend auto operator==(
-        const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool
-    {
+    friend auto operator==(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
         return lhs.cur == rhs.cur;
     }
 
@@ -268,23 +236,18 @@ class dll_iterator
      * @return true
      * @return false
      */
-    friend auto operator!=(
-        const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool
-    {
+    friend auto operator!=(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
         return !(lhs == rhs);
     }
 };
-
 
 /*!
  * @brief begin
  *
  * @return dll_iterator
  */
-template <typename T>
-inline constexpr auto dllink<T>::begin() noexcept -> dll_iterator<T>
-{
-    return dll_iterator<T> {this->next};
+template <typename T> inline constexpr auto dllink<T>::begin() noexcept -> dll_iterator<T> {
+    return dll_iterator<T>{this->next};
 }
 
 /*!
@@ -292,8 +255,6 @@ inline constexpr auto dllink<T>::begin() noexcept -> dll_iterator<T>
  *
  * @return dll_iterator
  */
-template <typename T>
-inline constexpr auto dllink<T>::end() noexcept -> dll_iterator<T>
-{
-    return dll_iterator<T> {this};
+template <typename T> inline constexpr auto dllink<T>::end() noexcept -> dll_iterator<T> {
+    return dll_iterator<T>{this};
 }

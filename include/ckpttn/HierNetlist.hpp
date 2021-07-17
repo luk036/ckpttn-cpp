@@ -8,8 +8,8 @@
 // #include <utility>
 // #include <vector>
 // #include <xnetwork/classes/graph.hpp>
-#include "netlist.hpp"
 #include "array_like.hpp"
+#include "netlist.hpp"
 
 // using node_t = int;
 
@@ -25,9 +25,7 @@
  * HierNetlist is implemented by xn::Graph, which is a networkx-like graph.
  *
  */
-template <typename graph_t>
-class HierNetlist : public Netlist<graph_t>
-{
+template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
   public:
     using nodeview_t = typename graph_t::nodeview_t;
     using node_t = typename graph_t::node_t;
@@ -39,7 +37,6 @@ class HierNetlist : public Netlist<graph_t>
     std::vector<node_t> node_down_map;
     py::dict<index_t, node_t> cluster_down_map;
     shift_array<std::vector<int>> net_weight{};
-
 
     /*!
      * @brief Construct a new HierNetlist object
@@ -67,7 +64,7 @@ class HierNetlist : public Netlist<graph_t>
      * @param[out] part_down
      */
     void projection_down(gsl::span<const std::uint8_t> part,
-        gsl::span<std::uint8_t> part_down) const;
+                         gsl::span<std::uint8_t> part_down) const;
 
     /*!
      * @brief projection up
@@ -75,19 +72,15 @@ class HierNetlist : public Netlist<graph_t>
      * @param[in] part
      * @param[out] part_up
      */
-    void projection_up(gsl::span<const std::uint8_t> part,
-        gsl::span<std::uint8_t> part_up) const;
+    void projection_up(gsl::span<const std::uint8_t> part, gsl::span<std::uint8_t> part_up) const;
 
     /**
      * @brief Get the net weight
      *
      * @return int
      */
-    auto get_net_weight(const node_t& net) const -> int
-    {
-        return this->net_weight.empty() ? 1
-                                        :
-                                        this->net_weight[net];
+    auto get_net_weight(const node_t& net) const -> int {
+        return this->net_weight.empty() ? 1 : this->net_weight[net];
     }
 };
 
@@ -101,11 +94,8 @@ class HierNetlist : public Netlist<graph_t>
  * @param[in] nets
  */
 template <typename graph_t>
-HierNetlist<graph_t>::HierNetlist(
-    graph_t G, const nodeview_t& modules, const nodeview_t& nets)
-    : Netlist<graph_t> {std::move(G), modules, nets}
-{
-}
+HierNetlist<graph_t>::HierNetlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets)
+    : Netlist<graph_t>{std::move(G), modules, nets} {}
 
 // template <typename graph_t>
 // HierNetlist<graph_t>::HierNetlist(graph_t G, uint32_t numModules, uint32_t numNets)

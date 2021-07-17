@@ -1,10 +1,11 @@
 #pragma once
 
-#include "FMPmrConfig.hpp"
-#include "dllist.hpp"  // import dllink
-#include "netlist.hpp" // import Netlist
-#include "robin.hpp"   // import robin
 #include <gsl/span>
+
+#include "FMPmrConfig.hpp"
+#include "dllist.hpp"   // import dllink
+#include "netlist.hpp"  // import Netlist
+#include "robin.hpp"    // import robin
 
 // class FMKWayGainMgr;
 
@@ -12,8 +13,7 @@
  * @brief FMKWayGainCalc
  *
  */
-class FMKWayGainCalc
-{
+class FMKWayGainCalc {
     friend class FMKWayGainMgr;
     using node_t = typename SimpleNetlist::node_t;
     using Item = dllink<std::pair<node_t, uint32_t>>;
@@ -23,7 +23,7 @@ class FMKWayGainCalc
     std::uint8_t K;
     robin<std::uint8_t> RR;
     // size_t num_modules;
-    int totalcost {0};
+    int totalcost{0};
     std::byte StackBuf[20000];
     FMPmr::monotonic_buffer_resource rsrc;
     std::vector<std::vector<Item>> vertex_list;
@@ -32,7 +32,7 @@ class FMKWayGainCalc
   public:
     FMPmr::vector<int> deltaGainW;
     FMPmr::vector<node_t> IdVec;
-    bool special_handle_2pin_nets {true}; // @TODO should be template parameter
+    bool special_handle_2pin_nets{true};  // @TODO should be template parameter
 
     /*!
      * @brief Construct a new FMKWayGainCalc object
@@ -41,22 +41,19 @@ class FMKWayGainCalc
      * @param[in] K number of partitions
      */
     FMKWayGainCalc(const SimpleNetlist& H, std::uint8_t K)
-        : H {H}
-        , K {K}
-        , RR {K}
-        , rsrc(StackBuf, sizeof StackBuf)
-        , vertex_list {}
-        , deltaGainV(K, 0, &rsrc)
-        , deltaGainW(K, 0, &rsrc)
-        , IdVec(&rsrc)
-    {
-        for (auto k = 0U; k != this->K; ++k)
-        {
+        : H{H},
+          K{K},
+          RR{K},
+          rsrc(StackBuf, sizeof StackBuf),
+          vertex_list{},
+          deltaGainV(K, 0, &rsrc),
+          deltaGainW(K, 0, &rsrc),
+          IdVec(&rsrc) {
+        for (auto k = 0U; k != this->K; ++k) {
             auto vec = std::vector<Item>{};
             vec.reserve(H.number_of_modules());
-            for (const auto& v : this->H)
-            {
-                vec.emplace_back(Item(std::pair {v, uint32_t(0)}));
+            for (const auto& v : this->H) {
+                vec.emplace_back(Item(std::pair{v, uint32_t(0)}));
             }
             this->vertex_list.emplace_back(std::move(vec));
         }
@@ -78,18 +75,14 @@ class FMKWayGainCalc
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int
-    {
+    auto init(gsl::span<const std::uint8_t> part) -> int {
         this->totalcost = 0;
-        for (auto& vec : this->vertex_list)
-        {
-            for (auto& vlink : vec)
-            {
+        for (auto& vec : this->vertex_list) {
+            for (auto& vlink : vec) {
                 vlink.data.second = 0U;
             }
         }
-        for (const auto& net : this->H.nets)
-        {
+        for (const auto& net : this->H.nets) {
             this->_init_gain(net, part);
         }
         return this->totalcost;
@@ -99,8 +92,7 @@ class FMKWayGainCalc
      * @brief
      *
      */
-    auto update_move_init() -> void
-    {
+    auto update_move_init() -> void {
         std::fill(this->deltaGainV.begin(), this->deltaGainV.end(), 0);
     }
 
@@ -112,8 +104,8 @@ class FMKWayGainCalc
      * @param[out] w
      * @return std::vector<int>
      */
-    auto update_move_2pin_net(gsl::span<const std::uint8_t> part,
-        const MoveInfo<node_t>& move_info) -> node_t;
+    auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> node_t;
 
     void init_IdVec(const node_t& v, const node_t& net);
 
@@ -126,8 +118,8 @@ class FMKWayGainCalc
      * @param[in] move_info
      * @return ret_info
      */
-    auto update_move_3pin_net(gsl::span<const std::uint8_t> part,
-        const MoveInfo<node_t>& move_info) -> ret_info;
+    auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> ret_info;
 
     /*!
      * @brief
@@ -137,7 +129,7 @@ class FMKWayGainCalc
      * @return ret_info
      */
     auto update_move_general_net(gsl::span<const std::uint8_t> part,
-        const MoveInfo<node_t>& move_info) -> ret_info;
+                                 const MoveInfo<node_t>& move_info) -> ret_info;
 
   private:
     /*!
@@ -147,10 +139,8 @@ class FMKWayGainCalc
      * @param[in] part_v
      * @param[in] weight
      */
-    auto _modify_gain(const node_t& v, std::uint8_t part_v, unsigned int weight) -> void
-    {
-        for (const auto& k : this->RR.exclude(part_v))
-        {
+    auto _modify_gain(const node_t& v, std::uint8_t part_v, unsigned int weight) -> void {
+        for (const auto& k : this->RR.exclude(part_v)) {
             this->vertex_list[k][v].data.second += weight;
         }
     }
@@ -163,9 +153,8 @@ class FMKWayGainCalc
      * @param part_v
      * @param v
      */
-    template <typename... Ts>
-    auto _modify_vertex_va(unsigned int weight, std::uint8_t k, Ts... v) -> void
-    {
+    template <typename... Ts> auto _modify_vertex_va(unsigned int weight, std::uint8_t k, Ts... v)
+        -> void {
         ((this->vertex_list[k][v].data.second += weight), ...);
     }
 
@@ -224,10 +213,8 @@ class FMKWayGainCalc
      * @param v
      */
     template <typename... Ts>
-    auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) -> void
-    {
-        for (const auto& k : this->RR.exclude(part_v))
-        {
+    auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) -> void {
+        for (const auto& k : this->RR.exclude(part_v)) {
             _modify_vertex_va(weight, k, v...);
         }
     }
@@ -238,8 +225,7 @@ class FMKWayGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain(const node_t& net, gsl::span<const std::uint8_t> part)
-        -> void;
+    auto _init_gain(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
     /*!
      * @brief
@@ -247,8 +233,7 @@ class FMKWayGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain_2pin_net(
-        const node_t& net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_2pin_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
     /*!
      * @brief
@@ -256,8 +241,7 @@ class FMKWayGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain_3pin_net(
-        const node_t& net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_3pin_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
     /*!
      * @brief
@@ -265,6 +249,5 @@ class FMKWayGainCalc
      * @param[in] net
      * @param[in] part
      */
-    auto _init_gain_general_net(
-        const node_t& net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_general_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 };

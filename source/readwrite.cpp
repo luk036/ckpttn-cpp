@@ -4,7 +4,7 @@
 #include <iostream>
 // #include <py2cpp/py2cpp.hpp>
 #include <string_view>
-#include <utility> // for std::pair
+#include <utility>  // for std::pair
 #include <vector>
 
 // using graph_t =
@@ -16,11 +16,9 @@ using std::ifstream;
 using std::ofstream;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H)
-{
-    auto json = ofstream {jsonFileName.data()};
-    if (json.fail())
-    {
+void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H) {
+    auto json = ofstream{jsonFileName.data()};
+    if (json.fail()) {
         std::cerr << "Error: Can't open file " << jsonFileName << ".\n";
         exit(1);
     }
@@ -37,18 +35,15 @@ void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H)
 
     json << R"( "nodes": [)"
          << "\n";
-    for (const auto& node : H.G)
-    {
+    for (const auto& node : H.G) {
         json << "  { \"id\": " << node << " },\n";
     }
     json << " ],\n";
 
     json << R"( "links": [)"
          << "\n";
-    for (const auto& v : H)
-    {
-        for (const auto& net : H.G[v])
-        {
+    for (const auto& v : H) {
+        for (const auto& net : H.G[v]) {
             json << "  {\n";
             json << "   \"source\": " << v << ",\n";
             json << "   \"target\": " << net << "\n";
@@ -61,11 +56,9 @@ void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H)
 }
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-auto readNetD(std::string_view netDFileName) -> SimpleNetlist
-{
-    auto netD = ifstream {netDFileName.data()};
-    if (netD.fail())
-    {
+auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
+    auto netD = ifstream{netDFileName.data()};
+    if (netD.fail()) {
         std::cerr << "Error: Can't open file " << netDFileName << ".\n";
         exit(1);
     }
@@ -78,7 +71,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist
     uint32_t numModules;
     index_t padOffset;
 
-    netD >> t; // eat 1st 0
+    netD >> t;  // eat 1st 0
     netD >> numPins >> numNets >> numModules >> padOffset;
 
     // using Edge = std::pair<int, int>;
@@ -88,51 +81,41 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist
     auto g = graph_t(num_vertices);
 
     constexpr index_t bufferSize = 100;
-    char lineBuffer[bufferSize]; // Does it work for other compiler?
+    char lineBuffer[bufferSize];  // Does it work for other compiler?
     netD.getline(lineBuffer, bufferSize);
 
     node_t w;
     index_t e = numModules - 1;
     char c;
     uint32_t i = 0;
-    for (; i < numPins; ++i)
-    {
-        if (netD.eof())
-        {
+    for (; i < numPins; ++i) {
+        if (netD.eof()) {
             std::cerr << "Warning: Unexpected end of file.\n";
             break;
         }
-        do
-        {
+        do {
             netD.get(c);
         } while ((isspace(c) != 0) && c != EOF);
-        if (c == '\n')
-        {
+        if (c == '\n') {
             continue;
         }
-        if (c == 'a')
-        {
+        if (c == 'a') {
             netD >> w;
-        }
-        else if (c == 'p')
-        {
+        } else if (c == 'p') {
             netD >> w;
             w += padOffset;
         }
-        do
-        {
+        do {
             netD.get(c);
         } while ((isspace(c) != 0) && c != EOF);
-        if (c == 's')
-        {
+        if (c == 's') {
             ++e;
         }
 
         // edge_array[i] = Edge(w, e);
         g.add_edge(w, e);
 
-        do
-        {
+        do {
             netD.get(c);
         } while ((isspace(c) != 0) && c != '\n' && c != EOF);
         // switch (c) {
@@ -140,25 +123,20 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist
         // case 'I': aPin.setDirection(Pin::INPUT); break;
         // case 'B': aPin.setDirection(Pin::BIDIR); break;
         // }
-        if (c != '\n')
-        {
+        if (c != '\n') {
             netD.getline(lineBuffer, bufferSize);
         }
     }
 
     e -= numModules - 1;
-    if (e < numNets)
-    {
+    if (e < numNets) {
         std::cerr << "Warning: number of nets is not " << numNets << ".\n";
         numNets = e;
-    }
-    else if (e > numNets)
-    {
+    } else if (e > numNets) {
         std::cerr << "Error: number of nets is not " << numNets << ".\n";
         exit(1);
     }
-    if (i < numPins)
-    {
+    if (i < numPins) {
         std::cerr << "Error: number of pins is not " << numPins << ".\n";
         exit(1);
     }
@@ -167,17 +145,15 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist
     //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
     // auto index = boost::get(boost::vertex_index, g);
     // auto G = xn::grAdaptor<graph_t>{std::move(g)};
-    auto H = SimpleNetlist {std::move(g), numModules, numNets};
+    auto H = SimpleNetlist{std::move(g), numModules, numNets};
     H.num_pads = numModules - padOffset - 1;
     return H;
 }
 
 // Read the IBM .are format
-void readAre(SimpleNetlist& H, std::string_view areFileName)
-{
-    auto are = ifstream {areFileName.data()};
-    if (are.fail())
-    {
+void readAre(SimpleNetlist& H, std::string_view areFileName) {
+    auto are = ifstream{areFileName.data()};
+    if (are.fail()) {
         std::cerr << " Could not open " << areFileName << std::endl;
         exit(1);
     }
@@ -196,43 +172,32 @@ void readAre(SimpleNetlist& H, std::string_view areFileName)
     auto module_weight = std::vector<unsigned int>(numModules);
 
     size_t lineno = 1;
-    for (size_t i = 0; i < numModules; i++)
-    {
-        if (are.eof())
-        {
+    for (size_t i = 0; i < numModules; i++) {
+        if (are.eof()) {
             break;
         }
-        do
-        {
+        do {
             are.get(c);
         } while ((isspace(c) != 0) && c != EOF);
-        if (c == '\n')
-        {
+        if (c == '\n') {
             lineno++;
             continue;
         }
-        if (c == 'a')
-        {
+        if (c == 'a') {
             are >> w;
-        }
-        else if (c == 'p')
-        {
+        } else if (c == 'p') {
             are >> w;
             w += node_t(padOffset);
-        }
-        else
-        {
+        } else {
             std::cerr << "Syntax error in line " << lineno << ":"
                       << R"(expect keyword "a" or "p")" << std::endl;
             exit(0);
         }
 
-        do
-        {
+        do {
             are.get(c);
         } while ((isspace(c) != 0) && c != EOF);
-        if (isdigit(c) != 0)
-        {
+        if (isdigit(c) != 0) {
             are.putback(c);
             are >> weight;
             module_weight[w] = weight;

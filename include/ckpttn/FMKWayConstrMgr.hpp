@@ -1,8 +1,9 @@
 #pragma once
 
-#include "FMConstrMgr.hpp"
 #include <gsl/span>
 #include <range/v3/algorithm/min_element.hpp>
+
+#include "FMConstrMgr.hpp"
 // #include <range/v3/view/zip.hpp>
 // Check if (the move of v can satisfied, makebetter, or notsatisfied
 
@@ -10,8 +11,7 @@
  * @brief FM K-Way Partition Constraint Manager
  *
  */
-class FMKWayConstrMgr : public FMConstrMgr
-{
+class FMKWayConstrMgr : public FMConstrMgr {
   private:
     std::vector<int> illegal;
 
@@ -24,18 +24,14 @@ class FMKWayConstrMgr : public FMConstrMgr
      * @param[in] K
      */
     FMKWayConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
-        : FMConstrMgr {H, BalTol, K}
-        , illegal(K, 1)
-    {
-    }
+        : FMConstrMgr{H, BalTol, K}, illegal(K, 1) {}
 
     /*!
      * @brief
      *
      * @return std::uint8_t
      */
-    [[nodiscard]] auto select_togo() const -> std::uint8_t
-    {
+    [[nodiscard]] auto select_togo() const -> std::uint8_t {
         auto it = ranges::min_element(this->diff);
         return std::uint8_t(std::distance(this->diff.cbegin(), it));
     }
@@ -45,12 +41,10 @@ class FMKWayConstrMgr : public FMConstrMgr
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> void
-    {
+    auto init(gsl::span<const std::uint8_t> part) -> void {
         FMConstrMgr::init(part);
         auto it = this->diff.begin();
-        for (auto& il : this->illegal)
-        {
+        for (auto& il : this->illegal) {
             il = (*it < this->lowerbound);
             ++it;
         }
