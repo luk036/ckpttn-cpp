@@ -10,12 +10,12 @@
 // #include <range/v3/view/remove_if.hpp>
 // #include <range/v3/view/transform.hpp>
 #include <ckpttn/HierNetlist.hpp>
-#include <transrangers.hpp>
+// #include <transrangers.hpp>
 #include <tuple>
 #include <vector>
 
 using node_t = typename SimpleNetlist::node_t;
-using namespace transrangers;
+// using namespace transrangers;
 
 /**
  * @brief Create a contraction subgraph object
@@ -28,8 +28,13 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     -> std::unique_ptr<SimpleHierNetlist> {
     auto weight = py::dict<node_t, unsigned int>{};
     for (const auto& net : H.nets) {
-        weight[net] = accumulate(
-            transform([&](const auto& v) { return H.get_module_weight(v); }, all(H.G[net])), 0U);
+        // weight[net] = accumulate(
+        //     transform([&](const auto& v) { return H.get_module_weight(v); }, all(H.G[net])), 0U);
+        auto sum = 0U;
+        for (const auto& v : H.G[net]) {
+            sum += H.get_module_weight(v);
+        }
+        weight[net] = sum;
     }
 
     auto S = py::set<node_t>{};

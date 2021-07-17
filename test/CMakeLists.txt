@@ -38,6 +38,7 @@ target_link_libraries(
   cppcoro::cppcoro
   Threads::Threads
   GSL
+  range-v3
 )
 set_target_properties(CkPttnTests PROPERTIES CXX_STANDARD 20)
 

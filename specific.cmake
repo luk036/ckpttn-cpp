@@ -14,6 +14,7 @@ else()
 endif(XNetwork_FOUND)
 
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
+CPMAddPackage("gh:ericniebler/range-v3#0.11.0")
 
 CPMAddPackage(
   NAME cppcoro

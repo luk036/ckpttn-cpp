@@ -57,7 +57,7 @@ target_compile_options(CkPttn PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permiss
 
 # Link dependencies
 target_link_libraries(
-  CkPttn PRIVATE XNetwork::XNetwork cppcoro::cppcoro Threads::Threads GSL fmt::fmt
+  CkPttn PRIVATE XNetwork::XNetwork cppcoro::cppcoro Threads::Threads GSL fmt::fmt range-v3
 )
 
 target_include_directories(

@@ -4,21 +4,21 @@
 #include <py2cpp/py2cpp.hpp>
 // #include <range/v3/view/all.hpp>
 // #include <range/v3/view/remove_if.hpp>
-#include <transranger_view.hpp>
-#include <transrangers.hpp>
+// #include <transranger_view.hpp>
+// #include <transrangers.hpp>
 #include <unordered_set>
 #include <vector>
 
 TEST_CASE("Test Range") {
-    using namespace transrangers;
+    // using namespace transrangers;
 
-    auto S = std::vector<int>{1, 2, 3, 4};
-    auto is_odd = [](int a) { return a % 2 == 1; };
-    auto rng = filter(is_odd, all(S));
-    auto total = accumulate(rng, 0);
-    for (const auto& e : input_view(rng)) {
-        total += e;
-    }
+    // auto S = std::vector<int>{1, 2, 3, 4};
+    // auto is_odd = [](int a) { return a % 2 == 1; };
+    // auto rng = filter(is_odd, all(S));
+    // auto total = accumulate(rng, 0);
+    // for (const auto& e : input_view(rng)) {
+    //     total += e;
+    // }
 
     const auto R = py::range(10);
 
