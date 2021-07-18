@@ -5,11 +5,7 @@ find_package(XNetwork QUIET)
 if(XNetwork_FOUND)
   message(STATUS "Found XNetwork: ${XNetwork_INCLUDE_DIR}")
 else()
-  CPMAddPackage(
-    NAME XNetwork
-    GIT_TAG 1.0.7
-    GITHUB_REPOSITORY luk036/xn-cpp
-  )
+  CPMAddPackage("gh:luk036/xn-cpp#1.0.7")
 endif(XNetwork_FOUND)
 
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
