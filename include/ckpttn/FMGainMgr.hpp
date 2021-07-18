@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cinttypes>
 #include <gsl/span>
 #include <iterator>

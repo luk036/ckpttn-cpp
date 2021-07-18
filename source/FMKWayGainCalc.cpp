@@ -118,8 +118,8 @@ void FMKWayGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const std:
  * @param[in] part
  */
 void FMKWayGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const std::uint8_t> part) {
-    std::byte StackBuf[2048];
-    FMPmr::monotonic_buffer_resource rsrc(StackBuf, sizeof StackBuf);
+    std::byte StackBufLocal[2048];
+    FMPmr::monotonic_buffer_resource rsrc(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<std::uint8_t>(this->K, 0, &rsrc);
     // auto IdVec = FMPmr::vector<node_t>(&rsrc);
 
@@ -297,8 +297,8 @@ auto FMKWayGainCalc::update_move_general_net(gsl::span<const std::uint8_t> part,
                                              const MoveInfo<node_t>& move_info)
     -> FMKWayGainCalc::ret_info {
     // const auto& [net, v, fromPart, toPart] = move_info;
-    std::byte StackBuf[FM_MAX_NUM_PARTITIONS];
-    FMPmr::monotonic_buffer_resource rsrc(StackBuf, sizeof StackBuf);
+    std::byte StackBufLocal[FM_MAX_NUM_PARTITIONS];
+    FMPmr::monotonic_buffer_resource rsrc(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<std::uint8_t>(this->K, 0, &rsrc);
 
     // auto IdVec = std::vector<node_t> {};
