@@ -53,14 +53,13 @@ class MLPartMgr {
 
     void set_limitsize(size_t limit) { this->limitsize = limit; }
 
-    /*!
+    /**
      * @brief run_Partition
-     *
-     * @tparam GainMgr
-     * @tparam ConstrMgr
+     * 
+     * @tparam PartMgr 
      * @param[in] H
      * @param[in,out] part
-     * @return LegalCheck
+     * @return LegalCheck 
      */
     template <typename PartMgr>
     auto run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
