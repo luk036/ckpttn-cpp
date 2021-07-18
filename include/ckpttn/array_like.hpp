@@ -1,6 +1,7 @@
 #pragma once
 
 #include <any>
+#include <cassert>
 #include <range/v3/view/repeat_n.hpp>
 // #include <type_traits>
 
