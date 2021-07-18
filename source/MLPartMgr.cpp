@@ -37,9 +37,9 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
         // release memory resource all memory saving
     };
 
-    auto [legalcheck, totalcost] = legalcheck_fn();
+    auto [legalcheck, cost] = legalcheck_fn();
     if (legalcheck != LegalCheck::allsatisfied) {
-        this->totalcost = totalcost;
+        this->totalcost = cost;
         return legalcheck;
     }
 
