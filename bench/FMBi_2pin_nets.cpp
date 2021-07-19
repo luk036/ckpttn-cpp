@@ -1,12 +1,12 @@
-#include "benchmark/benchmark.h"
-#include <ckpttn/FMBiConstrMgr.hpp> // import FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>   // import FMBiGainMgr
-#include <ckpttn/FMPartMgr.hpp> // import FMBiPartMgr#include <string_view>
+#include <ckpttn/FMBiConstrMgr.hpp>  // import FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>    // import FMBiGainMgr
+#include <ckpttn/FMPartMgr.hpp>      // import FMBiPartMgr#include <string_view>
 #include <string_view>
 
-extern auto create_test_netlist()
-    -> SimpleNetlist;                        // import create_test_netlist
-extern auto create_dwarf() -> SimpleNetlist; // import create_dwarf
+#include "benchmark/benchmark.h"
+
+extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
+extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist& H, std::string_view areFileName);
 
@@ -16,14 +16,12 @@ extern void readAre(SimpleNetlist& H, std::string_view areFileName);
  * @param[in] H
  * @param[in] option
  */
-void run_FMBiPartMgr(const SimpleNetlist& H, bool option)
-{
-    auto gainMgr = FMBiGainMgr {H};
+void run_FMBiPartMgr(const SimpleNetlist& H, bool option) {
+    auto gainMgr = FMBiGainMgr{H};
     gainMgr.gainCalc.special_handle_2pin_nets = option;
 
-    auto constrMgr = FMBiConstrMgr {H, 0.45};
-    auto partMgr =
-        FMPartMgr<FMBiGainMgr, FMBiConstrMgr> {H, gainMgr, constrMgr};
+    auto constrMgr = FMBiConstrMgr{H, 0.45};
+    auto partMgr = FMPartMgr<FMBiGainMgr, FMBiConstrMgr>{H, gainMgr, constrMgr};
     auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
     partMgr.legalize(part);
     // auto totalcostbefore = partMgr.totalcost;
@@ -38,13 +36,11 @@ void run_FMBiPartMgr(const SimpleNetlist& H, bool option)
  *
  * @param[in] state
  */
-static void BM_with_2pin_nets(benchmark::State& state)
-{
+static void BM_with_2pin_nets(benchmark::State& state) {
     auto H = readNetD("../../testcases/ibm03.net");
     readAre(H, "../../testcases/ibm03.are");
 
-    while (state.KeepRunning())
-    {
+    while (state.KeepRunning()) {
         run_FMBiPartMgr(H, true);
     }
 }
@@ -59,13 +55,11 @@ BENCHMARK(BM_with_2pin_nets);
  *
  * @param[in] state
  */
-static void BM_without_2pin_nets(benchmark::State& state)
-{
+static void BM_without_2pin_nets(benchmark::State& state) {
     auto H = readNetD("../../testcases/ibm03.net");
     readAre(H, "../../testcases/ibm03.are");
 
-    while (state.KeepRunning())
-    {
+    while (state.KeepRunning()) {
         run_FMBiPartMgr(H, false);
     }
 }
