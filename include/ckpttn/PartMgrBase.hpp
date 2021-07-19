@@ -15,8 +15,8 @@
 // forward declare
 template <typename graph_t> struct Netlist;
 // using RngIter = decltype(py::range(1));
-// //using graph_t = xn::SimpleGraph;
-using SimpleNetlist = Netlist<xn::SimpleGraph>;
+// //using graph_t = xnetwork::SimpleGraph;
+using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
 
 enum class LegalCheck;
 

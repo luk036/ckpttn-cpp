@@ -20,14 +20,14 @@
 /*!
  * @brief Netlist
  *
- * Netlist is implemented by xn::Graph, which is a networkx-like graph.
+ * Netlist is implemented by xnetwork::Graph, which is a networkx-like graph.
  *
  */
 template <typename graph_t> struct Netlist {
     using nodeview_t = typename graph_t::nodeview_t;
     using node_t = typename graph_t::node_t;
     using index_t = typename nodeview_t::key_type;
-    // using graph_t = xn::Graph<graph_t>;
+    // using graph_t = xnetwork::Graph<graph_t>;
 
     graph_t G;
     nodeview_t modules;
@@ -183,7 +183,7 @@ Netlist<graph_t>::Netlist(graph_t G, uint32_t numModules, uint32_t numNets)
     : Netlist{std::move(G), py::range(numModules), py::range(numModules, numModules + numNets)} {}
 
 // using RngIter = decltype(py::range(1));
-using graph_t = xn::SimpleGraph;
+using graph_t = xnetwork::SimpleGraph;
 using index_t = uint32_t;
 using SimpleNetlist = Netlist<graph_t>;
 

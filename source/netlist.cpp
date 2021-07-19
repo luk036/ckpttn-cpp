@@ -1,3 +1,3 @@
 #include <ckpttn/netlist.hpp>
 
-template struct Netlist<xn::SimpleGraph>;
+template struct Netlist<xnetwork::SimpleGraph>;

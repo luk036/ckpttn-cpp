@@ -130,7 +130,7 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
             g.add_edge(node_up_dict[v], net_up_map[net]);
         }
     }
-    // auto G = xn::grAdaptor<graph_t>(std::move(g));
+    // auto G = py::grAdaptor<graph_t>(std::move(g));
     auto G = std::move(g);
 
     auto H2 = std::make_unique<SimpleHierNetlist>(std::move(G), py::range(numModules),

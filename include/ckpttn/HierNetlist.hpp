@@ -22,7 +22,7 @@
 /*!
  * @brief HierNetlist
  *
- * HierNetlist is implemented by xn::Graph, which is a networkx-like graph.
+ * HierNetlist is implemented by xnetwork::Graph, which is a networkx-like graph.
  *
  */
 template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
@@ -104,4 +104,4 @@ HierNetlist<graph_t>::HierNetlist(graph_t G, const nodeview_t& modules, const no
 // {
 // }
 
-using SimpleHierNetlist = HierNetlist<xn::SimpleGraph>;
+using SimpleHierNetlist = HierNetlist<xnetwork::SimpleGraph>;

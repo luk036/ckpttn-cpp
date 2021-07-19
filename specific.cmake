@@ -1,19 +1,10 @@
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-find_package(XNetwork QUIET)
-if(XNetwork_FOUND)
-  message(STATUS "Found XNetwork: ${XNetwork_INCLUDE_DIR}")
-else()
-  CPMAddPackage(
-    NAME XNetwork
-    GIT_TAG 1.0.7
-    GITHUB_REPOSITORY luk036/xn-cpp
-  )
-endif(XNetwork_FOUND)
-
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
 CPMAddPackage("gh:ericniebler/range-v3#0.11.0")
+
+CPMAddPackage("gh:luk036/xnetwork-cpp#1.0.8")
 
 CPMAddPackage(
   NAME cppcoro

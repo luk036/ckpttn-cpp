@@ -34,4 +34,4 @@ void HierNetlist<graph_t>::projection_down(gsl::span<const std::uint8_t> part,
     // }
 }
 
-template class HierNetlist<xn::SimpleGraph>;
+template class HierNetlist<xnetwork::SimpleGraph>;

@@ -57,7 +57,7 @@ target_compile_options(CkPttn PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permiss
 
 # Link dependencies
 target_link_libraries(
-  CkPttn PRIVATE XNetwork::XNetwork cppcoro::cppcoro Threads::Threads GSL fmt::fmt range-v3
+  CkPttn PRIVATE XNetwork cppcoro::cppcoro Threads::Threads GSL fmt::fmt range-v3
 )
 
 target_include_directories(
@@ -81,5 +81,5 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 7.1.3"
+  DEPENDENCIES "XNetwork 1.0.8"
 )
