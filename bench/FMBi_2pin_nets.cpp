@@ -40,8 +40,8 @@ void run_FMBiPartMgr(const SimpleNetlist& H, bool option)
  */
 static void BM_with_2pin_nets(benchmark::State& state)
 {
-    auto H = readNetD("../../../testcases/ibm03.net");
-    readAre(H, "../../../testcases/ibm03.are");
+    auto H = readNetD("../../testcases/ibm03.net");
+    readAre(H, "../../testcases/ibm03.are");
 
     while (state.KeepRunning())
     {
@@ -61,8 +61,8 @@ BENCHMARK(BM_with_2pin_nets);
  */
 static void BM_without_2pin_nets(benchmark::State& state)
 {
-    auto H = readNetD("../../../testcases/ibm03.net");
-    readAre(H, "../../../testcases/ibm03.are");
+    auto H = readNetD("../../testcases/ibm03.net");
+    readAre(H, "../../testcases/ibm03.are");
 
     while (state.KeepRunning())
     {
