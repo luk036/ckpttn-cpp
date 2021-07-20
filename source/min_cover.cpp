@@ -6,7 +6,7 @@
 // #include <range/v3/all.hpp>
 // #include <range/v3/core.hpp>
 // #include <range/v3/numeric/accumulate.hpp>
-#include <range/v3/view/enumerate.hpp>
+// #include <range/v3/view/enumerate.hpp>
 // #include <range/v3/view/remove_if.hpp>
 // #include <range/v3/view/transform.hpp>
 #include <ckpttn/HierNetlist.hpp>
@@ -96,15 +96,18 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     {  // localize module_map and net_map
         auto module_map = py::dict<node_t, index_t>{};
         module_map.reserve(numModules);
-        for (const auto& [i_v, v] : ranges::views::enumerate(modules)) {
+        auto i_v = index_t(0);
+        for (const auto& v : modules) {
             module_map[v] = index_t(i_v);
+            ++i_v;
         }
 
         // auto net_map = py::dict<node_t, index_t> {};
         net_up_map.reserve(numNets);
-        for (const auto& [i_net, net] : ranges::views::enumerate(nets)) {
+        auto i_net = index_t(0);
+        for (const auto& net : nets) {
             net_up_map[net] = index_t(i_net) + numModules;
-            ;
+            ++i_net;
         }
 
         node_up_dict.reserve(H.number_of_modules());
