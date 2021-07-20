@@ -35,7 +35,7 @@ if(benchmark_ADDED)
   set_target_properties(benchmark PROPERTIES CXX_STANDARD 11)
 endif()
 
-#~~~~~~~~~~~~~~~~
+# ~~~
 
 file(GLOB_RECURSE ALL_BENCH_CPP *.cpp)
 
@@ -78,4 +78,3 @@ if(NOT TEST_INSTALLED_VERSION)
     # target_compile_definitions(CkPttnTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
   endif()
 endif()
-

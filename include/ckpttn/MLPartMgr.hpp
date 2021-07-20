@@ -55,11 +55,11 @@ class MLPartMgr {
 
     /**
      * @brief run_Partition
-     * 
-     * @tparam PartMgr 
+     *
+     * @tparam PartMgr
      * @param[in] H
      * @param[in,out] part
-     * @return LegalCheck 
+     * @return LegalCheck
      */
     template <typename PartMgr>
     auto run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
