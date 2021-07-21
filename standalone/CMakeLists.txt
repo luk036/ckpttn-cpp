@@ -26,4 +26,4 @@ add_executable(CkPttnStandalone ${sources})
 
 set_target_properties(CkPttnStandalone PROPERTIES CXX_STANDARD 20 OUTPUT_NAME "CkPttn")
 
-target_link_libraries(CkPttnStandalone CkPttn::CkPttn cxxopts)
+target_link_libraries(CkPttnStandalone CkPttn::CkPttn cxxopts ${SPECIFIC_LIBS})

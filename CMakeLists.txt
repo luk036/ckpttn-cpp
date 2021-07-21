@@ -26,13 +26,6 @@ include(cmake/CPM.cmake)
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.6.0")
 
-CPMAddPackage(
-  NAME fmt
-  GIT_TAG 7.1.3
-  GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS "FMT_INSTALL YES" # create an installable target
-)
-
 include(specific.cmake)
 
 # ---- Add source files ----
@@ -56,9 +49,7 @@ set_target_properties(CkPttn PROPERTIES CXX_STANDARD 20)
 target_compile_options(CkPttn PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(
-  CkPttn PRIVATE XNetwork cppcoro::cppcoro Threads::Threads GSL fmt::fmt range-v3
-)
+target_link_libraries(CkPttn PRIVATE ${SPECIFIC_LIBS})
 
 target_include_directories(
   CkPttn PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

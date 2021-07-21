@@ -30,16 +30,7 @@ endif()
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(CkPttnTests ${sources})
-target_link_libraries(
-  CkPttnTests
-  doctest::doctest
-  CkPttn::CkPttn
-  XNetwork::XNetwork
-  cppcoro::cppcoro
-  Threads::Threads
-  GSL
-  range-v3
-)
+target_link_libraries(CkPttnTests doctest::doctest CkPttn::CkPttn ${SPECIFIC_LIBS})
 set_target_properties(CkPttnTests PROPERTIES CXX_STANDARD 20)
 
 # enable compiler warnings

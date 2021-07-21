@@ -43,30 +43,21 @@ enable_testing()
 
 foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
 
-   get_filename_component(ONE_BENCH_EXEC ${ONE_BENCH_CPP} NAME_WE)
+  get_filename_component(ONE_BENCH_EXEC ${ONE_BENCH_CPP} NAME_WE)
 
-   # Avoid name collision 
-   set(TARGET_NAME Bench_${ONE_BENCH_EXEC})
+  # Avoid name collision
+  set(TARGET_NAME Bench_${ONE_BENCH_EXEC})
 
-   add_executable(${TARGET_NAME} ${ONE_BENCH_CPP})
-   set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC}) 
-   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 20)
+  add_executable(${TARGET_NAME} ${ONE_BENCH_CPP})
+  set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC})
+  set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 20)
 
-   target_link_libraries(
-     ${TARGET_NAME}
-     doctest::doctest
-     benchmark::benchmark
-     CkPttn::CkPttn
-     XNetwork::XNetwork
-     cppcoro::cppcoro
-     Threads::Threads
-     GSL
-     range-v3
-   )
-   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 20)
-   
-   # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
-   add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
+  target_link_libraries(
+    ${TARGET_NAME} doctest::doctest benchmark::benchmark CkPttn::CkPttn ${SPECIFIC_LIBS}
+  )
+
+  # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
+  add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
 endforeach()
 
 # enable compiler warnings
