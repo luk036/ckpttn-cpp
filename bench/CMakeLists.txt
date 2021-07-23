@@ -30,7 +30,7 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 20)
 
   target_link_libraries(
-    ${TARGET_NAME} doctest::doctest benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
+    ${TARGET_NAME} benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
   )
 
   # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})

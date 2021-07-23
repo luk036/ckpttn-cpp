@@ -6,12 +6,12 @@
 using node_t = typename SimpleNetlist::node_t;
 
 /**
- * @brief 
- * 
- * @tparam GainMgr 
- * @tparam ConstrMgr 
- * @tparam Derived 
- * @param[in] part 
+ * @brief
+ *
+ * @tparam GainMgr
+ * @tparam ConstrMgr
+ * @tparam Derived
+ * @param[in] part
  */
 template <typename GainMgr, typename ConstrMgr,
           template <typename _gainMgr, typename _constrMgr> class Derived>  //

@@ -9,9 +9,14 @@ CPMAddPackage(
 )
 
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
-CPMAddPackage("gh:ericniebler/range-v3#0.11.0")
+CPMAddPackage("gh:ericniebler/range-v3#0.10.0")
 
-CPMAddPackage("gh:luk036/xnetwork-cpp#1.0.8")
+CPMAddPackage(
+  NAME XNetwork
+  GIT_TAG 1.0.9
+  GITHUB_REPOSITORY luk036/xnetwork-cpp
+  OPTIONS "INSTALL_ONLY ON" # create an installable target
+)
 
 CPMAddPackage(
   NAME cppcoro
