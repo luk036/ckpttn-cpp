@@ -1,27 +1,4 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-
-project(CkPttnBench LANGUAGES CXX)
-
-# --- Import tools ----
-
-include(../cmake/tools.cmake)
-
 # ---- Dependencies ----
-
-include(../cmake/CPM.cmake)
-
-CPMAddPackage("gh:onqtam/doctest#2.4.5")
-CPMAddPackage("gh:TheLartians/Format.cmake@1.7.0")
-
-include(../specific.cmake)
-
-if(TEST_INSTALLED_VERSION)
-  find_package(CkPttn REQUIRED)
-else()
-  CPMAddPackage(NAME CkPttn SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
-endif()
-
-# ---- Create binary ----
 
 CPMAddPackage(
   NAME benchmark
@@ -35,7 +12,7 @@ if(benchmark_ADDED)
   set_target_properties(benchmark PROPERTIES CXX_STANDARD 11)
 endif()
 
-# ~~~
+# ---- Create binary ----
 
 file(GLOB_RECURSE ALL_BENCH_CPP *.cpp)
 
@@ -53,7 +30,7 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 20)
 
   target_link_libraries(
-    ${TARGET_NAME} doctest::doctest benchmark::benchmark CkPttn::CkPttn ${SPECIFIC_LIBS}
+    ${TARGET_NAME} doctest::doctest benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
   )
 
   # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
@@ -61,11 +38,9 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
 endforeach()
 
 # enable compiler warnings
-if(NOT TEST_INSTALLED_VERSION)
-  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    target_compile_options(CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror)
-  elseif(MSVC)
-    target_compile_options(CkPttn PUBLIC /W4 /WX)
-    # target_compile_definitions(CkPttnTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
-  endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  target_compile_options(CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror)
+elseif(MSVC)
+  target_compile_options(CkPttn PUBLIC /W4 /WX)
+  # target_compile_definitions(CkPttnTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
 endif()

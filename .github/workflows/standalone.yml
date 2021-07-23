@@ -31,10 +31,10 @@ jobs:
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90 
 
       - name: configure
-        run: cmake -Sstandalone -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_TYPE=Debug
 
       - name: build
         run: cmake --build build -j4
 
       - name: run
-        run: ./build/CkPttn
+        run: ./build/standalone/CkPttn

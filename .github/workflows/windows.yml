@@ -27,10 +27,10 @@ jobs:
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
       - name: configure
-        run: cmake -Stest -Bbuild/test
+        run: cmake -S. -Bbuild
 
       - name: build
-        run: cmake --build build/test --config Debug -j4
+        run: cmake --build build --config Debug -j4
 
       - name: test
         run: |

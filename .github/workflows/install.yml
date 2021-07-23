@@ -33,17 +33,15 @@ jobs:
 
       - name: build and install library
         run: |
-          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DINSTALL_ONLY=ON
           sudo cmake --build build --target install
           rm -rf build
 
       - name: configure
-        run: cmake -Stest -Bbuild/test -DTEST_INSTALLED_VERSION=1
+        run: cmake -Stest_installed -Bbuild
 
       - name: build
-        run: cmake --build build/test --config Debug -j4
+        run: cmake --build build --config Debug -j4
 
-      - name: test
-        run: |
-          cd build/test
-          ctest --build-config Debug
+      - name: run
+        run: ./build/test_installed/CkPttn

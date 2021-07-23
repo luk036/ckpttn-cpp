@@ -1,24 +1,27 @@
-[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/MacOS/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
-[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Windows/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
-[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
-[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Style/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
-[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Install/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
-[![codecov](https://codecov.io/gh/TheLartians/ModernCppStarter/branch/master/graph/badge.svg)](https://codecov.io/gh/TheLartians/ModernCppStarter)
+[![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
+[![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
+[![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
+[![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Style/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
+[![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Install/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
+[![codecov](https://codecov.io/gh/luk036/ckpttn-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/ckpttn-cpp)
 
 <p align="center">
   <img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" height="175" width="auto" />
 </p>
 
-# ModernCppStarter
+# ckpttn-cpp
 
-Setting up a new C++ project usually requires a significant amount of preparation and boilerplate code, even more so for modern C++ projects with tests, executables and continuous integration.
-This template is the result of learnings from many previous projects and should help reduce the work required to setup up a modern C++ project.
+Circuit Partitioning for modern C++
+
+- This library requires C++20 or above.
+- This library requires standard library `<meomory_resource>`.
+- This library depends on GSL, XNetwork, Boost.
 
 ## Features
 
+- Lazy evaluation of Cholesky/LDLT decomposition
+- Suport semi- and strictlu positive definite.
 - [Modern CMake practices](https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/)
-- Suited for single header libraries and projects of any scale
-- Clean separation of library and executable code
 - Integrated test suite
 - Continuous integration via [GitHub Actions](https://help.github.com/en/actions/)
 - Code coverage via [codecov](https://codecov.io)
@@ -52,8 +55,8 @@ During development it is usually convenient to [build all subprojects at once](#
 Use the following command to build and run the executable target.
 
 ```bash
-cmake -S standalone -B build/standalone
-cmake --build build/standalone
+cmake -S. -B build
+cmake --build build
 ./build/standalone/CkPttn --help
 ```
 
@@ -62,11 +65,12 @@ cmake --build build/standalone
 Use the following commands from the project's root directory to run the test suite.
 
 ```bash
-cmake -S test -B build/test
-cmake --build build/test
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
+cmake -S. -B build
+cmake --build build
+cd build/test
+CTEST_OUTPUT_ON_FAILURE=1 ctest
 
-# or simply call the executable: 
+# or maybe simply call the executable: 
 ./build/test/CkPttnTests
 ```
 
@@ -78,49 +82,30 @@ Use the following commands from the project's root directory to check and fix C+
 This requires _clang-format_, _cmake-format_ and _pyyaml_ to be installed on the current system.
 
 ```bash
-cmake -S test -B build/test
+cmake -S . -B build/test
 
 # view changes
-cmake --build build/test --target format
+cmake --build build --target format
 
 # apply changes
-cmake --build build/test --target fix-format
+cmake --build build --target fix-format
 ```
 
 See [Format.cmake](https://github.com/TheLartians/Format.cmake) for details.
 
 ### Build the documentation
 
-The documentation is automatically built and [published](https://thelartians.github.io/ModernCppStarter) whenever a [GitHub Release](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository) is created.
+The documentation is automatically built and [published](https://luk036.github.io/ckpttn-cpp) whenever a [GitHub Release](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository) is created.
 To manually build documentation, call the following command.
 
 ```bash
-cmake -S documentation -B build/doc
-cmake --build build/doc --target GenerateDocs
+cmake -S . -B build
+cmake --build build --target GenerateDocs
 # view the docs
-open build/doc/doxygen/html/index.html
+open build/documentation/doxygen/html/index.html
 ```
 
 To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.
-
-### Build everything at once
-
-The project also includes an `all` directory that allows building all targets at the same time.
-This is useful during development, as it exposes all subprojects to your IDE and avoids redundant builds of the library.
-
-```bash
-cmake -S all -B build
-cmake --build build
-
-# run tests
-./build/test/CkPttnTests
-# format code
-cmake --build build --target fix-format
-# run standalone
-./build/standalone/CkPttn --help
-# build docs
-cmake --build build --target GenerateDocs
-```
 
 ### Additional tools
 
@@ -140,56 +125,6 @@ Additional arguments can be passed to the analyzers by setting the `CLANG_TIDY_A
 #### Ccache
 
 Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
-
-## FAQ
-
-> Can I use this for header-only libraries?
-
-Yes, however you will need to change the library type to an `INTERFACE` library as documented in the [CMakeLists.txt](CMakeLists.txt).
-See [here](https://github.com/TheLartians/StaticTypeInfo) for an example header-only library based on the template.
-
-> I don't need a standalone target / documentation. How can I get rid of it?
-
-Simply remove the standalone / documentation directory and according github workflow file.
-
-> Can I build the standalone and tests at the same time? / How can I tell my IDE about all subprojects?
-
-To keep the template modular, all subprojects derived from the library have been separated into their own CMake modules.
-This approach makes it trivial for third-party projects to re-use the projects library code.
-To allow IDEs to see the full scope of the project, the template includes the `all` directory that will create a single build for all subprojects.
-Use this as the main directory for best IDE support.
-
-> I see you are using `GLOB` to add source files in CMakeLists.txt. Isn't that evil?
-
-Glob is considered bad because any changes to the source file structure [might not be automatically caught](https://cmake.org/cmake/help/latest/command/file.html#filesystem) by CMake's builders and you will need to manually invoke CMake on changes.
-  I personally prefer the `GLOB` solution for its simplicity, but feel free to change it to explicitly listing sources.
-
-> I want create additional targets that depend on my library. Should I modify the main CMakeLists to include them?
-
-Avoid including derived projects from the libraries CMakeLists (even though it is a common sight in the C++ world), as this effectively inverts the dependency tree and makes the build system hard to reason about.
-Instead, create a new directory or project with a CMakeLists that adds the library as a dependency (e.g. like the [standalone](standalone/CMakeLists.txt) directory).
-Depending type it might make sense move these components into a separate repositories and reference a specific commit or version of the library.
-This has the advantage that individual libraries and components can be improved and updated independently.
-
-> You recommend to add external dependencies using CPM.cmake. Will this force users of my library to use CPM.cmake as well?
-
-[CPM.cmake](https://github.com/TheLartians/CPM.cmake) should be invisible to library users as it's a self-contained CMake Script.
-If problems do arise, users can always opt-out by defining the CMake or env variable [`CPM_USE_LOCAL_PACKAGES`](https://github.com/cpm-cmake/CPM.cmake#options), which will override all calls to `CPMAddPackage` with the according `find_package` call.
-This should also enable users to use the project with their favorite external C++ dependency manager, such as vcpkg or Conan.
-
-> Can I configure and build my project offline?
-
-No internet connection is required for building the project, however when using CPM missing dependencies are downloaded at configure time.
-To avoid redundant downloads, it's highly recommended to set a CPM.cmake cache directory, e.g.: `export CPM_SOURCE_CACHE=$HOME/.cache/CPM`.
-This will enable shallow clones and allow offline configurations dependencies are already available in the cache.
-
-> Can I use CPack to create a package installer for my project?
-
-As there are a lot of possible options and configurations, this is not (yet) in the scope of this template. See the [CPack documentation](https://cmake.org/cmake/help/latest/module/CPack.html) for more information on setting up CPack installers.
-
-> This is too much, I just want to play with C++ code and test some libraries.
-
-Perhaps the [MiniCppStarter](https://github.com/TheLartians/MiniCppStarter) is something for you!
 
 ## Related projects and alternatives
 

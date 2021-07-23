@@ -6,11 +6,12 @@
 using node_t = typename SimpleNetlist::node_t;
 
 /**
- * @brief
- *
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
+ * @brief 
+ * 
+ * @tparam GainMgr 
+ * @tparam ConstrMgr 
+ * @tparam Derived 
+ * @param[in] part 
  */
 template <typename GainMgr, typename ConstrMgr,
           template <typename _gainMgr, typename _constrMgr> class Derived>  //
@@ -81,6 +82,7 @@ auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> 
  *
  * @tparam GainMgr
  * @tparam ConstrMgr
+ * @tparam Derived
  * @param[in] part
  */
 template <typename GainMgr, typename ConstrMgr,
@@ -140,6 +142,7 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<std::ui
  *
  * @tparam GainMgr
  * @tparam ConstrMgr
+ * @tparam Derived
  * @param[in] part
  */
 template <typename GainMgr, typename ConstrMgr,

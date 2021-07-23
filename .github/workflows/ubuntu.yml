@@ -32,11 +32,14 @@ jobs:
           sudo apt-get install g++-10
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90 
 
+      - name: install dependency
+        run: sudo apt-get install lcov
+
       - name: configure
-        run: cmake -Stest -Bbuild/test -DENABLE_TEST_COVERAGE=1 -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -S. -Bbuild -DENABLE_TEST_COVERAGE=1 -DCMAKE_BUILD_TYPE=Debug
 
       - name: build
-        run: cmake --build build/test -j4
+        run: cmake --build build -j4
 
       - name: test
         run: |
@@ -44,4 +47,8 @@ jobs:
           ctest --build-config Debug
 
       - name: collect code coverage
-        run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+        run: |
+          lcov --directory . --capture --output-file coverage.info # capture coverage info
+          lcov --remove coverage.info '/usr/*' 'standalone/*' 'bench/*' --output-file coverage.info # filter out system
+          lcov --list coverage.info #debug info
+          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

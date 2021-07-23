@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
+# set(USE_STATIC_ANALYZER "clang-tidy")
+
+option(CPM_USE_LOCAL_PACKAGES "Use Local package" TRUE)
+option(INSTALL_ONLY "Enable for installation only" OFF)
+
 # ---- Project ----
 
 # Note: update this to your new project's name and version
@@ -21,6 +26,12 @@ endif()
 # ---- Add dependencies via CPM ----
 # see https://github.com/TheLartians/CPM.cmake for more info
 
+# --- Import tools ----
+
+include(cmake/tools.cmake)
+
+# ---- Dependencies ----
+
 include(cmake/CPM.cmake)
 
 # PackageProject.cmake will be used to make our target installable
@@ -40,20 +51,20 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/
 # ---- Create library ----
 
 # Note: for header-only libraries change all PUBLIC flags to INTERFACE and create an interface
-# target: add_library(CkPttn INTERFACE)
-add_library(CkPttn ${headers} ${sources})
+# target: add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME} ${headers} ${sources})
 
-set_target_properties(CkPttn PROPERTIES CXX_STANDARD 20)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
-target_compile_options(CkPttn PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
+target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(CkPttn PRIVATE ${SPECIFIC_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SPECIFIC_LIBS})
 
 target_include_directories(
-  CkPttn PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-                $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
+  ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+                         $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
 
 # ---- Create an installable target ----
@@ -72,5 +83,11 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 7.1.3"
 )
+
+if(NOT INSTALL_ONLY)
+  add_subdirectory(test)
+  add_subdirectory(standalone)
+  add_subdirectory(documentation)
+  add_subdirectory(bench)
+endif()
