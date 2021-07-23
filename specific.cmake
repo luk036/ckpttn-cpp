@@ -12,13 +12,6 @@ CPMAddPackage("gh:microsoft/GSL@3.1.0")
 CPMAddPackage("gh:ericniebler/range-v3#0.10.0")
 
 CPMAddPackage(
-  NAME XNetwork
-  GIT_TAG 1.0.9
-  GITHUB_REPOSITORY luk036/xnetwork-cpp
-  OPTIONS "INSTALL_ONLY ON" # create an installable target
-)
-
-CPMAddPackage(
   NAME cppcoro
   GIT_TAG 1.0
   GITHUB_REPOSITORY luk036/cppcoro
@@ -40,5 +33,12 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
   add_compile_options(/std:c++latest /await)
 endif()
+
+CPMAddPackage(
+  NAME XNetwork
+  GIT_TAG 1.0.10
+  GITHUB_REPOSITORY luk036/xnetwork-cpp
+  OPTIONS "INSTALL_ONLY ON" # create an installable target
+)
 
 set(SPECIFIC_LIBS XNetwork::XNetwork cppcoro::cppcoro Threads::Threads GSL fmt::fmt range-v3)
