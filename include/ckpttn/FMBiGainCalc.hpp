@@ -35,7 +35,6 @@ class FMBiGainCalc {
      * @brief Construct a new FMBiGainCalc object
      *
      * @param[in] H
-     * @param[in] K
      */
     explicit FMBiGainCalc(const SimpleNetlist& H, std::uint8_t /*K*/)
         : H{H}, vertex_list(H.number_of_modules()), rsrc(StackBuf, sizeof StackBuf), IdVec(&rsrc) {

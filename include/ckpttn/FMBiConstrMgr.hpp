@@ -22,7 +22,6 @@ class FMBiConstrMgr : public FMConstrMgr {
      *
      * @param[in] H
      * @param[in] BalTol
-     * @param[in] K (for compatability only)
      */
     FMBiConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t /*K*/)
         : FMConstrMgr{H, BalTol, 2} {}
