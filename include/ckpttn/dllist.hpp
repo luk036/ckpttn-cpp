@@ -7,7 +7,7 @@
 // Forward declaration for begin() end()
 template <typename T> class dll_iterator;
 
-/*!
+/**
  * @brief doubly linked node (that may also be a "head" a list)
  *
  * A Doubly-linked List class. This class simply contains a link of
@@ -23,14 +23,14 @@ template <typename T> class dllink {
     friend dll_iterator<T>;
 
   private:
-    dllink* next{this}; /*!< pointer to the next node */
-    dllink* prev{this}; /*!< pointer to the previous node */
+    dllink* next{this}; /**< pointer to the next node */
+    dllink* prev{this}; /**< pointer to the previous node */
 
   public:
-    T data{}; /*!< data */
-    // Int key{}; /*!< key */
+    T data{}; /**< data */
+    // Int key{}; /**< key */
 
-    /*!
+    /**
      * @brief Construct a new dllink object
      *
      * @param[in] data the data
@@ -39,7 +39,7 @@ template <typename T> class dllink {
         static_assert(sizeof(dllink) <= 24, "keep this class small");
     }
 
-    /*!
+    /**
      * @brief Copy construct a new dllink object (deleted intentionally)
      *
      */
@@ -50,13 +50,13 @@ template <typename T> class dllink {
     constexpr dllink(dllink&&) noexcept = default;
     constexpr auto operator=(dllink&&) noexcept -> dllink& = default;  // don't assign
 
-    /*!
+    /**
      * @brief lock the node (and don't append it to any list)
      *
      */
     constexpr auto lock() noexcept -> void { this->next = nullptr; }
 
-    /*!
+    /**
      * @brief whether the node is locked
      *
      * @return true
@@ -66,7 +66,7 @@ template <typename T> class dllink {
         return this->next == nullptr;
     }
 
-    /*!
+    /**
      * @brief whether the list is empty
      *
      * @return true
@@ -74,13 +74,13 @@ template <typename T> class dllink {
      */
     [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->next == this; }
 
-    /*!
+    /**
      * @brief reset the list
      *
      */
     constexpr auto clear() noexcept -> void { this->next = this->prev = this; }
 
-    /*!
+    /**
      * @brief detach from a list
      *
      */
@@ -92,7 +92,7 @@ template <typename T> class dllink {
         n->prev = p;
     }
 
-    /*!
+    /**
      * @brief append the node to the front
      *
      * @param[in,out] node
@@ -104,7 +104,7 @@ template <typename T> class dllink {
         node.prev = this;
     }
 
-    /*!
+    /**
      * @brief append the node to the back
      *
      * @param[in,out] node
@@ -116,7 +116,7 @@ template <typename T> class dllink {
         node.next = this;
     }
 
-    /*!
+    /**
      * @brief pop a node from the front
      *
      * @return dllink&
@@ -130,7 +130,7 @@ template <typename T> class dllink {
         return *res;
     }
 
-    /*!
+    /**
      * @brief pop a node from the back
      *
      * @return dllink&
@@ -146,14 +146,14 @@ template <typename T> class dllink {
 
     // For iterator
 
-    /*!
+    /**
      * @brief
      *
      * @return dll_iterator
      */
     constexpr auto begin() noexcept -> dll_iterator<T>;
 
-    /*!
+    /**
      * @brief
      *
      * @return dll_iterator
@@ -183,7 +183,7 @@ template <typename T> class dllink {
 };
 #pragma pack(pop)
 
-/*!
+/**
  * @brief list iterator
  *
  * List iterator. Traverse the list from the first item. Usually it is
@@ -191,17 +191,17 @@ template <typename T> class dllink {
  */
 template <typename T> class dll_iterator {
   private:
-    dllink<T>* cur; /*!< pointer to the current item */
+    dllink<T>* cur; /**< pointer to the current item */
 
   public:
-    /*!
+    /**
      * @brief Construct a new dll iterator object
      *
      * @param[in] cur
      */
     constexpr explicit dll_iterator(dllink<T>* cur) noexcept : cur{cur} {}
 
-    /*!
+    /**
      * @brief move to the next item
      *
      * @return dllink&
@@ -211,37 +211,39 @@ template <typename T> class dll_iterator {
         return *this;
     }
 
-    /*!
+    /**
      * @brief get the reference of the current item
      *
      * @return dllink&
      */
     constexpr auto operator*() noexcept -> dllink<T>& { return *this->cur; }
 
-    /*!
+    /**
      * @brief eq operator
-     *
-     * @param[in] rhs
-     * @return true
-     * @return false
+     * 
+     * @param[in] lhs 
+     * @param[in] rhs 
+     * @return true 
+     * @return false 
      */
     friend auto operator==(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
         return lhs.cur == rhs.cur;
     }
 
-    /*!
+    /**
      * @brief neq operator
-     *
-     * @param[in] rhs
-     * @return true
-     * @return false
+     * 
+     * @param lhs 
+     * @param rhs 
+     * @return true 
+     * @return false 
      */
     friend auto operator!=(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
         return !(lhs == rhs);
     }
 };
 
-/*!
+/**
  * @brief begin
  *
  * @return dll_iterator
@@ -250,7 +252,7 @@ template <typename T> inline constexpr auto dllink<T>::begin() noexcept -> dll_i
     return dll_iterator<T>{this->next};
 }
 
-/*!
+/**
  * @brief end
  *
  * @return dll_iterator

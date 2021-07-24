@@ -17,7 +17,7 @@
 //     py::set<node_t> extern_nets;
 // };
 
-/*!
+/**
  * @brief Netlist
  *
  * Netlist is implemented by xnetwork::Graph, which is a networkx-like graph.
@@ -43,22 +43,21 @@ template <typename graph_t> struct Netlist {
     py::set<node_t> module_fixed;
 
   public:
-    /*!
+    /**
      * @brief Construct a new Netlist object
-     *
-     * @param[in] G
-     * @param[in] module_list
-     * @param[in] net_list
-     * @param[in] module_fixed
+     * 
+     * @param[in] G 
+     * @param[in] modules 
+     * @param[in] nets 
      */
     Netlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets);
 
     /**
      * @brief Construct a new Netlist object
-     *
-     * @param[in] G
-     * @param[in] num_modules
-     * @param[in] num_nets
+     * 
+     * @param[in] G 
+     * @param[in] numModules 
+     * @param[in] numNets 
      */
     Netlist(graph_t G, uint32_t numModules, uint32_t numNets);
 
@@ -73,21 +72,21 @@ template <typename graph_t> struct Netlist {
      */
     [[nodiscard]] auto number_of_modules() const -> size_t { return this->num_modules; }
 
-    /*!
+    /**
      * @brief Get the number of nets
      *
      * @return size_t
      */
     [[nodiscard]] auto number_of_nets() const -> size_t { return this->num_nets; }
 
-    /*!
+    /**
      * @brief Get the number of nodes
      *
      * @return size_t
      */
     [[nodiscard]] auto number_of_nodes() const -> size_t { return this->G.number_of_nodes(); }
 
-    // /*!
+    // /**
     //  * @brief
     //  *
     //  * @return index_t
@@ -95,14 +94,14 @@ template <typename graph_t> struct Netlist {
     // auto number_of_pins() const -> index_t { return
     // this->G.number_of_edges(); }
 
-    /*!
+    /**
      * @brief Get the max degree
      *
      * @return size_t
      */
     [[nodiscard]] auto get_max_degree() const -> size_t { return this->max_degree; }
 
-    /*!
+    /**
      * @brief Get the max net degree
      *
      * @return index_t
@@ -132,15 +131,6 @@ template <typename graph_t> struct Netlist {
     }
 };
 
-/**
- * @brief Construct a new Netlist object
- *
- * @tparam nodeview_t
- * @tparam nodemap_t
- * @param[in] G
- * @param[in] modules
- * @param[in] nets
- */
 template <typename graph_t>
 Netlist<graph_t>::Netlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets)
     : G{std::move(G)},

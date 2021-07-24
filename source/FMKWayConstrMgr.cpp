@@ -1,19 +1,8 @@
 // #include <algorithm> // import std::any_of()
 #include <ckpttn/FMKWayConstrMgr.hpp>
-// #include <functional> // import std::identity
 // #include <range/v3/algorithm/any_of.hpp>
 
 /**
- * @brief identity function object (coming in C++20)
- *
- */
-struct identity {
-    template <class T> constexpr auto operator()(T&& t) const noexcept -> T&& {
-        return std::forward<T>(t);
-    }
-};
-
-/*!
  * @brief
  *
  * @param[in] move_info_v

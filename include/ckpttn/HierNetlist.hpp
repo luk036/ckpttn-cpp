@@ -19,7 +19,7 @@
 //     py::set<node_t> extern_nets;
 // };
 
-/*!
+/**
  * @brief HierNetlist
  *
  * HierNetlist is implemented by xnetwork::Graph, which is a networkx-like graph.
@@ -38,26 +38,16 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     py::dict<index_t, node_t> cluster_down_map;
     shift_array<std::vector<int>> net_weight{};
 
-    /*!
-     * @brief Construct a new HierNetlist object
-     *
-     * @param[in] G
-     * @param[in] module_list
-     * @param[in] net_list
-     * @param[in] module_fixed
+    /**
+     * @brief Construct a new Hier Netlist object
+     * 
+     * @param[in] G 
+     * @param[in] modules 
+     * @param[in] nets 
      */
     HierNetlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets);
 
     /**
-     * @brief Construct a new Netlist object
-     *
-     * @param[in] G
-     * @param[in] num_modules
-     * @param[in] num_nets
-     */
-    // HierNetlist(graph_t G, uint32_t numModules, uint32_t numNets);
-
-    /*!
      * @brief projection down
      *
      * @param[in] part
@@ -66,7 +56,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     void projection_down(gsl::span<const std::uint8_t> part,
                          gsl::span<std::uint8_t> part_down) const;
 
-    /*!
+    /**
      * @brief projection up
      *
      * @param[in] part
@@ -84,15 +74,6 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     }
 };
 
-/**
- * @brief Construct a new Netlist object
- *
- * @tparam nodeview_t
- * @tparam nodemap_t
- * @param[in] G
- * @param[in] modules
- * @param[in] nets
- */
 template <typename graph_t>
 HierNetlist<graph_t>::HierNetlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets)
     : Netlist<graph_t>{std::move(G), modules, nets} {}

@@ -20,7 +20,7 @@ using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
 
 enum class LegalCheck;
 
-/*!
+/**
  * @brief Partition Manager Base
  *
  * @tparam GainMgr
@@ -68,24 +68,25 @@ class PartMgrBase {
   public:
     int totalcost{};
 
-    /*!
-     * @brief Construct a new FDPartMgr object
-     *
+    /**
+     * @brief Construct a new Part Mgr Base object
+     * 
      * @param[in] H
      * @param[in,out] gainMgr
      * @param[in,out] constrMgr
+     * @param[in] K 
      */
     PartMgrBase(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
         : H{H}, gainMgr{gainMgr}, validator{constrMgr}, K{K} {}
 
-    /*!
+    /**
      * @brief
      *
      * @param[in,out] part
      */
     void init(gsl::span<std::uint8_t> part);
 
-    /*!
+    /**
      * @brief
      *
      * @param[in,out] part
@@ -93,7 +94,7 @@ class PartMgrBase {
      */
     auto legalize(gsl::span<std::uint8_t> part) -> LegalCheck;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in,out] part
@@ -101,7 +102,7 @@ class PartMgrBase {
     void optimize(gsl::span<std::uint8_t> part);
 
   private:
-    /*!
+    /**
      * @brief
      *
      * @param[in,out] part

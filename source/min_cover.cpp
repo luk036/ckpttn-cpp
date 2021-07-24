@@ -19,10 +19,11 @@ using node_t = typename SimpleNetlist::node_t;
 
 /**
  * @brief Create a contraction subgraph object
- *
+ * 
  * @param[in] H
  * @param[in] DontSelect
- * @return auto
+ * @return std::unique_ptr<SimpleHierNetlist> 
+ * @todo simplify this function
  */
 auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& DontSelect)
     -> std::unique_ptr<SimpleHierNetlist> {

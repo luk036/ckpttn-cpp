@@ -3,18 +3,19 @@
 // #include <range/v3/algorithm/min_element.hpp>
 #include <tuple>
 
-/*!
+/**
  * @brief minimum weighted vertex cover problem
  *
  *    This function solves minimum vertex cover problem
  *    using primal-dual paradigm:
- *
- * @tparam Netlist
- * @tparam Container
+ * 
+ * @tparam Netlist 
+ * @tparam C1 
+ * @tparam C2 
  * @param[in] H
  * @param[in] weight
- * @param[in,out] cover initial: pre-covered vetrices
- * @return C1::value_type total cost
+ * @param[in,out] coverset in: pre-covered vetrices, out: sol'n set
+ * @return C1::mapped_type 
  */
 template <typename Netlist, typename C1, typename C2>
 auto min_vertex_cover(const Netlist& H, const C1& weight, C2& coverset) ->

@@ -31,7 +31,7 @@ void run_FMBiPartMgr(const SimpleNetlist& H, bool option) {
     // CHECK(partMgr.totalcost >= 0);
 }
 
-/*!
+/**
  * @brief
  *
  * @param[in] state
@@ -50,7 +50,7 @@ BENCHMARK(BM_with_2pin_nets);
 
 //~~~~~~~~~~~~~~~~
 
-/*!
+/**
  * @brief Define another benchmark
  *
  * @param[in] state

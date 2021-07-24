@@ -33,7 +33,7 @@ void run_FMKWayPartMgr(SimpleNetlist& H, std::uint8_t K, bool option) {
     // CHECK(partMgr.totalcost >= 0);
 }
 
-/*!
+/**
  * @brief
  *
  * @param[in] state
@@ -52,7 +52,7 @@ BENCHMARK(BM_with_2pin_nets);
 
 //~~~~~~~~~~~~~~~~
 
-/*!
+/**
  * @brief Define another benchmark
  *
  * @param[in] state

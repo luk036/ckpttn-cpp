@@ -23,7 +23,7 @@ extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node
 
 enum class LegalCheck;
 
-/*!
+/**
  * @brief Multilevel Partition Manager
  *
  */
@@ -36,14 +36,14 @@ class MLPartMgr {
   public:
     int totalcost{};
 
-    /*!
+    /**
      * @brief Construct a new MLPartMgr object
      *
      * @param[in] BalTol
      */
     explicit MLPartMgr(double BalTol) : MLPartMgr(BalTol, 2) {}
 
-    /*!
+    /**
      * @brief Construct a new MLPartMgr object
      *
      * @param[in] BalTol

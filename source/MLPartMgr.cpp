@@ -4,7 +4,7 @@
 
 using node_t = typename SimpleNetlist::node_t;
 
-/*!
+/**
  * @brief run_Partition
  *
  * @tparam GainMgr

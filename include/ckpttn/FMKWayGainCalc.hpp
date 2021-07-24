@@ -9,7 +9,7 @@
 
 // class FMKWayGainMgr;
 
-/*!
+/**
  * @brief FMKWayGainCalc
  *
  */
@@ -34,7 +34,7 @@ class FMKWayGainCalc {
     FMPmr::vector<node_t> IdVec;
     bool special_handle_2pin_nets{true};  // @TODO should be template parameter
 
-    /*!
+    /**
      * @brief Construct a new FMKWayGainCalc object
      *
      * @param[in] H Netlist
@@ -59,7 +59,7 @@ class FMKWayGainCalc {
         }
     }
 
-    // /*!
+    // /**
     //  * @brief
     //  *
     //  * @param[in] toPart
@@ -70,7 +70,7 @@ class FMKWayGainCalc {
     //     return &this->vertex_list[toPart][0];
     // }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -88,7 +88,7 @@ class FMKWayGainCalc {
         return this->totalcost;
     }
 
-    /*!
+    /**
      * @brief
      *
      */
@@ -96,22 +96,27 @@ class FMKWayGainCalc {
         std::fill(this->deltaGainV.begin(), this->deltaGainV.end(), 0);
     }
 
-    /*!
-     * @brief
-     *
+    /**
+     * @brief 
+     * 
      * @param[in] part
      * @param[in] move_info
-     * @param[out] w
-     * @return std::vector<int>
+     * @return node_t 
      */
     auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
         -> node_t;
 
+    /**
+     * @brief 
+     * 
+     * @param[in] v 
+     * @param[in] net 
+     */
     void init_IdVec(const node_t& v, const node_t& net);
 
     using ret_info = std::vector<std::vector<int>>;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -121,7 +126,7 @@ class FMKWayGainCalc {
     auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
         -> ret_info;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -132,7 +137,7 @@ class FMKWayGainCalc {
                                  const MoveInfo<node_t>& move_info) -> ret_info;
 
   private:
-    /*!
+    /**
      * @brief
      *
      * @param[in] v
@@ -146,12 +151,12 @@ class FMKWayGainCalc {
     }
 
     /**
-     * @brief
-     *
-     * @tparam Ts
-     * @param weight
-     * @param part_v
-     * @param v
+     * @brief 
+     * 
+     * @tparam Ts 
+     * @param[in] weight 
+     * @param[in] k 
+     * @param[in] v 
      */
     template <typename... Ts> auto _modify_vertex_va(unsigned int weight, std::uint8_t k, Ts... v)
         -> void {
@@ -219,7 +224,7 @@ class FMKWayGainCalc {
         }
     }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] net
@@ -227,7 +232,7 @@ class FMKWayGainCalc {
      */
     auto _init_gain(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] net
@@ -235,7 +240,7 @@ class FMKWayGainCalc {
      */
     auto _init_gain_2pin_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] net
@@ -243,7 +248,7 @@ class FMKWayGainCalc {
      */
     auto _init_gain_3pin_net(const node_t& net, gsl::span<const std::uint8_t> part) -> void;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] net

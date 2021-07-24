@@ -11,7 +11,7 @@
 #include "dllist.hpp"   // import dllink
 #include "netlist.hpp"  // import Netlist
 
-/*!
+/**
  * @brief
  *
  * @tparam GainCalc
@@ -37,7 +37,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
 
     // FMGainMgr(FMGainMgr&&) = default;
 
-    /*!
+    /**
      * @brief Construct a new FMGainMgr object
      *
      * @param[in] H
@@ -45,14 +45,14 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      */
     FMGainMgr(const SimpleNetlist& H, std::uint8_t K);
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
      */
     auto init(gsl::span<const std::uint8_t> part) -> int;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] toPart
@@ -63,7 +63,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
         return this->gainbucket[toPart].is_empty();
     }
 
-    /*!
+    /**
      * @brief
      *
      * @return true
@@ -74,7 +74,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
                            [&](const auto& bckt) { return bckt.is_empty(); });
     }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -82,7 +82,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      */
     auto select(gsl::span<const std::uint8_t> part) -> std::tuple<MoveInfoV<node_t>, int>;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] toPart
@@ -90,7 +90,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      */
     auto select_togo(uint8_t toPart) -> std::tuple<node_t, int>;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -100,7 +100,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
         -> void;
 
   private:
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -109,7 +109,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
     auto _update_move_2pin_net(gsl::span<const std::uint8_t> part,
                                const MoveInfo<node_t>& move_info) -> void;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -118,7 +118,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
     auto _update_move_3pin_net(gsl::span<const std::uint8_t> part,
                                const MoveInfo<node_t>& move_info) -> void;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part

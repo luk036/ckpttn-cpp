@@ -10,7 +10,7 @@
 // Forward declaration for begin() end()
 template <typename _Tp, typename Int> class bpq_iterator;
 
-/*!
+/**
  * @brief bounded priority queue
  *
  * Bounded Priority Queue with integer keys in [a..b].
@@ -29,7 +29,7 @@ template <typename _Tp, typename Int> class bpq_iterator;
  *
  * All the member functions assume that the keys are within the bound.
  *
- * @TODO: support std::pmr
+ * @todo #1 support std::pmr
  */
 template <typename _Tp, typename Int = int32_t,
           typename _Sequence = std::vector<dllink<std::pair<_Tp, std::make_unsigned_t<Int>>>>>
@@ -62,7 +62,7 @@ class bpqueue {
     // using alloc_t = decltype(bucket.get_allocator());
 
   public:
-    /*!
+    /**
      * @brief Construct a new bpqueue object
      *
      * @param[in] a lower bound
@@ -83,7 +83,7 @@ class bpqueue {
     constexpr bpqueue(bpqueue&&) noexcept = default;
     constexpr auto operator=(bpqueue&&) noexcept -> bpqueue& = default;  // don't assign
 
-    /*!
+    /**
      * @brief whether the %bpqueue is empty.
      *
      * @return true
@@ -91,7 +91,7 @@ class bpqueue {
      */
     [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->max == 0U; }
 
-    /*!
+    /**
      * @brief Set the key object
      *
      * @param[out] it   the item
@@ -101,7 +101,7 @@ class bpqueue {
         it.data.second = static_cast<UInt>(gain - this->offset);
     }
 
-    /*!
+    /**
      * @brief Get the max value
      *
      * @return T maximum value
@@ -110,7 +110,7 @@ class bpqueue {
         return this->offset + Int(this->max);
     }
 
-    /*!
+    /**
      * @brief clear reset the PQ
      */
     constexpr auto clear() noexcept -> void {
@@ -120,7 +120,7 @@ class bpqueue {
         }
     }
 
-    /*!
+    /**
      * @brief append item with internal key
      *
      * @param[in,out] it the item
@@ -130,7 +130,7 @@ class bpqueue {
         this->append(it, Int(it.data.second));
     }
 
-    /*!
+    /**
      * @brief append item with external key
      *
      * @param[in,out] it the item
@@ -145,7 +145,7 @@ class bpqueue {
         this->bucket[it.data.second].append(it);
     }
 
-    /*!
+    /**
      * @brief append from list
      *
      * @param[in,out] nodes
@@ -165,7 +165,7 @@ class bpqueue {
     //     }
     // }
 
-    /*!
+    /**
      * @brief pop node with the highest key
      *
      * @return dllink&
@@ -178,7 +178,7 @@ class bpqueue {
         return res;
     }
 
-    /*!
+    /**
      * @brief decrease key by delta
      *
      * @param[in,out] it the item
@@ -203,7 +203,7 @@ class bpqueue {
         }
     }
 
-    /*!
+    /**
      * @brief increase key by delta
      *
      * @param[in,out] it the item
@@ -224,7 +224,7 @@ class bpqueue {
         }
     }
 
-    /*!
+    /**
      * @brief modify key by delta
      *
      * @param[in,out] it the item
@@ -244,7 +244,7 @@ class bpqueue {
         }
     }
 
-    /*!
+    /**
      * @brief detach the item from bpqueue
      *
      * @param[in,out] it the item
@@ -257,14 +257,14 @@ class bpqueue {
         }
     }
 
-    /*!
+    /**
      * @brief iterator point to begin
      *
      * @return bpq_iterator
      */
     constexpr auto begin() -> bpq_iterator<_Tp, Int>;
 
-    /*!
+    /**
      * @brief iterator point to end
      *
      * @return bpq_iterator
@@ -306,7 +306,7 @@ class bpqueue {
     // }
 };
 
-/*!
+/**
  * @brief Bounded Priority Queue Iterator
  *
  * Bounded Priority Queue Iterator. Traverse the queue in descending
@@ -321,12 +321,12 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     using Item = dllink<std::pair<_Tp, UInt>>;
 
   private:
-    bpqueue<_Tp, Int>& bpq;                     /*!< the priority queue */
-    UInt curkey;                                /*!< the current key value */
-    dll_iterator<std::pair<_Tp, UInt>> curitem; /*!< list iterator pointed to the current item.
+    bpqueue<_Tp, Int>& bpq;                     /**< the priority queue */
+    UInt curkey;                                /**< the current key value */
+    dll_iterator<std::pair<_Tp, UInt>> curitem; /**< list iterator pointed to the current item.
                                                  */
 
-    /*!
+    /**
      * @brief get the reference of the current list
      *
      * @return dllink&
@@ -334,7 +334,7 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     constexpr auto curlist() -> Item& { return this->bpq.bucket[this->curkey]; }
 
   public:
-    /*!
+    /**
      * @brief Construct a new bpq iterator object
      *
      * @param[in] bpq
@@ -343,7 +343,7 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     constexpr bpq_iterator(bpqueue<_Tp, Int>& bpq, UInt curkey)
         : bpq{bpq}, curkey{curkey}, curitem{bpq.bucket[curkey].begin()} {}
 
-    /*!
+    /**
      * @brief move to the next item
      *
      * @return bpq_iterator&
@@ -359,37 +359,39 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
         return *this;
     }
 
-    /*!
+    /**
      * @brief get the reference of the current item
      *
      * @return bpq_iterator&
      */
     constexpr auto operator*() -> Item& { return *this->curitem; }
 
-    /*!
+    /**
      * @brief eq operator
-     *
-     * @param[in] rhs
-     * @return true
-     * @return false
+     * 
+     * @param[in] lhs 
+     * @param[in] rhs 
+     * @return true 
+     * @return false 
      */
     friend constexpr auto operator==(const bpq_iterator& lhs, const bpq_iterator& rhs) -> bool {
         return lhs.curitem == rhs.curitem;
     }
 
-    /*!
+    /**
      * @brief neq operator
-     *
-     * @param[in] rhs
-     * @return true
-     * @return false
+     * 
+     * @param lhs 
+     * @param rhs 
+     * @return true 
+     * @return false 
      */
     friend constexpr auto operator!=(const bpq_iterator& lhs, const bpq_iterator& rhs) -> bool {
         return !(lhs == rhs);
     }
 };
 
-/*!
+/**
  * @brief
  *
  * @return bpq_iterator
@@ -399,7 +401,7 @@ inline constexpr auto bpqueue<_Tp, Int, _Sequence>::begin() -> bpq_iterator<_Tp,
     return {*this, this->max};
 }
 
-/*!
+/**
  * @brief
  *
  * @return bpq_iterator

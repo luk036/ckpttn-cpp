@@ -7,7 +7,7 @@
 
 // struct FMBiGainMgr;
 
-/*!
+/**
  * @brief FMBiGainMgr
  *
  */
@@ -19,14 +19,14 @@ class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
 
     explicit FMBiGainMgr(const SimpleNetlist& H) : Base{H, 2} {}
 
-    /*!
+    /**
      * @brief Construct a new FMBiGainMgr object
      *
      * @param[in] H
      */
     FMBiGainMgr(const SimpleNetlist& H, std::uint8_t /* K */) : Base{H, 2} {}
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -34,7 +34,7 @@ class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
      */
     auto init(gsl::span<const std::uint8_t> part) -> int;
 
-    /*!
+    /**
      * @brief (needed by base class)
      *
      * @param[in] w
@@ -45,7 +45,7 @@ class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
         this->gainbucket[1 - part_w].modify_key(this->gainCalc.vertex_list[w], key);
     }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] move_info_v
@@ -57,7 +57,7 @@ class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
         this->_set_key(move_info_v.fromPart, move_info_v.v, -gain);
     }
 
-    /*!
+    /**
      * @brief lock
      *
      * @param[in] whichPart
@@ -69,7 +69,7 @@ class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
         vlink.lock();
     }
 
-    /*!
+    /**
      * @brief lock_all
      *
      * @param[in] fromPart
@@ -78,7 +78,7 @@ class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
     auto lock_all(uint8_t fromPart, const node_t& v) -> void { this->lock(1 - fromPart, v); }
 
   private:
-    /*!
+    /**
      * @brief Set the key object
      *
      * @param[in] whichPart

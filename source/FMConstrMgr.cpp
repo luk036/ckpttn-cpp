@@ -8,7 +8,7 @@ FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
     // this->totalweight
     //     = accumulate(transform([&](const auto& v) { return H.get_module_weight(v); }, all(H)),
     //     0U);
-    this->totalweight = 0U;
+    // this->totalweight = 0U;
     for (const auto& v : H) {
         this->totalweight += H.get_module_weight(v);
     }

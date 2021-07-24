@@ -7,13 +7,13 @@
 
 #include "netlist.hpp"
 
-/*!
+/**
  * @brief Check if the move of v can satisfied, getbetter, or notsatisfied
  *
  */
 enum class LegalCheck { notsatisfied, getbetter, allsatisfied };
 
-/*!
+/**
  * @brief FM Partition Constraint Manager
  *
  */
@@ -29,7 +29,7 @@ class FMConstrMgr {
     unsigned int lowerbound{};
     std::uint8_t K;
 
-    /*!
+    /**
      * @brief Construct a new FMConstrMgr object
      *
      * @param[in] H
@@ -37,7 +37,7 @@ class FMConstrMgr {
      */
     FMConstrMgr(const SimpleNetlist& H, double BalTol) : FMConstrMgr(H, BalTol, 2) {}
 
-    /*!
+    /**
      * @brief Construct a new FMConstrMgr object
      *
      * @param[in] H
@@ -49,14 +49,14 @@ class FMConstrMgr {
   public:
     using node_t = typename SimpleNetlist::node_t;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
      */
     auto init(gsl::span<const std::uint8_t> part) -> void;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] move_info_v
@@ -64,7 +64,7 @@ class FMConstrMgr {
      */
     auto check_legal(const MoveInfoV<node_t>& move_info_v) -> LegalCheck;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] move_info_v
@@ -73,7 +73,7 @@ class FMConstrMgr {
      */
     auto check_constraints(const MoveInfoV<node_t>& move_info_v) -> bool;
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] move_info_v

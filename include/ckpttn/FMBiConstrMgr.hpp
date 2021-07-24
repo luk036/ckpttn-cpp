@@ -2,14 +2,14 @@
 
 #include "FMConstrMgr.hpp"  // import FMConstrMgr
 
-/*!
+/**
  * @brief Constraint Manager
  *
  * Check if (the move of v can satisfied, makebetter, or notsatisfied
  */
 class FMBiConstrMgr : public FMConstrMgr {
   public:
-    /*!
+    /**
      * @brief Construct a new FMBiConstrMgr object
      *
      * @param[in] H
@@ -17,7 +17,7 @@ class FMBiConstrMgr : public FMConstrMgr {
      */
     FMBiConstrMgr(const SimpleNetlist& H, double BalTol) : FMConstrMgr{H, BalTol, 2} {}
 
-    /*!
+    /**
      * @brief Construct a new FMBiConstrMgr object (for general framework)
      *
      * @param[in] H
@@ -26,7 +26,7 @@ class FMBiConstrMgr : public FMConstrMgr {
     FMBiConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t /*K*/)
         : FMConstrMgr{H, BalTol, 2} {}
 
-    /*!
+    /**
      * @brief
      *
      * @return std::uint8_t

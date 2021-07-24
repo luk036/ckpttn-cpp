@@ -224,7 +224,7 @@ auto FMBiGainCalc::update_move_general_net(gsl::span<const std::uint8_t> part,
     //     num[part[w]] += 1;
     //     IdVec.push_back(w);
     // }
-    auto degree = this->IdVec.size();
+    const auto degree = this->IdVec.size();
     auto deltaGain = std::vector<int>(degree, 0);
     auto weight = this->H.get_net_weight(move_info.net);
 

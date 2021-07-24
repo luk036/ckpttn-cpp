@@ -7,7 +7,7 @@
 // #include <range/v3/view/zip.hpp>
 // Check if (the move of v can satisfied, makebetter, or notsatisfied
 
-/*!
+/**
  * @brief FM K-Way Partition Constraint Manager
  *
  */
@@ -16,7 +16,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
     std::vector<int> illegal;
 
   public:
-    /*!
+    /**
      * @brief Construct a new FMKWayConstrMgr object
      *
      * @param[in] H
@@ -26,7 +26,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
     FMKWayConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
         : FMConstrMgr{H, BalTol, K}, illegal(K, 1) {}
 
-    /*!
+    /**
      * @brief
      *
      * @return std::uint8_t
@@ -36,7 +36,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
         return std::uint8_t(std::distance(this->diff.cbegin(), it));
     }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] part
@@ -50,7 +50,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
         }
     }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] move_info_v

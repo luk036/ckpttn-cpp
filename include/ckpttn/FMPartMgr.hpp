@@ -8,7 +8,7 @@
 
 #include "PartMgrBase.hpp"
 
-/*!
+/**
  * @brief FM Partition Manager
  *
  * @tparam GainMgr
@@ -19,7 +19,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
     using Base = PartMgrBase<GainMgr, ConstrMgr, FMPartMgr>;
 
   public:
-    /*!
+    /**
      * @brief Construct a new FMPartMgr object
      *
      * @param[in] H
@@ -30,7 +30,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
     FMPartMgr(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
         : Base{H, gainMgr, constrMgr, K} {}
 
-    /*!
+    /**
      * @brief Construct a new FMPartMgr object
      *
      * @param[in] H
@@ -58,7 +58,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
         return snapshot;
     }
 
-    /*!
+    /**
      * @brief
      *
      * @param[in] snapshot
