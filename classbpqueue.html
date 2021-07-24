@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bpqueue class | CkPttn</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">CkPttn</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bpqueue_8hpp.html">&lt;ckpttn/bpqueue.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename _Tp, typename Int = int32_t, typename _Sequence = std::vector&lt;<a href="classdllink.html" class="m-doc">dllink</a>&lt;std::pair&lt;_Tp, std::make_unsigned_t&lt;Int&gt;&gt;&gt;&gt;&gt;</div>
+          bpqueue <span class="m-thin">class</span>
+        </h1>
+        <p>bounded priority queue</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Bounded Priority Queue with integer keys in [a..b]. Implemented by array (bucket) of doubly-linked lists. Efficient if key is bounded by a small integer value.</p><p>Note that this class does not own the PQ nodes. This feature makes the nodes sharable between doubly linked list class and this class. In the FM algorithm, the node either attached to the gain buckets (PQ) or in the waitinglist (doubly linked list), but not in both of them in the same time.</p><p>Another improvement is to make the array size one element bigger i.e. (b - a + 2). The extra dummy array element (which is called sentinel) is used to reduce the boundary checking during updating.</p><p>All the member functions assume that the keys are within the bound.</p><aside class="m-note m-dim"><h4><a href="todo.html#_todo000001" class="m-doc">Todo</a></h4><p>#1 support std::pmr</p></aside>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="aa32d55a68bb1b82f06ab5c2d1e26da17">
+              using <a href="#aa32d55a68bb1b82f06ab5c2d1e26da17" class="m-doc-self">value_type</a> = typename _Sequence::value_type
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac0a659f5a536734ee98d2ef45c5d95ff">
+              using <a href="#ac0a659f5a536734ee98d2ef45c5d95ff" class="m-doc-self">reference</a> = typename _Sequence::reference
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a768b7c41bc2d728df025ceb64b9a0870">
+              using <a href="#a768b7c41bc2d728df025ceb64b9a0870" class="m-doc-self">const_reference</a> = typename _Sequence::const_reference
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a493a3674f9d73d9625747f2b26d32d73">
+              using <a href="#a493a3674f9d73d9625747f2b26d32d73" class="m-doc-self">size_type</a> = typename _Sequence::size_type
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a63d5b9a05b880a3b8a38e946ba32ead8">
+              using <a href="#a63d5b9a05b880a3b8a38e946ba32ead8" class="m-doc-self">container_type</a> = _Sequence
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a285f228a0c04f94891b5b42f71539edb" class="m-doc">bpqueue</a>(</span><span class="m-doc-wrap">Int a,
+              Int b) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Construct a new bpqueue object.</dd>
+            <dt id="af3f7a9dd4fdd56be06782b7ef839df6b">
+              <span class="m-doc-wrap-bumper"><a href="#af3f7a9dd4fdd56be06782b7ef839df6b" class="m-doc-self">bpqueue</a>(</span><span class="m-doc-wrap">const <a href="classbpqueue.html" class="m-doc">bpqueue</a>&amp;) <span class="m-label m-flat m-danger">deleted</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2aa0a607280c7b3d12c8931b8faf49dd">
+              <span class="m-doc-wrap-bumper"><a href="#a2aa0a607280c7b3d12c8931b8faf49dd" class="m-doc-self">~bpqueue</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ace6b1c891372c7cb379f596f2b6e9d11">
+              <span class="m-doc-wrap-bumper"><a href="#ace6b1c891372c7cb379f596f2b6e9d11" class="m-doc-self">bpqueue</a>(</span><span class="m-doc-wrap"><a href="classbpqueue.html" class="m-doc">bpqueue</a>&amp;&amp;) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="afcdcb8fc6b611889561a89291c949bcf">
+              <span class="m-doc-wrap-bumper">auto <a href="#afcdcb8fc6b611889561a89291c949bcf" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbpqueue.html" class="m-doc">bpqueue</a>&amp;) -&gt; bpqueue &amp; -&gt; auto <span class="m-label m-flat m-danger">deleted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7d55bb8472c85e029ca1d35f81bd178a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7d55bb8472c85e029ca1d35f81bd178a" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbpqueue.html" class="m-doc">bpqueue</a>&amp;&amp;) noexcept -&gt; bpqueue &amp; -&gt; auto <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a676ce5bddceeb44644c11b16517e7cd9" class="m-doc">is_empty</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>whether the bpqueue is empty.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abf51fd1426f8ebf9f412ad23872a8e86" class="m-doc">set_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              Int gain) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Set the key object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa18a93a9e856438aa35ba17a87f54b0e" class="m-doc">get_max</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; Int -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Get the max value.</dd>
+            <dt id="a0fbaf7c95715a27f39626d77b75acf32">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0fbaf7c95715a27f39626d77b75acf32" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>clear reset the PQ</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a185d7897d743e849545e9fc3485673f6" class="m-doc">append_direct</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>append item with internal key</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1afa9dea4ed0632036ab12b7175de484" class="m-doc">append</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              Int k) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>append item with external key</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aeb551d6506f4dfc93d416d3f292179a5" class="m-doc">popleft</a>(</span><span class="m-doc-wrap">) noexcept -&gt; Item &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>append from list</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afb4d4eaf71c5d1a522d48b95a73b0801" class="m-doc">decrease_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              UInt delta) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>decrease key by delta</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a58ea4ac6036541c08d5df70c2689ffa9" class="m-doc">increase_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              UInt delta) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>increase key by delta</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab95566daf2ac2c82b290caf28717c257" class="m-doc">modify_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              Int delta) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>modify key by delta</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4617eca113d4292aa3f5a4cdb07e8e19" class="m-doc">detach</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>detach the item from bpqueue</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1eee9a56ded3805c16f637fee2c107da" class="m-doc">begin</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; _Tp, Int &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>iterator point to begin</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aac8105ed5f2ec51f7cb908b419755223" class="m-doc">end</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; _Tp, Int &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>iterator point to end</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a285f228a0c04f94891b5b42f71539edb"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a285f228a0c04f94891b5b42f71539edb" class="m-doc-self">bpqueue</a>(</span><span class="m-doc-wrap">Int a,
+              Int b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Construct a new bpqueue object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>lower bound</td>
+                </tr>
+                <tr>
+                  <td>b&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>upper bound</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a676ce5bddceeb44644c11b16517e7cd9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a676ce5bddceeb44644c11b16517e7cd9" class="m-doc-self">is_empty</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>whether the bpqueue is empty.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abf51fd1426f8ebf9f412ad23872a8e86"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abf51fd1426f8ebf9f412ad23872a8e86" class="m-doc-self">set_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              Int gain) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Set the key object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td>the item</td>
+                </tr>
+                <tr>
+                  <td>gain&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the key of it</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa18a93a9e856438aa35ba17a87f54b0e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa18a93a9e856438aa35ba17a87f54b0e" class="m-doc-self">get_max</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; Int <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Get the max value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>T maximum value</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a185d7897d743e849545e9fc3485673f6"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a185d7897d743e849545e9fc3485673f6" class="m-doc-self">append_direct</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>append item with internal key</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>the item</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1afa9dea4ed0632036ab12b7175de484"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1afa9dea4ed0632036ab12b7175de484" class="m-doc-self">append</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              Int k) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>append item with external key</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>the item</td>
+                </tr>
+                <tr>
+                  <td>k&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the key</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aeb551d6506f4dfc93d416d3f292179a5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb551d6506f4dfc93d416d3f292179a5" class="m-doc-self">popleft</a>(</span><span class="m-doc-wrap">) noexcept -&gt; Item &amp; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>append from list</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>dllink&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afb4d4eaf71c5d1a522d48b95a73b0801"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afb4d4eaf71c5d1a522d48b95a73b0801" class="m-doc-self">decrease_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              UInt delta) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>decrease key by delta</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>the item</td>
+                </tr>
+                <tr>
+                  <td>delta&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the change of the key</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Note that the order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.</p>
+          </div></section>
+          <section class="m-doc-details" id="a58ea4ac6036541c08d5df70c2689ffa9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a58ea4ac6036541c08d5df70c2689ffa9" class="m-doc-self">increase_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              UInt delta) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>increase key by delta</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>the item</td>
+                </tr>
+                <tr>
+                  <td>delta&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the change of the key</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Note that the order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab95566daf2ac2c82b290caf28717c257"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab95566daf2ac2c82b290caf28717c257" class="m-doc-self">modify_key</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it,
+              Int delta) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>modify key by delta</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>the item</td>
+                </tr>
+                <tr>
+                  <td>delta&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the change of the key</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Note that the order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4617eca113d4292aa3f5a4cdb07e8e19"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4617eca113d4292aa3f5a4cdb07e8e19" class="m-doc-self">detach</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">Item</a>&amp; it) noexcept -&gt; void <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>detach the item from bpqueue</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>the item</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1eee9a56ded3805c16f637fee2c107da"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1eee9a56ded3805c16f637fee2c107da" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; _Tp, Int &gt; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>iterator point to begin</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aac8105ed5f2ec51f7cb908b419755223"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename _Tp, typename Int, typename _Sequence&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto bpqueue&lt;_Tp, Int, _Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aac8105ed5f2ec51f7cb908b419755223" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; _Tp, Int &gt; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>iterator point to end</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

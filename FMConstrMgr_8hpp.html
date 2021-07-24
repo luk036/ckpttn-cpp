@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CkPttn</title>
+  <title>ckpttn/FMConstrMgr.hpp file | CkPttn</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -30,7 +30,7 @@
                 <li><a href="about.html">About</a></li>
               </ol>
             </li>
-            <li><a href="namespaces.html" id="m-navbar-current">Namespaces</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
           </ol>
           <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="annotated.html">Classes</a></li>
@@ -48,26 +48,42 @@
   <div class="m-container m-container-inflatable">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <h1>Namespaces</h1>
-        <ul class="m-doc">
-          <li>namespace <a href="namespaceckpttn.html" class="m-doc">ckpttn</a> <span class="m-doc"><span></span></span></li>
-        </ul>
-        <script>
-        function toggle(e) {
-            e.parentElement.className = e.parentElement.className == 'm-doc-collapsible' ?
-                'm-doc-expansible' : 'm-doc-collapsible';
-            return false;
-        }
-        /* Collapse all nodes marked as such. Doing it via JS instead of
-           directly in markup so disabling it doesn't harm usability. The list
-           is somehow regenerated on every iteration and shrinks as I change
-           the classes. It's not documented anywhere and I'm not sure if this
-           is the same across browsers, so I am going backwards in that list to
-           be sure. */
-        var collapsed = document.getElementsByClassName("collapsed");
-        for(var i = collapsed.length - 1; i >= 0; --i)
-            collapsed[i].className = 'm-doc-expansible';
-        </script>
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_9325628becdfdc2ed4518460ce2121d7.html">ckpttn</a>/</span>FMConstrMgr.hpp <span class="m-thin">file</span>
+        </h1>
+        <p><span></span></p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a>
+            </dt>
+            <dd>FM Partition Constraint Manager.</dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt id="a4add05ea0ff560e61ee764a606768d80">
+              <span class="m-doc-wrap-bumper">enum class <a href="#a4add05ea0ff560e61ee764a606768d80" class="m-doc-self">LegalCheck</a> { </span><span class="m-doc-wrap"><a href="#a4add05ea0ff560e61ee764a606768d80add22e5df8b6b926b39f620203694af78" class="m-doc">notsatisfied</a>,
+              <a href="#a4add05ea0ff560e61ee764a606768d80aab83e58e316ccba2a9f06719c2062900" class="m-doc">getbetter</a>,
+              <a href="#a4add05ea0ff560e61ee764a606768d80a401cd59adbb83a8930e1f84e2f28ab81" class="m-doc">allsatisfied</a> }</span>
+            </dt>
+            <dd>Check if the move of v can satisfied, getbetter, or notsatisfied.</dd>
+          </dl>
+        </section>
       </div>
     </div>
   </div>

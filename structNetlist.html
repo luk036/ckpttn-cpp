@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Netlist struct | CkPttn</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">CkPttn</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="netlist_8hpp.html">&lt;ckpttn/netlist.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;</div>
+          Netlist <span class="m-thin">struct</span>
+        </h1>
+        <p><a href="structNetlist.html" class="m-doc">Netlist</a>.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p><a href="structNetlist.html" class="m-doc">Netlist</a> is implemented by xnetwork::Graph, which is a networkx-like graph.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;</div>
+              class <a href="classHierNetlist.html" class="m-doc">HierNetlist</a>
+            </dt>
+            <dd><a href="classHierNetlist.html" class="m-doc">HierNetlist</a>.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="a08ef86caa175ac7ce7cec591e3543183">
+              using <a href="#a08ef86caa175ac7ce7cec591e3543183" class="m-doc-self">nodeview_t</a> = typename graph_t::nodeview_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8fbf3e646832343e6cfc2c788e35a669">
+              using <a href="#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc-self">node_t</a> = typename graph_t::node_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a10fbbe99297f505e1c58e156973263c7">
+              using <a href="#a10fbbe99297f505e1c58e156973263c7" class="m-doc-self">index_t</a> = typename nodeview_t::key_type
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a8391b145580674e986de6ff8dba2c13e" class="m-doc">Netlist</a>(</span><span class="m-doc-wrap"><a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> G,
+              const <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a>&amp; modules,
+              const <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a>&amp; nets)</span>
+            </dt>
+            <dd>Construct a new <a href="structNetlist.html" class="m-doc">Netlist</a> object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a0354af4c8d6d8d1b05c389b6fcba3cfb" class="m-doc">Netlist</a>(</span><span class="m-doc-wrap"><a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> G,
+              uint32_t numModules,
+              uint32_t numNets)</span>
+            </dt>
+            <dd>Construct a new <a href="structNetlist.html" class="m-doc">Netlist</a> object.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a9b291296aff6be252bdbf1ec223780c1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9b291296aff6be252bdbf1ec223780c1" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a95bcf35a0d80b22bff12404dd953b7ad">
+              <span class="m-doc-wrap-bumper">auto <a href="#a95bcf35a0d80b22bff12404dd953b7ad" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a995da877a09ce1823a104720f3bdd539" class="m-doc">number_of_modules</a>(</span><span class="m-doc-wrap">) const -&gt; size_t -&gt; auto</span>
+            </dt>
+            <dd>Get the number of modules.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a93fe2265b67cee9f0047aba206e70125" class="m-doc">number_of_nets</a>(</span><span class="m-doc-wrap">) const -&gt; size_t -&gt; auto</span>
+            </dt>
+            <dd>Get the number of nets.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a92dc1c22bf9262f753a4c65796e7677d" class="m-doc">number_of_nodes</a>(</span><span class="m-doc-wrap">) const -&gt; size_t -&gt; auto</span>
+            </dt>
+            <dd>Get the number of nodes.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a92e324fe34b3112849da0fe9cb7e1ad1" class="m-doc">get_max_degree</a>(</span><span class="m-doc-wrap">) const -&gt; size_t -&gt; auto</span>
+            </dt>
+            <dd>Get the max degree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aebb0557c2d86fdb203d47cf840b1483f" class="m-doc">get_max_net_degree</a>(</span><span class="m-doc-wrap">) const -&gt; size_t -&gt; auto</span>
+            </dt>
+            <dd>Get the max net degree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6d1a7876e2d62498cb42c2142dc274c3" class="m-doc">get_module_weight</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">node_<wbr />t</a>&amp; v) const -&gt; unsigned int -&gt; auto</span>
+            </dt>
+            <dd>Get the module weight.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a73863a1b4f5d2f6481e80fa42c267365" class="m-doc">get_net_weight</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">node_<wbr />t</a>&amp;) const -&gt; int -&gt; auto</span>
+            </dt>
+            <dd>Get the net weight.</dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a333dc04137c42cc4d7a5f6cbdb9641b6">
+              <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> <a href="#a333dc04137c42cc4d7a5f6cbdb9641b6" class="m-doc-self">G</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a4d5429a1cac4012bee42baa6af6da465">
+              <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a> <a href="#a4d5429a1cac4012bee42baa6af6da465" class="m-doc-self">modules</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ae287f5164ee28a97fcc77259be7b0d9e">
+              <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a> <a href="#ae287f5164ee28a97fcc77259be7b0d9e" class="m-doc-self">nets</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab038735024d9565b63b93541e95257e6">
+              size_t <a href="#ab038735024d9565b63b93541e95257e6" class="m-doc-self">num_modules</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8d5f506f47c558e26ed25241ba573318">
+              size_t <a href="#a8d5f506f47c558e26ed25241ba573318" class="m-doc-self">num_nets</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a810e2ab434d47f937ea505efebb03bb7">
+              size_t <a href="#a810e2ab434d47f937ea505efebb03bb7" class="m-doc-self">num_pads</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a616ca78f9fdf8aac081166f8c1b28141">
+              size_t <a href="#a616ca78f9fdf8aac081166f8c1b28141" class="m-doc-self">max_degree</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0dadd0fa16e56f9fa3f108c789a507eb">
+              size_t <a href="#a0dadd0fa16e56f9fa3f108c789a507eb" class="m-doc-self">max_net_degree</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af7ba33ae5b1a807f0d64311093433ad0">
+              std::vector&lt;unsigned int&gt; <a href="#af7ba33ae5b1a807f0d64311093433ad0" class="m-doc-self">module_weight</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a256acc61e0209546de91bd0634bd5874">
+              bool <a href="#a256acc61e0209546de91bd0634bd5874" class="m-doc-self">has_fixed_modules</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab78a880e6c7779fb96eaa4b8ff1efade">
+              py::set&lt;<a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">node_<wbr />t</a>&gt; <a href="#ab78a880e6c7779fb96eaa4b8ff1efade" class="m-doc-self">module_fixed</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a8391b145580674e986de6ff8dba2c13e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8391b145580674e986de6ff8dba2c13e" class="m-doc-self">Netlist</a>(</span><span class="m-doc-wrap"><a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> G,
+              const <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a>&amp; modules,
+              const <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a>&amp; nets)</span></span>
+            </h3>
+            <p>Construct a new <a href="structNetlist.html" class="m-doc">Netlist</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">G&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>modules&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>nets&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0354af4c8d6d8d1b05c389b6fcba3cfb"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0354af4c8d6d8d1b05c389b6fcba3cfb" class="m-doc-self">Netlist</a>(</span><span class="m-doc-wrap"><a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> G,
+              uint32_t numModules,
+              uint32_t numNets)</span></span>
+            </h3>
+            <p>Construct a new <a href="structNetlist.html" class="m-doc">Netlist</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">G&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>numModules&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>numNets&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a995da877a09ce1823a104720f3bdd539"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a995da877a09ce1823a104720f3bdd539" class="m-doc-self">number_of_modules</a>(</span><span class="m-doc-wrap">) const -&gt; size_t</span></span>
+            </h3>
+            <p>Get the number of modules.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>size_t</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a93fe2265b67cee9f0047aba206e70125"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a93fe2265b67cee9f0047aba206e70125" class="m-doc-self">number_of_nets</a>(</span><span class="m-doc-wrap">) const -&gt; size_t</span></span>
+            </h3>
+            <p>Get the number of nets.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>size_t</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a92dc1c22bf9262f753a4c65796e7677d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92dc1c22bf9262f753a4c65796e7677d" class="m-doc-self">number_of_nodes</a>(</span><span class="m-doc-wrap">) const -&gt; size_t</span></span>
+            </h3>
+            <p>Get the number of nodes.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>size_t</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a92e324fe34b3112849da0fe9cb7e1ad1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92e324fe34b3112849da0fe9cb7e1ad1" class="m-doc-self">get_max_degree</a>(</span><span class="m-doc-wrap">) const -&gt; size_t</span></span>
+            </h3>
+            <p>Get the max degree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>size_t</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aebb0557c2d86fdb203d47cf840b1483f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aebb0557c2d86fdb203d47cf840b1483f" class="m-doc-self">get_max_net_degree</a>(</span><span class="m-doc-wrap">) const -&gt; size_t</span></span>
+            </h3>
+            <p>Get the max net degree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>index_t</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6d1a7876e2d62498cb42c2142dc274c3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6d1a7876e2d62498cb42c2142dc274c3" class="m-doc-self">get_module_weight</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">node_<wbr />t</a>&amp; v) const -&gt; unsigned int</span></span>
+            </h3>
+            <p>Get the module weight.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">v&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>int</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a73863a1b4f5d2f6481e80fa42c267365"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> _1&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Netlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a73863a1b4f5d2f6481e80fa42c267365" class="m-doc-self">get_net_weight</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">node_<wbr />t</a>&amp;) const -&gt; int</span></span>
+            </h3>
+            <p>Get the net weight.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>int</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
