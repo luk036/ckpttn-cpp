@@ -8,14 +8,14 @@
  *
  *    This function solves minimum vertex cover problem
  *    using primal-dual paradigm:
- * 
- * @tparam Netlist 
- * @tparam C1 
- * @tparam C2 
+ *
+ * @tparam Netlist
+ * @tparam C1
+ * @tparam C2
  * @param[in] H
  * @param[in] weight
  * @param[in,out] coverset in: pre-covered vetrices, out: sol'n set
- * @return C1::mapped_type 
+ * @return C1::mapped_type
  */
 template <typename Netlist, typename C1, typename C2>
 auto min_vertex_cover(const Netlist& H, const C1& weight, C2& coverset) ->

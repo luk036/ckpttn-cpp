@@ -97,20 +97,20 @@ class FMKWayGainCalc {
     }
 
     /**
-     * @brief 
-     * 
+     * @brief
+     *
      * @param[in] part
      * @param[in] move_info
-     * @return node_t 
+     * @return node_t
      */
     auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
         -> node_t;
 
     /**
-     * @brief 
-     * 
-     * @param[in] v 
-     * @param[in] net 
+     * @brief
+     *
+     * @param[in] v
+     * @param[in] net
      */
     void init_IdVec(const node_t& v, const node_t& net);
 
@@ -151,12 +151,12 @@ class FMKWayGainCalc {
     }
 
     /**
-     * @brief 
-     * 
-     * @tparam Ts 
-     * @param[in] weight 
-     * @param[in] k 
-     * @param[in] v 
+     * @brief
+     *
+     * @tparam Ts
+     * @param[in] weight
+     * @param[in] k
+     * @param[in] v
      */
     template <typename... Ts> auto _modify_vertex_va(unsigned int weight, std::uint8_t k, Ts... v)
         -> void {

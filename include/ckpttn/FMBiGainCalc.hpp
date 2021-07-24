@@ -70,11 +70,11 @@ class FMBiGainCalc {
     void init_IdVec(const node_t& v, const node_t& net);
 
     /**
-     * @brief 
-     * 
+     * @brief
+     *
      * @param[in] part
      * @param[in] move_info
-     * @return node_t 
+     * @return node_t
      */
     auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
         -> node_t;

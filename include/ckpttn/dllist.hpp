@@ -220,11 +220,11 @@ template <typename T> class dll_iterator {
 
     /**
      * @brief eq operator
-     * 
-     * @param[in] lhs 
-     * @param[in] rhs 
-     * @return true 
-     * @return false 
+     *
+     * @param[in] lhs
+     * @param[in] rhs
+     * @return true
+     * @return false
      */
     friend auto operator==(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
         return lhs.cur == rhs.cur;
@@ -232,11 +232,11 @@ template <typename T> class dll_iterator {
 
     /**
      * @brief neq operator
-     * 
-     * @param lhs 
-     * @param rhs 
-     * @return true 
-     * @return false 
+     *
+     * @param lhs
+     * @param rhs
+     * @return true
+     * @return false
      */
     friend auto operator!=(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
         return !(lhs == rhs);

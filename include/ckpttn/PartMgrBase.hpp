@@ -70,11 +70,11 @@ class PartMgrBase {
 
     /**
      * @brief Construct a new Part Mgr Base object
-     * 
+     *
      * @param[in] H
      * @param[in,out] gainMgr
      * @param[in,out] constrMgr
-     * @param[in] K 
+     * @param[in] K
      */
     PartMgrBase(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
         : H{H}, gainMgr{gainMgr}, validator{constrMgr}, K{K} {}

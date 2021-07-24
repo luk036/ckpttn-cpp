@@ -45,19 +45,19 @@ template <typename graph_t> struct Netlist {
   public:
     /**
      * @brief Construct a new Netlist object
-     * 
-     * @param[in] G 
-     * @param[in] modules 
-     * @param[in] nets 
+     *
+     * @param[in] G
+     * @param[in] modules
+     * @param[in] nets
      */
     Netlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets);
 
     /**
      * @brief Construct a new Netlist object
-     * 
-     * @param[in] G 
-     * @param[in] numModules 
-     * @param[in] numNets 
+     *
+     * @param[in] G
+     * @param[in] numModules
+     * @param[in] numNets
      */
     Netlist(graph_t G, uint32_t numModules, uint32_t numNets);
 

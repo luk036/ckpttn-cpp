@@ -40,10 +40,10 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
 
     /**
      * @brief Construct a new Hier Netlist object
-     * 
-     * @param[in] G 
-     * @param[in] modules 
-     * @param[in] nets 
+     *
+     * @param[in] G
+     * @param[in] modules
+     * @param[in] nets
      */
     HierNetlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets);
 

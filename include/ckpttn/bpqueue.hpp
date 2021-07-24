@@ -368,11 +368,11 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
 
     /**
      * @brief eq operator
-     * 
-     * @param[in] lhs 
-     * @param[in] rhs 
-     * @return true 
-     * @return false 
+     *
+     * @param[in] lhs
+     * @param[in] rhs
+     * @return true
+     * @return false
      */
     friend constexpr auto operator==(const bpq_iterator& lhs, const bpq_iterator& rhs) -> bool {
         return lhs.curitem == rhs.curitem;
@@ -380,11 +380,11 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
 
     /**
      * @brief neq operator
-     * 
-     * @param lhs 
-     * @param rhs 
-     * @return true 
-     * @return false 
+     *
+     * @param lhs
+     * @param rhs
+     * @return true
+     * @return false
      */
     friend constexpr auto operator!=(const bpq_iterator& lhs, const bpq_iterator& rhs) -> bool {
         return !(lhs == rhs);
