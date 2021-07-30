@@ -75,10 +75,10 @@
             <dd>minimum weighted vertex cover problem</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename <a href="structNetlist.html" class="m-doc">Netlist</a>, typename C1, typename C2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aeb542dca5e5b72538a5a85d7cbb1c75d" class="m-doc">min_maximal_matching</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html" class="m-doc">Netlist</a>&amp; H,
+              <span class="m-doc-wrap-bumper">auto <a href="#aea693a815038def1e2943a371183b1b2" class="m-doc">min_maximal_matching</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html" class="m-doc">Netlist</a>&amp; H,
               const C1&amp; weight,
-              C2&amp;&amp; matchset,
-              C2&amp;&amp; dep) -&gt; typename C1::mapped_type -&gt; auto</span>
+              C2&amp; matchset,
+              C2&amp; dep) -&gt; typename C1::mapped_type -&gt; auto</span>
             </dt>
             <dd>minimum weighted maximal matching problem</dd>
           </dl>
@@ -135,15 +135,15 @@
             </table>
 <p>This function solves minimum vertex cover problem using primal-dual paradigm:</p>
           </div></section>
-          <section class="m-doc-details" id="aeb542dca5e5b72538a5a85d7cbb1c75d"><div>
+          <section class="m-doc-details" id="aea693a815038def1e2943a371183b1b2"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename <a href="structNetlist.html" class="m-doc">Netlist</a>, typename C1, typename C2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb542dca5e5b72538a5a85d7cbb1c75d" class="m-doc-self">min_maximal_matching</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html" class="m-doc">Netlist</a>&amp; H,
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aea693a815038def1e2943a371183b1b2" class="m-doc-self">min_maximal_matching</a>(</span><span class="m-doc-wrap">const <a href="structNetlist.html" class="m-doc">Netlist</a>&amp; H,
               const C1&amp; weight,
-              C2&amp;&amp; matchset,
-              C2&amp;&amp; dep) -&gt; typename C1::mapped_type</span></span>
+              C2&amp; matchset,
+              C2&amp; dep) -&gt; typename C1::mapped_type</span></span>
             </h3>
             <p>minimum weighted maximal matching problem</p>
             <table class="m-table m-fullwidth m-flat">
@@ -165,19 +165,19 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>H</td>
+                  <td>H&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>weight</td>
+                  <td>weight&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>matchset</td>
+                  <td>matchset&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>dep</td>
+                  <td>dep&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
                   <td></td>
                 </tr>
               </tbody>
