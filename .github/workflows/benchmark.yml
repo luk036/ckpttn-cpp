@@ -31,6 +31,9 @@ jobs:
           sudo apt-get install g++-10
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90 
 
+      - name: install dependency
+        run: sudo apt-get install libboost-dev libboost-container-dev
+
       - name: configure
         run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
 

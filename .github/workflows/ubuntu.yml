@@ -33,7 +33,7 @@ jobs:
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90 
 
       - name: install dependency
-        run: sudo apt-get install lcov
+        run: sudo apt-get install lcov libboost-dev libboost-container-dev
 
       - name: configure
         run: cmake -S. -Bbuild -DENABLE_TEST_COVERAGE=1 -DCMAKE_BUILD_TYPE=Debug
