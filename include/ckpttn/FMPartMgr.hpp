@@ -25,7 +25,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
      * @param[in] H
      * @param[in,out] gainMgr
      * @param[in,out] constrMgr
-     * @param K
+     * @param[in] K
      */
     FMPartMgr(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
         : Base{H, gainMgr, constrMgr, K} {}
@@ -43,7 +43,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
     /**
      * @brief
      *
-     * @param part
+     * @param[in] part
      * @return std::vector<std::uint8_t>
      */
     auto take_snapshot(gsl::span<const std::uint8_t> part) -> std::vector<std::uint8_t> {

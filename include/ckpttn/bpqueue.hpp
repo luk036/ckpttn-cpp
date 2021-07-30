@@ -381,8 +381,8 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     /**
      * @brief neq operator
      *
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return true
      * @return false
      */

@@ -114,8 +114,8 @@ class FMBiGainCalc {
      * @brief
      *
      * @tparam Ts
-     * @param weight
-     * @param w
+     * @param[in] weight
+     * @param[in] w
      */
     template <typename... Ts> auto _modify_gain_va(unsigned int weight, Ts... w) -> void {
         ((this->vertex_list[w].data.second += weight), ...);
@@ -125,8 +125,8 @@ class FMBiGainCalc {
     //  * @brief
     //  *
     //  * @tparam Ts
-    //  * @param weight
-    //  * @param w
+    //  * @param[in] weight
+    //  * @param[in] w
     //  */
     // auto _modify_gain_va(unsigned int weight, const node_t& w1) -> void
     // {
@@ -137,8 +137,8 @@ class FMBiGainCalc {
     //  * @brief
     //  *
     //  * @tparam Ts
-    //  * @param weight
-    //  * @param w
+    //  * @param[in] weight
+    //  * @param[in] w
     //  */
     // auto _modify_gain_va(unsigned int weight, const node_t& w1, const node_t& w2) ->
     // void
@@ -151,8 +151,8 @@ class FMBiGainCalc {
     //  * @brief
     //  *
     //  * @tparam Ts
-    //  * @param weight
-    //  * @param w
+    //  * @param[in] weight
+    //  * @param[in] w
     //  */
     // auto _modify_gain_va(unsigned int weight, const node_t& w1, const node_t& w2,
     //     const node_t& w3) -> void

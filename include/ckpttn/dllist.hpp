@@ -233,8 +233,8 @@ template <typename T> class dll_iterator {
     /**
      * @brief neq operator
      *
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return true
      * @return false
      */

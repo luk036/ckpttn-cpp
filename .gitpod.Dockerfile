@@ -23,6 +23,7 @@ RUN apt-get update \
   lcov \
   libbenchmark-dev \
   libboost-dev \
+  libboost-container-dev \
   libfmt-dev \
 #  libjsoncpp-dev \
 #  libopenblas-dev \

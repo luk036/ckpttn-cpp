@@ -167,9 +167,9 @@ class FMKWayGainCalc {
     //  * @brief
     //  *
     //  * @tparam Ts
-    //  * @param weight
-    //  * @param part_v
-    //  * @param v
+    //  * @param[in] weight
+    //  * @param[in] part_v
+    //  * @param[in] v
     //  */
     // auto _modify_vertex_va(unsigned int weight, std::uint8_t k, const node_t& v1) ->
     // void
@@ -181,9 +181,9 @@ class FMKWayGainCalc {
     //  * @brief
     //  *
     //  * @tparam Ts
-    //  * @param weight
-    //  * @param part_v
-    //  * @param v
+    //  * @param[in] weight
+    //  * @param[in] part_v
+    //  * @param[in] v
     //  */
     // auto _modify_vertex_va(
     //     unsigned int weight, std::uint8_t k, const node_t& v1, const node_t& v2) ->
@@ -197,9 +197,9 @@ class FMKWayGainCalc {
     //  * @brief
     //  *
     //  * @tparam Ts
-    //  * @param weight
-    //  * @param part_v
-    //  * @param v
+    //  * @param[in] weight
+    //  * @param[in] part_v
+    //  * @param[in] v
     //  */
     // auto _modify_vertex_va(unsigned int weight, std::uint8_t k, const node_t& v1,
     //     const node_t& v2, const node_t& v3) -> void
@@ -213,9 +213,9 @@ class FMKWayGainCalc {
      * @brief
      *
      * @tparam Ts
-     * @param weight
-     * @param part_v
-     * @param v
+     * @param[in] weight
+     * @param[in] part_v
+     * @param[in] v
      */
     template <typename... Ts>
     auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) -> void {

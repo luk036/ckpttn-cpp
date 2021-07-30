@@ -55,14 +55,14 @@ auto min_vertex_cover(const Netlist& H, const C1& weight, C2& coverset) ->
  * @tparam Netlist
  * @tparam C1
  * @tparam C2
- * @param H
- * @param weight
- * @param matchset
- * @param dep
+ * @param[in] H
+ * @param[in] weight
+ * @param[in,out] matchset
+ * @param[in,out] dep
  * @return C1::value_type
  */
 template <typename Netlist, typename C1, typename C2>
-auto min_maximal_matching(const Netlist& H, const C1& weight, C2&& matchset, C2&& dep) ->
+auto min_maximal_matching(const Netlist& H, const C1& weight, C2& matchset, C2& dep) ->
     typename C1::mapped_type {
     auto cover = [&](const auto& net) {
         for (const auto& v : H.G[net]) {
