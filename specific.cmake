@@ -33,12 +33,12 @@ endif(cppcoro_ADDED)
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
   add_compile_options(-fcoroutines)
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  # using clang
-  add_compile_options(-fcoroutines-ts -stdlib=libc++)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
   add_compile_options(/std:c++latest /await)
+else() # (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  # using clang
+  add_compile_options(-fcoroutines-ts -stdlib=libc++)
 endif()
 
 CPMAddPackage(
