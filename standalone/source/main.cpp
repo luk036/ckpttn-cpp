@@ -46,8 +46,8 @@ auto main(int argc, char** argv) -> int {
         return 1;
     }
 
-    ckpttn::CkPttn ckpttn(name);
-    std::cout << ckpttn.greet(langIt->second) << std::endl;
+    // ckpttn::CkPttn ckpttn(name);
+    // std::cout << ckpttn.greet(langIt->second) << std::endl;
 
     return 0;
 }

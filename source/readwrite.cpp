@@ -95,7 +95,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
         }
         do {
             netD.get(c);
-        } while ((isspace(c) != 0) && c != EOF);
+        } while ((isspace(c) != 0));
         if (c == '\n') {
             continue;
         }
@@ -107,7 +107,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
         }
         do {
             netD.get(c);
-        } while ((isspace(c) != 0) && c != EOF);
+        } while ((isspace(c) != 0));
         if (c == 's') {
             ++e;
         }
@@ -117,7 +117,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
 
         do {
             netD.get(c);
-        } while ((isspace(c) != 0) && c != '\n' && c != EOF);
+        } while ((isspace(c) != 0) && c != '\n');
         // switch (c) {
         // case 'O': aPin.setDirection(Pin::OUTPUT); break;
         // case 'I': aPin.setDirection(Pin::INPUT); break;
@@ -178,7 +178,7 @@ void readAre(SimpleNetlist& H, std::string_view areFileName) {
         }
         do {
             are.get(c);
-        } while ((isspace(c) != 0) && c != EOF);
+        } while ((isspace(c) != 0));
         if (c == '\n') {
             lineno++;
             continue;
@@ -196,7 +196,7 @@ void readAre(SimpleNetlist& H, std::string_view areFileName) {
 
         do {
             are.get(c);
-        } while ((isspace(c) != 0) && c != EOF);
+        } while ((isspace(c) != 0));
         if (isdigit(c) != 0) {
             are.putback(c);
             are >> weight;
