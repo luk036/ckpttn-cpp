@@ -16,7 +16,7 @@ env:
 jobs:
   build:
     name: Build and publish documentation
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -25,12 +25,17 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
+      - name: Before Install
+        run: |
+          sudo apt-get install g++-10
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90 
+
       - name: install dependency
-        run: brew install boost
+        run: sudo apt-get install libboost-dev libboost-container-dev
 
       - name: Install dependencies
         run: |
-          brew install doxygen
+          sudo apt-get install doxygen
           pip3 install jinja2 Pygments
 
       - name: Build
