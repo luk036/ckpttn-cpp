@@ -2,8 +2,13 @@ name: Documentation
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
 
 env:
   CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
@@ -11,7 +16,7 @@ env:
 jobs:
   build:
     name: Build and publish documentation
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -20,17 +25,12 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
-      - name: Before Install
-        run: |
-          sudo apt-get install g++-10
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90 
-
       - name: install dependency
-        run: sudo apt-get install libboost-dev libboost-container-dev
+        run: brew install boost
 
       - name: Install dependencies
         run: |
-          sudo apt-get install doxygen
+          brew install doxygen
           pip3 install jinja2 Pygments
 
       - name: Build
