@@ -1,8 +1,10 @@
 #include <ckpttn/HierNetlist.hpp>
 
+using namespace std;
+
 template <typename graph_t>
-void HierNetlist<graph_t>::projection_up(gsl::span<const std::uint8_t> part,
-                                         gsl::span<std::uint8_t> part_up) const {
+void HierNetlist<graph_t>::projection_up(gsl::span<const uint8_t> part,
+                                         gsl::span<uint8_t> part_up) const {
     const auto& H = *this->parent;
     for (const auto& v : H) {
         part_up[this->node_up_map[v]] = part[v];
@@ -10,8 +12,8 @@ void HierNetlist<graph_t>::projection_up(gsl::span<const std::uint8_t> part,
 }
 
 template <typename graph_t>
-void HierNetlist<graph_t>::projection_down(gsl::span<const std::uint8_t> part,
-                                           gsl::span<std::uint8_t> part_down) const {
+void HierNetlist<graph_t>::projection_down(gsl::span<const uint8_t> part,
+                                           gsl::span<uint8_t> part_down) const {
     const auto& H = *this->parent;
     for (const auto& v : this->modules) {
         if (this->cluster_down_map.contains(v)) {

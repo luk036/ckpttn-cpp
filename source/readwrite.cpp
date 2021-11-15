@@ -4,7 +4,7 @@
 #include <iostream>
 // #include <py2cpp/py2cpp.hpp>
 #include <string_view>
-#include <utility>  // for std::pair
+#include <utility>  // for pair
 #include <vector>
 
 // using graph_t =
@@ -12,14 +12,13 @@
 // using node_t = typename boost::graph_traits<graph_t>::vertex_descriptor;
 // using edge_t = typename boost::graph_traits<graph_t>::edge_iterator;
 
-using std::ifstream;
-using std::ofstream;
+using namespace std;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H) {
+void writeJSON(string_view jsonFileName, const SimpleNetlist& H) {
     auto json = ofstream{jsonFileName.data()};
     if (json.fail()) {
-        std::cerr << "Error: Can't open file " << jsonFileName << ".\n";
+        cerr << "Error: Can't open file " << jsonFileName << ".\n";
         exit(1);
     }
     json << R"({
@@ -56,10 +55,10 @@ void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H) {
 }
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
+auto readNetD(string_view netDFileName) -> SimpleNetlist {
     auto netD = ifstream{netDFileName.data()};
     if (netD.fail()) {
-        std::cerr << "Error: Can't open file " << netDFileName << ".\n";
+        cerr << "Error: Can't open file " << netDFileName << ".\n";
         exit(1);
     }
 
@@ -74,7 +73,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
     netD >> t;  // eat 1st 0
     netD >> numPins >> numNets >> numModules >> padOffset;
 
-    // using Edge = std::pair<int, int>;
+    // using Edge = pair<int, int>;
 
     const auto num_vertices = numModules + numNets;
     // const auto R = py::range<node_t>(0, num_vertices);
@@ -90,7 +89,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
     uint32_t i = 0;
     for (; i < numPins; ++i) {
         if (netD.eof()) {
-            std::cerr << "Warning: Unexpected end of file.\n";
+            cerr << "Warning: Unexpected end of file.\n";
             break;
         }
         do {
@@ -130,31 +129,31 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
 
     e -= numModules - 1;
     if (e < numNets) {
-        std::cerr << "Warning: number of nets is not " << numNets << ".\n";
+        cerr << "Warning: number of nets is not " << numNets << ".\n";
         numNets = e;
     } else if (e > numNets) {
-        std::cerr << "Error: number of nets is not " << numNets << ".\n";
+        cerr << "Error: number of nets is not " << numNets << ".\n";
         exit(1);
     }
     if (i < numPins) {
-        std::cerr << "Error: number of pins is not " << numPins << ".\n";
+        cerr << "Error: number of pins is not " << numPins << ".\n";
         exit(1);
     }
 
     // using IndexMap =
     //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
     // auto index = boost::get(boost::vertex_index, g);
-    // auto G = py::grAdaptor<graph_t>{std::move(g)};
-    auto H = SimpleNetlist{std::move(g), numModules, numNets};
+    // auto G = py::grAdaptor<graph_t>{move(g)};
+    auto H = SimpleNetlist{move(g), numModules, numNets};
     H.num_pads = numModules - padOffset - 1;
     return H;
 }
 
 // Read the IBM .are format
-void readAre(SimpleNetlist& H, std::string_view areFileName) {
+void readAre(SimpleNetlist& H, string_view areFileName) {
     auto are = ifstream{areFileName.data()};
     if (are.fail()) {
-        std::cerr << " Could not open " << areFileName << std::endl;
+        cerr << " Could not open " << areFileName << endl;
         exit(1);
     }
 
@@ -169,7 +168,7 @@ void readAre(SimpleNetlist& H, std::string_view areFileName) {
     // xxx index_t smallestWeight = UINT_MAX;
     auto numModules = H.number_of_modules();
     auto padOffset = numModules - H.num_pads - 1;
-    auto module_weight = std::vector<unsigned int>(numModules);
+    auto module_weight = vector<unsigned int>(numModules);
 
     size_t lineno = 1;
     for (size_t i = 0; i < numModules; i++) {
@@ -189,8 +188,8 @@ void readAre(SimpleNetlist& H, std::string_view areFileName) {
             are >> w;
             w += node_t(padOffset);
         } else {
-            std::cerr << "Syntax error in line " << lineno << ":"
-                      << R"(expect keyword "a" or "p")" << std::endl;
+            cerr << "Syntax error in line " << lineno << ":"
+                      << R"(expect keyword "a" or "p")" << endl;
             exit(0);
         }
 
@@ -206,5 +205,5 @@ void readAre(SimpleNetlist& H, std::string_view areFileName) {
         lineno++;
     }
 
-    H.module_weight = std::move(module_weight);
+    H.module_weight = move(module_weight);
 }

@@ -2,10 +2,11 @@
 #include <fmt/format.h>
 
 using namespace ckpttn;
+using namespace std;
 
-CkPttn::CkPttn(std::string _name) : name(std::move(_name)) {}
+CkPttn::CkPttn(string _name) : name(move(_name)) {}
 
-std::string CkPttn::greet(LanguageCode lang) const {
+string CkPttn::greet(LanguageCode lang) const {
     switch (lang) {
         default:
         case LanguageCode::EN:

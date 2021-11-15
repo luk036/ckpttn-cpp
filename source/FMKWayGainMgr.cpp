@@ -1,13 +1,15 @@
 #include <ckpttn/FMKWayGainCalc.hpp>
 #include <ckpttn/FMKWayGainMgr.hpp>
 
+using namespace std;
+
 /**
  * @brief
  *
  * @param[in] part
  * @return int
  */
-auto FMKWayGainMgr::init(gsl::span<const std::uint8_t> part) -> int {
+auto FMKWayGainMgr::init(gsl::span<const uint8_t> part) -> int {
     auto totalcost = Base::init(part);
 
     for (auto& bckt : this->gainbucket) {

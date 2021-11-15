@@ -2,7 +2,9 @@
 #include <ckpttn/netlist.hpp>  // import Netlist
 // #include <transrangers.hpp>
 
-FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
+using namespace std;
+
+FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, uint8_t K)
     : H{H}, BalTol{BalTol}, diff(K, 0), K{K} {
     // using namespace transrangers;
     // this->totalweight
@@ -13,7 +15,7 @@ FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
         this->totalweight += H.get_module_weight(v);
     }
     const auto totalweightK = this->totalweight * (2.0 / this->K);
-    this->lowerbound = uint32_t(std::round(totalweightK * this->BalTol));
+    this->lowerbound = uint32_t(round(totalweightK * this->BalTol));
 }
 
 /**
@@ -21,8 +23,8 @@ FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
  *
  * @param[in] part
  */
-void FMConstrMgr::init(gsl::span<const std::uint8_t> part) {
-    std::fill(this->diff.begin(), this->diff.end(), 0);
+void FMConstrMgr::init(gsl::span<const uint8_t> part) {
+    fill(this->diff.begin(), this->diff.end(), 0);
     for (const auto& v : this->H) {
         // auto weight_v = this->H.get_module_weight(v);
         this->diff[part[v]] += this->H.get_module_weight(v);

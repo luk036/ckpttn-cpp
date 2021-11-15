@@ -15,6 +15,7 @@
 #include <vector>
 
 using node_t = typename SimpleNetlist::node_t;
+using namespace std;
 // using namespace transrangers;
 
 /**
@@ -22,11 +23,11 @@ using node_t = typename SimpleNetlist::node_t;
  *
  * @param[in] H
  * @param[in] DontSelect
- * @return std::unique_ptr<SimpleHierNetlist>
+ * @return unique_ptr<SimpleHierNetlist>
  * @todo simplify this function
  */
 auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& DontSelect)
-    -> std::unique_ptr<SimpleHierNetlist> {
+    -> unique_ptr<SimpleHierNetlist> {
     auto weight = py::dict<node_t, unsigned int>{};
     for (const auto& net : H.nets) {
         // weight[net] = accumulate(
@@ -53,13 +54,13 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     auto node_up_dict = py::dict<node_t, index_t>{};
     auto net_up_map = py::dict<node_t, index_t>{};
 
-    auto modules = std::vector<node_t>{};
-    auto nets = std::vector<node_t>{};
+    auto modules = vector<node_t>{};
+    auto nets = vector<node_t>{};
     nets.reserve(H.nets.size() - S.size());
 
     {  // localize C and clusters
         auto C = py::set<node_t>{};
-        auto clusters = std::vector<node_t>{};
+        auto clusters = vector<node_t>{};
         C.reserve(3 * S.size());  // ???
         clusters.reserve(S.size());
 
@@ -86,7 +87,7 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
         }
         modules.insert(modules.end(), clusters.begin(), clusters.end());
     }
-    // auto nodes = std::vector<node_t>{};
+    // auto nodes = vector<node_t>{};
     // nodes.reserve(modules.size() + nets.size());
 
     // nodes.insert(nodes.end(), modules.begin(), modules.end());
@@ -134,18 +135,18 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
             g.add_edge(node_up_dict[v], net_up_map[net]);
         }
     }
-    // auto G = py::grAdaptor<graph_t>(std::move(g));
-    auto G = std::move(g);
+    // auto G = py::grAdaptor<graph_t>(move(g));
+    auto G = move(g);
 
-    auto H2 = std::make_unique<SimpleHierNetlist>(std::move(G), py::range(numModules),
+    auto H2 = make_unique<SimpleHierNetlist>(move(G), py::range(numModules),
                                                   py::range(numModules, numModules + numNets));
 
-    auto node_down_map = std::vector<node_t>{};
+    auto node_down_map = vector<node_t>{};
     node_down_map.resize(numModules);
     // for (const auto& [v1, v2] : node_up_dict.items())
     for (const auto& keyvalue : node_up_dict.items()) {
-        auto&& v1 = std::get<0>(keyvalue);
-        auto&& v2 = std::get<1>(keyvalue);
+        auto&& v1 = get<0>(keyvalue);
+        auto&& v2 = get<1>(keyvalue);
         node_down_map[v2] = v1;
     }
     auto cluster_down_map = py::dict<index_t, node_t>{};
@@ -153,8 +154,8 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     // // for (const auto& [v, net] : cluster_map.items())
     // for (const auto& keyvalue : cluster_map.items())
     // {
-    //     auto&& v = std::get<0>(keyvalue);
-    //     auto&& net = std::get<1>(keyvalue);
+    //     auto&& v = get<0>(keyvalue);
+    //     auto&& net = get<1>(keyvalue);
     //     cluster_down_map[node_up_dict[v]] = net;
     // }
     for (auto&& net : S) {
@@ -163,7 +164,7 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
         }
     }
 
-    auto module_weight = std::vector<unsigned int>{};
+    auto module_weight = vector<unsigned int>{};
     module_weight.reserve(numModules);
     for (const auto& i_v : py::range(numModules)) {
         if (cluster_down_map.contains(i_v)) {
@@ -181,15 +182,15 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     //     node_up_map = {}
     // else:
     //     raise NotImplementedError
-    auto node_up_map = std::vector<node_t>(H.modules.size());
+    auto node_up_map = vector<node_t>(H.modules.size());
     for (const auto& v : H.modules) {
         node_up_map[v] = node_up_dict[v];
     }
 
-    H2->node_up_map = std::move(node_up_map);
-    H2->node_down_map = std::move(node_down_map);
-    H2->cluster_down_map = std::move(cluster_down_map);
-    H2->module_weight = std::move(module_weight);
+    H2->node_up_map = move(node_up_map);
+    H2->node_down_map = move(node_down_map);
+    H2->cluster_down_map = move(cluster_down_map);
+    H2->module_weight = move(module_weight);
     H2->parent = &H;
     return H2;
 }
