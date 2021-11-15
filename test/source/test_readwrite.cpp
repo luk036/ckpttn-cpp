@@ -4,9 +4,11 @@
 #include <ckpttn/netlist.hpp>
 #include <string_view>
 
-extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, std::string_view areFileName);
-extern void writeJSON(std::string_view jsonFileName, const SimpleNetlist& H);
+using namespace std;
+
+extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, string_view areFileName);
+extern void writeJSON(string_view jsonFileName, const SimpleNetlist& H);
 
 TEST_CASE("Test Read Dwarf") {
     auto H = readNetD("../../testcases/dwarf1.netD");

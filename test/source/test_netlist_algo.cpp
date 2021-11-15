@@ -2,16 +2,18 @@
 
 #include <ckpttn/netlist.hpp>       // import Netlist
 #include <ckpttn/netlist_algo.hpp>  // import Netlist
-// #include <memory> //std::unique_ptr
+// #include <memory> //unique_ptr
 #include <py2cpp/py2cpp.hpp>
 #include <string_view>
 
+using namespace std;
+
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, std::string_view areFileName);
-// extern std::tuple<py::set<node_t>, int>
-// min_net_cover_pd(SimpleNetlist &, const std::vector<int> &);
+extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, string_view areFileName);
+// extern tuple<py::set<node_t>, int>
+// min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
 

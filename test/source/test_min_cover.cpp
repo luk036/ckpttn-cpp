@@ -3,20 +3,22 @@
 #include <ckpttn/HierNetlist.hpp>  // import Netlist
 #include <ckpttn/netlist.hpp>      // import Netlist
 #include <ckpttn/netlist_algo.hpp>
-#include <memory>  //std::unique_ptr
+#include <memory>  //unique_ptr
 #include <py2cpp/py2cpp.hpp>
 #include <string_view>
 
+using namespace std;
+
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, std::string_view areFileName);
-// extern std::tuple<py::set<node_t>, int>
-// min_net_cover_pd(SimpleNetlist &, const std::vector<int> &);
+extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, string_view areFileName);
+// extern tuple<py::set<node_t>, int>
+// min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
 extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node_t>&)
-    -> std::unique_ptr<SimpleHierNetlist>;
+    -> unique_ptr<SimpleHierNetlist>;
 
 //
 // Primal-dual algorithm for minimum vertex cover problem
@@ -44,9 +46,9 @@ TEST_CASE("Test contraction subgraph dwarf") {
     // CHECK(H2->number_of_pins() < 14);
     CHECK(H2->get_max_net_degree() <= 3);
 
-    auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
-    auto part2 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
-    auto part3 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
+    auto part = vector<uint8_t>(H.number_of_modules(), 0);
+    auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
+    auto part3 = vector<uint8_t>(H2->number_of_modules(), 0);
     part2[0] = part2[2] = 1;
     part2[1] = 2;
     H2->projection_down(part2, part);
@@ -64,10 +66,10 @@ TEST_CASE("Test contraction subgraph ibm01") {
     // CHECK(H2->number_of_pins() < H.number_of_pins());
     CHECK(H2->get_max_net_degree() <= H.get_max_net_degree());
 
-    auto part2 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
-    auto part3 = std::vector<std::uint8_t>(H3->number_of_modules(), 0);
-    auto part4 = std::vector<std::uint8_t>(H3->number_of_modules(), 0);
-    auto i = std::uint8_t(0);
+    auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
+    auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
+    auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
+    auto i = uint8_t(0);
 
     for (auto& item : part3) {
         item = ++i % 6;
@@ -87,11 +89,11 @@ TEST_CASE("Test contraction subgraph ibm18") {
     // CHECK(H2->number_of_pins() < H.number_of_pins());
     CHECK(H2->get_max_net_degree() <= H.get_max_net_degree());
 
-    auto part2 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
-    auto part3 = std::vector<std::uint8_t>(H3->number_of_modules(), 0);
-    auto part4 = std::vector<std::uint8_t>(H3->number_of_modules(), 0);
+    auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
+    auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
+    auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
     for (auto i = 0u; i != H3->number_of_modules(); ++i) {
-        part3[i] = std::uint8_t(i);
+        part3[i] = uint8_t(i);
     }
     H3->projection_down(part3, part2);
     H3->projection_up(part2, part4);

@@ -3,20 +3,22 @@
 #include <doctest/doctest.h>
 // #include <iostream>
 
+using namespace std;
+
 TEST_CASE("Test set partition (odd k)")
 {
     constexpr auto n = 10;
     constexpr auto k = 5;
     auto cnt = 1;
 
-    std::array<int, n + 1> b {0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4};
+    array<int, n + 1> b {0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4};
 
     for (const auto& [x, y] : set_partition(n, k))
     {
         // auto old = b[x];
         b[x] = y;
         cnt += 1;
-        // std::cout << "Move " << x << " from block " << old << " to " << y
+        // cout << "Move " << x << " from block " << old << " to " << y
         //           << "\n";
     }
 
@@ -30,14 +32,14 @@ TEST_CASE("Test set partition (even k)")
     constexpr auto k = 4;
     auto cnt = 1;
 
-    std::array<int, n + 1> b {0, 0, 0, 0, 0, 0, 0, 1, 2};
+    array<int, n + 1> b {0, 0, 0, 0, 0, 0, 0, 1, 2};
 
     for (const auto& [x, y] : set_partition(n, k))
     {
         // auto old = b[x];
         b[x] = y;
         cnt += 1;
-        // std::cout << "Move " << x << " from block " << old << " to " << y
+        // cout << "Move " << x << " from block " << old << " to " << y
         //           << "\n";
     }
 

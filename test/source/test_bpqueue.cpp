@@ -4,6 +4,8 @@
 #include <ckpttn/dllist.hpp>   // import dllink
 #include <gsl/span>
 
+using namespace std;
+
 TEST_CASE("Test BPQueue") {
     constexpr auto PMAX = 10;
 
@@ -12,9 +14,9 @@ TEST_CASE("Test BPQueue") {
 
     CHECK(bpq1.is_empty());
 
-    auto d = dllink{std::pair{0, uint32_t(0)}};
-    auto e = dllink{std::pair{0, uint32_t(0)}};
-    auto f = dllink{std::pair{0, uint32_t(0)}};
+    auto d = dllink{pair{0, uint32_t(0)}};
+    auto e = dllink{pair{0, uint32_t(0)}};
+    auto f = dllink{pair{0, uint32_t(0)}};
 
     CHECK(d.data.second == 0);
 
@@ -31,7 +33,7 @@ TEST_CASE("Test BPQueue") {
     CHECK(bpq1.is_empty());
     CHECK(bpq2.get_max() == 6);
 
-    auto nodelist = std::vector<dllink<std::pair<int, uint32_t>>>(10);
+    auto nodelist = vector<dllink<pair<int, uint32_t>>>(10);
 
     auto i = 0U;
     for (auto& it : nodelist) {
@@ -47,6 +49,6 @@ TEST_CASE("Test BPQueue") {
     // }
     // CHECK(count == 10);
 
-    // const std::vector<std::uint8_t> a {3, 4, 5, 6};
-    // gsl::span<const std::uint8_t> s {a};
+    // const vector<uint8_t> a {3, 4, 5, 6};
+    // gsl::span<const uint8_t> s {a};
 }

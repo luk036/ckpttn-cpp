@@ -11,17 +11,19 @@
 #include <iostream>
 #include <string_view>
 
-// using std::experimental::randint;
+using namespace std;
+
+// using experimental::randint;
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, std::string_view areFileName);
+extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, string_view areFileName);
 
 TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto H = create_dwarf();
     auto partMgr = MLPartMgr{0.3};
-    auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
+    auto part = vector<uint8_t>(H.number_of_modules(), 0);
     partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
     CHECK(partMgr.totalcost == 2U);
 }
@@ -29,7 +31,7 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
 TEST_CASE("Test MLKWayPartMgr dwarf") {
     const auto H = create_dwarf();
     auto partMgr = MLPartMgr{0.4, 3};  // 0.3???
-    auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
+    auto part = vector<uint8_t>(H.number_of_modules(), 0);
     partMgr.run_FMPartition<FMPartMgr<FMKWayGainMgr, FMKWayConstrMgr>>(H, part);
     CHECK(partMgr.totalcost == 4U);
 }
@@ -41,11 +43,11 @@ TEST_CASE("Test MLBiPartMgr p1") {
 
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
-        auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
+        auto part = vector<uint8_t>(H.number_of_modules(), 0);
         auto whichPart = 0U;
         for (auto& elem : part) {
             whichPart ^= 1;
-            elem = std::uint8_t(whichPart);
+            elem = uint8_t(whichPart);
         }
         partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
         if (mincost > partMgr.totalcost) {
@@ -66,11 +68,11 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
 
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
-        auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
+        auto part = vector<uint8_t>(H.number_of_modules(), 0);
         auto whichPart = 0U;
         for (auto& elem : part) {
             whichPart ^= 1;
-            elem = std::uint8_t(whichPart);
+            elem = uint8_t(whichPart);
         }
         partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
         if (mincost > partMgr.totalcost) {
@@ -88,12 +90,12 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     readAre(H, "../../testcases/ibm03.are");
     auto partMgr = MLPartMgr{0.45};
     partMgr.set_limitsize(300);
-    auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
-    // auto part_info = PartInfo{std::move(part), py::set<node_t>()};
-    auto begin = std::chrono::steady_clock::now();
+    auto part = vector<uint8_t>(H.number_of_modules(), 0);
+    // auto part_info = PartInfo{move(part), py::set<node_t>()};
+    auto begin = chrono::steady_clock::now();
     partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
-    std::chrono::duration<double> last = std::chrono::steady_clock::now() - begin;
-    std::cout << "time: " << last.count() << std::endl;
+    chrono::duration<double> last = chrono::steady_clock::now() - begin;
+    cout << "time: " << last.count() << endl;
     CHECK(partMgr.totalcost >= 1104U);
     CHECK(partMgr.totalcost <= 2041U);
 }
@@ -103,12 +105,12 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     readAre(H, "../../testcases/ibm18.are");
     auto partMgr = MLPartMgr{0.45};
     partMgr.set_limitsize(24000);
-    auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
-    // auto part_info = PartInfo{std::move(part), py::set<node_t>()};
-    auto begin = std::chrono::steady_clock::now();
+    auto part = vector<uint8_t>(H.number_of_modules(), 0);
+    // auto part_info = PartInfo{move(part), py::set<node_t>()};
+    auto begin = chrono::steady_clock::now();
     partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
-    std::chrono::duration<double> last = std::chrono::steady_clock::now() - begin;
-    std::cout << "time: " << last.count() << std::endl;
+    chrono::duration<double> last = chrono::steady_clock::now() - begin;
+    cout << "time: " << last.count() << endl;
     CHECK(partMgr.totalcost >= 1104U);
     CHECK(partMgr.totalcost <= 5112U);
 }
