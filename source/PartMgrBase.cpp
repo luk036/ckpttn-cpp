@@ -4,7 +4,7 @@
 #include <ckpttn/netlist.hpp>
 
 using node_t = typename SimpleNetlist::node_t;
-using namespace std;
+// using namespace std;
 
 /**
  * @brief
@@ -16,7 +16,7 @@ using namespace std;
  */
 template <typename GainMgr, typename ConstrMgr,
           template <typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<GainMgr, ConstrMgr, Derived>::init(gsl::span<uint8_t> part) {
+void PartMgrBase<GainMgr, ConstrMgr, Derived>::init(gsl::span<std::uint8_t> part) {
     this->totalcost = this->gainMgr.init(part);
     this->validator.init(part);
 }
@@ -32,7 +32,7 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::init(gsl::span<uint8_t> part) {
  */
 template <typename GainMgr, typename ConstrMgr,
           template <typename _gainMgr, typename _constrMgr> class Derived>  //
-auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<uint8_t> part)
+auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> part)
     -> LegalCheck {
     this->init(part);
 
@@ -88,9 +88,9 @@ auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<uint8_t> part)
  */
 template <typename GainMgr, typename ConstrMgr,
           template <typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<uint8_t> part) {
+void PartMgrBase<GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<std::uint8_t> part) {
     // using SS_t = decltype(self.take_snapshot(part));
-    using SS_t = vector<uint8_t>;
+    using SS_t = std::vector<std::uint8_t>;
 
     auto snapshot = SS_t{};
     auto totalgain = 0;
@@ -148,7 +148,7 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<uint8_t
  */
 template <typename GainMgr, typename ConstrMgr,
           template <typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<uint8_t> part) {
+void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> part) {
     // this->init(part);
     // auto totalcostafter = this->totalcost;
     while (true) {
