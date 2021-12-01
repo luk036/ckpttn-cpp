@@ -23,14 +23,10 @@
  "links": [
   {
    "source": 0,
-   "target": 7
+   "target": 8
   },
   {
    "source": 0,
-   "target": 8
-  },
-  {
-   "source": 1,
    "target": 7
   },
   {
@@ -38,20 +34,24 @@
    "target": 9
   },
   {
-   "source": 2,
-   "target": 8
-  },
-  {
-   "source": 2,
-   "target": 9
+   "source": 1,
+   "target": 7
   },
   {
    "source": 2,
    "target": 10
   },
   {
-   "source": 3,
+   "source": 2,
+   "target": 9
+  },
+  {
+   "source": 2,
    "target": 8
+  },
+  {
+   "source": 3,
+   "target": 11
   },
   {
    "source": 3,
@@ -59,7 +59,7 @@
   },
   {
    "source": 3,
-   "target": 11
+   "target": 8
   },
   {
    "source": 4,

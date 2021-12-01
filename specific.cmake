@@ -13,7 +13,7 @@ cpmaddpackage(
   NAME
   fmt
   GIT_TAG
-  6.1.2
+  7.1.3
   GITHUB_REPOSITORY
   fmtlib/fmt
   OPTIONS
@@ -45,9 +45,20 @@ endif()
 
 cpmaddpackage(
   NAME
+  Py2Cpp
+  GIT_TAG
+  1.0
+  GITHUB_REPOSITORY
+  luk036/py2cpp
+  OPTIONS
+  "INSTALL_ONLY ON" # create an installable target
+)
+
+cpmaddpackage(
+  NAME
   XNetwork
   GIT_TAG
-  1.0.16
+  1.1
   GITHUB_REPOSITORY
   luk036/xnetwork-cpp
   OPTIONS
@@ -56,8 +67,9 @@ cpmaddpackage(
 
 set(SPECIFIC_LIBS
     XNetwork::XNetwork
-    Boost::boost
+    Py2Cpp::Py2Cpp
     Boost::container
+    Boost::boost
     cppcoro::cppcoro
     Threads::Threads
     GSL
