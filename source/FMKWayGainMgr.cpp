@@ -9,7 +9,7 @@ using namespace std;
  * @param[in] part
  * @return int
  */
-auto FMKWayGainMgr::init(gsl::span<const uint8_t> part) -> int {
+auto FMKWayGainMgr::init(std::span<const uint8_t> part) -> int {
     auto totalcost = Base::init(part);
 
     for (auto& bckt : this->gainbucket) {

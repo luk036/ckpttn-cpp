@@ -34,7 +34,7 @@ FMGainMgr<GainCalc, Derived>::FMGainMgr(const SimpleNetlist& H, uint8_t K)
  * @param[in] part
  */
 template <typename GainCalc, class Derived>
-auto FMGainMgr<GainCalc, Derived>::init(gsl::span<const uint8_t> part) -> int {
+auto FMGainMgr<GainCalc, Derived>::init(std::span<const uint8_t> part) -> int {
     auto totalcost = this->gainCalc.init(part);
     // this->totalcost = this->gainCalc.totalcost;
     this->waitinglist.clear();
@@ -48,7 +48,7 @@ auto FMGainMgr<GainCalc, Derived>::init(gsl::span<const uint8_t> part) -> int {
  * @return tuple<MoveInfoV<node_t>, int>
  */
 template <typename GainCalc, class Derived>
-auto FMGainMgr<GainCalc, Derived>::select(gsl::span<const uint8_t> part)
+auto FMGainMgr<GainCalc, Derived>::select(std::span<const uint8_t> part)
     -> tuple<MoveInfoV<node_t>, int> {
     const auto it = max_element(
         this->gainbucket.begin(), this->gainbucket.end(),
@@ -91,7 +91,7 @@ auto FMGainMgr<GainCalc, Derived>::select_togo(uint8_t toPart) -> tuple<node_t, 
  * @param[in] gain
  */
 template <typename GainCalc, class Derived>
-void FMGainMgr<GainCalc, Derived>::update_move(gsl::span<const uint8_t> part,
+void FMGainMgr<GainCalc, Derived>::update_move(std::span<const uint8_t> part,
                                                const MoveInfoV<node_t>& move_info_v) {
     this->gainCalc.update_move_init();
     const auto& v = move_info_v.v;
@@ -128,7 +128,7 @@ void FMGainMgr<GainCalc, Derived>::update_move(gsl::span<const uint8_t> part,
  * @param[in] move_info
  */
 template <typename GainCalc, class Derived>
-void FMGainMgr<GainCalc, Derived>::_update_move_2pin_net(gsl::span<const uint8_t> part,
+void FMGainMgr<GainCalc, Derived>::_update_move_2pin_net(std::span<const uint8_t> part,
                                                          const MoveInfo<node_t>& move_info) {
     // const auto [w, deltaGainW] =
     //     this->gainCalc.update_move_2pin_net(part, move_info);
@@ -143,7 +143,7 @@ void FMGainMgr<GainCalc, Derived>::_update_move_2pin_net(gsl::span<const uint8_t
  * @param[in] move_info
  */
 template <typename GainCalc, class Derived>
-void FMGainMgr<GainCalc, Derived>::_update_move_3pin_net(gsl::span<const uint8_t> part,
+void FMGainMgr<GainCalc, Derived>::_update_move_3pin_net(std::span<const uint8_t> part,
                                                          const MoveInfo<node_t>& move_info) {
     // byte StackBuf[8192];
     // FMPmr::monotonic_buffer_resource rsrc(StackBuf, sizeof StackBuf);
@@ -173,7 +173,7 @@ void FMGainMgr<GainCalc, Derived>::_update_move_3pin_net(gsl::span<const uint8_t
  * @param[in] move_info
  */
 template <typename GainCalc, class Derived>
-void FMGainMgr<GainCalc, Derived>::_update_move_general_net(gsl::span<const uint8_t> part,
+void FMGainMgr<GainCalc, Derived>::_update_move_general_net(std::span<const uint8_t> part,
                                                             const MoveInfo<node_t>& move_info) {
     const auto deltaGain = this->gainCalc.update_move_general_net(part, move_info);
     // Why not auto&& ?

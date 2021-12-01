@@ -2,7 +2,7 @@
 
 // import networkx as nx
 // #include <algorithm>
-#include <gsl/span>
+#include <span>
 #include <iterator>
 #include <py2cpp/py2cpp.hpp>
 #include <utility>

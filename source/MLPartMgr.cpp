@@ -15,7 +15,7 @@ using node_t = typename SimpleNetlist::node_t;
  * @return LegalCheck
  */
 template <typename PartMgr>
-auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part)
+auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, std::span<std::uint8_t> part)
     -> LegalCheck {
     using GainMgr = typename PartMgr::GainMgr_;
     using ConstrMgr = typename PartMgr::ConstrMgr_;
@@ -65,10 +65,10 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
 #include <ckpttn/FMPartMgr.hpp>      // import FMBiPartMgr
 
 template auto MLPartMgr::run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(
-    const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
+    const SimpleNetlist& H, std::span<std::uint8_t> part) -> LegalCheck;
 
 #include <ckpttn/FMKWayConstrMgr.hpp>  // import FMKWayConstrMgr
 #include <ckpttn/FMKWayGainMgr.hpp>    // import FMKWayGainMgr
 
 template auto MLPartMgr::run_FMPartition<FMPartMgr<FMKWayGainMgr, FMKWayConstrMgr>>(
-    const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
+    const SimpleNetlist& H, std::span<std::uint8_t> part) -> LegalCheck;

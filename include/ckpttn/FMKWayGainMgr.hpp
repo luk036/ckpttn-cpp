@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gsl/span>
+#include <span>
 
 #include "FMGainMgr.hpp"
 #include "FMKWayGainCalc.hpp"
@@ -36,7 +36,7 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr> {
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int;
+    auto init(std::span<const std::uint8_t> part) -> int;
 
     /**
      * @brief (needed by base class)
@@ -45,7 +45,7 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr> {
      * @param[in] part_w
      * @param[in] keys
      */
-    auto modify_key(const node_t& w, std::uint8_t part_w, gsl::span<const int> keys) -> void {
+    auto modify_key(const node_t& w, std::uint8_t part_w, std::span<const int> keys) -> void {
         for (auto k : this->RR.exclude(part_w)) {
             this->gainbucket[k].modify_key(this->gainCalc.vertex_list[k][w], keys[k]);
         }

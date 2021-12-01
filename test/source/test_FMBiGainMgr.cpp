@@ -14,7 +14,7 @@ using namespace std;
  * @param[in] H
  * @param[in] part_test
  */
-void run_FMBiGainMgr(const SimpleNetlist& H, gsl::span<uint8_t> part) {
+void run_FMBiGainMgr(const SimpleNetlist& H, std::span<uint8_t> part) {
     auto mgr = FMBiGainMgr{H};
     mgr.init(part);
     while (!mgr.is_empty()) {

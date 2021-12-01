@@ -7,7 +7,7 @@
 // #include "netlist.hpp"
 #include <cassert>
 #include <ckpttn/HierNetlist.hpp>
-#include <gsl/span>
+#include <span>
 #include <memory>  // std::unique_ptr
 // #include <ckpttn/FMConstrMgr.hpp>   // import LegalCheck
 
@@ -62,5 +62,5 @@ class MLPartMgr {
      * @return LegalCheck
      */
     template <typename PartMgr>
-    auto run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
+    auto run_FMPartition(const SimpleNetlist& H, std::span<std::uint8_t> part) -> LegalCheck;
 };

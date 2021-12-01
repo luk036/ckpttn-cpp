@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <cinttypes>
-#include <gsl/span>
+#include <span>
 #include <iterator>
 #include <memory>
 #include <type_traits>
@@ -50,7 +50,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int;
+    auto init(std::span<const std::uint8_t> part) -> int;
 
     /**
      * @brief
@@ -80,7 +80,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @return std::tuple<MoveInfoV<node_t>, int>
      */
-    auto select(gsl::span<const std::uint8_t> part) -> std::tuple<MoveInfoV<node_t>, int>;
+    auto select(std::span<const std::uint8_t> part) -> std::tuple<MoveInfoV<node_t>, int>;
 
     /**
      * @brief
@@ -96,7 +96,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @param[in] move_info_v
      */
-    auto update_move(gsl::span<const std::uint8_t> part, const MoveInfoV<node_t>& move_info_v)
+    auto update_move(std::span<const std::uint8_t> part, const MoveInfoV<node_t>& move_info_v)
         -> void;
 
   private:
@@ -106,7 +106,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @param[in] move_info
      */
-    auto _update_move_2pin_net(gsl::span<const std::uint8_t> part,
+    auto _update_move_2pin_net(std::span<const std::uint8_t> part,
                                const MoveInfo<node_t>& move_info) -> void;
 
     /**
@@ -115,7 +115,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @param[in] move_info
      */
-    auto _update_move_3pin_net(gsl::span<const std::uint8_t> part,
+    auto _update_move_3pin_net(std::span<const std::uint8_t> part,
                                const MoveInfo<node_t>& move_info) -> void;
 
     /**
@@ -124,6 +124,6 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @param[in] move_info
      */
-    auto _update_move_general_net(gsl::span<const std::uint8_t> part,
+    auto _update_move_general_net(std::span<const std::uint8_t> part,
                                   const MoveInfo<node_t>& move_info) -> void;
 };

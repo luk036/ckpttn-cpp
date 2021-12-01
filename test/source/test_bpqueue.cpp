@@ -1,8 +1,8 @@
 #include <doctest/doctest.h>
-
 #include <ckpttn/bpqueue.hpp>  // import bpqueue
 #include <ckpttn/dllist.hpp>   // import dllink
-#include <gsl/span>
+#include <cstdint>  // import uint32_t
+#include <span>
 
 using namespace std;
 
@@ -50,5 +50,5 @@ TEST_CASE("Test BPQueue") {
     // CHECK(count == 10);
 
     // const vector<uint8_t> a {3, 4, 5, 6};
-    // gsl::span<const uint8_t> s {a};
+    // std::span<const uint8_t> s {a};
 }

@@ -8,7 +8,7 @@ using namespace std;
  *
  * @param[in] part
  */
-auto FMBiGainMgr::init(gsl::span<const uint8_t> part) -> int {
+auto FMBiGainMgr::init(std::span<const uint8_t> part) -> int {
     auto totalcost = Base::init(part);
     for (auto& bckt : this->gainbucket) {
         bckt.clear();

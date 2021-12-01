@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cassert>
-#include <gsl/span>
+#include <span>
 
 #include "dllist.hpp"  // import dllink
 // #include <type_traits>
@@ -150,7 +150,7 @@ class bpqueue {
      *
      * @param[in,out] nodes
      */
-    // constexpr auto appendfrom(gsl::span<Item> nodes) noexcept -> void
+    // constexpr auto appendfrom(std::span<Item> nodes) noexcept -> void
     // {
     //     for (auto& it : nodes)
     //     {

@@ -2,7 +2,7 @@
 
 // import networkx as nx
 // #include <algorithm>
-// #include <gsl/span>
+// #include <span>
 // #include <iterator>
 // #include <py2cpp/py2cpp.hpp>
 // #include <utility>
@@ -53,8 +53,8 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param[in] part
      * @param[out] part_down
      */
-    void projection_down(gsl::span<const std::uint8_t> part,
-                         gsl::span<std::uint8_t> part_down) const;
+    void projection_down(std::span<const std::uint8_t> part,
+                         std::span<std::uint8_t> part_down) const;
 
     /**
      * @brief projection up
@@ -62,7 +62,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param[in] part
      * @param[out] part_up
      */
-    void projection_up(gsl::span<const std::uint8_t> part, gsl::span<std::uint8_t> part_up) const;
+    void projection_up(std::span<const std::uint8_t> part, std::span<std::uint8_t> part_up) const;
 
     /**
      * @brief Get the net weight

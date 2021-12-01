@@ -23,7 +23,7 @@ FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, uint8_t K)
  *
  * @param[in] part
  */
-void FMConstrMgr::init(gsl::span<const uint8_t> part) {
+void FMConstrMgr::init(std::span<const uint8_t> part) {
     fill(this->diff.begin(), this->diff.end(), 0);
     for (const auto& v : this->H) {
         // auto weight_v = this->H.get_module_weight(v);

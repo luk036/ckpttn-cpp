@@ -15,7 +15,7 @@ using namespace std;
  * @param[in] part
  * @param[in] vertex_list
  */
-void FMKWayGainCalc::_init_gain(const node_t& net, gsl::span<const uint8_t> part) {
+void FMKWayGainCalc::_init_gain(const node_t& net, std::span<const uint8_t> part) {
     const auto degree = this->H.G.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -43,7 +43,7 @@ void FMKWayGainCalc::_init_gain(const node_t& net, gsl::span<const uint8_t> part
  * @param[in] net
  * @param[in] part
  */
-void FMKWayGainCalc::_init_gain_2pin_net(const node_t& net, gsl::span<const uint8_t> part) {
+void FMKWayGainCalc::_init_gain_2pin_net(const node_t& net, std::span<const uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
@@ -67,7 +67,7 @@ void FMKWayGainCalc::_init_gain_2pin_net(const node_t& net, gsl::span<const uint
  * @param[in] net
  * @param[in] part
  */
-void FMKWayGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const uint8_t> part) {
+void FMKWayGainCalc::_init_gain_3pin_net(const node_t& net, std::span<const uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
@@ -118,7 +118,7 @@ void FMKWayGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const uint
  * @param[in] net
  * @param[in] part
  */
-void FMKWayGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const uint8_t> part) {
+void FMKWayGainCalc::_init_gain_general_net(const node_t& net, std::span<const uint8_t> part) {
     byte StackBufLocal[2048];
     FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<uint8_t>(this->K, 0, &rsrcLocal);
@@ -163,7 +163,7 @@ void FMKWayGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const u
  * @param[out] w
  * @return ret_2pin_info
  */
-auto FMKWayGainCalc::update_move_2pin_net(gsl::span<const uint8_t> part,
+auto FMKWayGainCalc::update_move_2pin_net(std::span<const uint8_t> part,
                                           const MoveInfo<node_t>& move_info)
     -> FMKWayGainCalc::node_t {
     // const auto& [net, v, fromPart, toPart] = move_info;
@@ -220,7 +220,7 @@ void FMKWayGainCalc::init_IdVec(const node_t& v, const node_t& net) {
  * @param[in] move_info
  * @return ret_info
  */
-auto FMKWayGainCalc::update_move_3pin_net(gsl::span<const uint8_t> part,
+auto FMKWayGainCalc::update_move_3pin_net(std::span<const uint8_t> part,
                                           const MoveInfo<node_t>& move_info)
     -> FMKWayGainCalc::ret_info {
     const auto degree = this->IdVec.size();
@@ -282,7 +282,7 @@ auto FMKWayGainCalc::update_move_3pin_net(gsl::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-auto FMKWayGainCalc::update_move_general_net(gsl::span<const uint8_t> part,
+auto FMKWayGainCalc::update_move_general_net(std::span<const uint8_t> part,
                                              const MoveInfo<node_t>& move_info)
     -> FMKWayGainCalc::ret_info {
     // const auto& [net, v, fromPart, toPart] = move_info;

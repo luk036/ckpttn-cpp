@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gsl/span>
+#include <span>
 #include <range/v3/algorithm/min_element.hpp>
 
 #include "FMConstrMgr.hpp"
@@ -41,7 +41,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> void {
+    auto init(std::span<const std::uint8_t> part) -> void {
         FMConstrMgr::init(part);
         auto it = this->diff.begin();
         for (auto& il : this->illegal) {

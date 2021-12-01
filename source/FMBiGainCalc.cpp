@@ -14,7 +14,7 @@ using namespace std;
  * @param[in] part
  */
 void FMBiGainCalc::_init_gain(  //
-    const node_t& net, gsl::span<const uint8_t> part) {
+    const node_t& net, std::span<const uint8_t> part) {
     const auto degree = this->H.G.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -43,7 +43,7 @@ void FMBiGainCalc::_init_gain(  //
  * @param[in] part
  */
 void FMBiGainCalc::_init_gain_2pin_net(  //
-    const node_t& net, gsl::span<const uint8_t> part) {
+    const node_t& net, std::span<const uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
@@ -63,7 +63,7 @@ void FMBiGainCalc::_init_gain_2pin_net(  //
  * @param[in] net
  * @param[in] part
  */
-void FMBiGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const uint8_t> part) {
+void FMBiGainCalc::_init_gain_3pin_net(const node_t& net, std::span<const uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
@@ -90,7 +90,7 @@ void FMBiGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const uint8_
  * @param[in] net
  * @param[in] part
  */
-void FMBiGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const uint8_t> part) {
+void FMBiGainCalc::_init_gain_general_net(const node_t& net, std::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
     for (const auto& w : this->H.G[net]) {
         num[part[w]] += 1;
@@ -126,7 +126,7 @@ void FMBiGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const uin
  * @param[out] w
  * @return int
  */
-auto FMBiGainCalc::update_move_2pin_net(gsl::span<const uint8_t> part,
+auto FMBiGainCalc::update_move_2pin_net(std::span<const uint8_t> part,
                                         const MoveInfo<node_t>& move_info) -> FMBiGainCalc::node_t {
     auto netCur = this->H.G[move_info.net].begin();
     auto w = (*netCur != move_info.v) ? *netCur : *++netCur;
@@ -168,7 +168,7 @@ void FMBiGainCalc::init_IdVec(const node_t& v, const node_t& net) {
  * @param[in] move_info
  * @return ret_info
  */
-auto FMBiGainCalc::update_move_3pin_net(gsl::span<const uint8_t> part,
+auto FMBiGainCalc::update_move_3pin_net(std::span<const uint8_t> part,
                                         const MoveInfo<node_t>& move_info) -> vector<int> {
     // const auto& [net, v, fromPart, _] = move_info;
     auto num = array<size_t, 2>{0U, 0U};
@@ -208,7 +208,7 @@ auto FMBiGainCalc::update_move_3pin_net(gsl::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-auto FMBiGainCalc::update_move_general_net(gsl::span<const uint8_t> part,
+auto FMBiGainCalc::update_move_general_net(std::span<const uint8_t> part,
                                            const MoveInfo<node_t>& move_info) -> vector<int> {
     // const auto& [net, v, fromPart, toPart] = move_info;
     auto num = array<uint8_t, 2>{0, 0};

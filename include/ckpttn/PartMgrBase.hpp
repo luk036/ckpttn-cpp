@@ -5,7 +5,7 @@
 // Snapshot in the form of "interface"???
 // #include "netlist.hpp"
 // #include <cinttypes>
-#include <gsl/span>
+#include <span>
 // #include <iterator>
 // #include <py2cpp/py2cpp.hpp>
 // #include <type_traits>
@@ -84,7 +84,7 @@ class PartMgrBase {
      *
      * @param[in,out] part
      */
-    void init(gsl::span<std::uint8_t> part);
+    void init(std::span<std::uint8_t> part);
 
     /**
      * @brief
@@ -92,14 +92,14 @@ class PartMgrBase {
      * @param[in,out] part
      * @return LegalCheck
      */
-    auto legalize(gsl::span<std::uint8_t> part) -> LegalCheck;
+    auto legalize(std::span<std::uint8_t> part) -> LegalCheck;
 
     /**
      * @brief
      *
      * @param[in,out] part
      */
-    void optimize(gsl::span<std::uint8_t> part);
+    void optimize(std::span<std::uint8_t> part);
 
   private:
     /**
@@ -107,5 +107,5 @@ class PartMgrBase {
      *
      * @param[in,out] part
      */
-    void _optimize_1pass(gsl::span<std::uint8_t> part);
+    void _optimize_1pass(std::span<std::uint8_t> part);
 };

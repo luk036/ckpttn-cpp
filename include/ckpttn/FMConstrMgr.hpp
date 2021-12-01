@@ -2,7 +2,7 @@
 
 #include <cinttypes>
 #include <cmath>
-#include <gsl/span>
+#include <span>
 #include <vector>
 
 #include "netlist.hpp"
@@ -54,7 +54,7 @@ class FMConstrMgr {
      *
      * @param[in] part
      */
-    auto init(gsl::span<const std::uint8_t> part) -> void;
+    auto init(std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief
