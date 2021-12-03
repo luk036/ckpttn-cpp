@@ -3,8 +3,9 @@
 // **Special code for two-pin nets**
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
+
 #include <gsl/span>
-#include <range/v3/algorithm/copy.hpp>
+// #include <range/v3/algorithm/copy.hpp>
 
 #include "PartMgrBase.hpp"
 
