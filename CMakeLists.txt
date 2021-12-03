@@ -10,7 +10,7 @@ option(INSTALL_ONLY "Enable for installation only" OFF)
 # Note: update this to your new project's name and version
 project(
   CkPttn
-  VERSION 1.0
+  VERSION 1.1
   LANGUAGES CXX)
 
 # ---- Include guards ----
@@ -95,7 +95,9 @@ packageproject(
   VERSION_HEADER
   "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY
-  SameMajorVersion)
+  SameMajorVersion
+  DEPENDENCIES
+  "XNetwork 1.2")
 
 if(NOT INSTALL_ONLY)
   add_subdirectory(test)
