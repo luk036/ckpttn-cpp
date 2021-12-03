@@ -66,7 +66,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
      */
     auto restore_part(const std::vector<std::uint8_t>& snapshot, gsl::span<std::uint8_t> part)
         -> void {
-        ranges::copy(snapshot, part.begin());
+        std::copy(snapshot.begin(), snapshot.end(), part.begin());
         // const auto N = part.size();
         // for (auto i = 0U; i != N; ++i)
         // {

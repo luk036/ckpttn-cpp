@@ -189,7 +189,7 @@ void readAre(SimpleNetlist& H, string_view areFileName) {
             w += node_t(padOffset);
         } else {
             cerr << "Syntax error in line " << lineno << ":"
-                      << R"(expect keyword "a" or "p")" << endl;
+                 << R"(expect keyword "a" or "p")" << endl;
             exit(0);
         }
 

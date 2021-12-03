@@ -1,7 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <gsl/span>
-#include <range/v3/algorithm/min_element.hpp>
+// #include <range/v3/algorithm/min_element.hpp>
 
 #include "FMConstrMgr.hpp"
 // #include <range/v3/view/zip.hpp>
@@ -32,7 +33,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
      * @return std::uint8_t
      */
     [[nodiscard]] auto select_togo() const -> std::uint8_t {
-        auto it = ranges::min_element(this->diff);
+        auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
         return std::uint8_t(std::distance(this->diff.cbegin(), it));
     }
 

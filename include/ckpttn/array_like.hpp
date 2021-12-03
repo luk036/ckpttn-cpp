@@ -2,27 +2,28 @@
 
 #include <any>
 #include <cassert>
-#include <range/v3/view/repeat_n.hpp>
+#include <cstddef>
+// #include <range/v3/view/repeat_n.hpp>
 // #include <type_traits>
 
-template <typename Val> inline auto get_repeat_array(const Val& a, std::ptrdiff_t n) {
-    using repeat_n_return_type = decltype(ranges::views::repeat_n(a, n));
+// template <typename Val> inline auto get_repeat_array(const Val& a, std::ptrdiff_t n) {
+//     using repeat_n_return_type = decltype(ranges::views::repeat_n(a, n));
 
-    struct iterable_wrapper : public repeat_n_return_type {
-      public:
-        using value_type [[maybe_unused]] = Val;   // luk:
-        using key_type [[maybe_unused]] = size_t;  // luk:
+//     struct iterable_wrapper : public repeat_n_return_type {
+//       public:
+//         using value_type [[maybe_unused]] = Val;   // luk:
+//         using key_type [[maybe_unused]] = size_t;  // luk:
 
-        iterable_wrapper(repeat_n_return_type&& base)
-            : repeat_n_return_type{std::forward<repeat_n_return_type>(base)} {}
+//         iterable_wrapper(repeat_n_return_type&& base)
+//             : repeat_n_return_type{std::forward<repeat_n_return_type>(base)} {}
 
-        [[nodiscard]] auto operator[](const std::any& /* don't care */) const -> const Val& {
-            return *this->begin();
-        }
-    };
+//         [[nodiscard]] auto operator[](const std::any& /* don't care */) const -> const Val& {
+//             return *this->begin();
+//         }
+//     };
 
-    return iterable_wrapper{ranges::views::repeat_n(a, n)};
-}
+//     return iterable_wrapper{ranges::views::repeat_n(a, n)};
+// }
 
 template <typename C> class shift_array : public C {
     using value_type = typename C::value_type;

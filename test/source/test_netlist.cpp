@@ -28,8 +28,8 @@ auto create_dwarf() -> SimpleNetlist {
     // char name[] = "ABCDE";
     auto edge_array
         = vector<Edge>{Edge(p1, n1), Edge(a0, n1), Edge(a1, n1), Edge(a0, n2), Edge(a2, n2),
-                            Edge(a3, n2), Edge(a1, n3), Edge(a2, n3), Edge(a3, n3), Edge(a2, n4),
-                            Edge(p2, n4), Edge(a3, n5), Edge(p3, n5), Edge(a0, n6)};
+                       Edge(a3, n2), Edge(a1, n3), Edge(a2, n3), Edge(a3, n3), Edge(a2, n4),
+                       Edge(p2, n4), Edge(a3, n5), Edge(p3, n5), Edge(a0, n6)};
     // index_t indices[] = {0, 1, 2, 3, 4, 5};
     // int num_arcs = sizeof(edge_array) / sizeof(Edge);
     // auto R = py::range(num_nodes);
@@ -69,7 +69,7 @@ auto create_test_netlist() -> SimpleNetlist {
 
     // char name[] = "ABCDE";
     auto edge_array = vector<Edge>{Edge(a1, n1), Edge(a1, n2), Edge(a2, n1),
-                                        Edge(a2, n2), Edge(a3, n2), Edge(a1, n3)};
+                                   Edge(a2, n2), Edge(a3, n2), Edge(a1, n3)};
     // index_t indices[] = {0, 1, 2, 3, 4, 5};
     // auto num_arcs = sizeof(edge_array) / sizeof(Edge);
     // auto g = graph_t{edge_array, edge_array + num_arcs, num_nodes};

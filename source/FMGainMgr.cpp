@@ -7,7 +7,6 @@ using node_t = typename SimpleNetlist::node_t;
 // using namespace ranges;
 using namespace std;
 
-
 /**
  * @brief Construct a new FMGainMgr object
  *

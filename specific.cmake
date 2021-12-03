@@ -21,7 +21,7 @@ cpmaddpackage(
 )
 
 cpmaddpackage("gh:microsoft/GSL@3.1.0")
-cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
+# cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
 
 cpmaddpackage(NAME cppcoro GIT_TAG 1.0 GITHUB_REPOSITORY luk036/cppcoro)
 # print_target_properties(cppcoro)
@@ -73,5 +73,4 @@ set(SPECIFIC_LIBS
     cppcoro::cppcoro
     Threads::Threads
     GSL
-    fmt::fmt
-    range-v3)
+    fmt::fmt)
