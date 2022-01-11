@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for TestCase, TEST_CASE
 
-#include <__config>                 // for std
-#include <__hash_table>             // for operator!=
+// #include <__config>                 // for std
+// #include <__hash_table>             // for operator!=
 #include <ckpttn/netlist.hpp>       // for Netlist, Netlist<>::nodeview_t
 #include <ckpttn/netlist_algo.hpp>  // for min_maximal_matching, min_vertex_...
 #include <py2cpp/dict.hpp>          // for dict

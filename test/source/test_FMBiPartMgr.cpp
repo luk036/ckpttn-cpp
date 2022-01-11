@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 
-#include <__config>                  // for std
+// #include <__config>                  // for std
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 #include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr

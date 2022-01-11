@@ -2,7 +2,7 @@
 
 #include <stdint.h>  // for uint8_t
 
-#include <__hash_table>                // for operator!=
+// #include <__hash_table>                // for operator!=
 #include <gsl/span>                    // for span
 #include <py2cpp/dict.hpp>             // for dict
 #include <py2cpp/set.hpp>              // for set
