@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-// #include <cstdint>
 #include <utility>  // import std::move()
 
 // Forward declaration for begin() end()

@@ -12,7 +12,8 @@
 // #include <iostream>
 
 using node_t = typename SimpleNetlist::node_t;
-// using namespace std;
+extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node_t>&)
+    -> std::unique_ptr<SimpleHierNetlist>;
 
 /**
  * @brief run_Partition

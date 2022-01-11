@@ -6,20 +6,20 @@
 // #include "FMPartMgr.hpp" // import FMPartMgr
 // #include "netlist.hpp"
 #include <cassert>
-#include <ckpttn/HierNetlist.hpp>
-#include <gsl/span>
-#include <memory>  // std::unique_ptr
+#include <ckpttn/netlist.hpp>
+#include <gsl/span>  // for span
+#include <memory>    // std::unique_ptr
+// #include <py2cpp/range.hpp>  // for range
 // #include <ckpttn/FMConstrMgr.hpp>   // import LegalCheck
 
 // forward declare
-// template <typename nodeview_t, typename nodemap_t>
-// struct Netlist;
+// template <typename nodeview_t, typename nodemap_t> struct Netlist;
 // using RngIter = decltype(py::range(1));
 // using SimpleNetlist = Netlist<RngIter, RngIter>;
 
-using node_t = typename SimpleNetlist::node_t;
-extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node_t>&)
-    -> std::unique_ptr<SimpleHierNetlist>;
+// using node_t = typename SimpleNetlist::node_t;
+// extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node_t>&)
+//     -> std::unique_ptr<SimpleHierNetlist>;
 
 enum class LegalCheck;
 

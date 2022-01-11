@@ -2,8 +2,7 @@
 
 #include <stdint.h>  // for int32_t
 
-#include <cassert>  // for assert
-// #include <type_traits>
+#include <cassert>      // for assert
 #include <type_traits>  // for make_unsigned_t, is_integral, integral_consta...
 #include <utility>      // for pair
 #include <vector>       // for vector, vector<>::value_type, vector<>::const...
