@@ -1,13 +1,14 @@
 #pragma once
 
-// import networkx as nx
-// #include <algorithm>
-#include <gsl/span>
-#include <iterator>
-#include <py2cpp/py2cpp.hpp>
-#include <utility>
-#include <vector>
-#include <xnetwork/classes/graph.hpp>
+#include <stddef.h>  // for size_t
+#include <stdint.h>  // for uint32_t, uint8_t
+
+#include <py2cpp/dict.hpp>             // for dict
+#include <py2cpp/range.hpp>            // for range, _iterator, iterable_wra...
+#include <py2cpp/set.hpp>              // for set
+#include <type_traits>                 // for move
+#include <vector>                      // for vector
+#include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
 
 // using node_t = int;
 

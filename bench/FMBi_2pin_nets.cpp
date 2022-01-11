@@ -1,9 +1,14 @@
-#include <ckpttn/FMBiConstrMgr.hpp>  // import FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>    // import FMBiGainMgr
-#include <ckpttn/FMPartMgr.hpp>      // import FMBiPartMgr#include <string_view>
-#include <string_view>
+#include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
+#include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
+#include <cstdint>                   // for uint8_t
+#include <string_view>               // for string_view
+#include <vector>                    // for vector
 
-#include "benchmark/benchmark.h"
+#include "benchmark/benchmark.h"    // for BENCHMARK, State, BENCHMARK_MAIN
+#include "ckpttn/FMBiGainCalc.hpp"  // for FMBiGainCalc
+#include "ckpttn/PartMgrBase.hpp"   // for SimpleNetlist
+#include "ckpttn/netlist.hpp"       // for Netlist
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf

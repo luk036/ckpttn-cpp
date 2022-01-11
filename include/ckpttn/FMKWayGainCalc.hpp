@@ -1,11 +1,19 @@
 #pragma once
 
-#include <gsl/span>
+#include <stdint.h>  // for uint8_t
+
+#include <algorithm>         // for fill
+#include <cstddef>           // for byte
+#include <gsl/span>          // for span
+#include <py2cpp/range.hpp>  // for _iterator
+#include <type_traits>       // for move
+#include <utility>           // for pair
+#include <vector>            // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"   // import dllink
-#include "netlist.hpp"  // import Netlist
-#include "robin.hpp"    // import robin
+#include "dllist.hpp"   // for dllink
+#include "netlist.hpp"  // for SimpleN...
+#include "robin.hpp"    // for robin<>...
 
 // class FMKWayGainMgr;
 

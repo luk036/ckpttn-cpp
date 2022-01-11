@@ -1,18 +1,25 @@
-#include <ckpttn/bpqueue.hpp>
-#include <ckpttn/netlist.hpp>
-#include <ckpttn/netlist_algo.hpp>
-#include <memory>
-#include <py2cpp/py2cpp.hpp>
+#include <ckpttn/netlist.hpp>       // for SimpleNetlist, index_t, Netlist
+#include <ckpttn/netlist_algo.hpp>  // for min_maximal_matching
 // #include <range/v3/all.hpp>
 // #include <range/v3/core.hpp>
 // #include <range/v3/numeric/accumulate.hpp>
 // #include <range/v3/view/enumerate.hpp>
 // #include <range/v3/view/remove_if.hpp>
 // #include <range/v3/view/transform.hpp>
-#include <ckpttn/HierNetlist.hpp>
-// #include <transrangers.hpp>
-#include <tuple>
-#include <vector>
+#include <stdint.h>  // for uint32_t
+
+#include <__config>                    // for std
+#include <__hash_table>                // for operator!=, __hash_const_iterator
+#include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
+#include <memory>                      // for unique_ptr, make_unique
+#include <py2cpp/dict.hpp>             // for dict, dict<>::Base
+#include <py2cpp/range.hpp>            // for _iterator, iterable_wrapper
+#include <py2cpp/set.hpp>              // for set
+#include <type_traits>                 // for move
+#include <unordered_map>               // for __hash_map_iterator, operator!=
+#include <utility>                     // for get
+#include <vector>                      // for vector<>::iterator, vector
+#include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
 
 using node_t = typename SimpleNetlist::node_t;
 using namespace std;

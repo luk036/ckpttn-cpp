@@ -1,11 +1,10 @@
 #pragma once
 
-#include <cinttypes>
-#include <cmath>
-#include <gsl/span>
-#include <vector>
+#include <cinttypes>  // for uint8_t
+#include <gsl/span>   // for span
+#include <vector>     // for vector
 
-#include "netlist.hpp"
+#include "netlist.hpp"  // for SimpleNetlist
 
 /**
  * @brief Check if the move of v can satisfied, getbetter, or notsatisfied

@@ -1,4 +1,5 @@
 #include <ckpttn/bpqueue.hpp>
+#include <cstdint>  // for int32_t
 
 /**
  * @brief sentinel

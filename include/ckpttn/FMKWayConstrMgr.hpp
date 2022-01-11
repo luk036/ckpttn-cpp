@@ -1,10 +1,15 @@
 #pragma once
 
-#include <algorithm>
-#include <gsl/span>
+#include <stdint.h>  // for uint8_t
+
+#include <algorithm>  // for min_element
+#include <gsl/span>   // for span
+#include <iterator>   // for distance
+#include <vector>     // for vector
 // #include <range/v3/algorithm/min_element.hpp>
 
-#include "FMConstrMgr.hpp"
+#include "FMConstrMgr.hpp"     // for FMConstrMgr, FMConstrMgr::node_t, Lega...
+#include "ckpttn/netlist.hpp"  // for MoveInfoV (ptr only), SimpleNetlist
 // #include <range/v3/view/zip.hpp>
 // Check if (the move of v can satisfied, makebetter, or notsatisfied
 

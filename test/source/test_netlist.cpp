@@ -1,10 +1,14 @@
 // -*- coding: utf-8 -*-
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 
-#include <ckpttn/netlist.hpp>
+#include <ckpttn/netlist.hpp>          // for Netlist, SimpleNetlist, graph_t
+#include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph
 // #include <py2cpp/py2cpp.hpp>
-#include <utility>  // for pair
-#include <vector>
+#include <__config>     // for std
+#include <cstdint>      // for uint32_t
+#include <type_traits>  // for move
+#include <utility>      // for pair
+#include <vector>       // for vector
 
 using namespace std;
 

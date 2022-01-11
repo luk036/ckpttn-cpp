@@ -1,5 +1,7 @@
 // #include <algorithm> // import std::any_of()
 #include <ckpttn/FMKWayConstrMgr.hpp>
+
+#include "ckpttn/FMConstrMgr.hpp"  // for LegalCheck, LegalCheck::allsatisfied
 // #include <range/v3/algorithm/any_of.hpp>
 
 /**

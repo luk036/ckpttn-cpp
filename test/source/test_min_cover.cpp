@@ -1,11 +1,13 @@
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 
-#include <ckpttn/HierNetlist.hpp>  // import Netlist
-#include <ckpttn/netlist.hpp>      // import Netlist
-#include <ckpttn/netlist_algo.hpp>
-#include <memory>  //unique_ptr
-#include <py2cpp/py2cpp.hpp>
-#include <string_view>
+#include <__config>                // for std
+#include <ckpttn/HierNetlist.hpp>  // for HierNetlist, SimpleHierNetlist
+#include <ckpttn/netlist.hpp>      // for Netlist, SimpleNetlist
+#include <cstdint>                 // for uint8_t
+#include <memory>                  // for unique_ptr
+#include <py2cpp/set.hpp>          // for set
+#include <string_view>             // for string_view
+#include <vector>                  // for vector, operator==
 
 using namespace std;
 

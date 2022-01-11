@@ -1,9 +1,20 @@
+#include <assert.h>  // for assert
+
 #include <ckpttn/FMKWayGainCalc.hpp>
-#include <ckpttn/FMPmrConfig.hpp>
+#include <ckpttn/FMPmrConfig.hpp>      // for FM_MAX_DEGREE, FM_MAX_NUM_PART...
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph
 // #include <range/v3/view/enumerate.hpp>
 // #include <range/v3/view/zip.hpp>
 // #include <range/v3/view/remove_if.hpp>
-#include <vector>
+#include <__config>          // for std
+#include <__hash_table>      // for __hash_const_iterator, operator!=
+#include <initializer_list>  // for initializer_list
+#include <vector>            // for vector, __vector_base<>::value...
+
+#include "ckpttn/dllist.hpp"   // for dllink
+#include "ckpttn/netlist.hpp"  // for SimpleNetlist, MoveInfo
+#include "ckpttn/robin.hpp"    // for robin<>::iterable_wrapper
 
 // using namespace ranges;
 using namespace std;

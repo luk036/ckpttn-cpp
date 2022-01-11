@@ -1,8 +1,9 @@
 // -*- coding: utf-8 -*-
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST_CASE
 
-#include <ckpttn/netlist.hpp>
-#include <string_view>
+#include <__config>            // for std
+#include <ckpttn/netlist.hpp>  // for Netlist, SimpleNetlist
+#include <string_view>         // for string_view
 
 using namespace std;
 

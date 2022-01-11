@@ -1,11 +1,14 @@
 #pragma once
 
-#include <cassert>
-#include <gsl/span>
+#include <stdint.h>  // for int32_t
 
-#include "dllist.hpp"  // import dllink
+#include <cassert>  // for assert
 // #include <type_traits>
-#include <vector>
+#include <type_traits>  // for make_unsigned_t, is_integral, integral_consta...
+#include <utility>      // for pair
+#include <vector>       // for vector, vector<>::value_type, vector<>::const...
+
+#include "dllist.hpp"  // for dllink, dll_iterator
 
 // Forward declaration for begin() end()
 template <typename _Tp, typename Int> class bpq_iterator;

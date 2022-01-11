@@ -1,8 +1,12 @@
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expr...
 
-#include <cinttypes>
-#include <ckpttn/dllist.hpp>  // import  dllink
-#include <ckpttn/robin.hpp>   // import  robin
+#include <__config>                        // for std
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <boost/container/vector.hpp>      // for operator!=
+#include <cinttypes>                       // for uint8_t
+#include <ckpttn/dllist.hpp>               // for dllink, dll_iterator, oper...
+#include <ckpttn/robin.hpp>                // for robin, robin<>::iterable_w...
+#include <utility>                         // for pair
 
 using namespace std;
 

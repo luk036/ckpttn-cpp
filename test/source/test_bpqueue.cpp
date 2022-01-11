@@ -1,8 +1,11 @@
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
-#include <ckpttn/bpqueue.hpp>  // import bpqueue
-#include <ckpttn/dllist.hpp>   // import dllink
-#include <gsl/span>
+#include <__config>            // for std
+#include <ckpttn/bpqueue.hpp>  // for bpqueue
+#include <ckpttn/dllist.hpp>   // for dllink
+#include <cstdint>             // for int32_t, uint32_t
+#include <utility>             // for pair
+#include <vector>              // for vector
 
 using namespace std;
 

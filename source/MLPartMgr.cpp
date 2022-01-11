@@ -1,5 +1,14 @@
-#include <ckpttn/FMConstrMgr.hpp>  // import LegalCheck
-#include <ckpttn/MLPartMgr.hpp>
+#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::allsatisfied
+#include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr, create_contraction_subg...
+#include <cstdint>                 // for uint8_t
+#include <gsl/span>                // for span
+#include <memory>                  // for unique_ptr
+#include <py2cpp/set.hpp>          // for set
+#include <tuple>                   // for tuple
+#include <vector>                  // for vector
+
+#include "ckpttn/HierNetlist.hpp"  // for HierNetlist
+#include "ckpttn/netlist.hpp"      // for SimpleNetlist
 // #include <iostream>
 
 using node_t = typename SimpleNetlist::node_t;
@@ -60,15 +69,14 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
     return legalcheck;
 }
 
-#include <ckpttn/FMBiConstrMgr.hpp>  // import FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>    // import FMBiGainMgr
-#include <ckpttn/FMPartMgr.hpp>      // import FMBiPartMgr
+#include <ckpttn/FMBiConstrMgr.hpp>    // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>      // for FMBiGainMgr
+#include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
+#include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
+#include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
 
 template auto MLPartMgr::run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(
     const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
-
-#include <ckpttn/FMKWayConstrMgr.hpp>  // import FMKWayConstrMgr
-#include <ckpttn/FMKWayGainMgr.hpp>    // import FMKWayGainMgr
 
 template auto MLPartMgr::run_FMPartition<FMPartMgr<FMKWayGainMgr, FMKWayConstrMgr>>(
     const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;

@@ -1,15 +1,17 @@
 #pragma once
 
-#include <algorithm>
-#include <cinttypes>
-#include <gsl/span>
-#include <iterator>
-#include <memory>
-#include <type_traits>
+#include <algorithm>  // for all_of
+#include <cinttypes>  // for uint8_t, uint32_t
+#include <gsl/span>   // for span
+#include <tuple>      // for tuple
+#include <utility>    // for pair
+#include <vector>     // for vector<>::const_iterator, vector
 
-#include "bpqueue.hpp"  // import bpqueue
-#include "dllist.hpp"   // import dllink
-#include "netlist.hpp"  // import Netlist
+#include "bpqueue.hpp"                // for bpqueue
+#include "ckpttn/FMBiGainCalc.hpp"    // for FMBiGainCalc
+#include "ckpttn/FMKWayGainCalc.hpp"  // for FMKWayGainCalc
+#include "dllist.hpp"                 // for dllink
+#include "netlist.hpp"                // for SimpleNetlist
 
 /**
  * @brief

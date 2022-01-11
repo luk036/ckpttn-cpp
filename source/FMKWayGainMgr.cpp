@@ -1,5 +1,19 @@
-#include <ckpttn/FMKWayGainCalc.hpp>
-#include <ckpttn/FMKWayGainMgr.hpp>
+#include <stdint.h>  // for uint8_t
+
+#include <__config>                        // for std
+#include <__hash_table>                    // for __hash_const_iterator, ope...
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <ckpttn/FMKWayGainCalc.hpp>       // for FMKWayGainCalc
+#include <ckpttn/FMKWayGainMgr.hpp>        // for FMKWayGainMgr, FMKWayGainM...
+#include <gsl/span>                        // for span
+#include <py2cpp/range.hpp>                // for _iterator
+#include <py2cpp/set.hpp>                  // for set
+#include <vector>                          // for vector, __vector_base<>::v...
+
+#include "ckpttn/FMGainMgr.hpp"  // for FMGainMgr::Item
+#include "ckpttn/bpqueue.hpp"    // for bpqueue
+#include "ckpttn/netlist.hpp"    // for MoveInfoV, Netlist, Simple...
+#include "ckpttn/robin.hpp"      // for robin<>::iterable_wrapper
 
 using namespace std;
 

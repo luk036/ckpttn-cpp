@@ -4,10 +4,15 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 
-#include <gsl/span>
+#include <stddef.h>  // for size_t
+#include <stdint.h>  // for uint8_t
+
+#include <algorithm>  // for copy
+#include <gsl/span>   // for span
+#include <vector>     // for vector
 // #include <range/v3/algorithm/copy.hpp>
 
-#include "PartMgrBase.hpp"
+#include "PartMgrBase.hpp"  // for PartMgrBase, SimpleNetlist
 
 /**
  * @brief FM Partition Manager

@@ -1,6 +1,15 @@
+#include <__config>                    // for std
+#include <__hash_table>                // for __hash_const_iterator, operator!=
+#include <array>                       // for array
+#include <boost/container/vector.hpp>  // for operator!=, vec_iterator, vector
 #include <ckpttn/FMBiGainCalc.hpp>
-#include <ckpttn/FMPmrConfig.hpp>
-#include <vector>
+#include <ckpttn/FMPmrConfig.hpp>      // for FM_MAX_DEGREE
+#include <initializer_list>            // for initializer_list
+#include <py2cpp/set.hpp>              // for set
+#include <vector>                      // for vector
+#include <xnetwork/classes/graph.hpp>  // for Graph
+
+#include "ckpttn/netlist.hpp"  // for SimpleNetlist, MoveInfo
 // #include <range/v3/view/remove_if.hpp>
 // #include <transrangers.hpp>
 // #include <range/v3/view/all.hpp>

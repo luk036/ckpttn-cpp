@@ -1,10 +1,13 @@
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for TestCase, TEST_CASE
 
-#include <ckpttn/netlist.hpp>       // import Netlist
-#include <ckpttn/netlist_algo.hpp>  // import Netlist
-// #include <memory> //unique_ptr
-#include <py2cpp/py2cpp.hpp>
-#include <string_view>
+#include <__config>                 // for std
+#include <__hash_table>             // for operator!=
+#include <ckpttn/netlist.hpp>       // for Netlist, Netlist<>::nodeview_t
+#include <ckpttn/netlist_algo.hpp>  // for min_maximal_matching, min_vertex_...
+#include <py2cpp/dict.hpp>          // for dict
+#include <py2cpp/range.hpp>         // for _iterator, iterable_wrapper
+#include <py2cpp/set.hpp>           // for set
+#include <string_view>              // for string_view
 
 using namespace std;
 

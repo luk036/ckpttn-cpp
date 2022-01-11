@@ -1,9 +1,10 @@
 // -*- coding: utf-8 -*-
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 
-#include <cinttypes>
-#include <py2cpp/py2cpp.hpp>
-#include <xnetwork/classes/graph.hpp>
+#include <__hash_table>                // for __hash_const_iterator, operator!=
+#include <py2cpp/range.hpp>            // for _iterator
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph, SimpleGraph
 
 /**
  * @brief Create a test netlist object

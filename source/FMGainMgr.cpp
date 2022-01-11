@@ -1,7 +1,19 @@
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <boost/container/vector.hpp>      // for operator!=, vec_iterator
 #include <ckpttn/FMGainMgr.hpp>
-#include <ckpttn/FMPmrConfig.hpp>
+#include <ckpttn/FMPmrConfig.hpp>      // for FM_MAX_DEGREE
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph
 // #include <range/v3/view/zip.hpp>
-#include <vector>
+#include <__config>      // for std
+#include <__hash_table>  // for __hash_const_iterator, ope...
+#include <iterator>      // for distance
+#include <type_traits>   // for is_base_of, integral_const...
+#include <vector>        // for vector<>::iterator, vector
+
+#include "ckpttn/bpqueue.hpp"  // for bpqueue
+#include "ckpttn/dllist.hpp"   // for dllink
+#include "ckpttn/netlist.hpp"  // for MoveInfoV, SimpleNetlist
 
 using node_t = typename SimpleNetlist::node_t;
 // using namespace ranges;
@@ -188,8 +200,10 @@ void FMGainMgr<GainCalc, Derived>::_update_move_general_net(gsl::span<const uint
     }
 }
 
-#include <ckpttn/FMBiGainMgr.hpp>  // import FMBiGainMgr
+#include <ckpttn/FMBiGainMgr.hpp>  // for FMBiGainMgr
+
 template class FMGainMgr<FMBiGainCalc, FMBiGainMgr>;
 
-#include <ckpttn/FMKWayGainMgr.hpp>  // import FMKWayGainMgr
+#include <ckpttn/FMKWayGainMgr.hpp>  // for FMKWayGainMgr
+
 template class FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>;

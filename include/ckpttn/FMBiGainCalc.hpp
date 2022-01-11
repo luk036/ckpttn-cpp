@@ -1,10 +1,15 @@
 #pragma once
 
-#include <gsl/span>
+#include <cstddef>           // for byte
+#include <cstdint>           // for uint8_t
+#include <gsl/span>          // for span
+#include <py2cpp/range.hpp>  // for _iterator
+#include <utility>           // for pair
+#include <vector>            // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"   // import dllink
-#include "netlist.hpp"  // import Netlist
+#include "dllist.hpp"   // for dllink
+#include "netlist.hpp"  // for SimpleN...
 
 // struct FMBiGainMgr;
 

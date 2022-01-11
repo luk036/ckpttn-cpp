@@ -1,7 +1,14 @@
-#include <cassert>
-#include <ckpttn/FMConstrMgr.hpp>  // import LegalCheck
-#include <ckpttn/PartMgrBase.hpp>
-#include <ckpttn/netlist.hpp>
+#include <__tuple>                 // for tuple_element<>::type
+#include <cassert>                 // for assert
+#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::notsat...
+#include <ckpttn/PartMgrBase.hpp>  // for PartMgrBase, part, SimpleNetlist
+#include <ckpttn/netlist.hpp>      // for Netlist, MoveInfoV
+#include <cstdint>                 // for uint8_t
+#include <gsl/span>                // for span
+#include <py2cpp/range.hpp>        // for _iterator
+#include <py2cpp/set.hpp>          // for set
+#include <tuple>                   // for get
+#include <vector>                  // for vector
 
 using node_t = typename SimpleNetlist::node_t;
 // using namespace std;
@@ -164,11 +171,13 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> 
     }
 }
 
-#include <ckpttn/FMKWayConstrMgr.hpp>  // import FMKWayConstrMgr
-#include <ckpttn/FMKWayGainMgr.hpp>    // import FMKWayGainMgr
-#include <ckpttn/FMPartMgr.hpp>        // import FMPartMgr
+#include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
+#include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
+#include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
+
 template class PartMgrBase<FMKWayGainMgr, FMKWayConstrMgr, FMPartMgr>;
 
-#include <ckpttn/FMBiConstrMgr.hpp>  // import FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>    // import FMBiGainMgr
+#include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
+
 template class PartMgrBase<FMBiGainMgr, FMBiConstrMgr, FMPartMgr>;
