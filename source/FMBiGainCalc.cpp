@@ -9,7 +9,8 @@
 #include <vector>                      // for vector
 #include <xnetwork/classes/graph.hpp>  // for Graph
 
-#include "ckpttn/netlist.hpp"  // for SimpleNetlist, MoveInfo
+#include "ckpttn/moveinfo.hpp"  // for MoveInfo
+#include "ckpttn/netlist.hpp"   // for SimpleNetlist
 // #include <range/v3/view/remove_if.hpp>
 // #include <transrangers.hpp>
 // #include <range/v3/view/all.hpp>

@@ -6,10 +6,12 @@
 #include <py2cpp/range.hpp>  // for _iterator
 #include <utility>           // for pair
 #include <vector>            // for vector
+#include <xnetwork/classes/graph.hpp>
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"   // for dllink
-#include "netlist.hpp"  // for SimpleN...
+#include "dllist.hpp"    // for dllink
+#include "moveinfo.hpp"  // for MoveInfo
+#include "netlist.hpp"   // for SimpleN...
 
 // struct FMBiGainMgr;
 
@@ -21,7 +23,7 @@ class FMBiGainCalc {
     friend class FMBiGainMgr;
 
   public:
-    using node_t = typename SimpleNetlist::node_t;
+    using node_t = typename xnetwork::SimpleGraph::node_t;
     using Item = dllink<std::pair<node_t, uint32_t>>;
 
   private:

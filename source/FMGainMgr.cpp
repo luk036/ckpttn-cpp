@@ -1,19 +1,15 @@
-#include <boost/container/pmr/vector.hpp>  // for vector
-#include <boost/container/vector.hpp>      // for operator!=, vec_iterator
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp>      // for FM_MAX_DEGREE
+#include <iterator>                    // for distance
 #include <py2cpp/set.hpp>              // for set
+#include <type_traits>                 // for is_base_of, integral_const...
+#include <vector>                      // for vector<>::iterator, vector
 #include <xnetwork/classes/graph.hpp>  // for Graph
-// #include <range/v3/view/zip.hpp>
-// #include <__config>      // for std
-// #include <__hash_table>  // for __hash_const_iterator, ope...
-#include <iterator>     // for distance
-#include <type_traits>  // for is_base_of, integral_const...
-#include <vector>       // for vector<>::iterator, vector
 
-#include "ckpttn/bpqueue.hpp"  // for bpqueue
-#include "ckpttn/dllist.hpp"   // for dllink
-#include "ckpttn/netlist.hpp"  // for MoveInfoV, SimpleNetlist
+#include "ckpttn/bpqueue.hpp"   // for bpqueue
+#include "ckpttn/dllist.hpp"    // for dllink
+#include "ckpttn/moveinfo.hpp"  // for MoveInfoV
+#include "ckpttn/netlist.hpp"   // for SimpleNetlist
 
 using node_t = typename SimpleNetlist::node_t;
 // using namespace ranges;

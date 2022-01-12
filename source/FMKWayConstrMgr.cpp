@@ -1,8 +1,21 @@
 // #include <algorithm> // import std::any_of()
+#include <algorithm>  // for min_element
 #include <ckpttn/FMKWayConstrMgr.hpp>
+#include <iterator>  // for distance
 
 #include "ckpttn/FMConstrMgr.hpp"  // for LegalCheck, LegalCheck::allsatisfied
+#include "ckpttn/moveinfo.hpp"     // for MoveInfo
 // #include <range/v3/algorithm/any_of.hpp>
+
+/**
+ * @brief
+ *
+ * @return std::uint8_t
+ */
+auto FMKWayConstrMgr::select_togo() const -> std::uint8_t {
+    auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
+    return std::uint8_t(std::distance(this->diff.cbegin(), it));
+}
 
 /**
  * @brief

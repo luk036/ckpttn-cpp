@@ -1,9 +1,10 @@
 // #include <__config>   // for std
 #include <algorithm>  // for fill
 #include <ckpttn/FMConstrMgr.hpp>
-#include <ckpttn/netlist.hpp>  // for MoveInfoV, SimpleNetlist, Netlist
-#include <cmath>               // for round
-#include <py2cpp/range.hpp>    // for _iterator
+#include <ckpttn/moveinfo.hpp>  // for MoveInfoV
+#include <ckpttn/netlist.hpp>   // for SimpleNetlist, Netlist
+#include <cmath>                // for round
+#include <py2cpp/range.hpp>     // for _iterator
 // #include <transrangers.hpp>
 
 using namespace std;

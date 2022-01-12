@@ -2,14 +2,16 @@
 
 #include <stdint.h>  // for uint8_t
 
-#include <algorithm>  // for min_element
-#include <gsl/span>   // for span
-#include <iterator>   // for distance
-#include <vector>     // for vector
-// #include <range/v3/algorithm/min_element.hpp>
+#include <gsl/span>  // for span
+#include <vector>    // for vector
 
-#include "FMConstrMgr.hpp"     // for FMConstrMgr, FMConstrMgr::node_t, Lega...
-#include "ckpttn/netlist.hpp"  // for MoveInfoV (ptr only), SimpleNetlist
+#include "FMConstrMgr.hpp"  // for FMConstrMgr, FMConstrMgr::node_t, Lega...
+#include "moveinfo.hpp"     // for MoveInfo
+
+// forward declare
+template <typename graph_t> struct Netlist;
+using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
+
 // #include <range/v3/view/zip.hpp>
 // Check if (the move of v can satisfied, makebetter, or notsatisfied
 
@@ -37,10 +39,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
      *
      * @return std::uint8_t
      */
-    [[nodiscard]] auto select_togo() const -> std::uint8_t {
-        auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
-        return std::uint8_t(std::distance(this->diff.cbegin(), it));
-    }
+    [[nodiscard]] auto select_togo() const -> std::uint8_t;
 
     /**
      * @brief

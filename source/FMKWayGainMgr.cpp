@@ -12,6 +12,7 @@
 
 #include "ckpttn/FMGainMgr.hpp"  // for FMGainMgr::Item
 #include "ckpttn/bpqueue.hpp"    // for bpqueue
+#include "ckpttn/moveinfo.hpp"   // for MoveInfo
 #include "ckpttn/netlist.hpp"    // for MoveInfoV, Netlist, Simple...
 #include "ckpttn/robin.hpp"      // for robin<>::iterable_wrapper
 

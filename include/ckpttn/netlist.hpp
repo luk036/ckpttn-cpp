@@ -178,20 +178,6 @@ using graph_t = xnetwork::SimpleGraph;
 using index_t = uint32_t;
 using SimpleNetlist = Netlist<graph_t>;
 
-template <typename Node> struct MoveInfo {
-    Node net;
-    Node v;
-    std::uint8_t fromPart;
-    std::uint8_t toPart;
-};
-
-template <typename Node> struct MoveInfoV {
-    Node v;
-    std::uint8_t fromPart;
-    std::uint8_t toPart;
-    // node_t v;
-};
-
 template <typename Node> struct Snapshot {
     py::set<Node> extern_nets;
     py::dict<index_t, std::uint8_t> extern_modules;

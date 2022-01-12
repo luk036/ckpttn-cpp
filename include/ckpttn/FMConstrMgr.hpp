@@ -3,8 +3,13 @@
 #include <cinttypes>  // for uint8_t
 #include <gsl/span>   // for span
 #include <vector>     // for vector
+#include <xnetwork/classes/graph.hpp>
 
-#include "netlist.hpp"  // for SimpleNetlist
+#include "moveinfo.hpp"  // for MoveInfo
+
+// forward declare
+template <typename graph_t> struct Netlist;
+using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
 
 /**
  * @brief Check if the move of v can satisfied, getbetter, or notsatisfied
@@ -46,7 +51,7 @@ class FMConstrMgr {
     FMConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K);
 
   public:
-    using node_t = typename SimpleNetlist::node_t;
+    using node_t = typename xnetwork::SimpleGraph::node_t;
 
     /**
      * @brief

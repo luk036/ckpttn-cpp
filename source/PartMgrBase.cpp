@@ -1,7 +1,8 @@
 #include <cassert>                 // for assert
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::notsat...
 #include <ckpttn/PartMgrBase.hpp>  // for PartMgrBase, part, SimpleNetlist
-#include <ckpttn/netlist.hpp>      // for Netlist, MoveInfoV
+#include <ckpttn/moveinfo.hpp>     // for MoveInfoV
+#include <ckpttn/netlist.hpp>      // for Netlist
 #include <cstdint>                 // for uint8_t
 #include <gsl/span>                // for span
 #include <py2cpp/range.hpp>        // for _iterator
