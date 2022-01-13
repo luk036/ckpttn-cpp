@@ -11,20 +11,20 @@
  * @brief FMBiGainMgr
  *
  */
-class FMBiGainMgr : public FMGainMgr<FMBiGainCalc, FMBiGainMgr> {
+template <typename Gnl> class FMBiGainMgr : public FMGainMgr<Gnl, FMBiGainCalc, FMBiGainMgr<Gnl>> {
   public:
-    using Base = FMGainMgr<FMBiGainCalc, FMBiGainMgr>;
+    using Base = FMGainMgr<Gnl, FMBiGainCalc, FMBiGainMgr<Gnl>>;
     using GainCalc_ = FMBiGainCalc;
-    using node_t = typename SimpleNetlist::node_t;
+    using node_t = typename Gnl::node_t;
 
-    explicit FMBiGainMgr(const SimpleNetlist& H) : Base{H, 2} {}
+    explicit FMBiGainMgr(const Gnl& H) : Base{H, 2} {}
 
     /**
      * @brief Construct a new FMBiGainMgr object
      *
      * @param[in] H
      */
-    FMBiGainMgr(const SimpleNetlist& H, std::uint8_t /* K */) : Base{H, 2} {}
+    FMBiGainMgr(const Gnl& H, std::uint8_t /* K */) : Base{H, 2} {}
 
     /**
      * @brief

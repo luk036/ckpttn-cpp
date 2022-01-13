@@ -19,15 +19,15 @@
  * @tparam GainCalc
  * @tparam Derived
  */
-template <typename GainCalc, class Derived> class FMGainMgr {
+template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     Derived& self = *static_cast<Derived*>(this);
-    using node_t = typename SimpleNetlist::node_t;
+    using node_t = typename Gnl::node_t;
     // friend Derived;
     using Item = dllink<std::pair<node_t, uint32_t>>;
 
   protected:
     Item waitinglist{std::pair{node_t{}, uint32_t(0)}};
-    const SimpleNetlist& H;
+    const Gnl& H;
     std::vector<bpqueue<node_t>> gainbucket;
     // size_t pmax;
     std::uint8_t K;
@@ -45,7 +45,7 @@ template <typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] H
      * @param[in] K
      */
-    FMGainMgr(const SimpleNetlist& H, std::uint8_t K);
+    FMGainMgr(const Gnl& H, std::uint8_t K);
 
     /**
      * @brief

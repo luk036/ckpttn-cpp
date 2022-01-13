@@ -176,9 +176,9 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> 
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
 
-template class PartMgrBase<FMKWayGainMgr, FMKWayConstrMgr<SimpleNetlist>, FMPartMgr>;
+template class PartMgrBase<FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>, FMPartMgr>;
 
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 
-template class PartMgrBase<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>, FMPartMgr>;
+template class PartMgrBase<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>, FMPartMgr>;

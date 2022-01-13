@@ -17,13 +17,14 @@
 #include "robin.hpp"     // for robin<>...
 
 // class FMKWayGainMgr;
+template <typename Gnl> class FMKWayGainMgr;
 
 /**
  * @brief FMKWayGainCalc
  *
  */
 class FMKWayGainCalc {
-    friend class FMKWayGainMgr;
+    friend class FMKWayGainMgr<SimpleNetlist>;
     using node_t = typename SimpleNetlist::node_t;
     using Item = dllink<std::pair<node_t, uint32_t>>;
 

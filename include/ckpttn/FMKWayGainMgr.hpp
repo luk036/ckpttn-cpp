@@ -14,14 +14,15 @@
  * @brief FMKWayGainMgr
  *
  */
-class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr> {
+template <typename Gnl> class FMKWayGainMgr
+    : public FMGainMgr<Gnl, FMKWayGainCalc, FMKWayGainMgr<Gnl>> {
   private:
     robin<std::uint8_t> RR;
 
   public:
-    using Base = FMGainMgr<FMKWayGainCalc, FMKWayGainMgr>;
+    using Base = FMGainMgr<Gnl, FMKWayGainCalc, FMKWayGainMgr<Gnl>>;
     using GainCalc_ = FMKWayGainCalc;
-    using node_t = typename SimpleNetlist::node_t;
+    using node_t = typename Gnl::node_t;
 
     /**
      * @brief Construct a new FMKWayGainMgr object
@@ -29,7 +30,7 @@ class FMKWayGainMgr : public FMGainMgr<FMKWayGainCalc, FMKWayGainMgr> {
      * @param[in] H
      * @param[in] K
      */
-    FMKWayGainMgr(const SimpleNetlist& H, std::uint8_t K) : Base{H, K}, RR{K} {}
+    FMKWayGainMgr(const Gnl& H, std::uint8_t K) : Base{H, K}, RR{K} {}
 
     /**
      * @brief

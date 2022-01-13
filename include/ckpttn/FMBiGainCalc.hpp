@@ -14,13 +14,14 @@
 #include "netlist.hpp"   // for SimpleN...
 
 // struct FMBiGainMgr;
+template <typename Gnl> class FMBiGainMgr;
 
 /**
  * @brief FMBiGainCalc
  *
  */
 class FMBiGainCalc {
-    friend class FMBiGainMgr;
+    friend class FMBiGainMgr<SimpleNetlist>;
 
   public:
     using node_t = typename xnetwork::SimpleGraph::node_t;

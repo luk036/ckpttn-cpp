@@ -2,18 +2,14 @@
 
 // #include <__config>                        // for std
 // #include <__hash_table>                    // for __hash_const_iterator, ope...
-#include <boost/container/pmr/vector.hpp>  // for vector
-#include <ckpttn/FMKWayGainCalc.hpp>       // for FMKWayGainCalc
-#include <ckpttn/FMKWayGainMgr.hpp>        // for FMKWayGainMgr, FMKWayGainM...
-#include <gsl/span>                        // for span
-#include <py2cpp/range.hpp>                // for _iterator
-#include <py2cpp/set.hpp>                  // for set
-#include <vector>                          // for vector, __vector_base<>::v...
+#include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc
+#include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr, FMKWayGainM...
+#include <ckpttn/FMPmrConfig.hpp>     // for pmr::vector
+#include <gsl/span>                   // for span
 
 #include "ckpttn/FMGainMgr.hpp"  // for FMGainMgr::Item
 #include "ckpttn/bpqueue.hpp"    // for bpqueue
 #include "ckpttn/moveinfo.hpp"   // for MoveInfo
-#include "ckpttn/netlist.hpp"    // for MoveInfoV, Netlist, Simple...
 #include "ckpttn/robin.hpp"      // for robin<>::iterable_wrapper
 
 using namespace std;
@@ -24,7 +20,7 @@ using namespace std;
  * @param[in] part
  * @return int
  */
-auto FMKWayGainMgr::init(gsl::span<const uint8_t> part) -> int {
+template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
     auto totalcost = Base::init(part);
 
     for (auto& bckt : this->gainbucket) {
@@ -53,7 +49,9 @@ auto FMKWayGainMgr::init(gsl::span<const uint8_t> part) -> int {
  * @param[in] move_info_v
  * @param[in] gain
  */
-void FMKWayGainMgr::update_move_v(const MoveInfoV<node_t>& move_info_v, int gain) {
+template <typename Gnl>
+void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& move_info_v,
+                                       int gain) {
     // const auto& [v, fromPart, toPart] = move_info_v;
 
     for (auto k = 0U; k != this->K; ++k) {
@@ -66,3 +64,12 @@ void FMKWayGainMgr::update_move_v(const MoveInfoV<node_t>& move_info_v, int gain
     this->_set_key(move_info_v.fromPart, move_info_v.v, -gain);
     // this->_set_key(toPart, v, -2*this->pmax);
 }
+
+// instantiation
+
+#include <py2cpp/range.hpp>  // for _iterator
+#include <py2cpp/set.hpp>    // for set
+
+#include "ckpttn/netlist.hpp"  // for MoveInfoV, Netlist, Simple...
+
+template class FMKWayGainMgr<SimpleNetlist>;

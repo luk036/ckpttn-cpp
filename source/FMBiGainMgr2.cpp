@@ -10,7 +10,6 @@
 #include <vector>                   // for vector
 
 #include "ckpttn/bpqueue.hpp"  // for bpqueue
-#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
 
 using namespace std;
 
@@ -19,7 +18,7 @@ using namespace std;
  *
  * @param[in] part
  */
-auto FMBiGainMgr::init(gsl::span<const uint8_t> part) -> int {
+template <typename Gnl> auto FMBiGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
     auto totalcost = Base::init(part);
     for (auto& bckt : this->gainbucket) {
         bckt.clear();
@@ -35,3 +34,9 @@ auto FMBiGainMgr::init(gsl::span<const uint8_t> part) -> int {
     }
     return totalcost;
 }
+
+// instantiation
+
+#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
+
+template class FMBiGainMgr<SimpleNetlist>;

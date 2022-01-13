@@ -20,7 +20,7 @@ using namespace std;
  * @param[in] part_test
  */
 void run_FMBiGainMgr(const SimpleNetlist& H, gsl::span<uint8_t> part) {
-    auto mgr = FMBiGainMgr{H};
+    auto mgr = FMBiGainMgr<SimpleNetlist>{H};
     mgr.init(part);
     while (!mgr.is_empty()) {
         // Take the gainmax with v from gainbucket
