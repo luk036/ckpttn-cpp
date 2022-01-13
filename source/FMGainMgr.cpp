@@ -203,13 +203,16 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
     }
 }
 
+#include <ckpttn/FMBiGainCalc.hpp>     // for FMBiGainCalc
 #include <ckpttn/FMBiGainMgr.hpp>      // for FMBiGainMgr
 #include <xnetwork/classes/graph.hpp>  // for Graph
 
 #include "ckpttn/netlist.hpp"  // for SimpleNetlist
 
-template class FMGainMgr<SimpleNetlist, FMBiGainCalc, FMBiGainMgr<SimpleNetlist>>;
+template class FMGainMgr<SimpleNetlist, FMBiGainCalc<SimpleNetlist>, FMBiGainMgr<SimpleNetlist>>;
 
-#include <ckpttn/FMKWayGainMgr.hpp>  // for FMKWayGainMgr
+#include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc
+#include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr
 
-template class FMGainMgr<SimpleNetlist, FMKWayGainCalc, FMKWayGainMgr<SimpleNetlist>>;
+template class FMGainMgr<SimpleNetlist, FMKWayGainCalc<SimpleNetlist>,
+                         FMKWayGainMgr<SimpleNetlist>>;

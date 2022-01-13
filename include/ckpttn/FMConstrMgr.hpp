@@ -3,7 +3,6 @@
 #include <cinttypes>  // for uint8_t
 #include <gsl/span>   // for span
 #include <vector>     // for vector
-// #include <xnetwork/classes/graph.hpp>
 
 #include "moveinfo.hpp"  // for MoveInfo
 

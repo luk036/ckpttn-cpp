@@ -15,13 +15,13 @@
  *
  */
 template <typename Gnl> class FMKWayGainMgr
-    : public FMGainMgr<Gnl, FMKWayGainCalc, FMKWayGainMgr<Gnl>> {
+    : public FMGainMgr<Gnl, FMKWayGainCalc<Gnl>, FMKWayGainMgr<Gnl>> {
   private:
     robin<std::uint8_t> RR;
 
   public:
-    using Base = FMGainMgr<Gnl, FMKWayGainCalc, FMKWayGainMgr<Gnl>>;
-    using GainCalc_ = FMKWayGainCalc;
+    using Base = FMGainMgr<Gnl, FMKWayGainCalc<Gnl>, FMKWayGainMgr<Gnl>>;
+    using GainCalc_ = FMKWayGainCalc<Gnl>;
     using node_t = typename Gnl::node_t;
 
     /**

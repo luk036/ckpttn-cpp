@@ -2,18 +2,16 @@
 
 #include <stdint.h>  // for uint8_t
 
-#include <algorithm>         // for fill
-#include <cstddef>           // for byte
-#include <gsl/span>          // for span
-#include <py2cpp/range.hpp>  // for _iterator
-#include <type_traits>       // for move
-#include <utility>           // for pair
-#include <vector>            // for vector
+#include <algorithm>    // for fill
+#include <cstddef>      // for byte
+#include <gsl/span>     // for span
+#include <type_traits>  // for move
+#include <utility>      // for pair
+#include <vector>       // for vector
 
 #include "FMPmrConfig.hpp"
 #include "dllist.hpp"    // for dllink
 #include "moveinfo.hpp"  // for MoveInfo
-#include "netlist.hpp"   // for SimpleN...
 #include "robin.hpp"     // for robin<>...
 
 // class FMKWayGainMgr;
@@ -23,13 +21,13 @@ template <typename Gnl> class FMKWayGainMgr;
  * @brief FMKWayGainCalc
  *
  */
-class FMKWayGainCalc {
-    friend class FMKWayGainMgr<SimpleNetlist>;
-    using node_t = typename SimpleNetlist::node_t;
+template <typename Gnl> class FMKWayGainCalc {
+    friend class FMKWayGainMgr<Gnl>;
+    using node_t = typename Gnl::node_t;
     using Item = dllink<std::pair<node_t, uint32_t>>;
 
   private:
-    const SimpleNetlist& H;
+    const Gnl& H;
     std::uint8_t K;
     robin<std::uint8_t> RR;
     // size_t num_modules;
@@ -50,7 +48,7 @@ class FMKWayGainCalc {
      * @param[in] H Netlist
      * @param[in] K number of partitions
      */
-    FMKWayGainCalc(const SimpleNetlist& H, std::uint8_t K)
+    FMKWayGainCalc(const Gnl& H, std::uint8_t K)
         : H{H},
           K{K},
           RR{K},

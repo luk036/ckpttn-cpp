@@ -7,11 +7,9 @@
 #include <utility>    // for pair
 #include <vector>     // for vector<>::const_iterator, vector
 
-#include "bpqueue.hpp"                // for bpqueue
-#include "ckpttn/FMBiGainCalc.hpp"    // for FMBiGainCalc
-#include "ckpttn/FMKWayGainCalc.hpp"  // for FMKWayGainCalc
-#include "dllist.hpp"                 // for dllink
-// #include "netlist.hpp"                // for SimpleNetlist
+#include "bpqueue.hpp"   // for bpqueue
+#include "dllist.hpp"    // for dllink
+#include "moveinfo.hpp"  // for MoveInfo
 
 /**
  * @brief

@@ -11,10 +11,11 @@
  * @brief FMBiGainMgr
  *
  */
-template <typename Gnl> class FMBiGainMgr : public FMGainMgr<Gnl, FMBiGainCalc, FMBiGainMgr<Gnl>> {
+template <typename Gnl> class FMBiGainMgr
+    : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
   public:
-    using Base = FMGainMgr<Gnl, FMBiGainCalc, FMBiGainMgr<Gnl>>;
-    using GainCalc_ = FMBiGainCalc;
+    using Base = FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>>;
+    using GainCalc_ = FMBiGainCalc<Gnl>;
     using node_t = typename Gnl::node_t;
 
     explicit FMBiGainMgr(const Gnl& H) : Base{H, 2} {}

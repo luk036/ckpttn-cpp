@@ -1,15 +1,12 @@
 #include <assert.h>  // for assert
 
 #include <ckpttn/FMKWayGainCalc.hpp>
-#include <ckpttn/FMPmrConfig.hpp>      // for FM_MAX_DEGREE, FM_MAX_NUM_PART...
-#include <initializer_list>            // for initializer_list
-#include <py2cpp/set.hpp>              // for set
-#include <vector>                      // for vector, __vector_base<>::value...
-#include <xnetwork/classes/graph.hpp>  // for Graph
+#include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE, FM_MAX_NUM_PART...
+#include <initializer_list>        // for initializer_list
+#include <vector>                  // for vector, __vector_base<>::value...
 
 #include "ckpttn/dllist.hpp"    // for dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfo
-#include "ckpttn/netlist.hpp"   // for SimpleNetlist
 #include "ckpttn/robin.hpp"     // for robin<>::iterable_wrapper
 
 // using namespace ranges;
@@ -22,7 +19,8 @@ using namespace std;
  * @param[in] part
  * @param[in] vertex_list
  */
-void FMKWayGainCalc::_init_gain(const node_t& net, gsl::span<const uint8_t> part) {
+template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net,
+                                                             gsl::span<const uint8_t> part) {
     const auto degree = this->H.G.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -50,7 +48,9 @@ void FMKWayGainCalc::_init_gain(const node_t& net, gsl::span<const uint8_t> part
  * @param[in] net
  * @param[in] part
  */
-void FMKWayGainCalc::_init_gain_2pin_net(const node_t& net, gsl::span<const uint8_t> part) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
+                                              gsl::span<const uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
@@ -74,7 +74,9 @@ void FMKWayGainCalc::_init_gain_2pin_net(const node_t& net, gsl::span<const uint
  * @param[in] net
  * @param[in] part
  */
-void FMKWayGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const uint8_t> part) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
+                                              gsl::span<const uint8_t> part) {
     auto netCur = this->H.G[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
@@ -125,11 +127,13 @@ void FMKWayGainCalc::_init_gain_3pin_net(const node_t& net, gsl::span<const uint
  * @param[in] net
  * @param[in] part
  */
-void FMKWayGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const uint8_t> part) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
+                                                 gsl::span<const uint8_t> part) {
     byte StackBufLocal[2048];
     FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<uint8_t>(this->K, 0, &rsrcLocal);
-    // auto IdVec = FMPmr::vector<node_t>(&rsrc);
+    // auto IdVec = FMPmr::vector<typename Gnl::node_t>(&rsrc);
 
     for (const auto& w : this->H.G[net]) {
         num[part[w]] += 1;
@@ -170,9 +174,10 @@ void FMKWayGainCalc::_init_gain_general_net(const node_t& net, gsl::span<const u
  * @param[out] w
  * @return ret_2pin_info
  */
-auto FMKWayGainCalc::update_move_2pin_net(gsl::span<const uint8_t> part,
-                                          const MoveInfo<node_t>& move_info)
-    -> FMKWayGainCalc::node_t {
+template <typename Gnl>
+auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
+                                               const MoveInfo<typename Gnl::node_t>& move_info) ->
+    typename Gnl::node_t {
     // const auto& [net, v, fromPart, toPart] = move_info;
     assert(part[move_info.v] == move_info.fromPart);
 
@@ -210,7 +215,8 @@ auto FMKWayGainCalc::update_move_2pin_net(gsl::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-void FMKWayGainCalc::init_IdVec(const node_t& v, const node_t& net) {
+template <typename Gnl> void FMKWayGainCalc<Gnl>::init_IdVec(const typename Gnl::node_t& v,
+                                                             const typename Gnl::node_t& net) {
     this->IdVec.clear();
     for (const auto& w : this->H.G[net]) {
         if (w == v) {
@@ -227,9 +233,10 @@ void FMKWayGainCalc::init_IdVec(const node_t& v, const node_t& net) {
  * @param[in] move_info
  * @return ret_info
  */
-auto FMKWayGainCalc::update_move_3pin_net(gsl::span<const uint8_t> part,
-                                          const MoveInfo<node_t>& move_info)
-    -> FMKWayGainCalc::ret_info {
+template <typename Gnl>
+auto FMKWayGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
+                                               const MoveInfo<typename Gnl::node_t>& move_info)
+    -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->IdVec.size();
     auto deltaGain = vector<vector<int>>(degree, vector<int>(this->K, 0));
     auto weight = this->H.get_net_weight(move_info.net);
@@ -289,15 +296,16 @@ auto FMKWayGainCalc::update_move_3pin_net(gsl::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-auto FMKWayGainCalc::update_move_general_net(gsl::span<const uint8_t> part,
-                                             const MoveInfo<node_t>& move_info)
-    -> FMKWayGainCalc::ret_info {
+template <typename Gnl>
+auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
+                                                  const MoveInfo<typename Gnl::node_t>& move_info)
+    -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, fromPart, toPart] = move_info;
     byte StackBufLocal[FM_MAX_NUM_PARTITIONS];
     FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<uint8_t>(this->K, 0, &rsrcLocal);
 
-    // auto IdVec = vector<node_t> {};
+    // auto IdVec = vector<typename Gnl::node_t> {};
     // for (const auto& w : this->H.G[move_info.net])
     // {
     //     if (w == move_info.v)
@@ -343,3 +351,12 @@ auto FMKWayGainCalc::update_move_general_net(gsl::span<const uint8_t> part,
     };
     return deltaGain;
 }
+
+// instantiation
+
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph
+
+#include "ckpttn/netlist.hpp"  // for SimpleNetlist
+
+template class FMKWayGainCalc<SimpleNetlist>;

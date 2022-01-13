@@ -1,34 +1,30 @@
 #pragma once
 
-#include <cstddef>           // for byte
-#include <cstdint>           // for uint8_t
-#include <gsl/span>          // for span
-#include <py2cpp/range.hpp>  // for _iterator
-#include <utility>           // for pair
-#include <vector>            // for vector
-#include <xnetwork/classes/graph.hpp>
+#include <cstddef>   // for byte
+#include <cstdint>   // for uint8_t
+#include <gsl/span>  // for span
+#include <utility>   // for pair
+#include <vector>    // for vector
 
 #include "FMPmrConfig.hpp"
 #include "dllist.hpp"    // for dllink
 #include "moveinfo.hpp"  // for MoveInfo
-#include "netlist.hpp"   // for SimpleN...
 
-// struct FMBiGainMgr;
 template <typename Gnl> class FMBiGainMgr;
 
 /**
  * @brief FMBiGainCalc
  *
  */
-class FMBiGainCalc {
-    friend class FMBiGainMgr<SimpleNetlist>;
+template <typename Gnl> class FMBiGainCalc {
+    friend class FMBiGainMgr<Gnl>;
 
   public:
-    using node_t = typename xnetwork::SimpleGraph::node_t;
+    using node_t = typename Gnl::node_t;
     using Item = dllink<std::pair<node_t, uint32_t>>;
 
   private:
-    const SimpleNetlist& H;
+    const Gnl& H;
     std::vector<Item> vertex_list;
     int totalcost{0};
     std::byte StackBuf[8192];  // ???
@@ -44,7 +40,7 @@ class FMBiGainCalc {
      *
      * @param[in] H
      */
-    explicit FMBiGainCalc(const SimpleNetlist& H, std::uint8_t /*K*/)
+    explicit FMBiGainCalc(const Gnl& H, std::uint8_t /*K*/)
         : H{H}, vertex_list(H.number_of_modules()), rsrc(StackBuf, sizeof StackBuf), IdVec(&rsrc) {
         for (const auto& v : this->H) {
             this->vertex_list[v].data = std::pair{v, int32_t(0)};
