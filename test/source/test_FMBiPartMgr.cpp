@@ -25,8 +25,8 @@ extern void readAre(SimpleNetlist& H, string_view areFileName);
  */
 void run_FMBiPartMgr(const SimpleNetlist& H) {
     auto gainMgr = FMBiGainMgr{H};
-    auto constrMgr = FMBiConstrMgr{H, 0.4};
-    auto partMgr = FMPartMgr<FMBiGainMgr, FMBiConstrMgr>{H, gainMgr, constrMgr};
+    auto constrMgr = FMBiConstrMgr<SimpleNetlist>{H, 0.4};
+    auto partMgr = FMPartMgr<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>>{H, gainMgr, constrMgr};
     auto part = vector<uint8_t>(H.number_of_modules(), 0);
     partMgr.legalize(part);
     auto totalcostbefore = partMgr.totalcost;

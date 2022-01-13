@@ -13,10 +13,14 @@
 #include "ckpttn/PartMgrBase.hpp"  // for SimpleNetlist
 #include "ckpttn/netlist.hpp"      // for Netlist
 
-class FMBiConstrMgr;
+template <typename Gnl> class FMBiConstrMgr;
+
 class FMBiGainMgr;
-class FMKWayConstrMgr;
+
+template <typename Gnl> class FMKWayConstrMgr;
+
 class FMKWayGainMgr;
+
 template <typename GainMgr, typename ConstrMgr> class FMPartMgr;
 
 using namespace std;
@@ -32,7 +36,7 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto H = create_dwarf();
     auto partMgr = MLPartMgr{0.3};
     auto part = vector<uint8_t>(H.number_of_modules(), 0);
-    partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
+    partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>>>(H, part);
     CHECK(partMgr.totalcost == 2U);
 }
 
@@ -40,7 +44,7 @@ TEST_CASE("Test MLKWayPartMgr dwarf") {
     const auto H = create_dwarf();
     auto partMgr = MLPartMgr{0.4, 3};  // 0.3???
     auto part = vector<uint8_t>(H.number_of_modules(), 0);
-    partMgr.run_FMPartition<FMPartMgr<FMKWayGainMgr, FMKWayConstrMgr>>(H, part);
+    partMgr.run_FMPartition<FMPartMgr<FMKWayGainMgr, FMKWayConstrMgr<SimpleNetlist>>>(H, part);
     CHECK(partMgr.totalcost == 4U);
 }
 
@@ -57,7 +61,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
             whichPart ^= 1;
             elem = uint8_t(whichPart);
         }
-        partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
+        partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>>>(H, part);
         if (mincost > partMgr.totalcost) {
             mincost = partMgr.totalcost;
         }
@@ -82,7 +86,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
             whichPart ^= 1;
             elem = uint8_t(whichPart);
         }
-        partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
+        partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>>>(H, part);
         if (mincost > partMgr.totalcost) {
             mincost = partMgr.totalcost;
         }
@@ -101,7 +105,7 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     auto part = vector<uint8_t>(H.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
+    partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>>>(H, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(partMgr.totalcost >= 1104U);
@@ -116,7 +120,7 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     auto part = vector<uint8_t>(H.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr>>(H, part);
+    partMgr.run_FMPartition<FMPartMgr<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>>>(H, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(partMgr.totalcost >= 1104U);

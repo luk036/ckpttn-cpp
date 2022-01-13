@@ -2,14 +2,12 @@
 #include <algorithm>  // for fill
 #include <ckpttn/FMConstrMgr.hpp>
 #include <ckpttn/moveinfo.hpp>  // for MoveInfoV
-#include <ckpttn/netlist.hpp>   // for SimpleNetlist, Netlist
 #include <cmath>                // for round
-#include <py2cpp/range.hpp>     // for _iterator
 // #include <transrangers.hpp>
 
 using namespace std;
 
-FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, uint8_t K)
+template <typename Gnl> FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& H, double BalTol, uint8_t K)
     : H{H}, BalTol{BalTol}, diff(K, 0), K{K} {
     // using namespace transrangers;
     // this->totalweight
@@ -28,7 +26,7 @@ FMConstrMgr::FMConstrMgr(const SimpleNetlist& H, double BalTol, uint8_t K)
  *
  * @param[in] part
  */
-void FMConstrMgr::init(gsl::span<const uint8_t> part) {
+template <typename Gnl> void FMConstrMgr<Gnl>::init(gsl::span<const uint8_t> part) {
     fill(this->diff.begin(), this->diff.end(), 0);
     for (const auto& v : this->H) {
         // auto weight_v = this->H.get_module_weight(v);
@@ -42,7 +40,9 @@ void FMConstrMgr::init(gsl::span<const uint8_t> part) {
  * @param[in] move_info_v
  * @return LegalCheck
  */
-auto FMConstrMgr::check_legal(const MoveInfoV<node_t>& move_info_v) -> LegalCheck {
+template <typename Gnl>
+auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
+    -> LegalCheck {
     this->weight = this->H.get_module_weight(move_info_v.v);
     const auto diffFrom = this->diff[move_info_v.fromPart];
     if (diffFrom < this->lowerbound + this->weight) {
@@ -62,7 +62,9 @@ auto FMConstrMgr::check_legal(const MoveInfoV<node_t>& move_info_v) -> LegalChec
  * @return true
  * @return false
  */
-auto FMConstrMgr::check_constraints(const MoveInfoV<node_t>& move_info_v) -> bool {
+template <typename Gnl>
+auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& move_info_v)
+    -> bool {
     // const auto& [v, fromPart, toPart] = move_info_v;
 
     this->weight = this->H.get_module_weight(move_info_v.v);
@@ -76,8 +78,16 @@ auto FMConstrMgr::check_constraints(const MoveInfoV<node_t>& move_info_v) -> boo
  *
  * @param[in] move_info_v
  */
-void FMConstrMgr::update_move(const MoveInfoV<node_t>& move_info_v) {
+template <typename Gnl>
+void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t>& move_info_v) {
     // auto [v, fromPart, toPart] = move_info_v;
     this->diff[move_info_v.toPart] += this->weight;
     this->diff[move_info_v.fromPart] -= this->weight;
 }
+
+// Instantiation
+#include <ckpttn/netlist.hpp>  // for SimpleNetlist, Netlist
+#include <py2cpp/range.hpp>    // for _iterator
+#include <xnetwork/classes/graph.hpp>
+
+template class FMConstrMgr<SimpleNetlist>;

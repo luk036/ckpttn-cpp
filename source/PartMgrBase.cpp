@@ -62,8 +62,8 @@ auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> 
             break;
         }
         const auto rslt = this->gainMgr.select_togo(toPart);
-        auto&& v = get<0>(rslt);
-        auto&& gainmax = get<1>(rslt);
+        auto&& v = std::get<0>(rslt);
+        auto&& gainmax = std::get<1>(rslt);
         const auto fromPart = part[v];
         // assert(v == v);
         assert(fromPart != toPart);
@@ -176,9 +176,9 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> 
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
 
-template class PartMgrBase<FMKWayGainMgr, FMKWayConstrMgr, FMPartMgr>;
+template class PartMgrBase<FMKWayGainMgr, FMKWayConstrMgr<SimpleNetlist>, FMPartMgr>;
 
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 
-template class PartMgrBase<FMBiGainMgr, FMBiConstrMgr, FMPartMgr>;
+template class PartMgrBase<FMBiGainMgr, FMBiConstrMgr<SimpleNetlist>, FMPartMgr>;

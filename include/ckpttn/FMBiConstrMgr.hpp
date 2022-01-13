@@ -7,7 +7,7 @@
  *
  * Check if (the move of v can satisfied, makebetter, or notsatisfied
  */
-class FMBiConstrMgr : public FMConstrMgr {
+template <typename Gnl> class FMBiConstrMgr : public FMConstrMgr<Gnl> {
   public:
     /**
      * @brief Construct a new FMBiConstrMgr object
@@ -15,7 +15,7 @@ class FMBiConstrMgr : public FMConstrMgr {
      * @param[in] H
      * @param[in] BalTol
      */
-    FMBiConstrMgr(const SimpleNetlist& H, double BalTol) : FMConstrMgr{H, BalTol, 2} {}
+    FMBiConstrMgr(const Gnl& H, double BalTol) : FMConstrMgr<Gnl>{H, BalTol, 2} {}
 
     /**
      * @brief Construct a new FMBiConstrMgr object (for general framework)
@@ -23,8 +23,8 @@ class FMBiConstrMgr : public FMConstrMgr {
      * @param[in] H
      * @param[in] BalTol
      */
-    FMBiConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t /*K*/)
-        : FMConstrMgr{H, BalTol, 2} {}
+    FMBiConstrMgr(const Gnl& H, double BalTol, std::uint8_t /*K*/)
+        : FMConstrMgr<Gnl>{H, BalTol, 2} {}
 
     /**
      * @brief

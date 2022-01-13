@@ -12,7 +12,7 @@
  *
  * @return std::uint8_t
  */
-auto FMKWayConstrMgr::select_togo() const -> std::uint8_t {
+template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::uint8_t {
     auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
     return std::uint8_t(std::distance(this->diff.cbegin(), it));
 }
@@ -23,8 +23,10 @@ auto FMKWayConstrMgr::select_togo() const -> std::uint8_t {
  * @param[in] move_info_v
  * @return LegalCheck
  */
-auto FMKWayConstrMgr::check_legal(const MoveInfoV<node_t>& move_info_v) -> LegalCheck {
-    const auto status = FMConstrMgr::check_legal(move_info_v);
+template <typename Gnl>
+auto FMKWayConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
+    -> LegalCheck {
+    const auto status = FMConstrMgr<Gnl>::check_legal(move_info_v);
     if (status != LegalCheck::allsatisfied) {
         return status;
     }
@@ -37,3 +39,10 @@ auto FMKWayConstrMgr::check_legal(const MoveInfoV<node_t>& move_info_v) -> Legal
     }
     return LegalCheck::allsatisfied;  // all satisfied
 }
+
+// Instantiation
+#include <ckpttn/netlist.hpp>  // for SimpleNetlist, Netlist
+#include <py2cpp/range.hpp>    // for _iterator
+#include <xnetwork/classes/graph.hpp>
+
+template class FMKWayConstrMgr<SimpleNetlist>;

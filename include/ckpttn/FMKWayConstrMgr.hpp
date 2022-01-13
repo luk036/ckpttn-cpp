@@ -9,8 +9,8 @@
 #include "moveinfo.hpp"     // for MoveInfo
 
 // forward declare
-template <typename graph_t> struct Netlist;
-using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
+// template <typename graph_t> struct Netlist;
+// using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
 
 // #include <range/v3/view/zip.hpp>
 // Check if (the move of v can satisfied, makebetter, or notsatisfied
@@ -19,7 +19,7 @@ using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
  * @brief FM K-Way Partition Constraint Manager
  *
  */
-class FMKWayConstrMgr : public FMConstrMgr {
+template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
   private:
     std::vector<int> illegal;
 
@@ -31,8 +31,8 @@ class FMKWayConstrMgr : public FMConstrMgr {
      * @param[in] BalTol
      * @param[in] K
      */
-    FMKWayConstrMgr(const SimpleNetlist& H, double BalTol, std::uint8_t K)
-        : FMConstrMgr{H, BalTol, K}, illegal(K, 1) {}
+    FMKWayConstrMgr(const Gnl& H, double BalTol, std::uint8_t K)
+        : FMConstrMgr<Gnl>{H, BalTol, K}, illegal(K, 1) {}
 
     /**
      * @brief
@@ -47,7 +47,7 @@ class FMKWayConstrMgr : public FMConstrMgr {
      * @param[in] part
      */
     auto init(gsl::span<const std::uint8_t> part) -> void {
-        FMConstrMgr::init(part);
+        FMConstrMgr<Gnl>::init(part);
         auto it = this->diff.begin();
         for (auto& il : this->illegal) {
             il = (*it < this->lowerbound);
@@ -61,5 +61,5 @@ class FMKWayConstrMgr : public FMConstrMgr {
      * @param[in] move_info_v
      * @return LegalCheck
      */
-    auto check_legal(const MoveInfoV<node_t>& move_info_v) -> LegalCheck;
+    auto check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v) -> LegalCheck;
 };
