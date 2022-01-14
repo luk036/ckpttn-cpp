@@ -14,7 +14,7 @@ TEST_CASE("Test xnetwork") {
     constexpr auto num_nodes = 6;
     enum nodes { a1, a2, a3, n1, n2, n3 };
     // const auto R = py::range<std::uint8_t>(0, num_nodes);
-    auto G = xnetwork::SimpleGraph{num_nodes};
+    xnetwork::SimpleGraph G{num_nodes};
     G.add_edge(a1, n1);
     G.add_edge(a1, n1);
     G.add_edge(a1, n2);

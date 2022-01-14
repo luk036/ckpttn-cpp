@@ -1,19 +1,19 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 // #include <__config>                // for std
-#include <ckpttn/HierNetlist.hpp>  // for HierNetlist, SimpleHierNetlist
-#include <ckpttn/netlist.hpp>      // for Netlist, SimpleNetlist
-#include <cstdint>                 // for uint8_t
-#include <memory>                  // for unique_ptr
-#include <py2cpp/set.hpp>          // for set
-#include <string_view>             // for string_view
-#include <vector>                  // for vector, operator==
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <ckpttn/HierNetlist.hpp>         // for HierNetlist, SimpleHierNetlist
+#include <ckpttn/netlist.hpp>             // for Netlist, SimpleNetlist
+#include <cstdint>                        // for uint8_t
+#include <memory>                         // for unique_ptr
+#include <py2cpp/set.hpp>                 // for set
+#include <vector>                         // for vector, operator==
 
 using namespace std;
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, string_view areFileName);
+extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
 // extern tuple<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 

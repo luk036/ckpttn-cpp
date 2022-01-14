@@ -43,7 +43,7 @@ class bpqueue {
     friend bpq_iterator<_Tp, Int>;
     using Item = dllink<std::pair<_Tp, UInt>>;
 
-    static_assert(std::is_same_v<Item, typename _Sequence::value_type>,
+    static_assert(std::is_same<Item, typename _Sequence::value_type>::value,
                   "value_type must be the same as the underlying container");
 
   public:

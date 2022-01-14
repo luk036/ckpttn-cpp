@@ -11,9 +11,9 @@
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>      // for std
 // #include <__hash_table>  // for __hash_const_iterator, operator!=
-#include <string_view>  // for string_view
-#include <type_traits>  // for move
-#include <vector>       // for vector
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <type_traits>                    // for move
+#include <vector>                         // for vector
 
 // using graph_t =
 //     boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;
@@ -23,7 +23,7 @@
 using namespace std;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-void writeJSON(string_view jsonFileName, const SimpleNetlist& H) {
+void writeJSON(boost::string_view jsonFileName, const SimpleNetlist& H) {
     auto json = ofstream{jsonFileName.data()};
     if (json.fail()) {
         cerr << "Error: Can't open file " << jsonFileName << ".\n";
@@ -63,7 +63,7 @@ void writeJSON(string_view jsonFileName, const SimpleNetlist& H) {
 }
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-auto readNetD(string_view netDFileName) -> SimpleNetlist {
+auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
     auto netD = ifstream{netDFileName.data()};
     if (netD.fail()) {
         cerr << "Error: Can't open file " << netDFileName << ".\n";
@@ -158,7 +158,7 @@ auto readNetD(string_view netDFileName) -> SimpleNetlist {
 }
 
 // Read the IBM .are format
-void readAre(SimpleNetlist& H, string_view areFileName) {
+void readAre(SimpleNetlist& H, boost::string_view areFileName) {
     auto are = ifstream{areFileName.data()};
     if (are.fail()) {
         cerr << " Could not open " << areFileName << endl;

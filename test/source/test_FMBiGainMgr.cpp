@@ -19,11 +19,15 @@ using namespace std;
  * @param[in] part_test
  */
 void run_FMBiGainMgr(const SimpleNetlist& H, gsl::span<uint8_t> part) {
-    auto mgr = FMBiGainMgr<SimpleNetlist>{H};
+    FMBiGainMgr<SimpleNetlist> mgr{H};
     mgr.init(part);
     while (!mgr.is_empty()) {
         // Take the gainmax with v from gainbucket
-        auto [move_info_v, gainmax] = mgr.select(part);
+        // auto [move_info_v, gainmax] = mgr.select(part);
+        auto result = mgr.select(part);
+        auto move_info_v = std::get<0>(result);
+        auto gainmax = std::get<1>(result);
+
         if (gainmax > 0) {
             mgr.update_move(part, move_info_v);
             mgr.update_move_v(move_info_v, gainmax);

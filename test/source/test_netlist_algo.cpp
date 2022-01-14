@@ -1,19 +1,19 @@
 #include <doctest/doctest.h>  // for TestCase, TEST_CASE
 // #include <__config>                 // for std
 // #include <__hash_table>             // for operator!=
-#include <ckpttn/netlist.hpp>       // for Netlist, Netlist<>::nodeview_t
-#include <ckpttn/netlist_algo.hpp>  // for min_maximal_matching, min_vertex_...
-#include <py2cpp/dict.hpp>          // for dict
-#include <py2cpp/range.hpp>         // for _iterator, iterable_wrapper
-#include <py2cpp/set.hpp>           // for set
-#include <string_view>              // for string_view
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <ckpttn/netlist.hpp>             // for Netlist, Netlist<>::nodeview_t
+#include <ckpttn/netlist_algo.hpp>        // for min_maximal_matching, min_vertex_...
+#include <py2cpp/dict.hpp>                // for dict
+#include <py2cpp/range.hpp>               // for _iterator, iterable_wrapper
+#include <py2cpp/set.hpp>                 // for set
 
 using namespace std;
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, string_view areFileName);
+extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
 // extern tuple<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
@@ -21,8 +21,8 @@ using node_t = SimpleNetlist::node_t;
 
 TEST_CASE("Test min_vertex_cover dwarf") {
     const auto H = create_dwarf();
-    auto weight = py::dict<node_t, int>{};
-    auto covset = py::set<node_t>{};
+    py::dict<node_t, int> weight{};
+    py::set<node_t> covset{};
     for (auto node : H) {
         weight[node] = 1;
         // covset[node] = false;
@@ -37,9 +37,9 @@ TEST_CASE("Test min_vertex_cover dwarf") {
 TEST_CASE("Test min_maximal_matching dwarf") {
     const auto H = create_dwarf();
     // const auto N = H.number_of_nets();
-    auto weight = py::dict<node_t, int>{};
-    auto matchset = py::set<node_t>{};
-    auto dep = py::set<node_t>{};
+    py::dict<node_t, int> weight{};
+    py::set<node_t> matchset{};
+    py::set<node_t> dep{};
     for (auto net : H.nets) {
         // matchset[net] = false;
         weight[net] = 1;

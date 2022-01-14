@@ -66,9 +66,9 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
     const auto part_v = part[v];
     const auto weight = this->H.get_net_weight(net);
     if (part_v == part_w) {
-        // this->_modify_gain(w, part_v, -weight);
-        // this->_modify_gain(v, part_v, -weight);
-        this->_modify_gain_va(-weight, part_v, w, v);
+        this->_modify_gain(w, part_v, -weight);
+        this->_modify_gain(v, part_v, -weight);
+        // this->_modify_gain_va(-weight, part_v, w, v);
     } else {
         this->totalcost += weight;
         this->vertex_list[part_v][w].data.second += weight;
@@ -99,10 +99,10 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
 
     if (part_u == part_v) {
         if (part_w == part_v) {
-            // this->_modify_gain(u, part_v, -weight);
-            // this->_modify_gain(v, part_v, -weight);
-            // this->_modify_gain(w, part_v, -weight);
-            this->_modify_gain_va(-weight, part_v, u, v, w);
+            this->_modify_gain(u, part_v, -weight);
+            this->_modify_gain(v, part_v, -weight);
+            this->_modify_gain(w, part_v, -weight);
+            // this->_modify_gain_va(-weight, part_v, u, v, w);
             return;
         }
     } else if (part_w == part_v) {
@@ -111,20 +111,27 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
         a = v, b = u, c = w;
     } else {
         this->totalcost += 2 * weight;
-        this->_modify_vertex_va(weight, part_v, u, w);
-        this->_modify_vertex_va(weight, part_w, u, v);
-        this->_modify_vertex_va(weight, part_u, v, w);
+        // this->_modify_vertex_va(weight, part_v, u, w);
+        // this->_modify_vertex_va(weight, part_w, u, v);
+        // this->_modify_vertex_va(weight, part_u, v, w);
+        this->_modify_gain(u, part_v, weight);
+        this->_modify_gain(w, part_v, weight);
+        this->_modify_gain(u, part_w, weight);
+        this->_modify_gain(v, part_w, weight);
+        this->_modify_gain(v, part_u, weight);
+        this->_modify_gain(w, part_u, weight);
         return;
     }
 
-    // for (const auto& e : {b, c})
-    // {
-    //     this->_modify_gain(e, part[b], -weight);
-    //     this->vertex_list[part[a]][e].data.second += weight;
-    // }
-    this->_modify_gain_va(-weight, part[b], b, c);
-    this->_modify_vertex_va(weight, part[a], b, c);
-    this->_modify_vertex_va(weight, part[b], a);
+    for (const auto& e : {b, c}) {
+        this->_modify_gain(e, part[b], -weight);
+        this->vertex_list[part[a]][e].data.second += weight;
+    }
+    this->vertex_list[part[b]][a].data.second += weight;
+
+    // this->_modify_gain_va(-weight, part[b], b, c);
+    // this->_modify_vertex_va(weight, part[a], b, c);
+    // this->_modify_vertex_va(weight, part[b], a);
 
     this->totalcost += weight;
 }
@@ -138,7 +145,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
                                                  gsl::span<const uint8_t> part) {
-    byte StackBufLocal[2048];
+    uint8_t StackBufLocal[2048];
     FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<uint8_t>(this->K, 0, &rsrcLocal);
     // auto IdVec = FMPmr::vector<typename Gnl::node_t>(&rsrc);
@@ -309,7 +316,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
                                                   const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, fromPart, toPart] = move_info;
-    byte StackBufLocal[FM_MAX_NUM_PARTITIONS];
+    uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
     FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal, sizeof StackBufLocal);
     auto num = FMPmr::vector<uint8_t>(this->K, 0, &rsrcLocal);
 

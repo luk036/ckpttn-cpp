@@ -58,7 +58,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
 # create an interface target: add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME} ${headers} ${sources})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(${PROJECT_NAME}
@@ -103,5 +103,5 @@ if(NOT INSTALL_ONLY)
   add_subdirectory(test)
   add_subdirectory(standalone)
   add_subdirectory(documentation)
-  add_subdirectory(bench)
+  # add_subdirectory(bench)
 endif()

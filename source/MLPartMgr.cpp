@@ -4,7 +4,7 @@
 #include <gsl/span>                // for span
 #include <memory>                  // for unique_ptr
 #include <py2cpp/set.hpp>          // for set
-#include <tuple>                   // for tuple
+#include <utility>                 // for pair
 #include <vector>                  // for vector
 
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
@@ -31,27 +31,27 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
     using ConstrMgr = typename PartMgr::ConstrMgr_;
 
     auto legalcheck_fn = [&]() {
-        auto gainMgr = GainMgr(H, this->K);
-        auto constrMgr = ConstrMgr(H, this->BalTol, this->K);
-        auto partMgr = PartMgr(H, gainMgr, constrMgr, this->K);
+        GainMgr gainMgr(H, this->K);
+        ConstrMgr constrMgr(H, this->BalTol, this->K);
+        PartMgr partMgr(H, gainMgr, constrMgr, this->K);
         auto legalcheck = partMgr.legalize(part);
-        return std::tuple{legalcheck, partMgr.totalcost};
+        return std::make_pair(legalcheck, partMgr.totalcost);
         // release memory resource all memory saving
     };
 
     auto optimize_fn = [&]() {
-        auto gainMgr = GainMgr(H, this->K);
-        auto constrMgr = ConstrMgr(H, this->BalTol, this->K);
-        auto partMgr = PartMgr(H, gainMgr, constrMgr, this->K);
+        GainMgr gainMgr(H, this->K);
+        ConstrMgr constrMgr(H, this->BalTol, this->K);
+        PartMgr partMgr(H, gainMgr, constrMgr, this->K);
         partMgr.optimize(part);
         return partMgr.totalcost;
         // release memory resource all memory saving
     };
 
-    auto [legalcheck, cost] = legalcheck_fn();
-    if (legalcheck != LegalCheck::allsatisfied) {
-        this->totalcost = cost;
-        return legalcheck;
+    auto legalcheck_cost = legalcheck_fn();
+    if (legalcheck_cost.first != LegalCheck::allsatisfied) {
+        this->totalcost = legalcheck_cost.second;
+        return legalcheck_cost.first;
     }
 
     if (H.number_of_modules() >= this->limitsize) {  // OK
@@ -67,7 +67,7 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
     }
 
     this->totalcost = optimize_fn();
-    return legalcheck;
+    return legalcheck_cost.first;
 }
 
 #include <ckpttn/FMBiConstrMgr.hpp>    // for FMBiConstrMgr

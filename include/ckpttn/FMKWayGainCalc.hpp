@@ -3,7 +3,6 @@
 #include <stdint.h>  // for uint8_t
 
 #include <algorithm>    // for fill
-#include <cstddef>      // for byte
 #include <gsl/span>     // for span
 #include <type_traits>  // for move
 #include <utility>      // for pair
@@ -33,7 +32,7 @@ template <typename Gnl> class FMKWayGainCalc {
     robin<std::uint8_t> RR;
     // size_t num_modules;
     int totalcost{0};
-    std::byte StackBuf[20000];
+    uint8_t StackBuf[20000];
     FMPmr::monotonic_buffer_resource rsrc;
     std::vector<std::vector<Item>> vertex_list;
     FMPmr::vector<int> deltaGainV;
@@ -62,7 +61,7 @@ template <typename Gnl> class FMKWayGainCalc {
             auto vec = std::vector<Item>{};
             vec.reserve(H.number_of_modules());
             for (const auto& v : this->H) {
-                vec.emplace_back(Item(std::pair{v, uint32_t(0)}));
+                vec.emplace_back(Item(std::make_pair(v, uint32_t(0))));
             }
             this->vertex_list.emplace_back(std::move(vec));
         }
@@ -167,10 +166,11 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] k
      * @param[in] v
      */
-    template <typename... Ts> auto _modify_vertex_va(unsigned int weight, std::uint8_t k, Ts... v)
-        -> void {
-        ((this->vertex_list[k][v].data.second += weight), ...);
-    }
+    // template <typename... Ts> auto _modify_vertex_va(unsigned int weight, std::uint8_t k, Ts...
+    // v)
+    //     -> void {
+    //     ((this->vertex_list[k][v].data.second += weight), ...);
+    // }
 
     // /**
     //  * @brief
@@ -226,12 +226,12 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] part_v
      * @param[in] v
      */
-    template <typename... Ts>
-    auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) -> void {
-        for (const auto& k : this->RR.exclude(part_v)) {
-            _modify_vertex_va(weight, k, v...);
-        }
-    }
+    // template <typename... Ts>
+    // auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) -> void {
+    //     for (const auto& k : this->RR.exclude(part_v)) {
+    //         _modify_vertex_va(weight, k, v...);
+    //     }
+    // }
 
     /**
      * @brief

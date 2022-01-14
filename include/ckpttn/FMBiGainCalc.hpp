@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstddef>   // for byte
+// #include <cstddef>   // for byte
 #include <cstdint>   // for uint8_t
 #include <gsl/span>  // for span
 #include <utility>   // for pair
@@ -30,7 +30,7 @@ template <typename Gnl> class FMBiGainCalc {
     const Gnl& H;
     std::vector<Item> vertex_list;
     int totalcost{0};
-    std::byte StackBuf[8192];  // ???
+    uint8_t StackBuf[8192];  // ???
     FMPmr::monotonic_buffer_resource rsrc;
 
   public:
@@ -46,7 +46,7 @@ template <typename Gnl> class FMBiGainCalc {
     explicit FMBiGainCalc(const Gnl& H, std::uint8_t /*K*/)
         : H{H}, vertex_list(H.number_of_modules()), rsrc(StackBuf, sizeof StackBuf), IdVec(&rsrc) {
         for (const auto& v : this->H) {
-            this->vertex_list[v].data = std::pair{v, int32_t(0)};
+            this->vertex_list[v].data = std::make_pair(v, int32_t(0));
         }
     }
 
@@ -124,9 +124,9 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] weight
      * @param[in] w
      */
-    template <typename... Ts> auto _modify_gain_va(unsigned int weight, Ts... w) -> void {
-        ((this->vertex_list[w].data.second += weight), ...);
-    }
+    // template <typename... Ts> auto _modify_gain_va(unsigned int weight, Ts... w) -> void {
+    //     ((this->vertex_list[w].data.second += weight), ...);
+    // }
 
     // /**
     //  * @brief

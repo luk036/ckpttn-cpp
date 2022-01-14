@@ -16,9 +16,9 @@ TEST_CASE("Test BPQueue") {
 
     CHECK(bpq1.is_empty());
 
-    auto d = dllink{pair{0, uint32_t(0)}};
-    auto e = dllink{pair{0, uint32_t(0)}};
-    auto f = dllink{pair{0, uint32_t(0)}};
+    auto d = dllink<std::pair<int, uint32_t>>{std::make_pair(0, uint32_t(0))};
+    auto e = dllink<std::pair<int, uint32_t>>{std::make_pair(0, uint32_t(0))};
+    auto f = dllink<std::pair<int, uint32_t>>{std::make_pair(0, uint32_t(0))};
 
     CHECK(d.data.second == 0);
 

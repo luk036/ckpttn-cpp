@@ -30,15 +30,14 @@ auto create_dwarf() -> SimpleNetlist {
     // static vector<nodes> net__name_list = {n1, n2, n3};
 
     // char name[] = "ABCDE";
-    auto edge_array
-        = vector<Edge>{Edge(p1, n1), Edge(a0, n1), Edge(a1, n1), Edge(a0, n2), Edge(a2, n2),
-                       Edge(a3, n2), Edge(a1, n3), Edge(a2, n3), Edge(a3, n3), Edge(a2, n4),
-                       Edge(p2, n4), Edge(a3, n5), Edge(p3, n5), Edge(a0, n6)};
+    vector<Edge> edge_array{Edge(p1, n1), Edge(a0, n1), Edge(a1, n1), Edge(a0, n2), Edge(a2, n2),
+                            Edge(a3, n2), Edge(a1, n3), Edge(a2, n3), Edge(a3, n3), Edge(a2, n4),
+                            Edge(p2, n4), Edge(a3, n5), Edge(p3, n5), Edge(a0, n6)};
     // index_t indices[] = {0, 1, 2, 3, 4, 5};
     // int num_arcs = sizeof(edge_array) / sizeof(Edge);
     // auto R = py::range(num_nodes);
     // graph_t g{R, R};
-    auto g = xnetwork::SimpleGraph(num_nodes);
+    xnetwork::SimpleGraph g(num_nodes);
     for (const auto& e : edge_array) {
         g.add_edge(e.first, e.second);
     }
@@ -54,7 +53,7 @@ auto create_dwarf() -> SimpleNetlist {
     // auto H = Netlist{move(g), py::range(7), py::range(7, 13),
     // py::range(7),
     //                  py::range(-7, 6)};
-    auto H = SimpleNetlist(move(g), 7, 6);
+    SimpleNetlist H(move(g), 7, 6);
 
     H.module_weight = module_weight;
     H.num_pads = 3;

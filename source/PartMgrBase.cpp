@@ -106,7 +106,10 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<st
 
     while (!this->gainMgr.is_empty()) {
         // Take the gainmax with v from gainbucket
-        auto [move_info_v, gainmax] = this->gainMgr.select(part);
+        // auto [move_info_v, gainmax] = this->gainMgr.select(part);
+        auto result = this->gainMgr.select(part);
+        auto move_info_v = std::get<0>(result);
+        auto gainmax = std::get<1>(result);
 
         // Check if the move of v can satisfied or notsatisfied
         const auto satisfiedOK = this->validator.check_constraints(move_info_v);

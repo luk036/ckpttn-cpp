@@ -12,7 +12,7 @@ template <typename T> class robin {
         T key;
     };
 
-    std::byte StackBuf[FM_MAX_NUM_PARTITIONS * sizeof(slnode)];
+    char StackBuf[FM_MAX_NUM_PARTITIONS * sizeof(slnode)];
     FMPmr::monotonic_buffer_resource rsrc;
     FMPmr::vector<slnode> cycle;
 

@@ -1,9 +1,9 @@
-#include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
-#include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
-#include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
-#include <cstdint>                     // for uint8_t
-#include <string_view>                 // for string_view
-#include <vector>                      // for vector
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <ckpttn/FMKWayConstrMgr.hpp>     // for FMKWayConstrMgr
+#include <ckpttn/FMKWayGainMgr.hpp>       // for FMKWayGainMgr
+#include <ckpttn/FMPartMgr.hpp>           // for FMPartMgr
+#include <cstdint>                        // for uint8_t
+#include <vector>                         // for vector
 
 #include "benchmark/benchmark.h"      // for BENCHMARK, State, BENCHMARK_MAIN
 #include "ckpttn/FMKWayGainCalc.hpp"  // for FMKWayGainCalc
@@ -11,8 +11,8 @@
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, std::string_view areFileName);
+extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
 
 /**
  * @brief Run FM K-way partitioning
@@ -22,14 +22,13 @@ extern void readAre(SimpleNetlist& H, std::string_view areFileName);
  * @param[in] option
  */
 void run_FMKWayPartMgr(SimpleNetlist& H, std::uint8_t K, bool option) {
-    auto gainMgr = FMKWayGainMgr<SimpleNetlist>{H, K};
+    FMKWayGainMgr<SimpleNetlist> gainMgr{H, K};
     gainMgr.gainCalc.special_handle_2pin_nets = option;
 
-    auto constrMgr = FMKWayConstrMgr<SimpleNetlist>{H, 0.4, K};
-    auto partMgr
-        = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>{
-            H, gainMgr, constrMgr};
-    auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
+    FMKWayConstrMgr<SimpleNetlist> constrMgr{H, 0.4, K};
+    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>> partMgr{
+        H, gainMgr, constrMgr};
+    std::vector<std::uint8_t> part(H.number_of_modules(), 0);
 
     partMgr.legalize(part);
     // auto totalcostbefore = partMgr.totalcost;

@@ -1,11 +1,11 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 // #include <__config>                  // for std
-#include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
-#include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
-#include <cstdint>                   // for uint8_t
-#include <string_view>               // for string_view
-#include <vector>                    // for vector
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <ckpttn/FMBiConstrMgr.hpp>       // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>         // for FMBiGainMgr
+#include <ckpttn/FMPartMgr.hpp>           // for FMPartMgr
+#include <cstdint>                        // for uint8_t
+#include <vector>                         // for vector
 
 #include "ckpttn/netlist.hpp"  // for SimpleNetlist
 
@@ -13,8 +13,8 @@ using namespace std;
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, string_view areFileName);
+extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
 
 /**
  * @brief Run test cases
@@ -22,12 +22,11 @@ extern void readAre(SimpleNetlist& H, string_view areFileName);
  * @param[in] H
  */
 void run_FMBiPartMgr(const SimpleNetlist& H) {
-    auto gainMgr = FMBiGainMgr<SimpleNetlist>{H};
-    auto constrMgr = FMBiConstrMgr<SimpleNetlist>{H, 0.4};
-    auto partMgr
-        = FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>{
-            H, gainMgr, constrMgr};
-    auto part = vector<uint8_t>(H.number_of_modules(), 0);
+    FMBiGainMgr<SimpleNetlist> gainMgr{H};
+    FMBiConstrMgr<SimpleNetlist> constrMgr{H, 0.4};
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> partMgr{
+        H, gainMgr, constrMgr};
+    vector<uint8_t> part(H.number_of_modules(), 0);
     partMgr.legalize(part);
     auto totalcostbefore = partMgr.totalcost;
     partMgr.optimize(part);

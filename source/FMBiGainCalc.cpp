@@ -62,9 +62,13 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
     const auto weight = this->H.get_net_weight(net);
     if (part[w] != part[v]) {
         this->totalcost += weight;
-        this->_modify_gain_va(weight, w, v);
+        // this->_modify_gain_va(weight, w, v);
+        this->_modify_gain(w, weight);
+        this->_modify_gain(v, weight);
     } else {
-        this->_modify_gain_va(-weight, w, v);
+        // this->_modify_gain_va(-weight, w, v);
+        this->_modify_gain(w, -weight);
+        this->_modify_gain(v, -weight);
     }
 }
 
@@ -84,10 +88,14 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typena
     const auto weight = this->H.get_net_weight(net);
     if (part[u] == part[v]) {
         if (part[w] == part[v]) {
-            this->_modify_gain_va(-weight, u, v, w);
+            // this->_modify_gain_va(-weight, u, v, w);
+            this->_modify_gain(u, -weight);
+            this->_modify_gain(v, -weight);
+            this->_modify_gain(w, -weight);
             return;
         }
-        this->_modify_gain_va(weight, w);
+        // this->_modify_gain_va(weight, w);
+        this->_modify_gain(w, weight);
     } else if (part[w] == part[v]) {
         this->_modify_gain(u, weight);
     } else {
