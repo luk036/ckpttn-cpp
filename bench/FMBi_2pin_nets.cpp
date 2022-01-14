@@ -25,8 +25,9 @@ void run_FMBiPartMgr(const SimpleNetlist& H, bool option) {
     gainMgr.gainCalc.special_handle_2pin_nets = option;
 
     auto constrMgr = FMBiConstrMgr<SimpleNetlist>{H, 0.45};
-    auto partMgr = FMPartMgr<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>{H, gainMgr,
-                                                                                       constrMgr};
+    auto partMgr
+        = FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>{
+            H, gainMgr, constrMgr};
     auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
     partMgr.legalize(part);
     // auto totalcostbefore = partMgr.totalcost;

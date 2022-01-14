@@ -7,10 +7,13 @@
 #include <vector>    // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"    // for dllink
-#include "moveinfo.hpp"  // for MoveInfo
+#include "dllist.hpp"  // for dllink
+// #include "moveinfo.hpp"  // for MoveInfo
 
+// forward declare
 template <typename Gnl> class FMBiGainMgr;
+template <typename Node> struct MoveInfo;
+template <typename Node> struct MoveInfoV;
 
 /**
  * @brief FMBiGainCalc

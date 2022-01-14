@@ -4,11 +4,10 @@
 
 #include "FMGainMgr.hpp"
 #include "FMKWayGainCalc.hpp"
-// #include <range/v3/view/zip.hpp>
 
-// using namespace ranges;
-
-// class FMKWayGainMgr;
+// forward declare
+template <typename Node> struct MoveInfo;
+template <typename Node> struct MoveInfoV;
 
 /**
  * @brief FMKWayGainMgr

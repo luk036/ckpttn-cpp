@@ -25,8 +25,9 @@ extern void readAre(SimpleNetlist& H, string_view areFileName);
 void run_FMKWayPartMgr(const SimpleNetlist& H, uint8_t K) {
     auto gainMgr = FMKWayGainMgr<SimpleNetlist>{H, K};
     auto constrMgr = FMKWayConstrMgr<SimpleNetlist>{H, 0.4, K};
-    auto partMgr = FMPartMgr<FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>{
-        H, gainMgr, constrMgr, K};
+    auto partMgr
+        = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>{
+            H, gainMgr, constrMgr, K};
     auto part = vector<uint8_t>(H.number_of_modules(), 0);
 
     partMgr.legalize(part);

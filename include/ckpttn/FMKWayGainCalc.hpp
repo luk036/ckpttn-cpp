@@ -10,12 +10,13 @@
 #include <vector>       // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"    // for dllink
-#include "moveinfo.hpp"  // for MoveInfo
-#include "robin.hpp"     // for robin<>...
+#include "dllist.hpp"  // for dllink
+#include "robin.hpp"   // for robin<>...
 
-// class FMKWayGainMgr;
+// forward declare
 template <typename Gnl> class FMKWayGainMgr;
+template <typename Node> struct MoveInfo;
+template <typename Node> struct MoveInfoV;
 
 /**
  * @brief FMKWayGainCalc

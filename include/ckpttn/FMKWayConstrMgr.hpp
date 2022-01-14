@@ -6,14 +6,11 @@
 #include <vector>    // for vector
 
 #include "FMConstrMgr.hpp"  // for FMConstrMgr, FMConstrMgr::node_t, Lega...
-#include "moveinfo.hpp"     // for MoveInfo
+// #include "moveinfo.hpp"     // for MoveInfo
 
 // forward declare
-// template <typename graph_t> struct Netlist;
-// using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
-
-// #include <range/v3/view/zip.hpp>
-// Check if (the move of v can satisfied, makebetter, or notsatisfied
+template <typename Node> struct MoveInfo;
+template <typename Node> struct MoveInfoV;
 
 /**
  * @brief FM K-Way Partition Constraint Manager

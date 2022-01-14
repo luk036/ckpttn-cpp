@@ -14,15 +14,18 @@
 
 #include "PartMgrBase.hpp"  // for PartMgrBase, SimpleNetlist
 
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+class FMPartMgr;
+
 /**
  * @brief FM Partition Manager
  *
  * @tparam GainMgr
  * @tparam ConstrMgr
  */
-template <typename GainMgr, typename ConstrMgr>  //
-class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
-    using Base = PartMgrBase<GainMgr, ConstrMgr, FMPartMgr>;
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr, FMPartMgr> {
+    using Base = PartMgrBase<Gnl, GainMgr, ConstrMgr, FMPartMgr>;
 
   public:
     /**
@@ -33,7 +36,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
      * @param[in,out] constrMgr
      * @param[in] K
      */
-    FMPartMgr(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
+    FMPartMgr(const Gnl& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
         : Base{H, gainMgr, constrMgr, K} {}
 
     /**
@@ -43,7 +46,7 @@ class FMPartMgr : public PartMgrBase<GainMgr, ConstrMgr, FMPartMgr> {
      * @param[in,out] gainMgr
      * @param[in,out] constrMgr
      */
-    FMPartMgr(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr)
+    FMPartMgr(const Gnl& H, GainMgr& gainMgr, ConstrMgr& constrMgr)
         : Base{H, gainMgr, constrMgr, 2} {}
 
     /**

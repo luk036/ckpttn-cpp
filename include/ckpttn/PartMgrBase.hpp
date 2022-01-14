@@ -3,18 +3,13 @@
 // **Special code for two-pin nets**
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
-// #include "netlist.hpp"
-// #include <cinttypes>
+
 #include <gsl/span>
-// #include <iterator>
-// #include <py2cpp/py2cpp.hpp>
-// #include <type_traits>
-// #include <vector>
-#include <xnetwork/classes/graph.hpp>
+// #include <xnetwork/classes/graph.hpp>
 
 // forward declare
-template <typename graph_t> struct Netlist;
-using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
+// template <typename graph_t> struct Netlist;
+// using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
 
 enum class LegalCheck;
 
@@ -43,20 +38,20 @@ enum class LegalCheck;
  *   G. Ausiello et al., Complexity and Approximation: Combinatorial
  * Optimization Problems and Their Approximability Properties, Section 10.3.2.
  */
-template <typename GainMgr, typename ConstrMgr,
-          template <typename _gainMgr, typename _constrMgr> class Derived>  //
+template <typename Gnl, typename GainMgr, typename ConstrMgr,
+          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
 class PartMgrBase {
   public:
     using GainCalc_ = typename GainMgr::GainCalc_;
     using GainMgr_ = GainMgr;
     using ConstrMgr_ = ConstrMgr;
 
-    using Der = Derived<GainMgr, ConstrMgr>;
+    using Der = Derived<Gnl, GainMgr, ConstrMgr>;
 
   protected:
     Der& self = *static_cast<Der*>(this);
 
-    const SimpleNetlist& H;
+    const Gnl& H;
     GainMgr& gainMgr;
     ConstrMgr& validator;
     size_t K;
@@ -74,7 +69,7 @@ class PartMgrBase {
      * @param[in,out] constrMgr
      * @param[in] K
      */
-    PartMgrBase(const SimpleNetlist& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
+    PartMgrBase(const Gnl& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
         : H{H}, gainMgr{gainMgr}, validator{constrMgr}, K{K} {}
 
     /**

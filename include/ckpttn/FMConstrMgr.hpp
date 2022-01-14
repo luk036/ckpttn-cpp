@@ -4,11 +4,11 @@
 #include <gsl/span>   // for span
 #include <vector>     // for vector
 
-#include "moveinfo.hpp"  // for MoveInfo
+// #include "moveinfo.hpp"  // for MoveInfo
 
 // forward declare
-// template <typename graph_t> struct Netlist;
-// using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
+template <typename Node> struct MoveInfo;
+template <typename Node> struct MoveInfoV;
 
 /**
  * @brief Check if the move of v can satisfied, getbetter, or notsatisfied

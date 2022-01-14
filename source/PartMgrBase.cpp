@@ -2,7 +2,6 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::notsat...
 #include <ckpttn/PartMgrBase.hpp>  // for PartMgrBase, part, SimpleNetlist
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV
-#include <ckpttn/netlist.hpp>      // for SimpleNetlist, Netlist
 #include <cstdint>                 // for uint8_t
 #include <gsl/span>                // for span
 #include <py2cpp/range.hpp>        // for _iterator
@@ -11,7 +10,7 @@
 #include <tuple>                   // for get
 #include <vector>                  // for vector
 
-using node_t = typename SimpleNetlist::node_t;
+// using node_t = typename SimpleNetlist::node_t;
 // using namespace std;
 
 /**
@@ -22,9 +21,9 @@ using node_t = typename SimpleNetlist::node_t;
  * @tparam Derived
  * @param[in] part
  */
-template <typename GainMgr, typename ConstrMgr,
-          template <typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<GainMgr, ConstrMgr, Derived>::init(gsl::span<std::uint8_t> part) {
+template <typename Gnl, typename GainMgr, typename ConstrMgr,
+          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
+void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::init(gsl::span<std::uint8_t> part) {
     this->totalcost = this->gainMgr.init(part);
     this->validator.init(part);
 }
@@ -38,9 +37,9 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::init(gsl::span<std::uint8_t> part
  * @param[in] part
  * @return LegalCheck
  */
-template <typename GainMgr, typename ConstrMgr,
-          template <typename _gainMgr, typename _constrMgr> class Derived>  //
-auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> part)
+template <typename Gnl, typename GainMgr, typename ConstrMgr,
+          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
+auto PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> part)
     -> LegalCheck {
     this->init(part);
 
@@ -67,7 +66,7 @@ auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> 
         const auto fromPart = part[v];
         // assert(v == v);
         assert(fromPart != toPart);
-        const auto move_info_v = MoveInfoV<node_t>{v, fromPart, toPart};
+        const auto move_info_v = MoveInfoV<typename Gnl::node_t>{v, fromPart, toPart};
         // Check if the move of v can notsatisfied, makebetter, or satisfied
         legalcheck = this->validator.check_legal(move_info_v);
         if (legalcheck == LegalCheck::notsatisfied) {  // notsatisfied
@@ -94,9 +93,9 @@ auto PartMgrBase<GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> 
  * @tparam Derived
  * @param[in] part
  */
-template <typename GainMgr, typename ConstrMgr,
-          template <typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<std::uint8_t> part) {
+template <typename Gnl, typename GainMgr, typename ConstrMgr,
+          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
+void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<std::uint8_t> part) {
     // using SS_t = decltype(self.take_snapshot(part));
     using SS_t = std::vector<std::uint8_t>;
 
@@ -154,9 +153,9 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<std::ui
  * @tparam Derived
  * @param[in] part
  */
-template <typename GainMgr, typename ConstrMgr,
-          template <typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> part) {
+template <typename Gnl, typename GainMgr, typename ConstrMgr,
+          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
+void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> part) {
     // this->init(part);
     // auto totalcostafter = this->totalcost;
     while (true) {
@@ -175,10 +174,14 @@ void PartMgrBase<GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> 
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
+#include <ckpttn/netlist.hpp>          // for SimpleNetlist, Netlist
+#include <xnetwork/classes/graph.hpp>
 
-template class PartMgrBase<FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>, FMPartMgr>;
+template class PartMgrBase<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
+                           FMKWayConstrMgr<SimpleNetlist>, FMPartMgr>;
 
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 
-template class PartMgrBase<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>, FMPartMgr>;
+template class PartMgrBase<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>,
+                           FMPartMgr>;

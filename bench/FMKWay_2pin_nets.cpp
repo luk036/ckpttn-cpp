@@ -26,8 +26,9 @@ void run_FMKWayPartMgr(SimpleNetlist& H, std::uint8_t K, bool option) {
     gainMgr.gainCalc.special_handle_2pin_nets = option;
 
     auto constrMgr = FMKWayConstrMgr<SimpleNetlist>{H, 0.4, K};
-    auto partMgr = FMPartMgr<FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>{
-        H, gainMgr, constrMgr};
+    auto partMgr
+        = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>{
+            H, gainMgr, constrMgr};
     auto part = std::vector<std::uint8_t>(H.number_of_modules(), 0);
 
     partMgr.legalize(part);

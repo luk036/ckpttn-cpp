@@ -4,6 +4,7 @@
 
 #include "FMBiGainCalc.hpp"
 #include "FMGainMgr.hpp"
+#include "moveinfo.hpp"  // for MoveInfo
 
 // struct FMBiGainMgr;
 

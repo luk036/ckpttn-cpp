@@ -76,10 +76,10 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
 
-template auto
-MLPartMgr::run_FMPartition<FMPartMgr<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+template auto MLPartMgr::run_FMPartition<
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
 
-template auto
-MLPartMgr::run_FMPartition<FMPartMgr<FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
+template auto MLPartMgr::run_FMPartition<
+    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
