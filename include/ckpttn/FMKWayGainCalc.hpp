@@ -20,6 +20,7 @@ template <typename Node> struct MoveInfoV;
 /**
  * @brief FMKWayGainCalc
  *
+ * @tparam Gnl
  */
 template <typename Gnl> class FMKWayGainCalc {
     friend class FMKWayGainMgr<Gnl>;

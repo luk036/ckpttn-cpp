@@ -9,7 +9,7 @@
  *    This function solves minimum vertex cover problem
  *    using primal-dual paradigm:
  *
- * @tparam Netlist
+ * @tparam Gnl
  * @tparam C1
  * @tparam C2
  * @param[in] H
@@ -17,9 +17,8 @@
  * @param[in,out] coverset in: pre-covered vetrices, out: sol'n set
  * @return C1::mapped_type
  */
-template <typename Netlist, typename C1, typename C2>
-auto min_vertex_cover(const Netlist& H, const C1& weight, C2& coverset) ->
-    typename C1::mapped_type {
+template <typename Gnl, typename C1, typename C2>
+auto min_vertex_cover(const Gnl& H, const C1& weight, C2& coverset) -> typename C1::mapped_type {
     using T = typename C1::mapped_type;
     auto in_coverset = [&](const auto& v) { return coverset.contains(v); };
     [[maybe_unused]] auto total_dual_cost = T(0);
@@ -52,7 +51,7 @@ auto min_vertex_cover(const Netlist& H, const C1& weight, C2& coverset) ->
  *    This function solves minimum maximal matching problem
  *    using primal-dual paradigm:
  *
- * @tparam Netlist
+ * @tparam Gnl
  * @tparam C1
  * @tparam C2
  * @param[in] H
@@ -61,8 +60,8 @@ auto min_vertex_cover(const Netlist& H, const C1& weight, C2& coverset) ->
  * @param[in,out] dep
  * @return C1::value_type
  */
-template <typename Netlist, typename C1, typename C2>
-auto min_maximal_matching(const Netlist& H, const C1& weight, C2& matchset, C2& dep) ->
+template <typename Gnl, typename C1, typename C2>
+auto min_maximal_matching(const Gnl& H, const C1& weight, C2& matchset, C2& dep) ->
     typename C1::mapped_type {
     auto cover = [&](const auto& net) {
         for (const auto& v : H.G[net]) {

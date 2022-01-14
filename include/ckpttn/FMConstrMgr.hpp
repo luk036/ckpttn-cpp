@@ -19,6 +19,7 @@ enum class LegalCheck { notsatisfied, getbetter, allsatisfied };
 /**
  * @brief FM Partition Constraint Manager
  *
+ * @tparam Gnl
  */
 template <typename Gnl> class FMConstrMgr {
   private:

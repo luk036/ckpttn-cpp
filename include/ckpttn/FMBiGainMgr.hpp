@@ -11,6 +11,7 @@
 /**
  * @brief FMBiGainMgr
  *
+ * @tparam Gnl
  */
 template <typename Gnl> class FMBiGainMgr
     : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {

@@ -1,10 +1,8 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 
-#include <chrono>                // for duration, operator-, steady_clock
-#include <ckpttn/MLPartMgr.hpp>  // for MLPartMgr
-// #include <experimental/random>
-// #include <__config>     // for std
 #include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <chrono>                         // for duration, operator-, steady_clock
+#include <ckpttn/MLPartMgr.hpp>           // for MLPartMgr
 #include <cstdint>                        // for uint8_t
 #include <iostream>                       // for operator<<, basic_ostream, endl, cout
 #include <ratio>                          // for ratio
@@ -32,9 +30,8 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto H = create_dwarf();
     MLPartMgr partMgr{0.3};
     vector<uint8_t> part(H.number_of_modules(), 0);
-    partMgr.run_FMPartition<
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(H,
-                                                                                            part);
+    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                     FMBiConstrMgr<SimpleNetlist>>>(H, part);
     CHECK(partMgr.totalcost == 2U);
 }
 
@@ -42,9 +39,8 @@ TEST_CASE("Test MLKWayPartMgr dwarf") {
     const auto H = create_dwarf();
     MLPartMgr partMgr{0.4, 3};  // 0.3???
     vector<uint8_t> part(H.number_of_modules(), 0);
-    partMgr.run_FMPartition<
-        FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
-        H, part);
+    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
+                                                     FMKWayConstrMgr<SimpleNetlist>>>(H, part);
     CHECK(partMgr.totalcost == 4U);
 }
 
@@ -61,9 +57,8 @@ TEST_CASE("Test MLBiPartMgr p1") {
             whichPart ^= 1;
             elem = uint8_t(whichPart);
         }
-        partMgr.run_FMPartition<
-            FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-            H, part);
+        partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                         FMBiConstrMgr<SimpleNetlist>>>(H, part);
         if (mincost > partMgr.totalcost) {
             mincost = partMgr.totalcost;
         }
@@ -88,9 +83,8 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
             whichPart ^= 1;
             elem = uint8_t(whichPart);
         }
-        partMgr.run_FMPartition<
-            FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-            H, part);
+        partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                         FMBiConstrMgr<SimpleNetlist>>>(H, part);
         if (mincost > partMgr.totalcost) {
             mincost = partMgr.totalcost;
         }
@@ -109,9 +103,8 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     vector<uint8_t> part(H.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    partMgr.run_FMPartition<
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(H,
-                                                                                            part);
+    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                     FMBiConstrMgr<SimpleNetlist>>>(H, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(partMgr.totalcost >= 1104U);
@@ -126,9 +119,8 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     vector<uint8_t> part(H.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    partMgr.run_FMPartition<
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(H,
-                                                                                            part);
+    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                     FMBiConstrMgr<SimpleNetlist>>>(H, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(partMgr.totalcost >= 1104U);

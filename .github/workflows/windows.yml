@@ -36,7 +36,7 @@ jobs:
       - name: Install dependent software
         run: |
           conda info
-          conda install -c conda-forge cmake boost=1.74
+          conda install -c conda-forge cmake boost=1.74 fmt
 
       - name: configure
         run: cmake -S. -Bbuild

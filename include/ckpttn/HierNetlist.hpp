@@ -34,6 +34,7 @@
  *
  * HierNetlist is implemented by xnetwork::Graph, which is a networkx-like graph.
  *
+ * @tparam graph_t
  */
 template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
   public:

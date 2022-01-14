@@ -6,7 +6,6 @@
 // #include "FMPartMgr.hpp" // import FMPartMgr
 // #include "netlist.hpp"
 #include <cassert>
-#include <ckpttn/netlist.hpp>
 #include <gsl/span>  // for span
 #include <memory>    // std::unique_ptr
 // #include <py2cpp/range.hpp>  // for range
@@ -56,11 +55,12 @@ class MLPartMgr {
     /**
      * @brief run_Partition
      *
+     * @tparam Gnl
      * @tparam PartMgr
      * @param[in] H
      * @param[in,out] part
      * @return LegalCheck
      */
-    template <typename PartMgr>
-    auto run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
+    template <typename Gnl, typename PartMgr>
+    auto run_FMPartition(const Gnl& H, gsl::span<std::uint8_t> part) -> LegalCheck;
 };

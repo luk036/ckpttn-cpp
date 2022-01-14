@@ -20,6 +20,7 @@ class FMPartMgr;
 /**
  * @brief FM Partition Manager
  *
+ * @tparam Gnl
  * @tparam GainMgr
  * @tparam ConstrMgr
  */

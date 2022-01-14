@@ -16,6 +16,7 @@ template <typename Node> struct MoveInfoV;
 /**
  * @brief
  *
+ * @tparam Gnl
  * @tparam GainCalc
  * @tparam Derived
  */

@@ -18,15 +18,15 @@ extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node
 /**
  * @brief run_Partition
  *
- * @tparam GainMgr
- * @tparam ConstrMgr
+ * @tparam Gnl
+ * @tparam PartMgr
+ * @param H
  * @param[in] H
  * @param[in,out] part
  * @return LegalCheck
  */
-template <typename PartMgr>
-auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> part)
-    -> LegalCheck {
+template <typename Gnl, typename PartMgr>
+auto MLPartMgr::run_FMPartition(const Gnl& H, gsl::span<std::uint8_t> part) -> LegalCheck {
     using GainMgr = typename PartMgr::GainMgr_;
     using ConstrMgr = typename PartMgr::ConstrMgr_;
 
@@ -55,11 +55,11 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
     }
 
     if (H.number_of_modules() >= this->limitsize) {  // OK
-        const auto H2 = create_contraction_subgraph(H, py::set<node_t>{});
+        const auto H2 = create_contraction_subgraph(H, py::set<typename Gnl::node_t>{});
         if (H2->number_of_modules() <= H.number_of_modules()) {
             auto part2 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
             H2->projection_up(part, part2);
-            auto legalcheck_recur = this->run_FMPartition<PartMgr>(*H2, part2);
+            auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*H2, part2);
             if (legalcheck_recur == LegalCheck::allsatisfied) {
                 H2->projection_down(part2, part);
             }
@@ -77,9 +77,11 @@ auto MLPartMgr::run_FMPartition(const SimpleNetlist& H, gsl::span<std::uint8_t> 
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
 
 template auto MLPartMgr::run_FMPartition<
+    SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;
 
 template auto MLPartMgr::run_FMPartition<
+    SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist& H, gsl::span<std::uint8_t> part) -> LegalCheck;

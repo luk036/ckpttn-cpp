@@ -15,6 +15,7 @@ template <typename Node> struct MoveInfoV;
 /**
  * @brief FM K-Way Partition Constraint Manager
  *
+ * @tparam Gnl
  */
 template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
   private:

@@ -6,6 +6,8 @@
  * @brief Constraint Manager
  *
  * Check if (the move of v can satisfied, makebetter, or notsatisfied
+ *
+ * @tparam Gnl
  */
 template <typename Gnl> class FMBiConstrMgr : public FMConstrMgr<Gnl> {
   public:

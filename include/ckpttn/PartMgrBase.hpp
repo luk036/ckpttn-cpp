@@ -16,6 +16,7 @@ enum class LegalCheck;
 /**
  * @brief Partition Manager Base
  *
+ * @tparam Gnl
  * @tparam GainMgr
  * @tparam ConstrMgr
  * @tparam Derived

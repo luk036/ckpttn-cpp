@@ -18,6 +18,7 @@ template <typename Node> struct MoveInfoV;
 /**
  * @brief FMBiGainCalc
  *
+ * @tparam Gnl
  */
 template <typename Gnl> class FMBiGainCalc {
     friend class FMBiGainMgr<Gnl>;
@@ -74,6 +75,12 @@ template <typename Gnl> class FMBiGainCalc {
         // nothing to do in 2-way partitioning
     }
 
+    /**
+     * @brief
+     *
+     * @param v
+     * @param net
+     */
     void init_IdVec(const node_t& v, const node_t& net);
 
     /**
@@ -91,7 +98,7 @@ template <typename Gnl> class FMBiGainCalc {
      *
      * @param[in] part
      * @param[in] move_info
-     * @return ret_info
+     * @return std::vector<int>
      */
     auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
         -> std::vector<int>;
@@ -101,7 +108,7 @@ template <typename Gnl> class FMBiGainCalc {
      *
      * @param[in] part
      * @param[in] move_info
-     * @return ret_info
+     * @return std::vector<int>
      */
     auto update_move_general_net(gsl::span<const std::uint8_t> part,
                                  const MoveInfo<node_t>& move_info) -> std::vector<int>;
@@ -117,13 +124,13 @@ template <typename Gnl> class FMBiGainCalc {
         this->vertex_list[w].data.second += weight;
     }
 
-    /**
-     * @brief
-     *
-     * @tparam Ts
-     * @param[in] weight
-     * @param[in] w
-     */
+    // /**
+    //  * @brief
+    //  *
+    //  * @tparam Ts
+    //  * @param[in] weight
+    //  * @param[in] w
+    //  */
     // template <typename... Ts> auto _modify_gain_va(unsigned int weight, Ts... w) -> void {
     //     ((this->vertex_list[w].data.second += weight), ...);
     // }
