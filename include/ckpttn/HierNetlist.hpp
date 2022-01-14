@@ -2,13 +2,14 @@
 
 #include <stdint.h>  // for uint8_t
 
-// #include <__hash_table>                // for operator!=
-#include <gsl/span>                    // for span
 #include <py2cpp/dict.hpp>             // for dict
 #include <py2cpp/set.hpp>              // for set
-#include <type_traits>                 // for move
-#include <vector>                      // for vector
 #include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph, Graph<>::n...
+// #include <__hash_table>                // for operator!=
+#include <__hash_table>  // for operator!=
+#include <gsl/span>      // for span
+#include <type_traits>   // for move
+#include <vector>        // for vector
 
 // import networkx as nx
 // #include <algorithm>

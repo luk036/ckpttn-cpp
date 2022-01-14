@@ -1,5 +1,5 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::allsatisfied
-#include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr, create_contraction_subg...
+#include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
 #include <cstdint>                 // for uint8_t
 #include <gsl/span>                // for span
 #include <memory>                  // for unique_ptr
@@ -7,7 +7,7 @@
 #include <tuple>                   // for tuple
 #include <vector>                  // for vector
 
-#include "ckpttn/HierNetlist.hpp"  // for HierNetlist
+#include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
 #include "ckpttn/netlist.hpp"      // for SimpleNetlist
 // #include <iostream>
 

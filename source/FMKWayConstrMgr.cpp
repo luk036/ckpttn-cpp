@@ -1,10 +1,13 @@
 // #include <algorithm> // import std::any_of()
-#include <algorithm>  // for min_element
-#include <ckpttn/FMKWayConstrMgr.hpp>
-#include <iterator>  // for distance
+#include <stdint.h>  // for uint8_t
 
-#include "ckpttn/FMConstrMgr.hpp"  // for LegalCheck, LegalCheck::allsatisfied
-#include "ckpttn/moveinfo.hpp"     // for MoveInfo
+#include <algorithm>                   // for min_element
+#include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr, move_info_v
+#include <iterator>                    // for distance
+#include <vector>                      // for vector
+
+#include "ckpttn/FMConstrMgr.hpp"  // for LegalCheck, LegalCheck::allsat...
+#include "ckpttn/moveinfo.hpp"     // for MoveInfoV
 // #include <range/v3/algorithm/any_of.hpp>
 
 /**
@@ -41,8 +44,6 @@ auto FMKWayConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& mo
 }
 
 // Instantiation
-#include <ckpttn/netlist.hpp>  // for SimpleNetlist, Netlist
-#include <py2cpp/range.hpp>    // for _iterator
-#include <xnetwork/classes/graph.hpp>
+#include <ckpttn/netlist.hpp>  // for Netlist, SimpleNetlist
 
 template class FMKWayConstrMgr<SimpleNetlist>;

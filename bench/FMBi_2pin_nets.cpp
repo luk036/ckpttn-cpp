@@ -7,8 +7,7 @@
 
 #include "benchmark/benchmark.h"    // for BENCHMARK, State, BENCHMARK_MAIN
 #include "ckpttn/FMBiGainCalc.hpp"  // for FMBiGainCalc
-#include "ckpttn/PartMgrBase.hpp"   // for SimpleNetlist
-#include "ckpttn/netlist.hpp"       // for Netlist
+#include "ckpttn/netlist.hpp"       // for SimpleNetlist
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf

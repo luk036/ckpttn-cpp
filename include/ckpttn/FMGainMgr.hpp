@@ -7,9 +7,14 @@
 #include <utility>    // for pair
 #include <vector>     // for vector<>::const_iterator, vector
 
-#include "bpqueue.hpp"   // for bpqueue
-#include "dllist.hpp"    // for dllink
-#include "moveinfo.hpp"  // for MoveInfo
+#include "bpqueue.hpp"                // for bpqueue
+// #include "ckpttn/FMBiGainCalc.hpp"    // for FMBiGainCalc
+// #include "ckpttn/FMKWayGainCalc.hpp"  // for FMKWayGainCalc
+// #include "ckpttn/netlist.hpp"         // for Netlist, Netlist<>::node_t
+#include "dllist.hpp"                 // for dllink
+
+template <typename Node> struct MoveInfo;
+template <typename Node> struct MoveInfoV;
 
 /**
  * @brief

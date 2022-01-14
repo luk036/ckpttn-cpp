@@ -1,16 +1,18 @@
 #include <stdint.h>  // for uint8_t
-
 // #include <__config>                        // for std
 // #include <__hash_table>                    // for __hash_const_iterator, ope...
-#include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc
-#include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr, FMKWayGainM...
-#include <ckpttn/FMPmrConfig.hpp>     // for pmr::vector
-#include <gsl/span>                   // for span
+#include <__config>                        // for std
+#include <__hash_table>                    // for __hash_const_iterator, ope...
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <ckpttn/FMKWayGainCalc.hpp>       // for FMKWayGainCalc
+#include <ckpttn/FMKWayGainMgr.hpp>        // for FMKWayGainMgr, move_info_v
+#include <gsl/span>                        // for span
+#include <vector>                          // for vector, __vector_base<>::v...
 
-#include "ckpttn/FMGainMgr.hpp"  // for FMGainMgr::Item
-#include "ckpttn/bpqueue.hpp"    // for bpqueue
-#include "ckpttn/moveinfo.hpp"   // for MoveInfo
-#include "ckpttn/robin.hpp"      // for robin<>::iterable_wrapper
+#include "ckpttn/bpqueue.hpp"   // for bpqueue
+#include "ckpttn/dllist.hpp"    // for dllink
+#include "ckpttn/moveinfo.hpp"  // for MoveInfoV
+#include "ckpttn/robin.hpp"     // for robin<>::iterable_wrapper
 
 using namespace std;
 
@@ -70,6 +72,6 @@ void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& mo
 #include <py2cpp/range.hpp>  // for _iterator
 #include <py2cpp/set.hpp>    // for set
 
-#include "ckpttn/netlist.hpp"  // for MoveInfoV, Netlist, Simple...
+#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
 
 template class FMKWayGainMgr<SimpleNetlist>;

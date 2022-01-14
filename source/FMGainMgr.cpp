@@ -1,3 +1,7 @@
+#include <__config>                        // for std
+#include <__hash_table>                    // for __hash_const_iterator, ope...
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <boost/container/vector.hpp>      // for operator!=, vec_iterator
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE
 #include <iterator>                // for distance
@@ -7,7 +11,7 @@
 
 #include "ckpttn/bpqueue.hpp"   // for bpqueue
 #include "ckpttn/dllist.hpp"    // for dllink
-#include "ckpttn/moveinfo.hpp"  // for MoveInfoV
+#include "ckpttn/moveinfo.hpp"  // for MoveInfoV, MoveInfo
 
 // using node_t = typename SimpleNetlist::node_t;
 // using namespace ranges;
@@ -207,7 +211,7 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
 #include <ckpttn/FMBiGainMgr.hpp>      // for FMBiGainMgr
 #include <xnetwork/classes/graph.hpp>  // for Graph
 
-#include "ckpttn/netlist.hpp"  // for SimpleNetlist
+#include "ckpttn/netlist.hpp"  // for Netlist, Netlist<>::node_t
 
 template class FMGainMgr<SimpleNetlist, FMBiGainCalc<SimpleNetlist>, FMBiGainMgr<SimpleNetlist>>;
 

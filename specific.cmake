@@ -23,14 +23,14 @@ cpmaddpackage(
 cpmaddpackage("gh:microsoft/GSL@3.1.0")
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
 
-cpmaddpackage(NAME cppcoro GIT_TAG 1.0 GITHUB_REPOSITORY luk036/cppcoro)
+# cpmaddpackage(NAME cppcoro GIT_TAG 1.0 GITHUB_REPOSITORY luk036/cppcoro)
 # print_target_properties(cppcoro)
-if(cppcoro_ADDED)
-  message(STATUS "Found cppcoro: ${cppcoro_SOURCE_DIR}")
-  add_library(cppcoro::cppcoro INTERFACE IMPORTED GLOBAL)
-  target_include_directories(cppcoro::cppcoro SYSTEM
-                             INTERFACE ${cppcoro_SOURCE_DIR}/include)
-endif(cppcoro_ADDED)
+# if(cppcoro_ADDED)
+#   message(STATUS "Found cppcoro: ${cppcoro_SOURCE_DIR}")
+#   add_library(cppcoro::cppcoro INTERFACE IMPORTED GLOBAL)
+#   target_include_directories(cppcoro::cppcoro SYSTEM
+#                              INTERFACE ${cppcoro_SOURCE_DIR}/include)
+# endif(cppcoro_ADDED)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
@@ -70,7 +70,6 @@ set(SPECIFIC_LIBS
     Py2Cpp::Py2Cpp
     Boost::container
     Boost::boost
-    cppcoro::cppcoro
     Threads::Threads
     GSL
     fmt::fmt)

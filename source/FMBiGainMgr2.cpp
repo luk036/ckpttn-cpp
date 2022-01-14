@@ -1,9 +1,10 @@
 #include <stdint.h>  // for uint8_t
-
 // #include <__config>                 // for std
 // #include <__hash_table>             // for __hash_const_iterator, operator!=
-#include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc::Item
-#include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, FMBiGainMgr::Base
+#include <__config>                 // for std
+#include <__hash_table>             // for __hash_const_iterator, operator!=
+#include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item
+#include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, part, FMBiGainMgr::Base
 #include <gsl/span>                 // for span
 #include <py2cpp/range.hpp>         // for _iterator
 #include <py2cpp/set.hpp>           // for set

@@ -1,10 +1,17 @@
 // #include <__config>                    // for std
 // #include <__hash_table>                // for __hash_const_iterator, operator!=
-#include <array>  // for array
-#include <ckpttn/FMBiGainCalc.hpp>
-#include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE
-#include <initializer_list>        // for initializer_list
-#include <vector>                  // for vector
+#include <__config>                        // for std
+#include <__hash_table>                    // for __hash_const_iterator, ope...
+#include <array>                           // for array
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <boost/container/vector.hpp>      // for operator!=, vec_iterator
+#include <ckpttn/FMBiGainCalc.hpp>         // for FMBiGainCalc, part, net
+#include <ckpttn/FMPmrConfig.hpp>          // for FM_MAX_DEGREE
+#include <cstddef>                         // for size_t
+#include <cstdint>                         // for uint8_t
+#include <gsl/span>                        // for span
+#include <initializer_list>                // for initializer_list
+#include <vector>                          // for vector
 
 #include "ckpttn/moveinfo.hpp"  // for MoveInfo
 // #include <range/v3/view/remove_if.hpp>
@@ -271,6 +278,6 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
 #include <py2cpp/set.hpp>              // for set
 #include <xnetwork/classes/graph.hpp>  // for Graph
 
-#include "ckpttn/netlist.hpp"  // for SimpleNetlist
+#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
 
 template class FMBiGainCalc<SimpleNetlist>;

@@ -1,8 +1,13 @@
 // #include <__config>   // for std
-#include <algorithm>  // for fill
-#include <ckpttn/FMConstrMgr.hpp>
-#include <ckpttn/moveinfo.hpp>  // for MoveInfoV
-#include <cmath>                // for round
+#include <stdint.h>  // for uint32_t, uint8_t
+
+#include <__config>                // for std
+#include <algorithm>               // for fill
+#include <ckpttn/FMConstrMgr.hpp>  // for FMConstrMgr, LegalCheck, move_info_v
+#include <ckpttn/moveinfo.hpp>     // for MoveInfoV
+#include <cmath>                   // for round
+#include <gsl/span>                // for span
+#include <vector>                  // for vector<>::iterator, vector
 // #include <transrangers.hpp>
 
 using namespace std;
@@ -86,8 +91,7 @@ void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t>& move_i
 }
 
 // Instantiation
-#include <ckpttn/netlist.hpp>  // for SimpleNetlist, Netlist
+#include <ckpttn/netlist.hpp>  // for Netlist, SimpleNetlist
 #include <py2cpp/range.hpp>    // for _iterator
-#include <xnetwork/classes/graph.hpp>
 
 template class FMConstrMgr<SimpleNetlist>;
