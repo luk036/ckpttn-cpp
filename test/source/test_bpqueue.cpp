@@ -1,6 +1,5 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 // #include <__config>            // for std
-#include <__config>            // for std
 #include <ckpttn/bpqueue.hpp>  // for bpqueue
 #include <ckpttn/dllist.hpp>   // for dllink
 #include <cstdint>             // for int32_t, uint32_t

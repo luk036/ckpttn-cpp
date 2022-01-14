@@ -1,7 +1,7 @@
 // #include <__config>   // for std
 #include <stdint.h>  // for uint32_t, uint8_t
 
-#include <__config>                // for std
+// #include <__config>                // for std
 #include <algorithm>               // for fill
 #include <ckpttn/FMConstrMgr.hpp>  // for FMConstrMgr, LegalCheck, move_info_v
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV

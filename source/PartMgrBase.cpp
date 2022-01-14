@@ -1,4 +1,3 @@
-#include <__tuple>                 // for tuple_element<>::type
 #include <cassert>                 // for assert
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::notsat...
 #include <ckpttn/PartMgrBase.hpp>  // for PartMgrBase, part, SimpleNetlist
@@ -8,6 +7,7 @@
 #include <gsl/span>                // for span
 #include <py2cpp/range.hpp>        // for _iterator
 #include <py2cpp/set.hpp>          // for set
+#include <tuple>                   // for tuple_element<>::type
 #include <tuple>                   // for get
 #include <vector>                  // for vector
 

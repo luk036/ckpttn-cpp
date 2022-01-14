@@ -6,10 +6,9 @@
 #include <py2cpp/set.hpp>              // for set
 #include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph, Graph<>::n...
 // #include <__hash_table>                // for operator!=
-#include <__hash_table>  // for operator!=
-#include <gsl/span>      // for span
-#include <type_traits>   // for move
-#include <vector>        // for vector
+#include <gsl/span>     // for span
+#include <type_traits>  // for move
+#include <vector>       // for vector
 
 // import networkx as nx
 // #include <algorithm>

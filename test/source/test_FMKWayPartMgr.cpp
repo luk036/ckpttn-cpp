@@ -1,6 +1,5 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 // #include <__config>                    // for std
-#include <__config>                    // for std
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr

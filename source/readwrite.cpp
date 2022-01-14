@@ -11,11 +11,9 @@
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>      // for std
 // #include <__hash_table>  // for __hash_const_iterator, operator!=
-#include <__config>      // for std
-#include <__hash_table>  // for __hash_const_iterator, operator!=
-#include <string_view>   // for string_view
-#include <type_traits>   // for move
-#include <vector>        // for vector
+#include <string_view>  // for string_view
+#include <type_traits>  // for move
+#include <vector>       // for vector
 
 // using graph_t =
 //     boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;

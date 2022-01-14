@@ -9,8 +9,6 @@
 #include <stdint.h>  // for uint32_t
 // #include <__config>                    // for std
 // #include <__hash_table>                // for operator!=, __hash_const_iterator
-#include <__config>                    // for std
-#include <__hash_table>                // for operator!=, __hash_const_iterator
 #include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
 #include <memory>                      // for unique_ptr, make_unique
 #include <py2cpp/dict.hpp>             // for dict, dict<>::Base

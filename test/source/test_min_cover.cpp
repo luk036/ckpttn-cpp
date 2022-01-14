@@ -1,6 +1,5 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 // #include <__config>                // for std
-#include <__config>                // for std
 #include <ckpttn/HierNetlist.hpp>  // for HierNetlist, SimpleHierNetlist
 #include <ckpttn/netlist.hpp>      // for Netlist, SimpleNetlist
 #include <cstdint>                 // for uint8_t

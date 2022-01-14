@@ -1,20 +1,17 @@
 #include <assert.h>  // for assert
 #include <stdint.h>  // for uint8_t
 
-#include <__config>                                           // for std
-#include <__hash_table>                                       // for __hash_...
-#include <algorithm>                                          // for fill
-#include <boost/container/pmr/monotonic_buffer_resource.hpp>  // for monoton...
-#include <boost/container/pmr/vector.hpp>                     // for vector
-#include <boost/container/vector.hpp>                         // for operator!=
-#include <ckpttn/FMKWayGainCalc.hpp>                          // for FMKWayG...
-#include <ckpttn/FMPmrConfig.hpp>                             // for FM_MAX_...
-#include <cstddef>                                            // for byte
-#include <gsl/span>                                           // for span
-#include <initializer_list>                                   // for initial...
-#include <type_traits>                                        // for swap
-#include <utility>                                            // for pair
-#include <vector>                                             // for vector
+// #include <__config>                                           // for std
+// #include <__hash_table>                                       // for __hash_...
+#include <algorithm>                  // for fill
+#include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayG...
+#include <ckpttn/FMPmrConfig.hpp>     // for FM_MAX_...
+#include <cstddef>                    // for byte
+#include <gsl/span>                   // for span
+#include <initializer_list>           // for initial...
+#include <type_traits>                // for swap
+#include <utility>                    // for pair
+#include <vector>                     // for vector
 
 #include "ckpttn/dllist.hpp"    // for dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfo
