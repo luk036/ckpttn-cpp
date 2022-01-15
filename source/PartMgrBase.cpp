@@ -16,14 +16,13 @@
 /**
  * @brief
  *
+ * @tparam Gnl
  * @tparam GainMgr
  * @tparam ConstrMgr
- * @tparam Derived
  * @param[in] part
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr,
-          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::init(gsl::span<std::uint8_t> part) {
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(gsl::span<std::uint8_t> part) {
     this->totalcost = this->gainMgr.init(part);
     this->validator.init(part);
 }
@@ -31,16 +30,14 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::init(gsl::span<std::uint8_t>
 /**
  * @brief
  *
+ * @tparam Gnl
  * @tparam GainMgr
  * @tparam ConstrMgr
- * @tparam Derived
  * @param[in] part
  * @return LegalCheck
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr,
-          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
-auto PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint8_t> part)
-    -> LegalCheck {
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part) -> LegalCheck {
     this->init(part);
 
     // Zero-weighted modules does not contribute legalization
@@ -88,15 +85,14 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::legalize(gsl::span<std::uint
 /**
  * @brief
  *
+ * @tparam Gnl
  * @tparam GainMgr
  * @tparam ConstrMgr
- * @tparam Derived
  * @param[in] part
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr,
-          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<std::uint8_t> part) {
-    // using SS_t = decltype(self.take_snapshot(part));
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_t> part) {
+    // using SS_t = decltype(this->take_snapshot(part));
     using SS_t = std::vector<std::uint8_t>;
 
     auto snapshot = SS_t{};
@@ -121,7 +117,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<st
             if (!deferredsnapshot || totalgain > besttotalgain) {
                 // Take a snapshot before move
                 // snapshot = part;
-                snapshot = self.take_snapshot(part);
+                snapshot = this->take_snapshot(part);
                 besttotalgain = totalgain;
             }
             deferredsnapshot = true;
@@ -142,7 +138,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<st
     if (deferredsnapshot) {
         // restore the previous best solution
         // part = snapshot;
-        self.restore_part(snapshot, part);
+        this->restore_part(snapshot, part);
         totalgain = besttotalgain;
     }
     this->totalcost -= totalgain;
@@ -151,14 +147,14 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::_optimize_1pass(gsl::span<st
 /**
  * @brief
  *
+ * @tparam Gnl
  * @tparam GainMgr
  * @tparam ConstrMgr
  * @tparam Derived
  * @param[in] part
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr,
-          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
-void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint8_t> part) {
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(gsl::span<std::uint8_t> part) {
     // this->init(part);
     // auto totalcostafter = this->totalcost;
     while (true) {
@@ -181,10 +177,9 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr, Derived>::optimize(gsl::span<std::uint
 #include <xnetwork/classes/graph.hpp>
 
 template class PartMgrBase<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-                           FMKWayConstrMgr<SimpleNetlist>, FMPartMgr>;
+                           FMKWayConstrMgr<SimpleNetlist>>;
 
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 
-template class PartMgrBase<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>,
-                           FMPartMgr>;
+template class PartMgrBase<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>;

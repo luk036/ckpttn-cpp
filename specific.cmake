@@ -55,7 +55,7 @@ cpmaddpackage(
   NAME
   XNetwork
   GIT_TAG
-  1.3
+  1.4
   GITHUB_REPOSITORY
   luk036/xnetwork-cpp
   OPTIONS

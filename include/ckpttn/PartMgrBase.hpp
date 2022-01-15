@@ -4,7 +4,11 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 
+#include <stdint.h>  // for uint8_t
+
 #include <gsl/span>
+#include <gsl/span>  // for span
+#include <vector>    // for vector
 // #include <xnetwork/classes/graph.hpp>
 
 // forward declare
@@ -39,18 +43,17 @@ enum class LegalCheck;
  *   G. Ausiello et al., Complexity and Approximation: Combinatorial
  * Optimization Problems and Their Approximability Properties, Section 10.3.2.
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr,
-          template <typename _gnl, typename _gainMgr, typename _constrMgr> class Derived>  //
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 class PartMgrBase {
   public:
     using GainCalc_ = typename GainMgr::GainCalc_;
     using GainMgr_ = GainMgr;
     using ConstrMgr_ = ConstrMgr;
 
-    using Der = Derived<Gnl, GainMgr, ConstrMgr>;
+    // using Der = Derived<Gnl, GainMgr, ConstrMgr>;
 
   protected:
-    Der& self = *static_cast<Der*>(this);
+    // Der& self = *static_cast<Der*>(this);
 
     const Gnl& H;
     GainMgr& gainMgr;
@@ -102,4 +105,37 @@ class PartMgrBase {
      * @param[in,out] part
      */
     void _optimize_1pass(gsl::span<std::uint8_t> part);
+
+    /**
+     * @brief
+     *
+     * @param[in] part
+     * @return std::vector<std::uint8_t>
+     */
+    auto take_snapshot(gsl::span<const std::uint8_t> part) -> std::vector<std::uint8_t> {
+        // const auto N = part.size();
+        // auto snapshot = std::vector<std::uint8_t>(N, 0U);
+        // // snapshot.reserve(N);
+        // for (auto i = 0U; i != N; ++i)
+        // {
+        //     snapshot[i] = part[i];
+        // }
+        auto snapshot = std::vector<std::uint8_t>(part.begin(), part.end());
+        return snapshot;
+    }
+
+    /**
+     * @brief
+     *
+     * @param[in] snapshot
+     * @param[in,out] part
+     */
+    auto restore_part(const std::vector<std::uint8_t>& snapshot, gsl::span<std::uint8_t> part)
+        -> void {
+        // std::copy(snapshot.begin(), snapshot.end(), part.begin());
+        const auto N = part.size();
+        for (auto i = 0U; i != N; ++i) {
+            part[i] = snapshot[i];
+        }
+    }
 };
