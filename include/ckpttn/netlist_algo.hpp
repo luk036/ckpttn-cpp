@@ -21,7 +21,8 @@ template <typename Gnl, typename C1, typename C2>
 auto min_vertex_cover(const Gnl& H, const C1& weight, C2& coverset) -> typename C1::mapped_type {
     using T = typename C1::mapped_type;
     auto in_coverset = [&](const auto& v) { return coverset.contains(v); };
-    [[maybe_unused]] auto total_dual_cost = T(0);
+    auto total_dual_cost = T(0);
+    static_assert(sizeof total_dual_cost >= 0, "maybe unused");
     auto total_primal_cost = T(0);
     auto gap = weight;
     for (const auto& net : H.nets) {
@@ -79,7 +80,8 @@ auto min_maximal_matching(const Gnl& H, const C1& weight, C2& matchset, C2& dep)
     using T = typename C1::mapped_type;
 
     auto gap = weight;
-    [[maybe_unused]] auto total_dual_cost = T(0);
+    auto total_dual_cost = T(0);
+    static_assert(sizeof total_dual_cost >= 0, "maybe unused");
     auto total_primal_cost = T(0);
     for (const auto& net : H.nets) {
         if (std::any_of(H.G[net].begin(), H.G[net].end(), in_dep)) {
