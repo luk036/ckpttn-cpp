@@ -3,12 +3,12 @@
 
 #include <algorithm>                   // for min_element
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr, move_info_v
+#include <gsl/gsl_util>                // for narrow_cast
 #include <iterator>                    // for distance
 #include <vector>                      // for vector
 
 #include "ckpttn/FMConstrMgr.hpp"  // for LegalCheck, LegalCheck::allsat...
 #include "ckpttn/moveinfo.hpp"     // for MoveInfoV
-// #include <range/v3/algorithm/any_of.hpp>
 
 /**
  * @brief
@@ -17,7 +17,7 @@
  */
 template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::uint8_t {
     auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
-    return std::uint8_t(std::distance(this->diff.cbegin(), it));
+    return gsl::narrow_cast<std::uint8_t>(std::distance(this->diff.cbegin(), it));
 }
 
 /**

@@ -52,10 +52,10 @@ TEST_CASE("Test MLBiPartMgr p1") {
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
         auto part = vector<uint8_t>(H.number_of_modules(), 0);
-        auto whichPart = 0U;
+        auto whichPart = uint8_t(0);
         for (auto& elem : part) {
             whichPart ^= 1;
-            elem = uint8_t(whichPart);
+            elem = whichPart;
         }
         partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                                          FMBiConstrMgr<SimpleNetlist>>>(H, part);
@@ -78,10 +78,10 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
         auto part = vector<uint8_t>(H.number_of_modules(), 0);
-        auto whichPart = 0U;
+        auto whichPart = uint8_t(0);
         for (auto& elem : part) {
             whichPart ^= 1;
-            elem = uint8_t(whichPart);
+            elem = whichPart;
         }
         partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                                          FMBiConstrMgr<SimpleNetlist>>>(H, part);

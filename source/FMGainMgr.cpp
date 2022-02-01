@@ -4,6 +4,7 @@
 // #include <boost/container/vector.hpp>      // for operator!=, vec_iterator
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE
+#include <gsl/gsl_util>            // for narrow_cast
 #include <iterator>                // for distance
 #include <py2cpp/set.hpp>          // for set
 #include <type_traits>             // for is_base_of, integral_const...
@@ -66,7 +67,7 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
         this->gainbucket.begin(), this->gainbucket.end(),
         [](const auto& bckt1, const auto& bckt2) { return bckt1.get_max() < bckt2.get_max(); });
 
-    const auto toPart = uint8_t(distance(this->gainbucket.begin(), it));
+    const auto toPart = gsl::narrow_cast<uint8_t>(distance(this->gainbucket.begin(), it));
     const auto gainmax = it->get_max();
     auto& vlink = it->popleft();
     this->waitinglist.append(vlink);

@@ -93,8 +93,8 @@ TEST_CASE("Test contraction subgraph ibm18") {
     auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
     auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
     auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
-    for (auto i = 0u; i != H3->number_of_modules(); ++i) {
-        part3[i] = uint8_t(i);
+    for (auto i = uint8_t(0); i != H3->number_of_modules(); ++i) {
+        part3[i] = i;
     }
     H3->projection_down(part3, part2);
     H3->projection_up(part2, part4);
