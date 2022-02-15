@@ -13,30 +13,31 @@
 template <typename _Tp, typename Int> class bpq_iterator;
 
 /**
- * @brief bounded priority queue
+ * @brief Bounded priority queue
  *
  * Bounded Priority Queue with integer keys in [a..b].
- * Implemented by array (bucket) of doubly-linked lists.
- * Efficient if key is bounded by a small integer value.
+ * Implemented by an array (bucket) of doubly-linked lists.
+ * Efficient if the keys are bounded by a small integer value.
  *
- * Note that this class does not own the PQ nodes. This feature
- * makes the nodes sharable between doubly linked list class and
- * this class. In the FM algorithm, the node either attached to
- * the gain buckets (PQ) or in the waitinglist (doubly linked list),
- * but not in both of them in the same time.
+ * Note that this class does not own PQ nodes. This feature
+ * allows these nodes sharable in both doubly linked list class and
+ * this class. In the FM algorithm, nodes are either attached to
+ * the gain buckets (PQ) or to the waitinglist (doubly-linked list),
+ * but cannot be in both at the same time.
  *
- * Another improvement is to make the array size one element bigger
- * i.e. (b - a + 2). The extra dummy array element (which is called
- * sentinel) is used to reduce the boundary checking during updating.
+ * Another improvement is to increase the size of the array by one
+ * element, i.e. (b - a + 2). The extra dummy array element (called
+ * sentinel) is used to reduce the boundary checking during updates.
  *
- * All the member functions assume that the keys are within the bound.
+ * All the member functions assume that the keys are inside the bounds.
  *
- * @todo #1 support std::pmr
+ * @tparam _Tp
+ * @tparam Int
+ * @tparam _Sequence
+ * @tparam std::make_unsigned_t<Int>>>>
  */
 template <typename _Tp, typename Int = int32_t,
           typename _Sequence = std::vector<dllink<std::pair<_Tp, std::make_unsigned_t<Int>>>>>
-//          class Allocator = typename std::allocator<dllink<std::pair<_Tp,
-//          Int>> > >
 class bpqueue {
     using UInt = std::make_unsigned_t<Int>;
 
@@ -54,14 +55,11 @@ class bpqueue {
     using container_type = _Sequence;
 
   private:
-    Item sentinel{};  //!< sentinel */
-
+    Item sentinel{};   //!< sentinel */
     _Sequence bucket;  //!< bucket, array of lists
     UInt max{};        //!< max value
     Int offset;        //!< a - 1
     UInt high;         //!< b - a + 1
-
-    // using alloc_t = decltype(bucket.get_allocator());
 
   public:
     /**
@@ -86,7 +84,7 @@ class bpqueue {
     constexpr auto operator=(bpqueue&&) noexcept -> bpqueue& = default;  // don't assign
 
     /**
-     * @brief whether the %bpqueue is empty.
+     * @brief Whether the %bpqueue is empty.
      *
      * @return true
      * @return false
@@ -96,7 +94,7 @@ class bpqueue {
     /**
      * @brief Set the key object
      *
-     * @param[out] it   the item
+     * @param[out] it the item
      * @param[in] gain the key of it
      */
     constexpr auto set_key(Item& it, Int gain) noexcept -> void {
@@ -106,14 +104,14 @@ class bpqueue {
     /**
      * @brief Get the max value
      *
-     * @return T maximum value
+     * @return Int maximum value
      */
     [[nodiscard]] constexpr auto get_max() const noexcept -> Int {
         return this->offset + Int(this->max);
     }
 
     /**
-     * @brief clear reset the PQ
+     * @brief Clear reset the PQ
      */
     constexpr auto clear() noexcept -> void {
         while (this->max > 0) {
@@ -123,7 +121,7 @@ class bpqueue {
     }
 
     /**
-     * @brief append item with internal key
+     * @brief Append item with internal key
      *
      * @param[in,out] it the item
      */
@@ -133,7 +131,7 @@ class bpqueue {
     }
 
     /**
-     * @brief append item with external key
+     * @brief Append item with external key
      *
      * @param[in,out] it the item
      * @param[in] k  the key
@@ -148,27 +146,7 @@ class bpqueue {
     }
 
     /**
-     * @brief append from list
-     *
-     * @param[in,out] nodes
-     */
-    // constexpr auto appendfrom(gsl::span<Item> nodes) noexcept -> void
-    // {
-    //     for (auto& it : nodes)
-    //     {
-    //         it.data.second -= this->offset;
-    //         assert(it.data.second > 0);
-    //         this->bucket[it.data.second].append(it);
-    //     }
-    //     this->max = this->high;
-    //     while (this->bucket[this->max].is_empty())
-    //     {
-    //         this->max -= 1;
-    //     }
-    // }
-
-    /**
-     * @brief pop node with the highest key
+     * @brief Pop node with the highest key
      *
      * @return dllink&
      */
@@ -181,13 +159,13 @@ class bpqueue {
     }
 
     /**
-     * @brief decrease key by delta
+     * @brief Decrease key by delta
      *
      * @param[in,out] it the item
      * @param[in] delta the change of the key
      *
      * Note that the order of items with same key will not be preserved.
-     * For FM algorithm, this is a prefered behavior.
+     * For the FM algorithm, this is a prefered behavior.
      */
     constexpr auto decrease_key(Item& it, UInt delta) noexcept -> void {
         // this->bucket[it.data.second].detach(it)
@@ -206,13 +184,13 @@ class bpqueue {
     }
 
     /**
-     * @brief increase key by delta
+     * @brief Increase key by delta
      *
      * @param[in,out] it the item
      * @param[in] delta the change of the key
      *
      * Note that the order of items with same key will not be preserved.
-     * For FM algorithm, this is a prefered behavior.
+     * For the FM algorithm, this is a prefered behavior.
      */
     constexpr auto increase_key(Item& it, UInt delta) noexcept -> void {
         // this->bucket[it.data.second].detach(it)
@@ -227,7 +205,7 @@ class bpqueue {
     }
 
     /**
-     * @brief modify key by delta
+     * @brief Modify key by delta
      *
      * @param[in,out] it the item
      * @param[in] delta the change of the key
@@ -247,7 +225,7 @@ class bpqueue {
     }
 
     /**
-     * @brief detach the item from bpqueue
+     * @brief Detach the item from bpqueue
      *
      * @param[in,out] it the item
      */
@@ -260,60 +238,26 @@ class bpqueue {
     }
 
     /**
-     * @brief iterator point to begin
+     * @brief Iterator point to the begin
      *
      * @return bpq_iterator
      */
     constexpr auto begin() -> bpq_iterator<_Tp, Int>;
 
     /**
-     * @brief iterator point to end
+     * @brief Iterator point to the end
      *
      * @return bpq_iterator
      */
     constexpr auto end() -> bpq_iterator<_Tp, Int>;
-
-    // constexpr auto& items()
-    // {
-    //     return *this;
-    // }
-
-    // constexpr const auto& items() const
-    // {
-    //     return *this;
-    // }
-
-    // using coro_t = boost::coroutines2::coroutine<dllink<T>&>;
-    // using pull_t = typename coro_t::pull_type;
-
-    // /**
-    //  * @brief item generator
-    //  *
-    //  * @return pull_t
-    //  */
-    // auto items() -> pull_t
-    // {
-    //     auto func = [&](typename coro_t::push_type& yield) {
-    //         auto curkey = this->max;
-    //         while (curkey > 0)
-    //         {
-    //             for (const auto& item : this->bucket[curkey].items())
-    //             {
-    //                 yield(item);
-    //             }
-    //             curkey -= 1;
-    //         }
-    //     };
-    //     return pull_t(func);
-    // }
 };
 
 /**
  * @brief Bounded Priority Queue Iterator
  *
- * Bounded Priority Queue Iterator. Traverse the queue in descending
- * order. Detaching queue items may invalidate the iterator because
- * the iterator makes a copy of current key.
+ * Traverse the queue in descending order.
+ * Detaching a queue items may invalidate the iterator because
+ * the iterator makes a copy of the current key.
  */
 template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     using UInt = std::make_unsigned_t<Int>;
@@ -323,15 +267,14 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     using Item = dllink<std::pair<_Tp, UInt>>;
 
   private:
-    bpqueue<_Tp, Int>& bpq;                     /**< the priority queue */
-    UInt curkey;                                /**< the current key value */
-    dll_iterator<std::pair<_Tp, UInt>> curitem; /**< list iterator pointed to the current item.
-                                                 */
+    bpqueue<_Tp, Int>& bpq;                      //!< the priority queue
+    UInt curkey;                                 //!< the current key value
+    dll_iterator<std::pair<_Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
 
     /**
-     * @brief get the reference of the current list
+     * @brief Get the reference of the current list
      *
-     * @return dllink&
+     * @return Item&
      */
     constexpr auto curlist() -> Item& { return this->bpq.bucket[this->curkey]; }
 
@@ -346,7 +289,7 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
         : bpq{bpq}, curkey{curkey}, curitem{bpq.bucket[curkey].begin()} {}
 
     /**
-     * @brief move to the next item
+     * @brief Move to the next item
      *
      * @return bpq_iterator&
      */
@@ -362,9 +305,9 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     }
 
     /**
-     * @brief get the reference of the current item
+     * @brief Get the reference of the current item
      *
-     * @return bpq_iterator&
+     * @return Item&
      */
     constexpr auto operator*() -> Item& { return *this->curitem; }
 
