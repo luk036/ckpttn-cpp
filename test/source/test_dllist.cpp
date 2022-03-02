@@ -26,7 +26,8 @@ TEST_CASE("Test dllist") {
     CHECK(!L2.is_empty());
 
     auto count = 0U;
-    for ([[maybe_unused]] auto& _ : L2) {
+    for (auto& _d : L2) {
+        static_assert(sizeof _d >= 0, "make compiler happy");
         count += 1;
     }
     CHECK(count == 2);
@@ -35,7 +36,8 @@ TEST_CASE("Test dllist") {
 TEST_CASE("Test robin") {
     robin<uint8_t> RR(6U);
     auto count = 0U;
-    for ([[maybe_unused]] auto _ : RR.exclude(2)) {
+    for (auto _i : RR.exclude(2)) {
+        static_assert(sizeof _i >= 0, "make compiler happy");
         count += 1;
     }
     CHECK(count == 5);
