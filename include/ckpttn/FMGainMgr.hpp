@@ -81,17 +81,17 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @brief
      *
      * @param[in] part
-     * @return std::tuple<MoveInfoV<node_t>, int>
+     * @return std::pair<MoveInfoV<node_t>, int>
      */
-    auto select(gsl::span<const std::uint8_t> part) -> std::tuple<MoveInfoV<node_t>, int>;
+    auto select(gsl::span<const std::uint8_t> part) -> std::pair<MoveInfoV<node_t>, int>;
 
     /**
      * @brief
      *
      * @param[in] toPart
-     * @return std::tuple<node_t, int>
+     * @return std::pair<node_t, int>
      */
-    auto select_togo(uint8_t toPart) -> std::tuple<node_t, int>;
+    auto select_togo(uint8_t toPart) -> std::pair<node_t, int>;
 
     /**
      * @brief

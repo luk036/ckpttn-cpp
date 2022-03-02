@@ -58,11 +58,11 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::init(gsl::span<const uint8_t> part) -> i
  * @tparam GainCalc
  * @tparam Derived
  * @param[in] part
- * @return tuple<MoveInfoV<typename Gnl::node_t>, int>
+ * @return pair<MoveInfoV<typename Gnl::node_t>, int>
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
-    -> tuple<MoveInfoV<typename Gnl::node_t>, int> {
+    -> pair<MoveInfoV<typename Gnl::node_t>, int> {
     const auto it = max_element(
         this->gainbucket.begin(), this->gainbucket.end(),
         [](const auto& bckt1, const auto& bckt2) { return bckt1.get_max() < bckt2.get_max(); });
@@ -85,11 +85,11 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
  * @tparam GainCalc
  * @tparam Derived
  * @param[in] toPart
- * @return tuple<typename Gnl::node_t, int>
+ * @return pair<typename Gnl::node_t, int>
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t toPart)
-    -> tuple<typename Gnl::node_t, int> {
+    -> pair<typename Gnl::node_t, int> {
     const auto gainmax = this->gainbucket[toPart].get_max();
     auto& vlink = this->gainbucket[toPart].popleft();
     this->waitinglist.append(vlink);

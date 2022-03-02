@@ -14,7 +14,7 @@ extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netli
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
-// extern tuple<py::set<node_t>, int>
+// extern pair<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;

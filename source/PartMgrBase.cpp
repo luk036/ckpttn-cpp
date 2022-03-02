@@ -58,8 +58,8 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part
             break;
         }
         const auto rslt = this->gainMgr.select_togo(toPart);
-        auto&& v = std::get<0>(rslt);
-        auto&& gainmax = std::get<1>(rslt);
+        auto&& v = rslt.first;
+        auto&& gainmax = rslt.second;
         const auto fromPart = part[v];
         // assert(v == v);
         assert(fromPart != toPart);
@@ -104,8 +104,8 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_
         // Take the gainmax with v from gainbucket
         // auto [move_info_v, gainmax] = this->gainMgr.select(part);
         auto result = this->gainMgr.select(part);
-        auto move_info_v = std::get<0>(result);
-        auto gainmax = std::get<1>(result);
+        auto move_info_v = result.first;
+        auto gainmax = result.second;
 
         // Check if the move of v can satisfied or notsatisfied
         const auto satisfiedOK = this->validator.check_constraints(move_info_v);
