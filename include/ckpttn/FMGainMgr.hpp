@@ -58,12 +58,12 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     /**
      * @brief
      *
-     * @param[in] toPart
+     * @param[in] to_part
      * @return true
      * @return false
      */
-    [[nodiscard]] auto is_empty_togo(uint8_t toPart) const -> bool {
-        return this->gainbucket[toPart].is_empty();
+    [[nodiscard]] auto is_empty_togo(uint8_t to_part) const -> bool {
+        return this->gainbucket[to_part].is_empty();
     }
 
     /**
@@ -88,10 +88,10 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     /**
      * @brief
      *
-     * @param[in] toPart
+     * @param[in] to_part
      * @return std::pair<node_t, int>
      */
-    auto select_togo(uint8_t toPart) -> std::pair<node_t, int>;
+    auto select_togo(uint8_t to_part) -> std::pair<node_t, int>;
 
     /**
      * @brief

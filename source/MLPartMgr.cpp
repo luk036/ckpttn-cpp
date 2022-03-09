@@ -55,13 +55,13 @@ auto MLPartMgr::run_FMPartition(const Gnl& hgr, gsl::span<std::uint8_t> part) ->
     }
 
     if (hgr.number_of_modules() >= this->limitsize) {  // OK
-        const auto H2 = create_contraction_subgraph(hgr, py::set<typename Gnl::node_t>{});
-        if (H2->number_of_modules() <= hgr.number_of_modules()) {
-            auto part2 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
-            H2->projection_up(part, part2);
-            auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*H2, part2);
+        const auto hgr2 = create_contraction_subgraph(hgr, py::set<typename Gnl::node_t>{});
+        if (hgr2->number_of_modules() <= hgr.number_of_modules()) {
+            auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
+            hgr2->projection_up(part, part2);
+            auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
             if (legalcheck_recur == LegalCheck::AllSatisfied) {
-                H2->projection_down(part2, part);
+                hgr2->projection_down(part2, part);
             }
         }
     }

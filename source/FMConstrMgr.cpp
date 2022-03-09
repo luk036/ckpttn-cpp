@@ -50,11 +50,11 @@ template <typename Gnl>
 auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
     -> LegalCheck {
     this->weight = this->hgr.get_module_weight(move_info_v.v);
-    const auto diffFrom = this->diff[move_info_v.fromPart];
+    const auto diffFrom = this->diff[move_info_v.from_part];
     if (diffFrom < this->lowerbound + this->weight) {
         return LegalCheck::NotSatisfied;  // not ok, don't move
     }
-    const auto diffTo = this->diff[move_info_v.toPart];
+    const auto diffTo = this->diff[move_info_v.to_part];
     if (diffTo + this->weight < this->lowerbound) {
         return LegalCheck::GetBetter;  // get better, but still illegal
     }
@@ -71,11 +71,11 @@ auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_i
 template <typename Gnl>
 auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& move_info_v)
     -> bool {
-    // const auto& [v, fromPart, toPart] = move_info_v;
+    // const auto& [v, from_part, to_part] = move_info_v;
 
     this->weight = this->hgr.get_module_weight(move_info_v.v);
-    // auto diffTo = this->diff[toPart] + this->weight;
-    const auto diffFrom = this->diff[move_info_v.fromPart];
+    // auto diffTo = this->diff[to_part] + this->weight;
+    const auto diffFrom = this->diff[move_info_v.from_part];
     return diffFrom >= this->lowerbound + this->weight;
 }
 
@@ -86,9 +86,9 @@ auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& 
  */
 template <typename Gnl>
 void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t>& move_info_v) {
-    // auto [v, fromPart, toPart] = move_info_v;
-    this->diff[move_info_v.toPart] += this->weight;
-    this->diff[move_info_v.fromPart] -= this->weight;
+    // auto [v, from_part, to_part] = move_info_v;
+    this->diff[move_info_v.to_part] += this->weight;
+    this->diff[move_info_v.from_part] -= this->weight;
 }
 
 // Instantiation

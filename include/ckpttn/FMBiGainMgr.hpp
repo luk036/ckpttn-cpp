@@ -56,8 +56,8 @@ template <typename Gnl> class FMBiGainMgr
      */
     auto update_move_v(const MoveInfoV<node_t>& move_info_v, int gain) -> void {
         // this->vertex_list[v].data.second -= 2 * gain;
-        // auto [fromPart, _ = move_info_v;
-        this->_set_key(move_info_v.fromPart, move_info_v.v, -gain);
+        // auto [from_part, _ = move_info_v;
+        this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
     }
 
     /**
@@ -75,10 +75,10 @@ template <typename Gnl> class FMBiGainMgr
     /**
      * @brief lock_all
      *
-     * @param[in] fromPart
+     * @param[in] from_part
      * @param[in] v
      */
-    auto lock_all(uint8_t fromPart, const node_t& v) -> void { this->lock(1 - fromPart, v); }
+    auto lock_all(uint8_t from_part, const node_t& v) -> void { this->lock(1 - from_part, v); }
 
   private:
     /**

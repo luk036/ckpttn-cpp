@@ -10,7 +10,7 @@
 #include "ckpttn/bpqueue.hpp"   // for BPQueue
 #include "ckpttn/dllist.hpp"    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV
-#include "ckpttn/robin.hpp"     // for robin<>::iterable_wrapper
+#include "ckpttn/robin.hpp"     // for Robin<>::iterable_wrapper
 
 using namespace std;
 
@@ -28,7 +28,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> p
     }
     for (const auto& v : this->hgr) {
         const auto pv = part[v];
-        for (const auto& k : this->RR.exclude(pv)) {
+        for (const auto& k : this->rr.exclude(pv)) {
             auto& vlink = this->gain_calc.vertex_list[k][v];
             this->gainbucket[k].append_direct(vlink);
         }
@@ -52,17 +52,17 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> p
 template <typename Gnl>
 void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& move_info_v,
                                        int gain) {
-    // const auto& [v, fromPart, toPart] = move_info_v;
+    // const auto& [v, from_part, to_part] = move_info_v;
 
     for (auto k = 0U; k != this->num_parts; ++k) {
-        if (move_info_v.fromPart == k || move_info_v.toPart == k) {
+        if (move_info_v.from_part == k || move_info_v.to_part == k) {
             continue;
         }
         this->gainbucket[k].modify_key(this->gain_calc.vertex_list[k][move_info_v.v],
-                                       this->gain_calc.deltaGainV[k]);
+                                       this->gain_calc.delta_gain_v[k]);
     }
-    this->_set_key(move_info_v.fromPart, move_info_v.v, -gain);
-    // this->_set_key(toPart, v, -2*this->pmax);
+    this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
+    // this->_set_key(to_part, v, -2*this->pmax);
 }
 
 // instantiation

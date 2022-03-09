@@ -53,17 +53,17 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part
 
     auto legalcheck = LegalCheck::NotSatisfied;
     while (legalcheck != LegalCheck::AllSatisfied) {
-        const auto toPart = this->validator.select_togo();
-        if (this->gain_mgr.is_empty_togo(toPart)) {
+        const auto to_part = this->validator.select_togo();
+        if (this->gain_mgr.is_empty_togo(to_part)) {
             break;
         }
-        const auto rslt = this->gain_mgr.select_togo(toPart);
+        const auto rslt = this->gain_mgr.select_togo(to_part);
         auto&& v = rslt.first;
         auto&& gainmax = rslt.second;
-        const auto fromPart = part[v];
+        const auto from_part = part[v];
         // assert(v == v);
-        assert(fromPart != toPart);
-        const auto move_info_v = MoveInfoV<typename Gnl::node_t>{v, fromPart, toPart};
+        assert(from_part != to_part);
+        const auto move_info_v = MoveInfoV<typename Gnl::node_t>{v, from_part, to_part};
         // Check if the move of v can NotSatisfied, makebetter, or satisfied
         legalcheck = this->validator.check_legal(move_info_v);
         if (legalcheck == LegalCheck::NotSatisfied) {  // NotSatisfied
@@ -74,7 +74,7 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part
         this->gain_mgr.update_move(part, move_info_v);
         this->gain_mgr.update_move_v(move_info_v, gainmax);
         this->validator.update_move(move_info_v);
-        part[v] = toPart;
+        part[v] = to_part;
         // totalgain += gainmax;
         this->totalcost -= gainmax;
         assert(this->totalcost >= 0);
@@ -127,13 +127,13 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_
         }
         // Update v and its neigbours (even they are in waitinglist);
         // Put neigbours to bucket
-        // const auto& [v, _, toPart] = move_info_v;
-        this->gain_mgr.lock(move_info_v.toPart, move_info_v.v);
+        // const auto& [v, _, to_part] = move_info_v;
+        this->gain_mgr.lock(move_info_v.to_part, move_info_v.v);
         this->gain_mgr.update_move(part, move_info_v);
         this->gain_mgr.update_move_v(move_info_v, gainmax);
         this->validator.update_move(move_info_v);
         totalgain += gainmax;
-        part[move_info_v.v] = move_info_v.toPart;
+        part[move_info_v.v] = move_info_v.to_part;
     }
     if (deferredsnapshot) {
         // restore the previous best solution

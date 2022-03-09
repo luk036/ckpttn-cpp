@@ -2,7 +2,7 @@
 // #include <__config>                        // for std
 #include <cinttypes>          // for uint8_t
 #include <ckpttn/dllist.hpp>  // for Dllist, dll_iterator, oper...
-#include <ckpttn/robin.hpp>   // for robin, robin<>::iterable_w...
+#include <ckpttn/robin.hpp>   // for Robin, Robin<>::iterable_w...
 #include <utility>            // for pair
 
 using namespace std;
@@ -33,10 +33,10 @@ TEST_CASE("Test dllist") {
     CHECK(count == 2);
 }
 
-TEST_CASE("Test robin") {
-    robin<uint8_t> RR(6U);
+TEST_CASE("Test Robin") {
+    Robin<uint8_t> rr(6U);
     auto count = 0U;
-    for (auto _i : RR.exclude(2)) {
+    for (auto _i : rr.exclude(2)) {
         static_assert(sizeof _i >= 0, "make compiler happy");
         count += 1;
     }

@@ -31,12 +31,12 @@ template <typename Gnl> class FMBiGainCalc {
     const Gnl& hgr;
     std::vector<Item> vertex_list;
     int totalcost{0};
-    uint8_t StackBuf[8192];  // ???
+    uint8_t stack_buf[8192];  // ???
     FMPmr::monotonic_buffer_resource rsrc;
 
   public:
-    int deltaGainW{};
-    FMPmr::vector<node_t> IdVec;
+    int delta_gain_w{};
+    FMPmr::vector<node_t> idx_vec;
     bool special_handle_2pin_nets{true};
 
     /**
@@ -47,8 +47,8 @@ template <typename Gnl> class FMBiGainCalc {
     explicit FMBiGainCalc(const Gnl& hgr, std::uint8_t /*num_parts*/)
         : hgr{hgr},
           vertex_list(hgr.number_of_modules()),
-          rsrc(StackBuf, sizeof StackBuf),
-          IdVec(&rsrc) {
+          rsrc(stack_buf, sizeof stack_buf),
+          idx_vec(&rsrc) {
         for (const auto& v : this->hgr) {
             this->vertex_list[v].data = std::make_pair(v, int32_t(0));
         }

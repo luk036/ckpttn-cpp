@@ -5,19 +5,19 @@
 
 #include "FMPmrConfig.hpp"
 
-template <typename T> class robin {
+template <typename T> class Robin {
   private:
-    struct slnode {
-        slnode* next;
+    struct SlNode {
+        SlNode* next;
         T key;
     };
 
-    char StackBuf[FM_MAX_NUM_PARTITIONS * sizeof(slnode)];
+    char stack_buf[FM_MAX_NUM_PARTITIONS * sizeof(SlNode)];
     FMPmr::monotonic_buffer_resource rsrc;
-    FMPmr::vector<slnode> cycle;
+    FMPmr::vector<SlNode> cycle;
 
     struct iterator {
-        slnode* cur;
+        SlNode* cur;
         auto operator!=(const iterator& other) const -> bool { return cur != other.cur; }
         auto operator==(const iterator& other) const -> bool { return cur == other.cur; }
         auto operator++() -> iterator& {
@@ -28,15 +28,15 @@ template <typename T> class robin {
     };
 
     struct iterable_wrapper {
-        robin<T>* rr;
-        T fromPart;
-        auto begin() { return iterator{rr->cycle[fromPart].next}; }
-        auto end() { return iterator{&rr->cycle[fromPart]}; }
+        Robin<T>* rr;
+        T from_part;
+        auto begin() { return iterator{rr->cycle[from_part].next}; }
+        auto end() { return iterator{&rr->cycle[from_part]}; }
         // auto size() const -> size_t { return rr->cycle.size() - 1; }
     };
 
   public:
-    explicit robin(T num_parts) : cycle(num_parts, &rsrc) {
+    explicit Robin(T num_parts) : cycle(num_parts, &rsrc) {
         // num_parts -= 1;
         // for (auto k = 0U; k != num_parts; ++k)
         // {
@@ -56,5 +56,5 @@ template <typename T> class robin {
         }
     }
 
-    auto exclude(T fromPart) { return iterable_wrapper{this, fromPart}; }
+    auto exclude(T from_part) { return iterable_wrapper{this, from_part}; }
 };

@@ -31,7 +31,7 @@ void run_FMBiGainMgr(const SimpleNetlist& hgr, gsl::span<uint8_t> part) {
         if (gainmax > 0) {
             mgr.update_move(part, move_info_v);
             mgr.update_move_v(move_info_v, gainmax);
-            part[move_info_v.v] = move_info_v.toPart;
+            part[move_info_v.v] = move_info_v.to_part;
         }
     }
 }

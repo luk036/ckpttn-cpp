@@ -10,7 +10,7 @@
 
 #include "FMPmrConfig.hpp"
 #include "dllist.hpp"  // for Dllink
-#include "robin.hpp"   // for robin<>...
+#include "robin.hpp"   // for Robin<>...
 
 // forward declare
 template <typename Gnl> class FMKWayGainMgr;
@@ -30,17 +30,17 @@ template <typename Gnl> class FMKWayGainCalc {
   private:
     const Gnl& hgr;
     std::uint8_t num_parts;
-    robin<std::uint8_t> RR;
+    Robin<std::uint8_t> rr;
     // size_t num_modules;
     int totalcost{0};
-    uint8_t StackBuf[20000];
+    uint8_t stack_buf[20000];
     FMPmr::monotonic_buffer_resource rsrc;
     std::vector<std::vector<Item>> vertex_list;
-    FMPmr::vector<int> deltaGainV;
+    FMPmr::vector<int> delta_gain_v;
 
   public:
-    FMPmr::vector<int> deltaGainW;
-    FMPmr::vector<node_t> IdVec;
+    FMPmr::vector<int> delta_gain_w;
+    FMPmr::vector<node_t> idx_vec;
     bool special_handle_2pin_nets{true};  // @TODO should be template parameter
 
     /**
@@ -52,12 +52,12 @@ template <typename Gnl> class FMKWayGainCalc {
     FMKWayGainCalc(const Gnl& hgr, std::uint8_t num_parts)
         : hgr{hgr},
           num_parts{num_parts},
-          RR{num_parts},
-          rsrc(StackBuf, sizeof StackBuf),
+          rr{num_parts},
+          rsrc(stack_buf, sizeof stack_buf),
           vertex_list{},
-          deltaGainV(num_parts, 0, &rsrc),
-          deltaGainW(num_parts, 0, &rsrc),
-          IdVec(&rsrc) {
+          delta_gain_v(num_parts, 0, &rsrc),
+          delta_gain_w(num_parts, 0, &rsrc),
+          idx_vec(&rsrc) {
         for (auto k = 0U; k != this->num_parts; ++k) {
             auto vec = std::vector<Item>{};
             vec.reserve(hgr.number_of_modules());
@@ -71,12 +71,12 @@ template <typename Gnl> class FMKWayGainCalc {
     // /**
     //  * @brief
     //  *
-    //  * @param[in] toPart
+    //  * @param[in] to_part
     //  * @return Dllink*
     //  */
-    // auto start_ptr(uint8_t toPart) -> Dllink<std::pair<node_t, int32_t>>*
+    // auto start_ptr(uint8_t to_part) -> Dllink<std::pair<node_t, int32_t>>*
     // {
-    //     return &this->vertex_list[toPart][0];
+    //     return &this->vertex_list[to_part][0];
     // }
 
     /**
@@ -102,7 +102,7 @@ template <typename Gnl> class FMKWayGainCalc {
      *
      */
     auto update_move_init() -> void {
-        std::fill(this->deltaGainV.begin(), this->deltaGainV.end(), 0);
+        std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
     }
 
     /**
@@ -154,7 +154,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] weight
      */
     auto _modify_gain(const node_t& v, std::uint8_t part_v, unsigned int weight) -> void {
-        for (const auto& k : this->RR.exclude(part_v)) {
+        for (const auto& k : this->rr.exclude(part_v)) {
             this->vertex_list[k][v].data.second += weight;
         }
     }
@@ -229,7 +229,7 @@ template <typename Gnl> class FMKWayGainCalc {
      */
     // template <typename... Ts>
     // auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) -> void {
-    //     for (const auto& k : this->RR.exclude(part_v)) {
+    //     for (const auto& k : this->rr.exclude(part_v)) {
     //         _modify_vertex_va(weight, k, v...);
     //     }
     // }

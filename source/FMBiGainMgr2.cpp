@@ -25,7 +25,7 @@ template <typename Gnl> auto FMBiGainMgr<Gnl>::init(gsl::span<const uint8_t> par
 
     for (const auto& v : this->hgr) {
         auto& vlink = this->gain_calc.vertex_list[v];
-        // auto toPart = 1 - part[v];
+        // auto to_part = 1 - part[v];
         this->gainbucket[1 - part[v]].append_direct(vlink);
     }
     for (const auto& v : this->hgr.module_fixed) {

@@ -155,8 +155,8 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
     auto net_cur = this->hgr.gr[move_info.net].begin();
     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
     const auto weight = this->hgr.get_net_weight(move_info.net);
-    const int delta = (part[w] == move_info.fromPart) ? weight : -weight;
-    this->deltaGainW = 2 * delta;
+    const int delta = (part[w] == move_info.from_part) ? weight : -weight;
+    this->delta_gain_w = 2 * delta;
     return w;
 }
 
@@ -173,16 +173,16 @@ void FMBiGainCalc<Gnl>::init_IdVec(const typename Gnl::node_t& v, const typename
     //         ranges::views::remove_if([&](auto w) { return w == v; });
     // using namespace transrangers;
     // auto rng = filter([&](const auto& w) { return w != v; }, all(this->hgr.gr[net]));
-    // this->IdVec = FMPmr::vector<typename Gnl::node_t>(rng.begin(), rng.end(), &this->rsrc);
+    // this->idx_vec = FMPmr::vector<typename Gnl::node_t>(rng.begin(), rng.end(), &this->rsrc);
 
-    this->IdVec.clear();
+    this->idx_vec.clear();
     auto&& rng = this->hgr.gr[net];
-    this->IdVec.reserve(rng.size() - 1);
+    this->idx_vec.reserve(rng.size() - 1);
     for (const auto& w : rng) {
         if (w == v) {
             continue;
         }
-        this->IdVec.push_back(w);
+        this->idx_vec.push_back(w);
     }
 }
 
@@ -197,9 +197,9 @@ template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t>& move_info)
     -> vector<int> {
-    // const auto& [net, v, fromPart, _] = move_info;
+    // const auto& [net, v, from_part, _] = move_info;
     auto num = array<size_t, 2>{0U, 0U};
-    for (const auto& w : this->IdVec) {
+    for (const auto& w : this->idx_vec) {
         num[part[w]] += 1;
     }
     // for (const auto& w : this->hgr.gr[move_info.net])
@@ -209,23 +209,23 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
     //         continue;
     //     }
     //     num[part[w]] += 1;
-    //     IdVec.push_back(w);
+    //     idx_vec.push_back(w);
     // }
-    auto deltaGain = vector<int>{0, 0};
+    auto delta_gain = vector<int>{0, 0};
     auto weight = this->hgr.get_net_weight(move_info.net);
-    const auto part_w = part[this->IdVec[0]];
+    const auto part_w = part[this->idx_vec[0]];
 
-    if (part_w != move_info.fromPart) {
+    if (part_w != move_info.from_part) {
         weight = -weight;
     }
-    if (part_w == part[this->IdVec[1]]) {
-        deltaGain[0] += weight;
-        deltaGain[1] += weight;
+    if (part_w == part[this->idx_vec[1]]) {
+        delta_gain[0] += weight;
+        delta_gain[1] += weight;
     } else {
-        deltaGain[0] += weight;
-        deltaGain[1] -= weight;
+        delta_gain[0] += weight;
+        delta_gain[1] -= weight;
     }
-    return deltaGain;
+    return delta_gain;
 }
 
 /**
@@ -239,10 +239,10 @@ template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
                                                 const MoveInfo<typename Gnl::node_t>& move_info)
     -> vector<int> {
-    // const auto& [net, v, fromPart, toPart] = move_info;
+    // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<uint8_t, 2>{0, 0};
-    // auto IdVec = vector<typename Gnl::node_t> {};
-    for (const auto& w : this->IdVec) {
+    // auto idx_vec = vector<typename Gnl::node_t> {};
+    for (const auto& w : this->idx_vec) {
         num[part[w]] += 1;
     }
 
@@ -253,30 +253,30 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
     //         continue;
     //     }
     //     num[part[w]] += 1;
-    //     IdVec.push_back(w);
+    //     idx_vec.push_back(w);
     // }
-    const auto degree = this->IdVec.size();
-    auto deltaGain = vector<int>(degree, 0);
+    const auto degree = this->idx_vec.size();
+    auto delta_gain = vector<int>(degree, 0);
     auto weight = this->hgr.get_net_weight(move_info.net);
 
     // #pragma unroll
-    for (const auto& l : {move_info.fromPart, move_info.toPart}) {
-        if (num[l] == 0) {
+    for (const auto& l_part : {move_info.from_part, move_info.to_part}) {
+        if (num[l_part] == 0) {
             for (size_t index = 0U; index != degree; ++index) {
-                deltaGain[index] -= weight;
+                delta_gain[index] -= weight;
             }
-        } else if (num[l] == 1) {
+        } else if (num[l_part] == 1) {
             for (size_t index = 0U; index != degree; ++index) {
-                auto part_w = part[this->IdVec[index]];
-                if (part_w == l) {
-                    deltaGain[index] += weight;
+                auto part_w = part[this->idx_vec[index]];
+                if (part_w == l_part) {
+                    delta_gain[index] += weight;
                     break;
                 }
             }
         }
         weight = -weight;
     }
-    return deltaGain;
+    return delta_gain;
 }
 
 // instantiation

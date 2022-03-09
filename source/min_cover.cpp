@@ -145,8 +145,8 @@ auto create_contraction_subgraph(const SimpleNetlist& hgr, const py::set<node_t>
     // auto gr = py::grAdaptor<graph_t>(move(g));
     auto gr = move(g);
 
-    auto H2 = make_unique<SimpleHierNetlist>(move(gr), py::range(numModules),
-                                             py::range(numModules, numModules + numNets));
+    auto hgr2 = make_unique<SimpleHierNetlist>(move(gr), py::range(numModules),
+                                               py::range(numModules, numModules + numNets));
 
     auto node_down_map = vector<node_t>{};
     node_down_map.resize(numModules);
@@ -194,10 +194,10 @@ auto create_contraction_subgraph(const SimpleNetlist& hgr, const py::set<node_t>
         node_up_map[v] = node_up_dict[v];
     }
 
-    H2->node_up_map = move(node_up_map);
-    H2->node_down_map = move(node_down_map);
-    H2->cluster_down_map = move(cluster_down_map);
-    H2->module_weight = move(module_weight);
-    H2->parent = &hgr;
-    return H2;
+    hgr2->node_up_map = move(node_up_map);
+    hgr2->node_down_map = move(node_down_map);
+    hgr2->cluster_down_map = move(cluster_down_map);
+    hgr2->module_weight = move(module_weight);
+    hgr2->parent = &hgr;
+    return hgr2;
 }
