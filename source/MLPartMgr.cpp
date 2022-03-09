@@ -1,4 +1,4 @@
-#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::allsatisfied
+#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::AllSatisfied
 #include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
 #include <cstdint>                 // for uint8_t
 #include <gsl/span>                // for span
@@ -31,25 +31,25 @@ auto MLPartMgr::run_FMPartition(const Gnl& hgr, gsl::span<std::uint8_t> part) ->
     using ConstrMgr = typename PartMgr::ConstrMgr_;
 
     auto legalcheck_fn = [&]() {
-        GainMgr gainMgr(hgr, this->num_parts);
-        ConstrMgr constrMgr(hgr, this->bal_tol, this->num_parts);
-        PartMgr partMgr(hgr, gainMgr, constrMgr, this->num_parts);
-        auto legalcheck = partMgr.legalize(part);
-        return std::make_pair(legalcheck, partMgr.totalcost);
+        GainMgr gain_mgr(hgr, this->num_parts);
+        ConstrMgr constr_mgr(hgr, this->bal_tol, this->num_parts);
+        PartMgr part_mgr(hgr, gain_mgr, constr_mgr, this->num_parts);
+        auto legalcheck = part_mgr.legalize(part);
+        return std::make_pair(legalcheck, part_mgr.totalcost);
         // release memory resource all memory saving
     };
 
     auto optimize_fn = [&]() {
-        GainMgr gainMgr(hgr, this->num_parts);
-        ConstrMgr constrMgr(hgr, this->bal_tol, this->num_parts);
-        PartMgr partMgr(hgr, gainMgr, constrMgr, this->num_parts);
-        partMgr.optimize(part);
-        return partMgr.totalcost;
+        GainMgr gain_mgr(hgr, this->num_parts);
+        ConstrMgr constr_mgr(hgr, this->bal_tol, this->num_parts);
+        PartMgr part_mgr(hgr, gain_mgr, constr_mgr, this->num_parts);
+        part_mgr.optimize(part);
+        return part_mgr.totalcost;
         // release memory resource all memory saving
     };
 
     auto legalcheck_cost = legalcheck_fn();
-    if (legalcheck_cost.first != LegalCheck::allsatisfied) {
+    if (legalcheck_cost.first != LegalCheck::AllSatisfied) {
         this->totalcost = legalcheck_cost.second;
         return legalcheck_cost.first;
     }
@@ -60,7 +60,7 @@ auto MLPartMgr::run_FMPartition(const Gnl& hgr, gsl::span<std::uint8_t> part) ->
             auto part2 = std::vector<std::uint8_t>(H2->number_of_modules(), 0);
             H2->projection_up(part, part2);
             auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*H2, part2);
-            if (legalcheck_recur == LegalCheck::allsatisfied) {
+            if (legalcheck_recur == LegalCheck::AllSatisfied) {
                 H2->projection_down(part2, part);
             }
         }

@@ -28,7 +28,7 @@ using namespace std;
  */
 template <typename Gnl, typename GainCalc, class Derived>
 FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl& hgr, uint8_t num_parts)
-    : hgr{hgr}, num_parts{num_parts}, gainCalc{hgr, num_parts} {
+    : hgr{hgr}, num_parts{num_parts}, gain_calc{hgr, num_parts} {
     static_assert(is_base_of<FMGainMgr<Gnl, GainCalc, Derived>, Derived>::value,
                   "base derived consistence");
     const auto pmax = int(hgr.get_max_degree());
@@ -47,8 +47,8 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl& hgr, uint8_t num_parts)
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::init(gsl::span<const uint8_t> part) -> int {
-    auto totalcost = this->gainCalc.init(part);
-    // this->totalcost = this->gainCalc.totalcost;
+    auto totalcost = this->gain_calc.init(part);
+    // this->totalcost = this->gain_calc.totalcost;
     this->waitinglist.clear();
     return totalcost;
 }
@@ -72,10 +72,10 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
     const auto gainmax = it->get_max();
     auto& vlink = it->popleft();
     this->waitinglist.append(vlink);
-    // typename Gnl::node_t v = &vlink - this->gainCalc.start_ptr(toPart);
+    // typename Gnl::node_t v = &vlink - this->gain_calc.start_ptr(toPart);
     const auto v = vlink.data.first;
     // const auto v =
-    //     typename Gnl::node_t(distance(this->gainCalc.start_ptr(toPart), &vlink));
+    //     typename Gnl::node_t(distance(this->gain_calc.start_ptr(toPart), &vlink));
     // auto move_info_v = MoveInfoV<typename Gnl::node_t> {v, part[v], toPart};
     return {{v, part[v], toPart}, gainmax};
 }
@@ -96,7 +96,7 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t toPart)
     this->waitinglist.append(vlink);
     const auto v = vlink.data.first;
     // const auto v =
-    //     typename Gnl::node_t(distance(this->gainCalc.start_ptr(toPart), &vlink));
+    //     typename Gnl::node_t(distance(this->gain_calc.start_ptr(toPart), &vlink));
     return {v, gainmax};
 }
 
@@ -111,7 +111,7 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t toPart)
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
     gsl::span<const uint8_t> part, const MoveInfoV<typename Gnl::node_t>& move_info_v) {
-    this->gainCalc.update_move_init();
+    this->gain_calc.update_move_init();
     const auto& v = move_info_v.v;
     for (const auto& net : this->hgr.gr[move_info_v.v]) {
         const auto degree = this->hgr.gr.degree(net);
@@ -122,15 +122,15 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
         }
         const auto move_info
             = MoveInfo<typename Gnl::node_t>{net, v, move_info_v.fromPart, move_info_v.toPart};
-        if (!this->gainCalc.special_handle_2pin_nets) {
-            this->gainCalc.init_IdVec(v, net);
+        if (!this->gain_calc.special_handle_2pin_nets) {
+            this->gain_calc.init_IdVec(v, net);
             this->_update_move_general_net(part, move_info);
             continue;
         }
         if (degree == 2) {
             this->_update_move_2pin_net(part, move_info);
         } else {
-            this->gainCalc.init_IdVec(v, net);
+            this->gain_calc.init_IdVec(v, net);
             if (degree == 3) {
                 this->_update_move_3pin_net(part, move_info);
             } else {
@@ -152,9 +152,9 @@ template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_2pin_net(
     gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t>& move_info) {
     // const auto [w, deltaGainW] =
-    //     this->gainCalc.update_move_2pin_net(part, move_info);
-    const auto w = this->gainCalc.update_move_2pin_net(part, move_info);
-    self.modify_key(w, part[w], this->gainCalc.deltaGainW);
+    //     this->gain_calc.update_move_2pin_net(part, move_info);
+    const auto w = this->gain_calc.update_move_2pin_net(part, move_info);
+    self.modify_key(w, part[w], this->gain_calc.deltaGainW);
 }
 
 /**
@@ -172,19 +172,19 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
     // FMPmr::monotonic_buffer_resource rsrc(StackBuf, sizeof StackBuf);
     // auto IdVec = FMPmr::vector<typename Gnl::node_t>(&rsrc);
 
-    auto deltaGain = this->gainCalc.update_move_3pin_net(part, move_info);
+    auto deltaGain = this->gain_calc.update_move_3pin_net(part, move_info);
 
-    // for (const auto& [dGw, w] : views::zip(deltaGain, this->gainCalc.IdVec))
+    // for (const auto& [dGw, w] : views::zip(deltaGain, this->gain_calc.IdVec))
     auto dGw_it = deltaGain.begin();
-    for (const auto& w : this->gainCalc.IdVec) {
+    for (const auto& w : this->gain_calc.IdVec) {
         self.modify_key(w, part[w], *dGw_it);
         ++dGw_it;
     }
 
-    // const auto degree = this->gainCalc.IdVec.size();
+    // const auto degree = this->gain_calc.IdVec.size();
     // for (size_t index = 0U; index != degree; ++index)
     // {
-    //     const auto& w = this->gainCalc.IdVec[index];
+    //     const auto& w = this->gain_calc.IdVec[index];
     //     self.modify_key(w, part[w], deltaGain[index]);
     // }
 }
@@ -200,10 +200,10 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
     gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t>& move_info) {
-    const auto deltaGain = this->gainCalc.update_move_general_net(part, move_info);
+    const auto deltaGain = this->gain_calc.update_move_general_net(part, move_info);
 
     auto dGw_it = deltaGain.begin();
-    for (const auto& w : this->gainCalc.IdVec) {
+    for (const auto& w : this->gain_calc.IdVec) {
         self.modify_key(w, part[w], *dGw_it);
         ++dGw_it;
     }

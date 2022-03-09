@@ -34,7 +34,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     std::uint8_t num_parts;
 
   public:
-    GainCalc gainCalc;
+    GainCalc gain_calc;
 
     // int totalcost;
 

@@ -28,26 +28,26 @@ extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
 
 TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto hgr = create_dwarf();
-    MLPartMgr partMgr{0.3};
+    MLPartMgr part_mgr{0.3};
     vector<uint8_t> part(hgr.number_of_modules(), 0);
-    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                     FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
-    CHECK(partMgr.totalcost == 2U);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+    CHECK(part_mgr.totalcost == 2U);
 }
 
 TEST_CASE("Test MLKWayPartMgr dwarf") {
     const auto hgr = create_dwarf();
-    MLPartMgr partMgr{0.4, 3};  // 0.3???
+    MLPartMgr part_mgr{0.4, 3};  // 0.3???
     vector<uint8_t> part(hgr.number_of_modules(), 0);
-    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-                                                     FMKWayConstrMgr<SimpleNetlist>>>(hgr, part);
-    CHECK(partMgr.totalcost == 4U);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
+                                                      FMKWayConstrMgr<SimpleNetlist>>>(hgr, part);
+    CHECK(part_mgr.totalcost == 4U);
 }
 
 TEST_CASE("Test MLBiPartMgr p1") {
     const auto hgr = readNetD("../../testcases/p1.net");
-    MLPartMgr partMgr{0.3};
-    partMgr.set_limitsize(500);
+    MLPartMgr part_mgr{0.3};
+    part_mgr.set_limitsize(500);
 
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
@@ -57,14 +57,14 @@ TEST_CASE("Test MLBiPartMgr p1") {
             whichPart ^= 1;
             elem = whichPart;
         }
-        partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                         FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
-        if (mincost > partMgr.totalcost) {
-            mincost = partMgr.totalcost;
+        part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+        if (mincost > part_mgr.totalcost) {
+            mincost = part_mgr.totalcost;
         }
     }
-    // CHECK(partMgr.totalcost >= 50);
-    // CHECK(partMgr.totalcost <= 50);
+    // CHECK(part_mgr.totalcost >= 50);
+    // CHECK(part_mgr.totalcost <= 50);
     CHECK(mincost >= 29U);
     CHECK(mincost <= 73U);
 }
@@ -72,8 +72,8 @@ TEST_CASE("Test MLBiPartMgr p1") {
 TEST_CASE("Test MLBiPartMgr ibm01") {
     auto hgr = readNetD("../../testcases/ibm01.net");
     readAre(hgr, "../../testcases/ibm01.are");
-    MLPartMgr partMgr{0.4};
-    partMgr.set_limitsize(400);
+    MLPartMgr part_mgr{0.4};
+    part_mgr.set_limitsize(400);
 
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
@@ -83,14 +83,14 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
             whichPart ^= 1;
             elem = whichPart;
         }
-        partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                         FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
-        if (mincost > partMgr.totalcost) {
-            mincost = partMgr.totalcost;
+        part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+        if (mincost > part_mgr.totalcost) {
+            mincost = part_mgr.totalcost;
         }
     }
-    // CHECK(partMgr.totalcost >= 650);
-    // CHECK(partMgr.totalcost <= 650);
+    // CHECK(part_mgr.totalcost >= 650);
+    // CHECK(part_mgr.totalcost <= 650);
     CHECK(mincost >= 221U);
     CHECK(mincost <= 695U);
 }
@@ -98,33 +98,33 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
 TEST_CASE("Test MLBiPartMgr ibm03") {
     auto hgr = readNetD("../../testcases/ibm03.net");
     readAre(hgr, "../../testcases/ibm03.are");
-    MLPartMgr partMgr{0.45};
-    partMgr.set_limitsize(300);
+    MLPartMgr part_mgr{0.45};
+    part_mgr.set_limitsize(300);
     vector<uint8_t> part(hgr.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                     FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
-    CHECK(partMgr.totalcost >= 1104U);
-    CHECK(partMgr.totalcost <= 2041U);
+    CHECK(part_mgr.totalcost >= 1104U);
+    CHECK(part_mgr.totalcost <= 2041U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm18") {
     auto hgr = readNetD("../../testcases/ibm18.net");
     readAre(hgr, "../../testcases/ibm18.are");
-    MLPartMgr partMgr{0.45};
-    partMgr.set_limitsize(24000);
+    MLPartMgr part_mgr{0.45};
+    part_mgr.set_limitsize(24000);
     vector<uint8_t> part(hgr.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    partMgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                     FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
-    CHECK(partMgr.totalcost >= 1104U);
-    CHECK(partMgr.totalcost <= 5112U);
+    CHECK(part_mgr.totalcost >= 1104U);
+    CHECK(part_mgr.totalcost <= 5112U);
 }
 
 /*

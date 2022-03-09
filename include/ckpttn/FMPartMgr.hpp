@@ -28,22 +28,22 @@ class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
      * @brief Construct a new FMPartMgr object
      *
      * @param[in] hgr
-     * @param[in,out] gainMgr
-     * @param[in,out] constrMgr
+     * @param[in,out] gain_mgr
+     * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    FMPartMgr(const Gnl& hgr, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t num_parts)
-        : Base{hgr, gainMgr, constrMgr, num_parts} {}
+    FMPartMgr(const Gnl& hgr, GainMgr& gain_mgr, ConstrMgr& constr_mgr, size_t num_parts)
+        : Base{hgr, gain_mgr, constr_mgr, num_parts} {}
 
     /**
      * @brief Construct a new FMPartMgr object
      *
      * @param[in] hgr
-     * @param[in,out] gainMgr
-     * @param[in,out] constrMgr
+     * @param[in,out] gain_mgr
+     * @param[in,out] constr_mgr
      */
-    FMPartMgr(const Gnl& hgr, GainMgr& gainMgr, ConstrMgr& constrMgr)
-        : Base{hgr, gainMgr, constrMgr, 2} {}
+    FMPartMgr(const Gnl& hgr, GainMgr& gain_mgr, ConstrMgr& constr_mgr)
+        : Base{hgr, gain_mgr, constr_mgr, 2} {}
 
     // /**
     //  * @brief

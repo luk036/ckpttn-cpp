@@ -30,17 +30,17 @@ template <typename Gnl>
 auto FMKWayConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
     -> LegalCheck {
     const auto status = FMConstrMgr<Gnl>::check_legal(move_info_v);
-    if (status != LegalCheck::allsatisfied) {
+    if (status != LegalCheck::AllSatisfied) {
         return status;
     }
     this->illegal[move_info_v.fromPart] = 0;
     this->illegal[move_info_v.toPart] = 0;
     for (const auto& value : this->illegal) {
         if (value == 1) {
-            return LegalCheck::getbetter;  // get better, but still illegal
+            return LegalCheck::GetBetter;  // get better, but still illegal
         }
     }
-    return LegalCheck::allsatisfied;  // all satisfied
+    return LegalCheck::AllSatisfied;  // all satisfied
 }
 
 // Instantiation

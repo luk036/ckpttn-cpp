@@ -21,19 +21,19 @@ extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
  * @param[in] option
  */
 void run_FMBiPartMgr(const SimpleNetlist& hgr, bool option) {
-    FMBiGainMgr<SimpleNetlist> gainMgr{hgr};
-    gainMgr.gainCalc.special_handle_2pin_nets = option;
+    FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
+    gain_mgr.gain_calc.special_handle_2pin_nets = option;
 
-    FMBiConstrMgr<SimpleNetlist> constrMgr{hgr, 0.45};
-    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> partMgr{
-        hgr, gainMgr, constrMgr};
+    FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.45};
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> part_mgr{
+        hgr, gain_mgr, constr_mgr};
     std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
-    partMgr.legalize(part);
-    // auto totalcostbefore = partMgr.totalcost;
-    partMgr.optimize(part);
+    part_mgr.legalize(part);
+    // auto totalcostbefore = part_mgr.totalcost;
+    part_mgr.optimize(part);
     // CHECK(totalcostbefore >= 0);
-    // CHECK(partMgr.totalcost <= totalcostbefore);
-    // CHECK(partMgr.totalcost >= 0);
+    // CHECK(part_mgr.totalcost <= totalcostbefore);
+    // CHECK(part_mgr.totalcost >= 0);
 }
 
 /**

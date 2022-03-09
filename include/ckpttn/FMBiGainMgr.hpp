@@ -45,7 +45,7 @@ template <typename Gnl> class FMBiGainMgr
      * @param[in] key
      */
     auto modify_key(const node_t& w, std::uint8_t part_w, int key) -> void {
-        this->gainbucket[1 - part_w].modify_key(this->gainCalc.vertex_list[w], key);
+        this->gainbucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w], key);
     }
 
     /**
@@ -67,7 +67,7 @@ template <typename Gnl> class FMBiGainMgr
      * @param[in] v
      */
     auto lock(uint8_t whichPart, const node_t& v) -> void {
-        auto& vlink = this->gainCalc.vertex_list[v];
+        auto& vlink = this->gain_calc.vertex_list[v];
         this->gainbucket[whichPart].detach(vlink);
         vlink.lock();
     }
@@ -89,6 +89,6 @@ template <typename Gnl> class FMBiGainMgr
      * @param[in] key
      */
     auto _set_key(uint8_t whichPart, const node_t& v, int key) -> void {
-        this->gainbucket[whichPart].set_key(this->gainCalc.vertex_list[v], key);
+        this->gainbucket[whichPart].set_key(this->gain_calc.vertex_list[v], key);
     }
 };

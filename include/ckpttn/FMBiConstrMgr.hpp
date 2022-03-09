@@ -5,7 +5,7 @@
 /**
  * @brief Constraint Manager
  *
- * Check if (the move of v can satisfied, makebetter, or notsatisfied
+ * Check if (the move of v can satisfied, makebetter, or NotSatisfied
  *
  * @tparam Gnl
  */

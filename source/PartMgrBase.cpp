@@ -23,7 +23,7 @@
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(gsl::span<std::uint8_t> part) {
-    this->totalcost = this->gainMgr.init(part);
+    this->totalcost = this->gain_mgr.init(part);
     this->validator.init(part);
 }
 
@@ -48,31 +48,31 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part
         if (!this->hgr.module_fixed.contains(v)) {
             continue;
         }
-        this->gainMgr.lock_all(part[v], v);
+        this->gain_mgr.lock_all(part[v], v);
     }
 
-    auto legalcheck = LegalCheck::notsatisfied;
-    while (legalcheck != LegalCheck::allsatisfied) {
+    auto legalcheck = LegalCheck::NotSatisfied;
+    while (legalcheck != LegalCheck::AllSatisfied) {
         const auto toPart = this->validator.select_togo();
-        if (this->gainMgr.is_empty_togo(toPart)) {
+        if (this->gain_mgr.is_empty_togo(toPart)) {
             break;
         }
-        const auto rslt = this->gainMgr.select_togo(toPart);
+        const auto rslt = this->gain_mgr.select_togo(toPart);
         auto&& v = rslt.first;
         auto&& gainmax = rslt.second;
         const auto fromPart = part[v];
         // assert(v == v);
         assert(fromPart != toPart);
         const auto move_info_v = MoveInfoV<typename Gnl::node_t>{v, fromPart, toPart};
-        // Check if the move of v can notsatisfied, makebetter, or satisfied
+        // Check if the move of v can NotSatisfied, makebetter, or satisfied
         legalcheck = this->validator.check_legal(move_info_v);
-        if (legalcheck == LegalCheck::notsatisfied) {  // notsatisfied
+        if (legalcheck == LegalCheck::NotSatisfied) {  // NotSatisfied
             continue;
         }
         // Update v and its neigbours (even they are in waitinglist);
         // Put neigbours to bucket
-        this->gainMgr.update_move(part, move_info_v);
-        this->gainMgr.update_move_v(move_info_v, gainmax);
+        this->gain_mgr.update_move(part, move_info_v);
+        this->gain_mgr.update_move_v(move_info_v, gainmax);
         this->validator.update_move(move_info_v);
         part[v] = toPart;
         // totalgain += gainmax;
@@ -100,14 +100,14 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_
     auto deferredsnapshot = false;
     auto besttotalgain = 0;
 
-    while (!this->gainMgr.is_empty()) {
+    while (!this->gain_mgr.is_empty()) {
         // Take the gainmax with v from gainbucket
-        // auto [move_info_v, gainmax] = this->gainMgr.select(part);
-        auto result = this->gainMgr.select(part);
+        // auto [move_info_v, gainmax] = this->gain_mgr.select(part);
+        auto result = this->gain_mgr.select(part);
         auto move_info_v = result.first;
         auto gainmax = result.second;
 
-        // Check if the move of v can satisfied or notsatisfied
+        // Check if the move of v can satisfied or NotSatisfied
         const auto satisfiedOK = this->validator.check_constraints(move_info_v);
         if (!satisfiedOK) {
             continue;
@@ -128,9 +128,9 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_
         // Update v and its neigbours (even they are in waitinglist);
         // Put neigbours to bucket
         // const auto& [v, _, toPart] = move_info_v;
-        this->gainMgr.lock(move_info_v.toPart, move_info_v.v);
-        this->gainMgr.update_move(part, move_info_v);
-        this->gainMgr.update_move_v(move_info_v, gainmax);
+        this->gain_mgr.lock(move_info_v.toPart, move_info_v.v);
+        this->gain_mgr.update_move(part, move_info_v);
+        this->gain_mgr.update_move_v(move_info_v, gainmax);
         this->validator.update_move(move_info_v);
         totalgain += gainmax;
         part[move_info_v.v] = move_info_v.toPart;

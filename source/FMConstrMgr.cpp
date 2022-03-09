@@ -52,13 +52,13 @@ auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_i
     this->weight = this->hgr.get_module_weight(move_info_v.v);
     const auto diffFrom = this->diff[move_info_v.fromPart];
     if (diffFrom < this->lowerbound + this->weight) {
-        return LegalCheck::notsatisfied;  // not ok, don't move
+        return LegalCheck::NotSatisfied;  // not ok, don't move
     }
     const auto diffTo = this->diff[move_info_v.toPart];
     if (diffTo + this->weight < this->lowerbound) {
-        return LegalCheck::getbetter;  // get better, but still illegal
+        return LegalCheck::GetBetter;  // get better, but still illegal
     }
-    return LegalCheck::allsatisfied;  // all satisfied
+    return LegalCheck::AllSatisfied;  // all satisfied
 }
 
 /**

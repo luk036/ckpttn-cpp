@@ -48,7 +48,7 @@ template <typename Gnl> class FMKWayGainMgr
      */
     auto modify_key(const node_t& w, std::uint8_t part_w, gsl::span<const int> keys) -> void {
         for (auto k : this->RR.exclude(part_w)) {
-            this->gainbucket[k].modify_key(this->gainCalc.vertex_list[k][w], keys[k]);
+            this->gainbucket[k].modify_key(this->gain_calc.vertex_list[k][w], keys[k]);
         }
     }
 
@@ -67,7 +67,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] v
      */
     auto lock(uint8_t whichPart, const node_t& v) -> void {
-        auto& vlink = this->gainCalc.vertex_list[whichPart][v];
+        auto& vlink = this->gain_calc.vertex_list[whichPart][v];
         this->gainbucket[whichPart].detach(vlink);
         vlink.lock();
     }
@@ -79,9 +79,9 @@ template <typename Gnl> class FMKWayGainMgr
      */
     auto lock_all(uint8_t /*fromPart*/, const node_t& v) -> void {
         // for (const auto& [vlist, bckt] :
-        //     views::zip(this->gainCalc.vertex_list, this->gainbucket))
+        //     views::zip(this->gain_calc.vertex_list, this->gainbucket))
         auto bckt_it = this->gainbucket.begin();
-        for (auto& vlist : this->gainCalc.vertex_list) {
+        for (auto& vlist : this->gain_calc.vertex_list) {
             auto& vlink = vlist[v];
             bckt_it->detach(vlink);
             vlink.lock();  // lock
@@ -98,6 +98,6 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] key
      */
     auto _set_key(uint8_t whichPart, const node_t& v, int key) -> void {
-        this->gainbucket[whichPart].set_key(this->gainCalc.vertex_list[whichPart][v], key);
+        this->gainbucket[whichPart].set_key(this->gain_calc.vertex_list[whichPart][v], key);
     }
 };

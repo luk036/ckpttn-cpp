@@ -23,21 +23,21 @@ extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
  * @param[in] num_parts
  */
 void run_FMKWayPartMgr(const SimpleNetlist& hgr, uint8_t num_parts) {
-    FMKWayGainMgr<SimpleNetlist> gainMgr{hgr, num_parts};
-    FMKWayConstrMgr<SimpleNetlist> constrMgr{hgr, 0.4, num_parts};
-    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>> partMgr{
-        hgr, gainMgr, constrMgr, num_parts};
+    FMKWayGainMgr<SimpleNetlist> gain_mgr{hgr, num_parts};
+    FMKWayConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4, num_parts};
+    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>> part_mgr{
+        hgr, gain_mgr, constr_mgr, num_parts};
     vector<uint8_t> part(hgr.number_of_modules(), 0);
 
-    partMgr.legalize(part);
-    auto totalcostbefore = partMgr.totalcost;
-    partMgr.optimize(part);
+    part_mgr.legalize(part);
+    auto totalcostbefore = part_mgr.totalcost;
+    part_mgr.optimize(part);
     CHECK(totalcostbefore >= 0);
-    CHECK(partMgr.totalcost <= totalcostbefore);
-    CHECK(partMgr.totalcost >= 0);
-    totalcostbefore = partMgr.totalcost;
-    partMgr.init(part);
-    CHECK(partMgr.totalcost == totalcostbefore);
+    CHECK(part_mgr.totalcost <= totalcostbefore);
+    CHECK(part_mgr.totalcost >= 0);
+    totalcostbefore = part_mgr.totalcost;
+    part_mgr.init(part);
+    CHECK(part_mgr.totalcost == totalcostbefore);
 }
 
 TEST_CASE("Test FMKWayPartMgr") {

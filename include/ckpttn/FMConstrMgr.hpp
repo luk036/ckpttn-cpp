@@ -11,10 +11,10 @@ template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
 
 /**
- * @brief Check if the move of v can satisfied, getbetter, or notsatisfied
+ * @brief Check if the move of v can satisfied, GetBetter, or NotSatisfied
  *
  */
-enum class LegalCheck { notsatisfied, getbetter, allsatisfied };
+enum class LegalCheck { NotSatisfied, GetBetter, AllSatisfied };
 
 /**
  * @brief FM Partition Constraint Manager

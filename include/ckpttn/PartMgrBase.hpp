@@ -56,7 +56,7 @@ class PartMgrBase {
     // Der& self = *static_cast<Der*>(this);
 
     const Gnl& hgr;
-    GainMgr& gainMgr;
+    GainMgr& gain_mgr;
     ConstrMgr& validator;
     size_t num_parts;
     // std::vector<std::uint8_t> snapshot;
@@ -69,12 +69,12 @@ class PartMgrBase {
      * @brief Construct a new Part Mgr Base object
      *
      * @param[in] hgr
-     * @param[in,out] gainMgr
-     * @param[in,out] constrMgr
+     * @param[in,out] gain_mgr
+     * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    PartMgrBase(const Gnl& hgr, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t num_parts)
-        : hgr{hgr}, gainMgr{gainMgr}, validator{constrMgr}, num_parts{num_parts} {}
+    PartMgrBase(const Gnl& hgr, GainMgr& gain_mgr, ConstrMgr& constr_mgr, size_t num_parts)
+        : hgr{hgr}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
 
     /**
      * @brief
