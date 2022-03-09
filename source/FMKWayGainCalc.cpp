@@ -281,12 +281,12 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
     // #pragma unroll
     for (auto i = 0; i != 2; ++i) {
         if (part_w == l) {
-            for (auto& dG0 : delta_gain[0]) {
-                dG0 += weight;
+            for (auto& dg0 : delta_gain[0]) {
+                dg0 += weight;
             }
         } else if (part_u == l) {
-            for (auto& dG1 : delta_gain[1]) {
-                dG1 += weight;
+            for (auto& dg1 : delta_gain[1]) {
+                dg1 += weight;
             }
         } else {
             delta_gain[0][l] -= weight;
@@ -354,8 +354,8 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
         } else if (num[l] == 1) {
             for (size_t index = 0U; index != degree; ++index) {
                 if (part[this->idx_vec[index]] == l) {
-                    for (auto& dG : delta_gain[index]) {
-                        dG += weight;
+                    for (auto& dg : delta_gain[index]) {
+                        dg += weight;
                     }
                     break;
                 }
