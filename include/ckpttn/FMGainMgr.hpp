@@ -27,7 +27,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     using Item = dllink<std::pair<node_t, uint32_t>>;
 
   protected:
-    Item waitinglist{std::make_pair(node_t{}, uint32_t(0))};
+    Dllist<std::pair<node_t, uint32_t>> waitinglist{std::make_pair(node_t{}, uint32_t(0))};
     const Gnl& H;
     std::vector<bpqueue<node_t>> gainbucket;
     // size_t pmax;

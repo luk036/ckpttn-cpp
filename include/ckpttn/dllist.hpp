@@ -2,9 +2,10 @@
 
 #include <cassert>
 #include <utility>  // import std::move()
+#include "dllink.hpp" // for Dllink
 
 // Forward declaration for begin() end()
-template <typename T> class dll_iterator;
+template <typename T> class DllIterator;
 
 /**
  * @brief doubly linked node (that may also be a "head" a list)
@@ -18,52 +19,32 @@ template <typename T> class dll_iterator;
  * are supplied by the caller in order to better reuse the nodes.
  */
 #pragma pack(push, 1)
-template <typename T> class dllink {
-    friend dll_iterator<T>;
+template <typename T> class Dllist {
+    friend DllIterator<T>;
 
   private:
-    dllink* next{this}; /**< pointer to the next node */
-    dllink* prev{this}; /**< pointer to the previous node */
+    dllink<T> head;
 
   public:
-    T data{}; /**< data */
-    // Int key{}; /**< key */
-
     /**
-     * @brief Construct a new dllink object
+     * @brief Construct a new Dllist object
      *
      * @param[in] data the data
      */
-    constexpr explicit dllink(T data) noexcept : data{std::move(data)} {
-        static_assert(sizeof(dllink) <= 24, "keep this class small");
+    constexpr explicit Dllist(T data) noexcept : head{std::move(data)} {
+        static_assert(sizeof(Dllist) <= 24, "keep this class small");
     }
 
     /**
-     * @brief Copy construct a new dllink object (deleted intentionally)
+     * @brief Copy construct a new Dllist object (deleted intentionally)
      *
      */
-    constexpr dllink() = default;
-    ~dllink() = default;
-    dllink(const dllink&) = delete;                               // don't copy
-    constexpr auto operator=(const dllink&) -> dllink& = delete;  // don't assign
-    constexpr dllink(dllink&&) noexcept = default;
-    constexpr auto operator=(dllink&&) noexcept -> dllink& = default;  // don't assign
-
-    /**
-     * @brief lock the node (and don't append it to any list)
-     *
-     */
-    constexpr auto lock() noexcept -> void { this->next = nullptr; }
-
-    /**
-     * @brief whether the node is locked
-     *
-     * @return true
-     * @return false
-     */
-    [[nodiscard]] constexpr auto is_locked() const noexcept -> bool {
-        return this->next == nullptr;
-    }
+    constexpr Dllist() = default;
+    ~Dllist() = default;
+    Dllist(const Dllist&) = delete;                               // don't copy
+    constexpr auto operator=(const Dllist&) -> Dllist& = delete;  // don't assign
+    constexpr Dllist(Dllist&&) noexcept = default;
+    constexpr auto operator=(Dllist&&) noexcept -> Dllist& = default;  // don't assign
 
     /**
      * @brief whether the list is empty
@@ -71,36 +52,22 @@ template <typename T> class dllink {
      * @return true
      * @return false
      */
-    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->next == this; }
+    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->head.next == &this->head; }
 
     /**
      * @brief reset the list
      *
      */
-    constexpr auto clear() noexcept -> void { this->next = this->prev = this; }
+    constexpr auto clear() noexcept -> void { this->head.next = this->head.prev = &this->head; }
 
-    /**
-     * @brief detach from a list
-     *
-     */
-    constexpr auto detach() noexcept -> void {
-        assert(!this->is_locked());
-        const auto n = this->next;
-        const auto p = this->prev;
-        p->next = n;
-        n->prev = p;
-    }
 
     /**
      * @brief append the node to the front
      *
      * @param[in,out] node
      */
-    constexpr auto appendleft(dllink& node) noexcept -> void {
-        node.next = this->next;
-        this->next->prev = &node;
-        this->next = &node;
-        node.prev = this;
+    constexpr auto appendleft(dllink<T>& node) noexcept -> void {
+        this->head.appendleft(node);
     }
 
     /**
@@ -108,39 +75,30 @@ template <typename T> class dllink {
      *
      * @param[in,out] node
      */
-    constexpr auto append(dllink& node) noexcept -> void {
-        node.prev = this->prev;
-        this->prev->next = &node;
-        this->prev = &node;
-        node.next = this;
+    constexpr auto append(dllink<T>& node) noexcept -> void {
+        this->head.append(node);
     }
 
     /**
      * @brief pop a node from the front
      *
-     * @return dllink&
+     * @return Dllist&
      *
      * Precondition: list is not empty
      */
-    constexpr auto popleft() noexcept -> dllink& {
-        auto res = this->next;
-        this->next = res->next;
-        this->next->prev = this;
-        return *res;
+    constexpr auto popleft() noexcept -> dllink<T>& {
+        return this->head.popleft();
     }
 
     /**
      * @brief pop a node from the back
      *
-     * @return dllink&
+     * @return Dllist&
      *
      * Precondition: list is not empty
      */
-    constexpr auto pop() noexcept -> dllink& {
-        auto res = this->prev;
-        this->prev = res->prev;
-        this->prev->next = this;
-        return *res;
+    constexpr auto pop() noexcept -> dllink<T>& {
+        return this->head.pop();
     }
 
     // For iterator
@@ -148,18 +106,18 @@ template <typename T> class dllink {
     /**
      * @brief
      *
-     * @return dll_iterator
+     * @return DllIterator
      */
-    constexpr auto begin() noexcept -> dll_iterator<T>;
+    constexpr auto begin() noexcept -> DllIterator<T>;
 
     /**
      * @brief
      *
-     * @return dll_iterator
+     * @return DllIterator
      */
-    constexpr auto end() noexcept -> dll_iterator<T>;
+    constexpr auto end() noexcept -> DllIterator<T>;
 
-    // using coro_t = boost::coroutines2::coroutine<dllink&>;
+    // using coro_t = boost::coroutines2::coroutine<Dllist&>;
     // using pull_t = typename coro_t::pull_type;
 
     // /**
@@ -188,7 +146,7 @@ template <typename T> class dllink {
  * List iterator. Traverse the list from the first item. Usually it is
  * safe to attach/detach list items during the iterator is active.
  */
-template <typename T> class dll_iterator {
+template <typename T> class DllIterator {
   private:
     dllink<T>* cur; /**< pointer to the current item */
 
@@ -198,14 +156,14 @@ template <typename T> class dll_iterator {
      *
      * @param[in] cur
      */
-    constexpr explicit dll_iterator(dllink<T>* cur) noexcept : cur{cur} {}
+    constexpr explicit DllIterator(dllink<T>* cur) noexcept : cur{cur} {}
 
     /**
      * @brief move to the next item
      *
-     * @return dllink&
+     * @return Dllist&
      */
-    constexpr auto operator++() noexcept -> dll_iterator& {
+    constexpr auto operator++() noexcept -> DllIterator& {
         this->cur = this->cur->next;
         return *this;
     }
@@ -213,7 +171,7 @@ template <typename T> class dll_iterator {
     /**
      * @brief get the reference of the current item
      *
-     * @return dllink&
+     * @return Dllist&
      */
     constexpr auto operator*() noexcept -> dllink<T>& { return *this->cur; }
 
@@ -225,7 +183,7 @@ template <typename T> class dll_iterator {
      * @return true
      * @return false
      */
-    friend auto operator==(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
+    friend auto operator==(const DllIterator& lhs, const DllIterator& rhs) noexcept -> bool {
         return lhs.cur == rhs.cur;
     }
 
@@ -237,7 +195,7 @@ template <typename T> class dll_iterator {
      * @return true
      * @return false
      */
-    friend auto operator!=(const dll_iterator& lhs, const dll_iterator& rhs) noexcept -> bool {
+    friend auto operator!=(const DllIterator& lhs, const DllIterator& rhs) noexcept -> bool {
         return !(lhs == rhs);
     }
 };
@@ -245,17 +203,17 @@ template <typename T> class dll_iterator {
 /**
  * @brief begin
  *
- * @return dll_iterator
+ * @return DllIterator
  */
-template <typename T> inline constexpr auto dllink<T>::begin() noexcept -> dll_iterator<T> {
-    return dll_iterator<T>{this->next};
+template <typename T> inline constexpr auto Dllist<T>::begin() noexcept -> DllIterator<T> {
+    return DllIterator<T>{this->head.next};
 }
 
 /**
  * @brief end
  *
- * @return dll_iterator
+ * @return DllIterator
  */
-template <typename T> inline constexpr auto dllink<T>::end() noexcept -> dll_iterator<T> {
-    return dll_iterator<T>{this};
+template <typename T> inline constexpr auto Dllist<T>::end() noexcept -> DllIterator<T> {
+    return DllIterator<T>{&this->head};
 }

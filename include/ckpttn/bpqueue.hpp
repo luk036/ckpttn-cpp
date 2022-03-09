@@ -37,15 +37,15 @@ template <typename _Tp, typename Int> class bpq_iterator;
  * @tparam std::make_unsigned_t<Int>>>>
  */
 template <typename _Tp, typename Int = int32_t,
-          typename _Sequence = std::vector<dllink<std::pair<_Tp, std::make_unsigned_t<Int>>>>>
+          typename _Sequence = std::vector<Dllist<std::pair<_Tp, std::make_unsigned_t<Int>>>>>
 class bpqueue {
     using UInt = std::make_unsigned_t<Int>;
 
     friend bpq_iterator<_Tp, Int>;
     using Item = dllink<std::pair<_Tp, UInt>>;
 
-    static_assert(std::is_same<Item, typename _Sequence::value_type>::value,
-                  "value_type must be the same as the underlying container");
+    // static_assert(std::is_same<Item, typename _Sequence::value_type>::value,
+    //               "value_type must be the same as the underlying container");
 
   public:
     using value_type = typename _Sequence::value_type;
@@ -269,7 +269,7 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
   private:
     bpqueue<_Tp, Int>& bpq;                      //!< the priority queue
     UInt curkey;                                 //!< the current key value
-    dll_iterator<std::pair<_Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
+    DllIterator<std::pair<_Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
 
     /**
      * @brief Get the reference of the current list
