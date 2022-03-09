@@ -73,8 +73,8 @@ auto create_contraction_subgraph(const SimpleNetlist& hgr, const py::set<node_t>
 
         for (const auto& net : hgr.nets) {
             if (S.contains(net)) {
-                // auto netCur = hgr.gr[net].begin();
-                // auto master = *netCur;
+                // auto net_cur = hgr.gr[net].begin();
+                // auto master = *net_cur;
                 clusters.push_back(net);
                 for (const auto& v : hgr.gr[net]) {
                     module_up_map[v] = net;

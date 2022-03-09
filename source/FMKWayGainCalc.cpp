@@ -59,9 +59,9 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
                                               gsl::span<const uint8_t> part) {
-    auto netCur = this->hgr.gr[net].begin();
-    const auto w = *netCur;
-    const auto v = *++netCur;
+    auto net_cur = this->hgr.gr[net].begin();
+    const auto w = *net_cur;
+    const auto v = *++net_cur;
     const auto part_w = part[w];
     const auto part_v = part[v];
     const auto weight = this->hgr.get_net_weight(net);
@@ -85,10 +85,10 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
                                               gsl::span<const uint8_t> part) {
-    auto netCur = this->hgr.gr[net].begin();
-    const auto w = *netCur;
-    const auto v = *++netCur;
-    const auto u = *++netCur;
+    auto net_cur = this->hgr.gr[net].begin();
+    const auto w = *net_cur;
+    const auto v = *++net_cur;
+    const auto u = *++net_cur;
     const auto part_w = part[w];
     const auto part_v = part[v];
     const auto part_u = part[u];
@@ -198,8 +198,8 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
 
     auto weight = this->hgr.get_net_weight(move_info.net);
     // auto deltaGainW = vector<int>(this->num_parts, 0);
-    auto netCur = this->hgr.gr[move_info.net].begin();
-    auto w = (*netCur != move_info.v) ? *netCur : *++netCur;
+    auto net_cur = this->hgr.gr[move_info.net].begin();
+    auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
     fill(this->deltaGainW.begin(), this->deltaGainW.end(), 0);
 
     // #pragma unroll
