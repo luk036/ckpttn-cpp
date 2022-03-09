@@ -167,8 +167,8 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-void FMBiGainCalc<Gnl>::init_IdVec(const typename Gnl::node_t& v, const typename Gnl::node_t& net) {
+template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
+                                                             const typename Gnl::node_t& net) {
     // auto rng = this->hgr.gr[net] |
     //         ranges::views::remove_if([&](auto w) { return w == v; });
     // using namespace transrangers;

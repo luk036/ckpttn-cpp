@@ -123,14 +123,14 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
         const auto move_info
             = MoveInfo<typename Gnl::node_t>{net, v, move_info_v.from_part, move_info_v.to_part};
         if (!this->gain_calc.special_handle_2pin_nets) {
-            this->gain_calc.init_IdVec(v, net);
+            this->gain_calc.init_idx_vec(v, net);
             this->_update_move_general_net(part, move_info);
             continue;
         }
         if (degree == 2) {
             this->_update_move_2pin_net(part, move_info);
         } else {
-            this->gain_calc.init_IdVec(v, net);
+            this->gain_calc.init_idx_vec(v, net);
             if (degree == 3) {
                 this->_update_move_3pin_net(part, move_info);
             } else {

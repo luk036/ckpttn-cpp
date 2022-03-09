@@ -230,8 +230,8 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::init_IdVec(const typename Gnl::node_t& v,
-                                                             const typename Gnl::node_t& net) {
+template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
+                                                               const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     for (const auto& w : this->hgr.gr[net]) {
         if (w == v) {

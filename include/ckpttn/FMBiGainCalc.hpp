@@ -84,7 +84,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param v
      * @param net
      */
-    void init_IdVec(const node_t& v, const node_t& net);
+    void init_idx_vec(const node_t& v, const node_t& net);
 
     /**
      * @brief

@@ -121,7 +121,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] v
      * @param[in] net
      */
-    void init_IdVec(const node_t& v, const node_t& net);
+    void init_idx_vec(const node_t& v, const node_t& net);
 
     using ret_info = std::vector<std::vector<int>>;
 
