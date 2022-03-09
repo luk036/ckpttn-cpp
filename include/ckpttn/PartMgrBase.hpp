@@ -40,7 +40,7 @@ enum class LegalCheck;
  * each iteration.
  *
  * Reference:
- *   G. Ausiello et al., Complexity and Approximation: Combinatorial
+ *   gr. Ausiello et al., Complexity and Approximation: Combinatorial
  * Optimization Problems and Their Approximability Properties, Section 10.3.2.
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
@@ -55,10 +55,10 @@ class PartMgrBase {
   protected:
     // Der& self = *static_cast<Der*>(this);
 
-    const Gnl& H;
+    const Gnl& hgr;
     GainMgr& gainMgr;
     ConstrMgr& validator;
-    size_t K;
+    size_t num_parts;
     // std::vector<std::uint8_t> snapshot;
     // std::vector<std::uint8_t> part;
 
@@ -68,13 +68,13 @@ class PartMgrBase {
     /**
      * @brief Construct a new Part Mgr Base object
      *
-     * @param[in] H
+     * @param[in] hgr
      * @param[in,out] gainMgr
      * @param[in,out] constrMgr
-     * @param[in] K
+     * @param[in] num_parts
      */
-    PartMgrBase(const Gnl& H, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t K)
-        : H{H}, gainMgr{gainMgr}, validator{constrMgr}, K{K} {}
+    PartMgrBase(const Gnl& hgr, GainMgr& gainMgr, ConstrMgr& constrMgr, size_t num_parts)
+        : hgr{hgr}, gainMgr{gainMgr}, validator{constrMgr}, num_parts{num_parts} {}
 
     /**
      * @brief

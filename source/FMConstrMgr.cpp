@@ -12,18 +12,19 @@
 
 using namespace std;
 
-template <typename Gnl> FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& H, double BalTol, uint8_t K)
-    : H{H}, BalTol{BalTol}, diff(K, 0), K{K} {
+template <typename Gnl>
+FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& hgr, double bal_tol, uint8_t num_parts)
+    : hgr{hgr}, bal_tol{bal_tol}, diff(num_parts, 0), num_parts{num_parts} {
     // using namespace transrangers;
     // this->totalweight
-    //     = accumulate(transform([&](const auto& v) { return H.get_module_weight(v); }, all(H)),
-    //     0U);
+    //     = accumulate(transform([&](const auto& v) { return hgr.get_module_weight(v); },
+    //     all(hgr)), 0U);
     // this->totalweight = 0U;
-    for (const auto& v : H) {
-        this->totalweight += H.get_module_weight(v);
+    for (const auto& v : hgr) {
+        this->totalweight += hgr.get_module_weight(v);
     }
-    const auto totalweightK = this->totalweight * (2.0 / this->K);
-    this->lowerbound = uint32_t(round(totalweightK * this->BalTol));
+    const auto totalweightK = this->totalweight * (2.0 / this->num_parts);
+    this->lowerbound = uint32_t(round(totalweightK * this->bal_tol));
 }
 
 /**
@@ -33,9 +34,9 @@ template <typename Gnl> FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& H, double BalTo
  */
 template <typename Gnl> void FMConstrMgr<Gnl>::init(gsl::span<const uint8_t> part) {
     fill(this->diff.begin(), this->diff.end(), 0);
-    for (const auto& v : this->H) {
-        // auto weight_v = this->H.get_module_weight(v);
-        this->diff[part[v]] += this->H.get_module_weight(v);
+    for (const auto& v : this->hgr) {
+        // auto weight_v = this->hgr.get_module_weight(v);
+        this->diff[part[v]] += this->hgr.get_module_weight(v);
     }
 }
 
@@ -48,7 +49,7 @@ template <typename Gnl> void FMConstrMgr<Gnl>::init(gsl::span<const uint8_t> par
 template <typename Gnl>
 auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
     -> LegalCheck {
-    this->weight = this->H.get_module_weight(move_info_v.v);
+    this->weight = this->hgr.get_module_weight(move_info_v.v);
     const auto diffFrom = this->diff[move_info_v.fromPart];
     if (diffFrom < this->lowerbound + this->weight) {
         return LegalCheck::notsatisfied;  // not ok, don't move
@@ -72,7 +73,7 @@ auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& 
     -> bool {
     // const auto& [v, fromPart, toPart] = move_info_v;
 
-    this->weight = this->H.get_module_weight(move_info_v.v);
+    this->weight = this->hgr.get_module_weight(move_info_v.v);
     // auto diffTo = this->diff[toPart] + this->weight;
     const auto diffFrom = this->diff[move_info_v.fromPart];
     return diffFrom >= this->lowerbound + this->weight;

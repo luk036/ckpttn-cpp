@@ -13,7 +13,7 @@ template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
 
 /**
- * @brief FM K-Way Partition Constraint Manager
+ * @brief FM num_parts-Way Partition Constraint Manager
  *
  * @tparam Gnl
  */
@@ -25,12 +25,12 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
     /**
      * @brief Construct a new FMKWayConstrMgr object
      *
-     * @param[in] H
-     * @param[in] BalTol
-     * @param[in] K
+     * @param[in] hgr
+     * @param[in] bal_tol
+     * @param[in] num_parts
      */
-    FMKWayConstrMgr(const Gnl& H, double BalTol, std::uint8_t K)
-        : FMConstrMgr<Gnl>{H, BalTol, K}, illegal(K, 1) {}
+    FMKWayConstrMgr(const Gnl& hgr, double bal_tol, std::uint8_t num_parts)
+        : FMConstrMgr<Gnl>{hgr, bal_tol, num_parts}, illegal(num_parts, 1) {}
 
     /**
      * @brief

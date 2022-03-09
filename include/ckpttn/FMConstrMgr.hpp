@@ -23,34 +23,34 @@ enum class LegalCheck { notsatisfied, getbetter, allsatisfied };
  */
 template <typename Gnl> class FMConstrMgr {
   private:
-    const Gnl& H;
-    double BalTol;
+    const Gnl& hgr;
+    double bal_tol;
     unsigned int totalweight{0};
     unsigned int weight{};  // cache value
 
   protected:
     std::vector<unsigned int> diff;
     unsigned int lowerbound{};
-    std::uint8_t K;
+    std::uint8_t num_parts;
 
     using node_t = typename Gnl::node_t;
 
     /**
      * @brief Construct a new FMConstrMgr object
      *
-     * @param[in] H
-     * @param[in] BalTol
+     * @param[in] hgr
+     * @param[in] bal_tol
      */
-    FMConstrMgr(const Gnl& H, double BalTol) : FMConstrMgr(H, BalTol, 2) {}
+    FMConstrMgr(const Gnl& hgr, double bal_tol) : FMConstrMgr(hgr, bal_tol, 2) {}
 
     /**
      * @brief Construct a new FMConstrMgr object
      *
-     * @param[in] H
-     * @param[in] BalTol
-     * @param[in] K
+     * @param[in] hgr
+     * @param[in] bal_tol
+     * @param[in] num_parts
      */
-    FMConstrMgr(const Gnl& H, double BalTol, std::uint8_t K);
+    FMConstrMgr(const Gnl& hgr, double bal_tol, std::uint8_t num_parts);
 
   public:
     /**

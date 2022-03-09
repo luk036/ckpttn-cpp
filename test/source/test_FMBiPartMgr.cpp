@@ -14,19 +14,19 @@ using namespace std;
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
+extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
 
 /**
  * @brief Run test cases
  *
- * @param[in] H
+ * @param[in] hgr
  */
-void run_FMBiPartMgr(const SimpleNetlist& H) {
-    FMBiGainMgr<SimpleNetlist> gainMgr{H};
-    FMBiConstrMgr<SimpleNetlist> constrMgr{H, 0.4};
+void run_FMBiPartMgr(const SimpleNetlist& hgr) {
+    FMBiGainMgr<SimpleNetlist> gainMgr{hgr};
+    FMBiConstrMgr<SimpleNetlist> constrMgr{hgr, 0.4};
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> partMgr{
-        H, gainMgr, constrMgr};
-    vector<uint8_t> part(H.number_of_modules(), 0);
+        hgr, gainMgr, constrMgr};
+    vector<uint8_t> part(hgr.number_of_modules(), 0);
     partMgr.legalize(part);
     auto totalcostbefore = partMgr.totalcost;
     partMgr.optimize(part);
@@ -39,30 +39,30 @@ void run_FMBiPartMgr(const SimpleNetlist& H) {
 }
 
 TEST_CASE("Test FMBiPartMgr") {
-    const auto H = create_test_netlist();
-    run_FMBiPartMgr(H);
+    const auto hgr = create_test_netlist();
+    run_FMBiPartMgr(hgr);
 }
 
 TEST_CASE("Test FMBiPartMgr dwarf") {
-    const auto H = create_dwarf();
-    run_FMBiPartMgr(H);
+    const auto hgr = create_dwarf();
+    run_FMBiPartMgr(hgr);
 }
 
 TEST_CASE("Test FMBiPartMgr p1") {
-    const auto H = readNetD("../../testcases/p1.net");
-    run_FMBiPartMgr(H);
+    const auto hgr = readNetD("../../testcases/p1.net");
+    run_FMBiPartMgr(hgr);
 }
 
 // TEST_CASE("Test FMBiPartMgr ibm01")
 // {
-//     auto H = readNetD("../../testcases/ibm01.net");
-//     readAre(H, "../../testcases/ibm01.are");
-//     run_FMBiPartMgr(H);
+//     auto hgr = readNetD("../../testcases/ibm01.net");
+//     readAre(hgr, "../../testcases/ibm01.are");
+//     run_FMBiPartMgr(hgr);
 // }
 
 // TEST_CASE("Test FMBiPartMgr ibm18")
 // {
-//     auto H = readNetD("../../testcases/ibm18.net");
-//     readAre(H, "../../testcases/ibm18.are");
-//     run_FMBiPartMgr(H);
+//     auto hgr = readNetD("../../testcases/ibm18.net");
+//     readAre(hgr, "../../testcases/ibm18.are");
+//     run_FMBiPartMgr(hgr);
 // }

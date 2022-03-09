@@ -36,17 +36,17 @@ template <typename T> class robin {
     };
 
   public:
-    explicit robin(T K) : cycle(K, &rsrc) {
-        // K -= 1;
-        // for (auto k = 0U; k != K; ++k)
+    explicit robin(T num_parts) : cycle(num_parts, &rsrc) {
+        // num_parts -= 1;
+        // for (auto k = 0U; k != num_parts; ++k)
         // {
         //     this->cycle[k].next = &this->cycle[k + 1];
         //     this->cycle[k].key = k;
         // }
-        // this->cycle[K].next = &this->cycle[0];
-        // this->cycle[K].key = K;
+        // this->cycle[num_parts].next = &this->cycle[0];
+        // this->cycle[num_parts].key = num_parts;
 
-        auto* slptr = &this->cycle[K - 1];
+        auto* slptr = &this->cycle[num_parts - 1];
         auto k = T(0);
         for (auto& sl : this->cycle) {
             sl.key = k;

@@ -28,7 +28,7 @@ template <typename Gnl> class FMBiGainCalc {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
-    const Gnl& H;
+    const Gnl& hgr;
     std::vector<Item> vertex_list;
     int totalcost{0};
     uint8_t StackBuf[8192];  // ???
@@ -42,11 +42,14 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Construct a new FMBiGainCalc object
      *
-     * @param[in] H
+     * @param[in] hgr
      */
-    explicit FMBiGainCalc(const Gnl& H, std::uint8_t /*K*/)
-        : H{H}, vertex_list(H.number_of_modules()), rsrc(StackBuf, sizeof StackBuf), IdVec(&rsrc) {
-        for (const auto& v : this->H) {
+    explicit FMBiGainCalc(const Gnl& hgr, std::uint8_t /*num_parts*/)
+        : hgr{hgr},
+          vertex_list(hgr.number_of_modules()),
+          rsrc(StackBuf, sizeof StackBuf),
+          IdVec(&rsrc) {
+        for (const auto& v : this->hgr) {
             this->vertex_list[v].data = std::make_pair(v, int32_t(0));
         }
     }
@@ -61,7 +64,7 @@ template <typename Gnl> class FMBiGainCalc {
         for (auto& vlink : this->vertex_list) {
             vlink.data.second = 0;
         }
-        for (const auto& net : this->H.nets) {
+        for (const auto& net : this->hgr.nets) {
             this->_init_gain(net, part);
         }
         return this->totalcost;

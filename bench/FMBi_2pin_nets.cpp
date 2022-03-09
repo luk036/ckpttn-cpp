@@ -12,22 +12,22 @@
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
+extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
 
 /**
  * @brief run FM Bi-partitioning
  *
- * @param[in] H
+ * @param[in] hgr
  * @param[in] option
  */
-void run_FMBiPartMgr(const SimpleNetlist& H, bool option) {
-    FMBiGainMgr<SimpleNetlist> gainMgr{H};
+void run_FMBiPartMgr(const SimpleNetlist& hgr, bool option) {
+    FMBiGainMgr<SimpleNetlist> gainMgr{hgr};
     gainMgr.gainCalc.special_handle_2pin_nets = option;
 
-    FMBiConstrMgr<SimpleNetlist> constrMgr{H, 0.45};
+    FMBiConstrMgr<SimpleNetlist> constrMgr{hgr, 0.45};
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> partMgr{
-        H, gainMgr, constrMgr};
-    std::vector<std::uint8_t> part(H.number_of_modules(), 0);
+        hgr, gainMgr, constrMgr};
+    std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
     partMgr.legalize(part);
     // auto totalcostbefore = partMgr.totalcost;
     partMgr.optimize(part);
@@ -42,11 +42,11 @@ void run_FMBiPartMgr(const SimpleNetlist& H, bool option) {
  * @param[in] state
  */
 static void BM_with_2pin_nets(benchmark::State& state) {
-    auto H = readNetD("../../testcases/ibm03.net");
-    readAre(H, "../../testcases/ibm03.are");
+    auto hgr = readNetD("../../testcases/ibm03.net");
+    readAre(hgr, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMBiPartMgr(H, true);
+        run_FMBiPartMgr(hgr, true);
     }
 }
 
@@ -61,11 +61,11 @@ BENCHMARK(BM_with_2pin_nets);
  * @param[in] state
  */
 static void BM_without_2pin_nets(benchmark::State& state) {
-    auto H = readNetD("../../testcases/ibm03.net");
-    readAre(H, "../../testcases/ibm03.are");
+    auto hgr = readNetD("../../testcases/ibm03.net");
+    readAre(hgr, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMBiPartMgr(H, false);
+        run_FMBiPartMgr(hgr, false);
     }
 }
 BENCHMARK(BM_without_2pin_nets);

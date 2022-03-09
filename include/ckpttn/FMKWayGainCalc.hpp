@@ -28,8 +28,8 @@ template <typename Gnl> class FMKWayGainCalc {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
-    const Gnl& H;
-    std::uint8_t K;
+    const Gnl& hgr;
+    std::uint8_t num_parts;
     robin<std::uint8_t> RR;
     // size_t num_modules;
     int totalcost{0};
@@ -46,22 +46,22 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Construct a new FMKWayGainCalc object
      *
-     * @param[in] H Netlist
-     * @param[in] K number of partitions
+     * @param[in] hgr Netlist
+     * @param[in] num_parts number of partitions
      */
-    FMKWayGainCalc(const Gnl& H, std::uint8_t K)
-        : H{H},
-          K{K},
-          RR{K},
+    FMKWayGainCalc(const Gnl& hgr, std::uint8_t num_parts)
+        : hgr{hgr},
+          num_parts{num_parts},
+          RR{num_parts},
           rsrc(StackBuf, sizeof StackBuf),
           vertex_list{},
-          deltaGainV(K, 0, &rsrc),
-          deltaGainW(K, 0, &rsrc),
+          deltaGainV(num_parts, 0, &rsrc),
+          deltaGainW(num_parts, 0, &rsrc),
           IdVec(&rsrc) {
-        for (auto k = 0U; k != this->K; ++k) {
+        for (auto k = 0U; k != this->num_parts; ++k) {
             auto vec = std::vector<Item>{};
-            vec.reserve(H.number_of_modules());
-            for (const auto& v : this->H) {
+            vec.reserve(hgr.number_of_modules());
+            for (const auto& v : this->hgr) {
                 vec.emplace_back(Item(std::make_pair(v, uint32_t(0))));
             }
             this->vertex_list.emplace_back(std::move(vec));
@@ -91,7 +91,7 @@ template <typename Gnl> class FMKWayGainCalc {
                 vlink.data.second = 0U;
             }
         }
-        for (const auto& net : this->H.nets) {
+        for (const auto& net : this->hgr.nets) {
             this->_init_gain(net, part);
         }
         return this->totalcost;

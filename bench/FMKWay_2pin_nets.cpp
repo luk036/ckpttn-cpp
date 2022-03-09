@@ -12,23 +12,23 @@
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
+extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
 
 /**
- * @brief Run FM K-way partitioning
+ * @brief Run FM num_parts-way partitioning
  *
- * @param[in] H
- * @param[in] K
+ * @param[in] hgr
+ * @param[in] num_parts
  * @param[in] option
  */
-void run_FMKWayPartMgr(SimpleNetlist& H, std::uint8_t K, bool option) {
-    FMKWayGainMgr<SimpleNetlist> gainMgr{H, K};
+void run_FMKWayPartMgr(SimpleNetlist& hgr, std::uint8_t num_parts, bool option) {
+    FMKWayGainMgr<SimpleNetlist> gainMgr{hgr, num_parts};
     gainMgr.gainCalc.special_handle_2pin_nets = option;
 
-    FMKWayConstrMgr<SimpleNetlist> constrMgr{H, 0.4, K};
+    FMKWayConstrMgr<SimpleNetlist> constrMgr{hgr, 0.4, num_parts};
     FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>> partMgr{
-        H, gainMgr, constrMgr};
-    std::vector<std::uint8_t> part(H.number_of_modules(), 0);
+        hgr, gainMgr, constrMgr};
+    std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
 
     partMgr.legalize(part);
     // auto totalcostbefore = partMgr.totalcost;
@@ -44,11 +44,11 @@ void run_FMKWayPartMgr(SimpleNetlist& H, std::uint8_t K, bool option) {
  * @param[in] state
  */
 static void BM_with_2pin_nets(benchmark::State& state) {
-    auto H = readNetD("../../testcases/ibm03.net");
-    readAre(H, "../../testcases/ibm03.are");
+    auto hgr = readNetD("../../testcases/ibm03.net");
+    readAre(hgr, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMKWayPartMgr(H, 3, true);
+        run_FMKWayPartMgr(hgr, 3, true);
     }
 }
 
@@ -63,11 +63,11 @@ BENCHMARK(BM_with_2pin_nets);
  * @param[in] state
  */
 static void BM_without_2pin_nets(benchmark::State& state) {
-    auto H = readNetD("../../testcases/ibm03.net");
-    readAre(H, "../../testcases/ibm03.are");
+    auto hgr = readNetD("../../testcases/ibm03.net");
+    readAre(hgr, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMKWayPartMgr(H, 3, false);
+        run_FMKWayPartMgr(hgr, 3, false);
     }
 }
 BENCHMARK(BM_without_2pin_nets);

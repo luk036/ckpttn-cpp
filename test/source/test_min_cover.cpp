@@ -13,7 +13,7 @@ using namespace std;
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist& H, boost::string_view areFileName);
+extern void readAre(SimpleNetlist& hgr, boost::string_view areFileName);
 // extern tuple<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
@@ -26,28 +26,28 @@ extern auto create_contraction_subgraph(const SimpleNetlist&, const py::set<node
 //
 
 // TEST_CASE("Test min_net_cover_pd dwarf", "[test_min_cover]") {
-//     auto H = create_dwarf();
-//     auto [S, cost] = min_net_cover_pd(H, H.module_weight);
+//     auto hgr = create_dwarf();
+//     auto [S, cost] = min_net_cover_pd(hgr, hgr.module_weight);
 //     CHECK(cost == 3);
 // }
 
 // TEST_CASE("Test min_net_cover_pd ibm01", "[test_min_cover]") {
-//     auto H = readNetD("../../testcases/ibm01.net");
-//     readAre(H, "../../testcases/ibm01.are");
-//     auto [S, cost] = min_net_cover_pd(H, H.net_weight);
+//     auto hgr = readNetD("../../testcases/ibm01.net");
+//     readAre(hgr, "../../testcases/ibm01.are");
+//     auto [S, cost] = min_net_cover_pd(hgr, hgr.net_weight);
 //     CHECK(cost == 4053);
 // }
 
 TEST_CASE("Test contraction subgraph dwarf") {
-    const auto H = create_dwarf();
-    const auto H2 = create_contraction_subgraph(H, py::set<node_t>{});
+    const auto hgr = create_dwarf();
+    const auto H2 = create_contraction_subgraph(hgr, py::set<node_t>{});
     // auto H3 = create_contraction_subgraph(*H2, py::set<node_t> {});
     CHECK(H2->number_of_modules() < 7);
     CHECK(H2->number_of_nets() == 3);
     // CHECK(H2->number_of_pins() < 14);
     CHECK(H2->get_max_net_degree() <= 3);
 
-    auto part = vector<uint8_t>(H.number_of_modules(), 0);
+    auto part = vector<uint8_t>(hgr.number_of_modules(), 0);
     auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
     auto part3 = vector<uint8_t>(H2->number_of_modules(), 0);
     part2[0] = part2[2] = 1;
@@ -58,14 +58,14 @@ TEST_CASE("Test contraction subgraph dwarf") {
 }
 
 TEST_CASE("Test contraction subgraph ibm01") {
-    auto H = readNetD("../../testcases/ibm01.net");
-    readAre(H, "../../testcases/ibm01.are");
-    auto H2 = create_contraction_subgraph(H, py::set<node_t>{});
+    auto hgr = readNetD("../../testcases/ibm01.net");
+    readAre(hgr, "../../testcases/ibm01.are");
+    auto H2 = create_contraction_subgraph(hgr, py::set<node_t>{});
     auto H3 = create_contraction_subgraph(*H2, py::set<node_t>{});
-    CHECK(H2->number_of_modules() < H.number_of_modules());
-    CHECK(H2->number_of_nets() < H.number_of_nets());
-    // CHECK(H2->number_of_pins() < H.number_of_pins());
-    CHECK(H2->get_max_net_degree() <= H.get_max_net_degree());
+    CHECK(H2->number_of_modules() < hgr.number_of_modules());
+    CHECK(H2->number_of_nets() < hgr.number_of_nets());
+    // CHECK(H2->number_of_pins() < hgr.number_of_pins());
+    CHECK(H2->get_max_net_degree() <= hgr.get_max_net_degree());
 
     auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
     auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
@@ -81,14 +81,14 @@ TEST_CASE("Test contraction subgraph ibm01") {
 }
 
 TEST_CASE("Test contraction subgraph ibm18") {
-    auto H = readNetD("../../testcases/ibm18.net");
-    readAre(H, "../../testcases/ibm18.are");
-    auto H2 = create_contraction_subgraph(H, py::set<node_t>{});
+    auto hgr = readNetD("../../testcases/ibm18.net");
+    readAre(hgr, "../../testcases/ibm18.are");
+    auto H2 = create_contraction_subgraph(hgr, py::set<node_t>{});
     auto H3 = create_contraction_subgraph(*H2, py::set<node_t>{});
-    CHECK(H2->number_of_modules() < H.number_of_modules());
-    CHECK(H2->number_of_nets() < H.number_of_nets());
-    // CHECK(H2->number_of_pins() < H.number_of_pins());
-    CHECK(H2->get_max_net_degree() <= H.get_max_net_degree());
+    CHECK(H2->number_of_modules() < hgr.number_of_modules());
+    CHECK(H2->number_of_nets() < hgr.number_of_nets());
+    // CHECK(H2->number_of_pins() < hgr.number_of_pins());
+    CHECK(H2->get_max_net_degree() <= hgr.get_max_net_degree());
 
     auto part2 = vector<uint8_t>(H2->number_of_modules(), 0);
     auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);

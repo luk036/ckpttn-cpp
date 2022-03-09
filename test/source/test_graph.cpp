@@ -14,25 +14,25 @@ TEST_CASE("Test xnetwork") {
     constexpr auto num_nodes = 6;
     enum nodes { a1, a2, a3, n1, n2, n3 };
     // const auto R = py::range<std::uint8_t>(0, num_nodes);
-    xnetwork::SimpleGraph G{num_nodes};
-    G.add_edge(a1, n1);
-    G.add_edge(a1, n1);
-    G.add_edge(a1, n2);
-    G.add_edge(a2, n2);
+    xnetwork::SimpleGraph gr{num_nodes};
+    gr.add_edge(a1, n1);
+    gr.add_edge(a1, n1);
+    gr.add_edge(a1, n2);
+    gr.add_edge(a2, n2);
 
     auto count = 0;
-    for (auto _v : G) {
+    for (auto _v : gr) {
         static_assert(sizeof _v >= 0, "make compiler happy");
         ++count;
     }
 
-    CHECK(G.number_of_nodes() == count);
+    CHECK(gr.number_of_nodes() == count);
 
     auto deg = 0;
-    for (auto _v : G[a1]) {
+    for (auto _v : gr[a1]) {
         static_assert(sizeof _v >= 0, "make compiler happy");
         ++deg;
     }
 
-    CHECK(G.degree(a1) == deg);
+    CHECK(gr.degree(a1) == deg);
 }

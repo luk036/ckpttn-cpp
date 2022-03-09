@@ -23,7 +23,7 @@
 using namespace std;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-void writeJSON(boost::string_view jsonFileName, const SimpleNetlist& H) {
+void writeJSON(boost::string_view jsonFileName, const SimpleNetlist& hgr) {
     auto json = ofstream{jsonFileName.data()};
     if (json.fail()) {
         cerr << "Error: Can't open file " << jsonFileName << ".\n";
@@ -35,22 +35,22 @@ void writeJSON(boost::string_view jsonFileName, const SimpleNetlist& H) {
  "graph": {
 )";
 
-    json << R"( "num_modules": )" << H.number_of_modules() << ",\n";
-    json << R"( "num_nets": )" << H.number_of_nets() << ",\n";
-    json << R"( "num_pads": )" << H.num_pads << "\n";
+    json << R"( "num_modules": )" << hgr.number_of_modules() << ",\n";
+    json << R"( "num_nets": )" << hgr.number_of_nets() << ",\n";
+    json << R"( "num_pads": )" << hgr.num_pads << "\n";
     json << " },\n";
 
     json << R"( "nodes": [)"
          << "\n";
-    for (const auto& node : H.G) {
+    for (const auto& node : hgr.gr) {
         json << "  { \"id\": " << node << " },\n";
     }
     json << " ],\n";
 
     json << R"( "links": [)"
          << "\n";
-    for (const auto& v : H) {
-        for (const auto& net : H.G[v]) {
+    for (const auto& v : hgr) {
+        for (const auto& net : hgr.gr[v]) {
             json << "  {\n";
             json << "   \"source\": " << v << ",\n";
             json << "   \"target\": " << net << "\n";
@@ -151,14 +151,14 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
     // using IndexMap =
     //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
     // auto index = boost::get(boost::vertex_index, g);
-    // auto G = py::grAdaptor<graph_t>{move(g)};
-    auto H = SimpleNetlist{move(g), numModules, numNets};
-    H.num_pads = numModules - padOffset - 1;
-    return H;
+    // auto gr = py::grAdaptor<graph_t>{move(g)};
+    auto hgr = SimpleNetlist{move(g), numModules, numNets};
+    hgr.num_pads = numModules - padOffset - 1;
+    return hgr;
 }
 
 // Read the IBM .are format
-void readAre(SimpleNetlist& H, boost::string_view areFileName) {
+void readAre(SimpleNetlist& hgr, boost::string_view areFileName) {
     auto are = ifstream{areFileName.data()};
     if (are.fail()) {
         cerr << " Could not open " << areFileName << endl;
@@ -174,8 +174,8 @@ void readAre(SimpleNetlist& H, boost::string_view areFileName) {
     unsigned int weight;
     // auto totalWeight = 0;
     // xxx index_t smallestWeight = UINT_MAX;
-    auto numModules = H.number_of_modules();
-    auto padOffset = numModules - H.num_pads - 1;
+    auto numModules = hgr.number_of_modules();
+    auto padOffset = numModules - hgr.num_pads - 1;
     auto module_weight = vector<unsigned int>(numModules);
 
     size_t lineno = 1;
@@ -213,5 +213,5 @@ void readAre(SimpleNetlist& H, boost::string_view areFileName) {
         lineno++;
     }
 
-    H.module_weight = move(module_weight);
+    hgr.module_weight = move(module_weight);
 }

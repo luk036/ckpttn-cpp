@@ -26,7 +26,7 @@ using namespace std;
  */
 template <typename Gnl>
 void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net, gsl::span<const uint8_t> part) {
-    const auto degree = this->H.G.degree(net);
+    const auto degree = this->hgr.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
         return;  // does not provide any gain when moving
@@ -55,11 +55,11 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net, gsl::span<co
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
                                                                     gsl::span<const uint8_t> part) {
-    auto netCur = this->H.G[net].begin();
+    auto netCur = this->hgr.gr[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
 
-    const auto weight = this->H.get_net_weight(net);
+    const auto weight = this->hgr.get_net_weight(net);
     if (part[w] != part[v]) {
         this->totalcost += weight;
         // this->_modify_gain_va(weight, w, v);
@@ -80,12 +80,12 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
                                                                     gsl::span<const uint8_t> part) {
-    auto netCur = this->H.G[net].begin();
+    auto netCur = this->hgr.gr[net].begin();
     const auto w = *netCur;
     const auto v = *++netCur;
     const auto u = *++netCur;
 
-    const auto weight = this->H.get_net_weight(net);
+    const auto weight = this->hgr.get_net_weight(net);
     if (part[u] == part[v]) {
         if (part[w] == part[v]) {
             // this->_modify_gain_va(-weight, u, v, w);
@@ -114,19 +114,19 @@ template <typename Gnl>
 void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
                                                gsl::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
-    for (const auto& w : this->H.G[net]) {
+    for (const auto& w : this->hgr.gr[net]) {
         num[part[w]] += 1;
     }
-    const auto weight = this->H.get_net_weight(net);
+    const auto weight = this->hgr.get_net_weight(net);
 
     // #pragma unroll
     for (const auto& k : {0U, 1U}) {
         if (num[k] == 0) {
-            for (const auto& w : this->H.G[net]) {
+            for (const auto& w : this->hgr.gr[net]) {
                 this->_modify_gain(w, -weight);
             }
         } else if (num[k] == 1) {
-            for (const auto& w : this->H.G[net]) {
+            for (const auto& w : this->hgr.gr[net]) {
                 if (part[w] == k) {
                     this->_modify_gain(w, weight);
                     break;
@@ -152,9 +152,9 @@ template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t>& move_info) ->
     typename Gnl::node_t {
-    auto netCur = this->H.G[move_info.net].begin();
+    auto netCur = this->hgr.gr[move_info.net].begin();
     auto w = (*netCur != move_info.v) ? *netCur : *++netCur;
-    const auto weight = this->H.get_net_weight(move_info.net);
+    const auto weight = this->hgr.get_net_weight(move_info.net);
     const int delta = (part[w] == move_info.fromPart) ? weight : -weight;
     this->deltaGainW = 2 * delta;
     return w;
@@ -169,14 +169,14 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
  */
 template <typename Gnl>
 void FMBiGainCalc<Gnl>::init_IdVec(const typename Gnl::node_t& v, const typename Gnl::node_t& net) {
-    // auto rng = this->H.G[net] |
+    // auto rng = this->hgr.gr[net] |
     //         ranges::views::remove_if([&](auto w) { return w == v; });
     // using namespace transrangers;
-    // auto rng = filter([&](const auto& w) { return w != v; }, all(this->H.G[net]));
+    // auto rng = filter([&](const auto& w) { return w != v; }, all(this->hgr.gr[net]));
     // this->IdVec = FMPmr::vector<typename Gnl::node_t>(rng.begin(), rng.end(), &this->rsrc);
 
     this->IdVec.clear();
-    auto&& rng = this->H.G[net];
+    auto&& rng = this->hgr.gr[net];
     this->IdVec.reserve(rng.size() - 1);
     for (const auto& w : rng) {
         if (w == v) {
@@ -202,7 +202,7 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
     for (const auto& w : this->IdVec) {
         num[part[w]] += 1;
     }
-    // for (const auto& w : this->H.G[move_info.net])
+    // for (const auto& w : this->hgr.gr[move_info.net])
     // {
     //     if (w == move_info.v)
     //     {
@@ -212,7 +212,7 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
     //     IdVec.push_back(w);
     // }
     auto deltaGain = vector<int>{0, 0};
-    auto weight = this->H.get_net_weight(move_info.net);
+    auto weight = this->hgr.get_net_weight(move_info.net);
     const auto part_w = part[this->IdVec[0]];
 
     if (part_w != move_info.fromPart) {
@@ -246,7 +246,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
         num[part[w]] += 1;
     }
 
-    // for (const auto& w : this->H.G[move_info.net])
+    // for (const auto& w : this->hgr.gr[move_info.net])
     // {
     //     if (w == move_info.v)
     //     {
@@ -257,7 +257,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
     // }
     const auto degree = this->IdVec.size();
     auto deltaGain = vector<int>(degree, 0);
-    auto weight = this->H.get_net_weight(move_info.net);
+    auto weight = this->hgr.get_net_weight(move_info.net);
 
     // #pragma unroll
     for (const auto& l : {move_info.fromPart, move_info.toPart}) {

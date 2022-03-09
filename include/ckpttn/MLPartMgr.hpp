@@ -28,8 +28,8 @@ enum class LegalCheck;
  */
 class MLPartMgr {
   private:
-    double BalTol;
-    std::uint8_t K;
+    double bal_tol;
+    std::uint8_t num_parts;
     size_t limitsize{7U};
 
   public:
@@ -38,17 +38,17 @@ class MLPartMgr {
     /**
      * @brief Construct a new MLPartMgr object
      *
-     * @param[in] BalTol
+     * @param[in] bal_tol
      */
-    explicit MLPartMgr(double BalTol) : MLPartMgr(BalTol, 2) {}
+    explicit MLPartMgr(double bal_tol) : MLPartMgr(bal_tol, 2) {}
 
     /**
      * @brief Construct a new MLPartMgr object
      *
-     * @param[in] BalTol
-     * @param[in] K
+     * @param[in] bal_tol
+     * @param[in] num_parts
      */
-    MLPartMgr(double BalTol, std::uint8_t K) : BalTol{BalTol}, K{K} {}
+    MLPartMgr(double bal_tol, std::uint8_t num_parts) : bal_tol{bal_tol}, num_parts{num_parts} {}
 
     void set_limitsize(size_t limit) { this->limitsize = limit; }
 
@@ -57,10 +57,10 @@ class MLPartMgr {
      *
      * @tparam Gnl
      * @tparam PartMgr
-     * @param[in] H
+     * @param[in] hgr
      * @param[in,out] part
      * @return LegalCheck
      */
     template <typename Gnl, typename PartMgr>
-    auto run_FMPartition(const Gnl& H, gsl::span<std::uint8_t> part) -> LegalCheck;
+    auto run_FMPartition(const Gnl& hgr, gsl::span<std::uint8_t> part) -> LegalCheck;
 };

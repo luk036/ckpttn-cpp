@@ -43,11 +43,11 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     /**
      * @brief Construct a new Hier Netlist object
      *
-     * @param[in] G
+     * @param[in] gr
      * @param[in] modules
      * @param[in] nets
      */
-    HierNetlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets);
+    HierNetlist(graph_t gr, const nodeview_t& modules, const nodeview_t& nets);
 
     /**
      * @brief projection down
@@ -77,12 +77,12 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
 };
 
 template <typename graph_t>
-HierNetlist<graph_t>::HierNetlist(graph_t G, const nodeview_t& modules, const nodeview_t& nets)
-    : Netlist<graph_t>{std::move(G), modules, nets} {}
+HierNetlist<graph_t>::HierNetlist(graph_t gr, const nodeview_t& modules, const nodeview_t& nets)
+    : Netlist<graph_t>{std::move(gr), modules, nets} {}
 
 // template <typename graph_t>
-// HierNetlist<graph_t>::HierNetlist(graph_t G, uint32_t numModules, uint32_t numNets)
-//     : Netlist<graph_t> {std::move(G), py::range<uint32_t>(numModules),
+// HierNetlist<graph_t>::HierNetlist(graph_t gr, uint32_t numModules, uint32_t numNets)
+//     : Netlist<graph_t> {std::move(gr), py::range<uint32_t>(numModules),
 //           py::range<uint32_t>(numModules, numModules + numNets)}
 // {
 // }

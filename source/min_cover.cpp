@@ -27,31 +27,32 @@ using namespace std;
 /**
  * @brief Create a contraction subgraph object
  *
- * @param[in] H
+ * @param[in] hgr
  * @param[in] DontSelect
  * @return unique_ptr<SimpleHierNetlist>
  * @todo simplify this function
  */
-auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& DontSelect)
+auto create_contraction_subgraph(const SimpleNetlist& hgr, const py::set<node_t>& DontSelect)
     -> unique_ptr<SimpleHierNetlist> {
     auto weight = py::dict<node_t, unsigned int>{};
-    for (const auto& net : H.nets) {
+    for (const auto& net : hgr.nets) {
         // weight[net] = accumulate(
-        //     transform([&](const auto& v) { return H.get_module_weight(v); }, all(H.G[net])), 0U);
+        //     transform([&](const auto& v) { return hgr.get_module_weight(v); }, all(hgr.gr[net])),
+        //     0U);
         auto sum = 0U;
-        for (const auto& v : H.G[net]) {
-            sum += H.get_module_weight(v);
+        for (const auto& v : hgr.gr[net]) {
+            sum += hgr.get_module_weight(v);
         }
         weight[net] = sum;
     }
 
     auto S = py::set<node_t>{};
     auto dep = DontSelect.copy();
-    min_maximal_matching(H, weight, S, dep);
+    min_maximal_matching(hgr, weight, S, dep);
 
     auto module_up_map = py::dict<node_t, node_t>{};
-    module_up_map.reserve(H.number_of_modules());
-    for (const auto& v : H) {
+    module_up_map.reserve(hgr.number_of_modules());
+    for (const auto& v : hgr) {
         module_up_map[v] = v;
     }
 
@@ -62,7 +63,7 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
 
     auto modules = vector<node_t>{};
     auto nets = vector<node_t>{};
-    nets.reserve(H.nets.size() - S.size());
+    nets.reserve(hgr.nets.size() - S.size());
 
     {  // localize C and clusters
         auto C = py::set<node_t>{};
@@ -70,12 +71,12 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
         C.reserve(3 * S.size());  // ???
         clusters.reserve(S.size());
 
-        for (const auto& net : H.nets) {
+        for (const auto& net : hgr.nets) {
             if (S.contains(net)) {
-                // auto netCur = H.G[net].begin();
+                // auto netCur = hgr.gr[net].begin();
                 // auto master = *netCur;
                 clusters.push_back(net);
-                for (const auto& v : H.G[net]) {
+                for (const auto& v : hgr.gr[net]) {
                     module_up_map[v] = net;
                     C.insert(v);
                 }
@@ -84,8 +85,8 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
                 nets.push_back(net);
             }
         }
-        modules.reserve(H.modules.size() - C.size() + clusters.size());
-        for (const auto& v : H) {
+        modules.reserve(hgr.modules.size() - C.size() + clusters.size());
+        for (const auto& v : hgr) {
             if (C.contains(v)) {
                 continue;
             }
@@ -118,9 +119,9 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
             ++i_net;
         }
 
-        node_up_dict.reserve(H.number_of_modules());
+        node_up_dict.reserve(hgr.number_of_modules());
 
-        for (const auto& v : H) {
+        for (const auto& v : hgr) {
             node_up_dict[v] = module_map[module_up_map[v]];
         }
         // for (const auto& net : nets)
@@ -132,19 +133,19 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     auto num_vertices = numModules + numNets;
     // auto R = py::range<node_t>(0, num_vertices);
     auto g = graph_t(num_vertices);
-    // G.add_nodes_from(nodes);
-    for (const auto& v : H) {
-        for (const auto& net : H.G[v]) {
+    // gr.add_nodes_from(nodes);
+    for (const auto& v : hgr) {
+        for (const auto& net : hgr.gr[v]) {
             if (S.contains(net)) {
                 continue;
             }
             g.add_edge(node_up_dict[v], net_up_map[net]);
         }
     }
-    // auto G = py::grAdaptor<graph_t>(move(g));
-    auto G = move(g);
+    // auto gr = py::grAdaptor<graph_t>(move(g));
+    auto gr = move(g);
 
-    auto H2 = make_unique<SimpleHierNetlist>(move(G), py::range(numModules),
+    auto H2 = make_unique<SimpleHierNetlist>(move(gr), py::range(numModules),
                                              py::range(numModules, numModules + numNets));
 
     auto node_down_map = vector<node_t>{};
@@ -165,7 +166,7 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     //     cluster_down_map[node_up_dict[v]] = net;
     // }
     for (auto&& net : S) {
-        for (auto&& v : H.G[net]) {
+        for (auto&& v : hgr.gr[net]) {
             cluster_down_map[node_up_dict[v]] = net;
         }
     }
@@ -178,18 +179,18 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
             module_weight.push_back(weight[net]);
         } else {
             const auto v2 = node_down_map[i_v];
-            module_weight.push_back(H.get_module_weight(v2));
+            module_weight.push_back(hgr.get_module_weight(v2));
         }
     }
 
-    // if isinstance(H.modules, range):
-    //     node_up_map = [0 for _ in H.modules]
-    // elif isinstance(H.modules, list):
+    // if isinstance(hgr.modules, range):
+    //     node_up_map = [0 for _ in hgr.modules]
+    // elif isinstance(hgr.modules, list):
     //     node_up_map = {}
     // else:
     //     raise NotImplementedError
-    auto node_up_map = vector<node_t>(H.modules.size());
-    for (const auto& v : H.modules) {
+    auto node_up_map = vector<node_t>(hgr.modules.size());
+    for (const auto& v : hgr.modules) {
         node_up_map[v] = node_up_dict[v];
     }
 
@@ -197,6 +198,6 @@ auto create_contraction_subgraph(const SimpleNetlist& H, const py::set<node_t>& 
     H2->node_down_map = move(node_down_map);
     H2->cluster_down_map = move(cluster_down_map);
     H2->module_weight = move(module_weight);
-    H2->parent = &H;
+    H2->parent = &hgr;
     return H2;
 }

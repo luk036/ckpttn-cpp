@@ -28,10 +28,10 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
 
   protected:
     Dllist<std::pair<node_t, uint32_t>> waitinglist{std::make_pair(node_t{}, uint32_t(0))};
-    const Gnl& H;
+    const Gnl& hgr;
     std::vector<BPQueue<node_t>> gainbucket;
     // size_t pmax;
-    std::uint8_t K;
+    std::uint8_t num_parts;
 
   public:
     GainCalc gainCalc;
@@ -43,10 +43,10 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     /**
      * @brief Construct a new FMGainMgr object
      *
-     * @param[in] H
-     * @param[in] K
+     * @param[in] hgr
+     * @param[in] num_parts
      */
-    FMGainMgr(const Gnl& H, std::uint8_t K);
+    FMGainMgr(const Gnl& hgr, std::uint8_t num_parts);
 
     /**
      * @brief

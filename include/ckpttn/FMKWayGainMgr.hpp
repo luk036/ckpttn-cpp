@@ -27,10 +27,10 @@ template <typename Gnl> class FMKWayGainMgr
     /**
      * @brief Construct a new FMKWayGainMgr object
      *
-     * @param[in] H
-     * @param[in] K
+     * @param[in] hgr
+     * @param[in] num_parts
      */
-    FMKWayGainMgr(const Gnl& H, std::uint8_t K) : Base{H, K}, RR{K} {}
+    FMKWayGainMgr(const Gnl& hgr, std::uint8_t num_parts) : Base{hgr, num_parts}, RR{num_parts} {}
 
     /**
      * @brief

@@ -41,11 +41,11 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part
     this->init(part);
 
     // Zero-weighted modules does not contribute legalization
-    for (const auto& v : this->H) {
-        if (this->H.get_module_weight(v) != 0U) {
+    for (const auto& v : this->hgr) {
+        if (this->hgr.get_module_weight(v) != 0U) {
             continue;
         }
-        if (!this->H.module_fixed.contains(v)) {
+        if (!this->hgr.module_fixed.contains(v)) {
             continue;
         }
         this->gainMgr.lock_all(part[v], v);

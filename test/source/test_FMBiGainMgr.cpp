@@ -15,11 +15,11 @@ using namespace std;
 /**
  * @brief
  *
- * @param[in] H
+ * @param[in] hgr
  * @param[in] part_test
  */
-void run_FMBiGainMgr(const SimpleNetlist& H, gsl::span<uint8_t> part) {
-    FMBiGainMgr<SimpleNetlist> mgr{H};
+void run_FMBiGainMgr(const SimpleNetlist& hgr, gsl::span<uint8_t> part) {
+    FMBiGainMgr<SimpleNetlist> mgr{hgr};
     mgr.init(part);
     while (!mgr.is_empty()) {
         // Take the gainmax with v from gainbucket
@@ -37,13 +37,13 @@ void run_FMBiGainMgr(const SimpleNetlist& H, gsl::span<uint8_t> part) {
 }
 
 TEST_CASE("Test FMBiGainMgr") {
-    const auto H = create_test_netlist();
+    const auto hgr = create_test_netlist();
     auto part_test = vector<uint8_t>{0, 1, 0};
-    run_FMBiGainMgr(H, part_test);
+    run_FMBiGainMgr(hgr, part_test);
 }
 
 TEST_CASE("Test FMBiGainMgr 2") {
-    const auto H = create_dwarf();
+    const auto hgr = create_dwarf();
     auto part_test = vector<uint8_t>{0, 0, 0, 0, 1, 1, 1};
-    run_FMBiGainMgr(H, part_test);
+    run_FMBiGainMgr(hgr, part_test);
 }

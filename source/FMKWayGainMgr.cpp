@@ -26,7 +26,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> p
     for (auto& bckt : this->gainbucket) {
         bckt.clear();
     }
-    for (const auto& v : this->H) {
+    for (const auto& v : this->hgr) {
         const auto pv = part[v];
         for (const auto& k : this->RR.exclude(pv)) {
             auto& vlink = this->gainCalc.vertex_list[k][v];
@@ -36,7 +36,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> p
         this->gainbucket[pv].set_key(vlink, 0);
         this->waitinglist.append(vlink);
     }
-    for (const auto& v : this->H.module_fixed) {
+    for (const auto& v : this->hgr.module_fixed) {
         this->lock_all(part[v], v);
     }
     return totalcost;
@@ -54,7 +54,7 @@ void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& mo
                                        int gain) {
     // const auto& [v, fromPart, toPart] = move_info_v;
 
-    for (auto k = 0U; k != this->K; ++k) {
+    for (auto k = 0U; k != this->num_parts; ++k) {
         if (move_info_v.fromPart == k || move_info_v.toPart == k) {
             continue;
         }

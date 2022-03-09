@@ -45,19 +45,19 @@ auto create_dwarf() -> SimpleNetlist {
     // using IndexMap =
     //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
     // IndexMap index = boost::get(boost::vertex_index, g);
-    // auto G = py::grAdaptor<graph_t>(move(g));
+    // auto gr = py::grAdaptor<graph_t>(move(g));
 
     // vector<node_t> module_list(7);
     // vector<node_t> net_list(5);
     vector<unsigned int> module_weight = {1, 3, 4, 2, 0, 0, 0};
-    // auto H = Netlist{move(g), py::range(7), py::range(7, 13),
+    // auto hgr = Netlist{move(g), py::range(7), py::range(7, 13),
     // py::range(7),
     //                  py::range(-7, 6)};
-    SimpleNetlist H(move(g), 7, 6);
+    SimpleNetlist hgr(move(g), 7, 6);
 
-    H.module_weight = module_weight;
-    H.num_pads = 3;
-    return H;
+    hgr.module_weight = module_weight;
+    hgr.num_pads = 3;
+    return hgr;
 }
 
 /**
@@ -76,7 +76,7 @@ auto create_test_netlist() -> SimpleNetlist {
     // index_t indices[] = {0, 1, 2, 3, 4, 5};
     // auto num_arcs = sizeof(edge_array) / sizeof(Edge);
     // auto g = graph_t{edge_array, edge_array + num_arcs, num_nodes};
-    // auto G = py::grAdaptor<graph_t>{move(g)};
+    // auto gr = py::grAdaptor<graph_t>{move(g)};
     // const auto R = py::range(num_nodes);
     graph_t g(num_nodes);
     for (const auto& e : edge_array) {
@@ -84,31 +84,31 @@ auto create_test_netlist() -> SimpleNetlist {
     }
 
     auto module_weight = vector<unsigned int>{3, 4, 2};
-    auto H = SimpleNetlist{move(g), 3, 3};
-    H.module_weight = move(module_weight);
-    return H;
+    auto hgr = SimpleNetlist{move(g), 3, 3};
+    hgr.module_weight = move(module_weight);
+    return hgr;
 }
 
 TEST_CASE("Test Netlist") {
-    const auto H = create_test_netlist();
+    const auto hgr = create_test_netlist();
 
-    CHECK(H.number_of_modules() == 3);
-    CHECK(H.number_of_nets() == 3);
-    // CHECK(H.number_of_pins() == 6);
-    CHECK(H.get_max_degree() == 3);
-    CHECK(H.get_max_net_degree() == 3);
-    CHECK(!H.has_fixed_modules);
+    CHECK(hgr.number_of_modules() == 3);
+    CHECK(hgr.number_of_nets() == 3);
+    // CHECK(hgr.number_of_pins() == 6);
+    CHECK(hgr.get_max_degree() == 3);
+    CHECK(hgr.get_max_net_degree() == 3);
+    CHECK(!hgr.has_fixed_modules);
 }
 
 TEST_CASE("Test dwarf") {
     // static_assert(sizeof(double*) == 8);
-    const auto H = create_dwarf();
+    const auto hgr = create_dwarf();
 
-    CHECK(H.number_of_modules() == 7);
-    CHECK(H.number_of_nets() == 6);
-    // CHECK(H.number_of_pins() == 14);
-    CHECK(H.get_max_degree() == 3);
-    CHECK(H.get_max_net_degree() == 3);
-    CHECK(!H.has_fixed_modules);
-    CHECK(H.get_module_weight(1) == 3U);
+    CHECK(hgr.number_of_modules() == 7);
+    CHECK(hgr.number_of_nets() == 6);
+    // CHECK(hgr.number_of_pins() == 14);
+    CHECK(hgr.get_max_degree() == 3);
+    CHECK(hgr.get_max_net_degree() == 3);
+    CHECK(!hgr.has_fixed_modules);
+    CHECK(hgr.get_module_weight(1) == 3U);
 }
