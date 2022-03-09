@@ -2,7 +2,8 @@
 
 #include <cassert>
 #include <utility>  // import std::move()
-#include "dllink.hpp" // for Dllink
+
+#include "dllink.hpp"  // for Dllink
 
 // Forward declaration for begin() end()
 template <typename T> class DllIterator;
@@ -52,7 +53,9 @@ template <typename T> class Dllist {
      * @return true
      * @return false
      */
-    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->head.next == &this->head; }
+    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool {
+        return this->head.next == &this->head;
+    }
 
     /**
      * @brief reset the list
@@ -60,24 +63,19 @@ template <typename T> class Dllist {
      */
     constexpr auto clear() noexcept -> void { this->head.next = this->head.prev = &this->head; }
 
-
     /**
      * @brief append the node to the front
      *
      * @param[in,out] node
      */
-    constexpr auto appendleft(dllink<T>& node) noexcept -> void {
-        this->head.appendleft(node);
-    }
+    constexpr auto appendleft(dllink<T>& node) noexcept -> void { this->head.appendleft(node); }
 
     /**
      * @brief append the node to the back
      *
      * @param[in,out] node
      */
-    constexpr auto append(dllink<T>& node) noexcept -> void {
-        this->head.append(node);
-    }
+    constexpr auto append(dllink<T>& node) noexcept -> void { this->head.append(node); }
 
     /**
      * @brief pop a node from the front
@@ -86,9 +84,7 @@ template <typename T> class Dllist {
      *
      * Precondition: list is not empty
      */
-    constexpr auto popleft() noexcept -> dllink<T>& {
-        return this->head.popleft();
-    }
+    constexpr auto popleft() noexcept -> dllink<T>& { return this->head.popleft(); }
 
     /**
      * @brief pop a node from the back
@@ -97,9 +93,7 @@ template <typename T> class Dllist {
      *
      * Precondition: list is not empty
      */
-    constexpr auto pop() noexcept -> dllink<T>& {
-        return this->head.pop();
-    }
+    constexpr auto pop() noexcept -> dllink<T>& { return this->head.pop(); }
 
     // For iterator
 

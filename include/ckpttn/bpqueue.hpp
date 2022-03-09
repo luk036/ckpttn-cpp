@@ -267,8 +267,8 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
     using Item = dllink<std::pair<_Tp, UInt>>;
 
   private:
-    bpqueue<_Tp, Int>& bpq;                      //!< the priority queue
-    UInt curkey;                                 //!< the current key value
+    bpqueue<_Tp, Int>& bpq;                     //!< the priority queue
+    UInt curkey;                                //!< the current key value
     DllIterator<std::pair<_Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
 
     /**
