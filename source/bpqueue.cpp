@@ -7,8 +7,8 @@
  * @tparam T
  */
 // template <typename T, typename Int, class Container>
-// dllink<std::pair<T, Int>> bpqueue<T, Int, Container>::sentinel {};
+// Dllink<std::pair<T, Int>> BPQueue<T, Int, Container>::sentinel {};
 
-template class bpqueue<int, int32_t>;
-// template class bpqueue<int, int32_t,
-//                FMPmr::vector<dllink<std::pair<int, int32_t>> > >;
+template class BPQueue<int, int32_t>;
+// template class BPQueue<int, int32_t,
+//                FMPmr::vector<Dllink<std::pair<int, int32_t>> > >;

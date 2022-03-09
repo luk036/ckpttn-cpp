@@ -13,7 +13,7 @@
 #include <utility>                    // for pair
 #include <vector>                     // for vector
 
-#include "ckpttn/dllist.hpp"    // for dllink
+#include "ckpttn/dllist.hpp"    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfo
 #include "ckpttn/robin.hpp"     // for robin<>...
 

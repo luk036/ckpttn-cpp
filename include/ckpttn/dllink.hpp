@@ -20,38 +20,38 @@ template <typename T> class DllIterator;
  * are supplied by the caller in order to better reuse the nodes.
  */
 #pragma pack(push, 1)
-template <typename T> class dllink {
+template <typename T> class Dllink {
     friend dll_iterator<T>;
     friend Dllist<T>;
     friend DllIterator<T>;
 
   private:
-    dllink* next{this}; /**< pointer to the next node */
-    dllink* prev{this}; /**< pointer to the previous node */
+    Dllink* next{this}; /**< pointer to the next node */
+    Dllink* prev{this}; /**< pointer to the previous node */
 
   public:
     T data{}; /**< data */
     // Int key{}; /**< key */
 
     /**
-     * @brief Construct a new dllink object
+     * @brief Construct a new Dllink object
      *
      * @param[in] data the data
      */
-    constexpr explicit dllink(T data) noexcept : data{std::move(data)} {
-        static_assert(sizeof(dllink) <= 24, "keep this class small");
+    constexpr explicit Dllink(T data) noexcept : data{std::move(data)} {
+        static_assert(sizeof(Dllink) <= 24, "keep this class small");
     }
 
     /**
-     * @brief Copy construct a new dllink object (deleted intentionally)
+     * @brief Copy construct a new Dllink object (deleted intentionally)
      *
      */
-    constexpr dllink() = default;
-    ~dllink() = default;
-    dllink(const dllink&) = delete;                               // don't copy
-    constexpr auto operator=(const dllink&) -> dllink& = delete;  // don't assign
-    constexpr dllink(dllink&&) noexcept = default;
-    constexpr auto operator=(dllink&&) noexcept -> dllink& = default;  // don't assign
+    constexpr Dllink() = default;
+    ~Dllink() = default;
+    Dllink(const Dllink&) = delete;                               // don't copy
+    constexpr auto operator=(const Dllink&) -> Dllink& = delete;  // don't assign
+    constexpr Dllink(Dllink&&) noexcept = default;
+    constexpr auto operator=(Dllink&&) noexcept -> Dllink& = default;  // don't assign
 
     /**
      * @brief lock the node (and don't append it to any list)
@@ -101,7 +101,7 @@ template <typename T> class dllink {
      *
      * @param[in,out] node
      */
-    constexpr auto appendleft(dllink& node) noexcept -> void {
+    constexpr auto appendleft(Dllink& node) noexcept -> void {
         node.next = this->next;
         this->next->prev = &node;
         this->next = &node;
@@ -113,7 +113,7 @@ template <typename T> class dllink {
      *
      * @param[in,out] node
      */
-    constexpr auto append(dllink& node) noexcept -> void {
+    constexpr auto append(Dllink& node) noexcept -> void {
         node.prev = this->prev;
         this->prev->next = &node;
         this->prev = &node;
@@ -123,11 +123,11 @@ template <typename T> class dllink {
     /**
      * @brief pop a node from the front
      *
-     * @return dllink&
+     * @return Dllink&
      *
      * Precondition: list is not empty
      */
-    constexpr auto popleft() noexcept -> dllink& {
+    constexpr auto popleft() noexcept -> Dllink& {
         auto res = this->next;
         this->next = res->next;
         this->next->prev = this;
@@ -137,11 +137,11 @@ template <typename T> class dllink {
     /**
      * @brief pop a node from the back
      *
-     * @return dllink&
+     * @return Dllink&
      *
      * Precondition: list is not empty
      */
-    constexpr auto pop() noexcept -> dllink& {
+    constexpr auto pop() noexcept -> Dllink& {
         auto res = this->prev;
         this->prev = res->prev;
         this->prev->next = this;
@@ -164,7 +164,7 @@ template <typename T> class dllink {
     //  */
     // constexpr auto end() noexcept -> dll_iterator<T>;
 
-    // using coro_t = boost::coroutines2::coroutine<dllink&>;
+    // using coro_t = boost::coroutines2::coroutine<Dllink&>;
     // using pull_t = typename coro_t::pull_type;
 
     // /**
@@ -195,7 +195,7 @@ template <typename T> class dllink {
 //  */
 // template <typename T> class dll_iterator {
 //   private:
-//     dllink<T>* cur; /**< pointer to the current item */
+//     Dllink<T>* cur; /**< pointer to the current item */
 
 //   public:
 //     /**
@@ -203,12 +203,12 @@ template <typename T> class dllink {
 //      *
 //      * @param[in] cur
 //      */
-//     constexpr explicit dll_iterator(dllink<T>* cur) noexcept : cur{cur} {}
+//     constexpr explicit dll_iterator(Dllink<T>* cur) noexcept : cur{cur} {}
 
 //     /**
 //      * @brief move to the next item
 //      *
-//      * @return dllink&
+//      * @return Dllink&
 //      */
 //     constexpr auto operator++() noexcept -> dll_iterator& {
 //         this->cur = this->cur->next;
@@ -218,9 +218,9 @@ template <typename T> class dllink {
 //     /**
 //      * @brief get the reference of the current item
 //      *
-//      * @return dllink&
+//      * @return Dllink&
 //      */
-//     constexpr auto operator*() noexcept -> dllink<T>& { return *this->cur; }
+//     constexpr auto operator*() noexcept -> Dllink<T>& { return *this->cur; }
 
 //     /**
 //      * @brief eq operator
@@ -252,7 +252,7 @@ template <typename T> class dllink {
 //  *
 //  * @return dll_iterator
 //  */
-// template <typename T> inline constexpr auto dllink<T>::begin() noexcept -> dll_iterator<T> {
+// template <typename T> inline constexpr auto Dllink<T>::begin() noexcept -> dll_iterator<T> {
 //     return dll_iterator<T>{this->next};
 // }
 
@@ -261,6 +261,6 @@ template <typename T> class dllink {
 //  *
 //  * @return dll_iterator
 //  */
-// template <typename T> inline constexpr auto dllink<T>::end() noexcept -> dll_iterator<T> {
+// template <typename T> inline constexpr auto Dllink<T>::end() noexcept -> dll_iterator<T> {
 //     return dll_iterator<T>{this};
 // }

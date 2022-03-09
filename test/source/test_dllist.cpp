@@ -10,9 +10,9 @@ using namespace std;
 TEST_CASE("Test dllist") {
     auto L1 = Dllist<std::pair<int, int>>{std::make_pair(0, 0)};
     auto L2 = Dllist<std::pair<int, int>>{std::make_pair(0, 0)};
-    auto d = dllink<std::pair<int, int>>{std::make_pair(0, 0)};
-    auto e = dllink<std::pair<int, int>>{std::make_pair(0, 0)};
-    auto f = dllink<std::pair<int, int>>{std::make_pair(0, 0)};
+    auto d = Dllink<std::pair<int, int>>{std::make_pair(0, 0)};
+    auto e = Dllink<std::pair<int, int>>{std::make_pair(0, 0)};
+    auto f = Dllink<std::pair<int, int>>{std::make_pair(0, 0)};
     CHECK(L1.is_empty());
 
     L1.appendleft(e);

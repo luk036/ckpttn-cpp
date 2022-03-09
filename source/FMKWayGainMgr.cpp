@@ -7,8 +7,8 @@
 #include <gsl/span>                   // for span
 #include <vector>                     // for vector, __vector_base<>::v...
 
-#include "ckpttn/bpqueue.hpp"   // for bpqueue
-#include "ckpttn/dllist.hpp"    // for dllink
+#include "ckpttn/bpqueue.hpp"   // for BPQueue
+#include "ckpttn/dllist.hpp"    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV
 #include "ckpttn/robin.hpp"     // for robin<>::iterable_wrapper
 

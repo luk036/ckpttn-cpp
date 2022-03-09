@@ -24,7 +24,7 @@ template <typename T> class Dllist {
     friend DllIterator<T>;
 
   private:
-    dllink<T> head;
+    Dllink<T> head;
 
   public:
     /**
@@ -68,14 +68,14 @@ template <typename T> class Dllist {
      *
      * @param[in,out] node
      */
-    constexpr auto appendleft(dllink<T>& node) noexcept -> void { this->head.appendleft(node); }
+    constexpr auto appendleft(Dllink<T>& node) noexcept -> void { this->head.appendleft(node); }
 
     /**
      * @brief append the node to the back
      *
      * @param[in,out] node
      */
-    constexpr auto append(dllink<T>& node) noexcept -> void { this->head.append(node); }
+    constexpr auto append(Dllink<T>& node) noexcept -> void { this->head.append(node); }
 
     /**
      * @brief pop a node from the front
@@ -84,7 +84,7 @@ template <typename T> class Dllist {
      *
      * Precondition: list is not empty
      */
-    constexpr auto popleft() noexcept -> dllink<T>& { return this->head.popleft(); }
+    constexpr auto popleft() noexcept -> Dllink<T>& { return this->head.popleft(); }
 
     /**
      * @brief pop a node from the back
@@ -93,7 +93,7 @@ template <typename T> class Dllist {
      *
      * Precondition: list is not empty
      */
-    constexpr auto pop() noexcept -> dllink<T>& { return this->head.pop(); }
+    constexpr auto pop() noexcept -> Dllink<T>& { return this->head.pop(); }
 
     // For iterator
 
@@ -142,7 +142,7 @@ template <typename T> class Dllist {
  */
 template <typename T> class DllIterator {
   private:
-    dllink<T>* cur; /**< pointer to the current item */
+    Dllink<T>* cur; /**< pointer to the current item */
 
   public:
     /**
@@ -150,7 +150,7 @@ template <typename T> class DllIterator {
      *
      * @param[in] cur
      */
-    constexpr explicit DllIterator(dllink<T>* cur) noexcept : cur{cur} {}
+    constexpr explicit DllIterator(Dllink<T>* cur) noexcept : cur{cur} {}
 
     /**
      * @brief move to the next item
@@ -167,7 +167,7 @@ template <typename T> class DllIterator {
      *
      * @return Dllist&
      */
-    constexpr auto operator*() noexcept -> dllink<T>& { return *this->cur; }
+    constexpr auto operator*() noexcept -> Dllink<T>& { return *this->cur; }
 
     /**
      * @brief eq operator

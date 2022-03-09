@@ -10,8 +10,8 @@
 #include <type_traits>             // for is_base_of, integral_const...
 #include <vector>                  // for vector<>::iterator, vector
 
-#include "ckpttn/bpqueue.hpp"   // for bpqueue
-#include "ckpttn/dllist.hpp"    // for dllink
+#include "ckpttn/bpqueue.hpp"   // for BPQueue
+#include "ckpttn/dllist.hpp"    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV, MoveInfo
 
 // using node_t = typename SimpleNetlist::node_t;
@@ -32,7 +32,7 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl& H, uint8_t K) : H{H}, K{
                   "base derived consistence");
     const auto pmax = int(H.get_max_degree());
     for (auto k = 0U; k != this->K; ++k) {
-        this->gainbucket.emplace_back(bpqueue<typename Gnl::node_t>(-pmax, pmax));
+        this->gainbucket.emplace_back(BPQueue<typename Gnl::node_t>(-pmax, pmax));
     }
 }
 

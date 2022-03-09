@@ -7,7 +7,7 @@
 #include <vector>    // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"  // for dllink
+#include "dllist.hpp"  // for Dllink
 // #include "moveinfo.hpp"  // for MoveInfo
 
 // forward declare
@@ -25,7 +25,7 @@ template <typename Gnl> class FMBiGainCalc {
 
   public:
     using node_t = typename Gnl::node_t;
-    using Item = dllink<std::pair<node_t, uint32_t>>;
+    using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
     const Gnl& H;

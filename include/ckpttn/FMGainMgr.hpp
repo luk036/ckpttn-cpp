@@ -7,8 +7,8 @@
 #include <utility>    // for pair
 #include <vector>     // for vector<>::const_iterator, vector
 
-#include "bpqueue.hpp"  // for bpqueue
-#include "dllist.hpp"   // for dllink
+#include "bpqueue.hpp"  // for BPQueue
+#include "dllist.hpp"   // for Dllink
 
 template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
@@ -24,12 +24,12 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     Derived& self = *static_cast<Derived*>(this);
     using node_t = typename Gnl::node_t;
     // friend Derived;
-    using Item = dllink<std::pair<node_t, uint32_t>>;
+    using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   protected:
     Dllist<std::pair<node_t, uint32_t>> waitinglist{std::make_pair(node_t{}, uint32_t(0))};
     const Gnl& H;
-    std::vector<bpqueue<node_t>> gainbucket;
+    std::vector<BPQueue<node_t>> gainbucket;
     // size_t pmax;
     std::uint8_t K;
 

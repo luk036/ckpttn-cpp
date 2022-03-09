@@ -9,7 +9,7 @@
 #include <vector>       // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"  // for dllink
+#include "dllist.hpp"  // for Dllink
 #include "robin.hpp"   // for robin<>...
 
 // forward declare
@@ -25,7 +25,7 @@ template <typename Node> struct MoveInfoV;
 template <typename Gnl> class FMKWayGainCalc {
     friend class FMKWayGainMgr<Gnl>;
     using node_t = typename Gnl::node_t;
-    using Item = dllink<std::pair<node_t, uint32_t>>;
+    using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
     const Gnl& H;
@@ -72,9 +72,9 @@ template <typename Gnl> class FMKWayGainCalc {
     //  * @brief
     //  *
     //  * @param[in] toPart
-    //  * @return dllink*
+    //  * @return Dllink*
     //  */
-    // auto start_ptr(uint8_t toPart) -> dllink<std::pair<node_t, int32_t>>*
+    // auto start_ptr(uint8_t toPart) -> Dllink<std::pair<node_t, int32_t>>*
     // {
     //     return &this->vertex_list[toPart][0];
     // }

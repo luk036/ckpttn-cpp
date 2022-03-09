@@ -8,7 +8,7 @@
 #include <py2cpp/set.hpp>           // for set
 #include <vector>                   // for vector
 
-#include "ckpttn/bpqueue.hpp"  // for bpqueue
+#include "ckpttn/bpqueue.hpp"  // for BPQueue
 
 using namespace std;
 
