@@ -1,4 +1,4 @@
-#include <stdint.h>  // for uint8_t
+#include <cstdint>  // for uint8_t
 // #include <__config>                 // for std
 // #include <__hash_table>             // for __hash_const_iterator, operator!=
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item

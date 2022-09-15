@@ -1,6 +1,6 @@
-#include <ctype.h>   // for isspace, isdigit
-#include <stdint.h>  // for uint32_t
-#include <stdlib.h>  // for exit, size_t
+#include <cctype>   // for isspace, isdigit
+#include <cstdint>  // for uint32_t
+#include <cstdlib>  // for exit, size_t
 
 #include <ckpttn/netlist.hpp>          // for SimpleNetlist, index_t, Netlist
 #include <fstream>                     // for operator<<, basic_ostream, cha...
@@ -72,11 +72,11 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
 
     using node_t = uint32_t;
 
-    char t;
-    uint32_t numPins;
-    uint32_t numNets;
-    uint32_t numModules;
-    index_t padOffset;
+    char t = 0;
+    uint32_t numPins = 0;
+    uint32_t numNets = 0;
+    uint32_t numModules = 0;
+    index_t padOffset = 0;
 
     netD >> t;  // eat 1st 0
     netD >> numPins >> numNets >> numModules >> padOffset;
@@ -91,9 +91,9 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
     char lineBuffer[bufferSize];  // Does it work for other compiler?
     netD.getline(lineBuffer, bufferSize);
 
-    node_t w;
+    node_t w = 0;
     index_t e = numModules - 1;
-    char c;
+    char c = 0;
     uint32_t i = 0;
     for (; i < numPins; ++i) {
         if (netD.eof()) {
@@ -169,9 +169,9 @@ void readAre(SimpleNetlist& hgr, boost::string_view areFileName) {
     constexpr index_t bufferSize = 100;
     char lineBuffer[bufferSize];
 
-    char c;
-    node_t w;
-    unsigned int weight;
+    char c = 0;
+    node_t w = 0;
+    unsigned int weight = 0;
     // auto totalWeight = 0;
     // xxx index_t smallestWeight = UINT_MAX;
     auto numModules = hgr.number_of_modules();

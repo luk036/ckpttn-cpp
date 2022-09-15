@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>  // for int32_t
+#include <cstdint>  // for int32_t
 
 #include <cassert>      // for assert
 #include <type_traits>  // for make_unsigned_t, is_integral, integral_consta...
@@ -10,7 +10,7 @@
 #include "dllist.hpp"  // for Dllink, dll_iterator
 
 // Forward declaration for begin() end()
-template <typename _Tp, typename Int> class bpq_iterator;
+template <typename Tp, typename Int> class bpq_iterator;
 
 /**
  * @brief Bounded priority queue
@@ -31,32 +31,32 @@ template <typename _Tp, typename Int> class bpq_iterator;
  *
  * All the member functions assume that the keys are inside the bounds.
  *
- * @tparam _Tp
+ * @tparam Tp
  * @tparam Int
  * @tparam _Sequence
  * @tparam std::make_unsigned_t<Int>>>>
  */
-template <typename _Tp, typename Int = int32_t,
-          typename _Sequence = std::vector<Dllist<std::pair<_Tp, std::make_unsigned_t<Int>>>>>
+template <typename Tp, typename Int = int32_t,
+          typename Sequence = std::vector<Dllist<std::pair<Tp, std::make_unsigned_t<Int>>>>>
 class BPQueue {
     using UInt = std::make_unsigned_t<Int>;
 
-    friend bpq_iterator<_Tp, Int>;
-    using Item = Dllink<std::pair<_Tp, UInt>>;
+    friend bpq_iterator<Tp, Int>;
+    using Item = Dllink<std::pair<Tp, UInt>>;
 
     // static_assert(std::is_same<Item, typename _Sequence::value_type>::value,
     //               "value_type must be the same as the underlying container");
 
   public:
-    using value_type = typename _Sequence::value_type;
-    using reference = typename _Sequence::reference;
-    using const_reference = typename _Sequence::const_reference;
-    using size_type = typename _Sequence::size_type;
-    using container_type = _Sequence;
+    using value_type = typename Sequence::value_type;
+    using reference = typename Sequence::reference;
+    using const_reference = typename Sequence::const_reference;
+    using size_type = typename Sequence::size_type;
+    using container_type = Sequence;
 
   private:
     Item sentinel{};   //!< sentinel */
-    _Sequence bucket;  //!< bucket, array of lists
+    Sequence bucket;  //!< bucket, array of lists
     UInt max{};        //!< max value
     Int offset;        //!< a - 1
     UInt high;         //!< b - a + 1
@@ -242,14 +242,14 @@ class BPQueue {
      *
      * @return bpq_iterator
      */
-    constexpr auto begin() -> bpq_iterator<_Tp, Int>;
+    constexpr auto begin() -> bpq_iterator<Tp, Int>;
 
     /**
      * @brief Iterator point to the end
      *
      * @return bpq_iterator
      */
-    constexpr auto end() -> bpq_iterator<_Tp, Int>;
+    constexpr auto end() -> bpq_iterator<Tp, Int>;
 };
 
 /**
@@ -259,17 +259,17 @@ class BPQueue {
  * Detaching a queue items may invalidate the iterator because
  * the iterator makes a copy of the current key.
  */
-template <typename _Tp, typename Int = int32_t> class bpq_iterator {
+template <typename Tp, typename Int = int32_t> class bpq_iterator {
     using UInt = std::make_unsigned_t<Int>;
 
-    // using value_type = _Tp;
+    // using value_type = Tp;
     // using key_type = Int;
-    using Item = Dllink<std::pair<_Tp, UInt>>;
+    using Item = Dllink<std::pair<Tp, UInt>>;
 
   private:
-    BPQueue<_Tp, Int>& bpq;                     //!< the priority queue
+    BPQueue<Tp, Int>& bpq;                     //!< the priority queue
     UInt curkey;                                //!< the current key value
-    DllIterator<std::pair<_Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
+    DllIterator<std::pair<Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
 
     /**
      * @brief Get the reference of the current list
@@ -285,7 +285,7 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
      * @param[in] bpq
      * @param[in] curkey
      */
-    constexpr bpq_iterator(BPQueue<_Tp, Int>& bpq, UInt curkey)
+    constexpr bpq_iterator(BPQueue<Tp, Int>& bpq, UInt curkey)
         : bpq{bpq}, curkey{curkey}, curitem{bpq.bucket[curkey].begin()} {}
 
     /**
@@ -341,8 +341,8 @@ template <typename _Tp, typename Int = int32_t> class bpq_iterator {
  *
  * @return bpq_iterator
  */
-template <typename _Tp, typename Int, class _Sequence>
-inline constexpr auto BPQueue<_Tp, Int, _Sequence>::begin() -> bpq_iterator<_Tp, Int> {
+template <typename Tp, typename Int, class Sequence>
+inline constexpr auto BPQueue<Tp, Int, Sequence>::begin() -> bpq_iterator<Tp, Int> {
     return {*this, this->max};
 }
 
@@ -351,7 +351,7 @@ inline constexpr auto BPQueue<_Tp, Int, _Sequence>::begin() -> bpq_iterator<_Tp,
  *
  * @return bpq_iterator
  */
-template <typename _Tp, typename Int, class _Sequence>
-inline constexpr auto BPQueue<_Tp, Int, _Sequence>::end() -> bpq_iterator<_Tp, Int> {
+template <typename Tp, typename Int, class Sequence>
+inline constexpr auto BPQueue<Tp, Int, Sequence>::end() -> bpq_iterator<Tp, Int> {
     return {*this, 0};
 }

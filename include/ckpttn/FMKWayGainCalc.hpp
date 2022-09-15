@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>  // for uint8_t
+#include <cstdint>  // for uint8_t
 
 #include <algorithm>    // for fill
 #include <gsl/span>     // for span

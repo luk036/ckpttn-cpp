@@ -1,5 +1,5 @@
-#include <assert.h>  // for assert
-#include <stdint.h>  // for uint8_t
+#include <cassert>  // for assert
+#include <cstdint>  // for uint8_t
 
 // #include <__config>                                           // for std
 // #include <__hash_table>                                       // for __hash_...

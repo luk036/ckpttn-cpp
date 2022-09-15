@@ -31,7 +31,7 @@ template <typename Gnl> class FMBiGainCalc {
     const Gnl& hgr;
     std::vector<Item> vertex_list;
     int totalcost{0};
-    uint8_t stack_buf[8192];  // ???
+    uint8_t stack_buf[8192];  // TODO
     FMPmr::monotonic_buffer_resource rsrc;
 
   public:

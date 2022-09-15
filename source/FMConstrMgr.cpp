@@ -1,5 +1,5 @@
 // #include <__config>   // for std
-#include <stdint.h>  // for uint32_t, uint8_t
+#include <cstdint>  // for uint32_t, uint8_t
 
 // #include <__config>                // for std
 #include <algorithm>               // for fill

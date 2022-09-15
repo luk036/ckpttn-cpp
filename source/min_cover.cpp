@@ -6,7 +6,7 @@
 // #include <range/v3/view/enumerate.hpp>
 // #include <range/v3/view/remove_if.hpp>
 // #include <range/v3/view/transform.hpp>
-#include <stdint.h>  // for uint32_t
+#include <cstdint>  // for uint32_t
 // #include <__config>                    // for std
 // #include <__hash_table>                // for operator!=, __hash_const_iterator
 #include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
@@ -68,7 +68,7 @@ auto create_contraction_subgraph(const SimpleNetlist& hgr, const py::set<node_t>
     {  // localize C and clusters
         auto C = py::set<node_t>{};
         auto clusters = vector<node_t>{};
-        C.reserve(3 * S.size());  // ???
+        C.reserve(3 * S.size());  // TODO
         clusters.reserve(S.size());
 
         for (const auto& net : hgr.nets) {

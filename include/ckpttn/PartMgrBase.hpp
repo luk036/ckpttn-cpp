@@ -4,7 +4,7 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 
-#include <stdint.h>  // for uint8_t
+#include <cstdint>  // for uint8_t
 
 #include <gsl/span>
 #include <gsl/span>  // for span

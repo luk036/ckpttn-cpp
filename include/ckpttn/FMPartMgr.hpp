@@ -4,7 +4,7 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 
-#include <stddef.h>  // for size_t
+#include <cstddef>  // for size_t
 
 #include "PartMgrBase.hpp"  // for PartMgrBase, SimpleNetlist
 

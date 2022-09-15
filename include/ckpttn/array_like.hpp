@@ -34,7 +34,7 @@ template <typename C> class shift_array : public C {
   public:
     shift_array() : C{} {}
 
-    shift_array(C&& base) : C{std::forward<C>(base)} {}
+    explicit shift_array(C&& base) : C{std::forward<C>(base)} {}
 
     void set_start(const size_t& start) { this->_start = start; }
 

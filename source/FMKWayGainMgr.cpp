@@ -1,4 +1,4 @@
-#include <stdint.h>  // for uint8_t
+#include <cstdint>  // for uint8_t
 // #include <__config>                        // for std
 // #include <__hash_table>                    // for __hash_const_iterator, ope...
 #include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc

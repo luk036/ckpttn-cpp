@@ -1,5 +1,5 @@
 // #include <algorithm> // import std::any_of()
-#include <stdint.h>  // for uint8_t
+#include <cstdint>  // for uint8_t
 
 #include <algorithm>                   // for min_element
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr, move_info_v
