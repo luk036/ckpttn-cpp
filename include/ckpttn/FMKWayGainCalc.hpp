@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cstdint>  // for uint8_t
-
 #include <algorithm>    // for fill
+#include <cstdint>      // for uint8_t
 #include <gsl/span>     // for span
 #include <type_traits>  // for move
 #include <utility>      // for pair

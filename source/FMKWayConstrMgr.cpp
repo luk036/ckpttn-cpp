@@ -1,8 +1,7 @@
 // #include <algorithm> // import std::any_of()
-#include <cstdint>  // for uint8_t
-
 #include <algorithm>                   // for min_element
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr, move_info_v
+#include <cstdint>                     // for uint8_t
 #include <gsl/gsl_util>                // for narrow_cast
 #include <iterator>                    // for distance
 #include <vector>                      // for vector

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cstdint>  // for uint8_t
-
+#include <cstdint>                     // for uint8_t
 #include <gsl/span>                    // for span
 #include <py2cpp/dict.hpp>             // for dict
 #include <py2cpp/set.hpp>              // for set

@@ -1,8 +1,7 @@
-#include <cctype>   // for isspace, isdigit
-#include <cstdint>  // for uint32_t
-#include <cstdlib>  // for exit, size_t
-
+#include <cctype>                      // for isspace, isdigit
 #include <ckpttn/netlist.hpp>          // for SimpleNetlist, index_t, Netlist
+#include <cstdint>                     // for uint32_t
+#include <cstdlib>                     // for exit, size_t
 #include <fstream>                     // for operator<<, basic_ostream, cha...
 #include <iostream>                    // for cerr
 #include <py2cpp/range.hpp>            // for _iterator

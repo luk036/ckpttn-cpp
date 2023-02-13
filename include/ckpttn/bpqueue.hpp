@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cstdint>  // for int32_t
-
 #include <cassert>      // for assert
+#include <cstdint>      // for int32_t
 #include <type_traits>  // for make_unsigned_t, is_integral, integral_consta...
 #include <utility>      // for pair
 #include <vector>       // for vector, vector<>::value_type, vector<>::const...
@@ -55,11 +54,11 @@ class BPQueue {
     using container_type = Sequence;
 
   private:
-    Item sentinel{};   //!< sentinel */
+    Item sentinel{};  //!< sentinel */
     Sequence bucket;  //!< bucket, array of lists
-    UInt max{};        //!< max value
-    Int offset;        //!< a - 1
-    UInt high;         //!< b - a + 1
+    UInt max{};       //!< max value
+    Int offset;       //!< a - 1
+    UInt high;        //!< b - a + 1
 
   public:
     /**
@@ -268,7 +267,7 @@ template <typename Tp, typename Int = int32_t> class bpq_iterator {
 
   private:
     BPQueue<Tp, Int>& bpq;                     //!< the priority queue
-    UInt curkey;                                //!< the current key value
+    UInt curkey;                               //!< the current key value
     DllIterator<std::pair<Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
 
     /**

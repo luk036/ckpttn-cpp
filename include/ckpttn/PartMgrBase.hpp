@@ -5,7 +5,6 @@
 // Snapshot in the form of "interface"???
 
 #include <cstdint>  // for uint8_t
-
 #include <gsl/span>
 #include <gsl/span>  // for span
 #include <vector>    // for vector

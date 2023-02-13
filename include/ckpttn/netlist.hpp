@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <cstdint>  // for uint32_t, uint8_t
-
+#include <cstddef>           // for size_t
+#include <cstdint>           // for uint32_t, uint8_t
 #include <py2cpp/dict.hpp>   // for dict
 #include <py2cpp/range.hpp>  // for range, _iterator, iterable_wra...
 #include <py2cpp/set.hpp>    // for set

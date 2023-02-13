@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cstdint>  // for uint8_t
-
+#include <cstdint>   // for uint8_t
 #include <gsl/span>  // for span
 #include <vector>    // for vector
 
