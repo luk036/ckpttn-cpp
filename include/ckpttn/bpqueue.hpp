@@ -88,7 +88,7 @@ class BPQueue {
      * @return true
      * @return false
      */
-    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool { return this->max == 0U; }
+    constexpr auto is_empty() const noexcept -> bool { return this->max == 0U; }
 
     /**
      * @brief Set the key object
@@ -105,7 +105,7 @@ class BPQueue {
      *
      * @return Int maximum value
      */
-    [[nodiscard]] constexpr auto get_max() const noexcept -> Int {
+    constexpr auto get_max() const noexcept -> Int {
         return this->offset + Int(this->max);
     }
 

@@ -17,7 +17,7 @@
 //         iterable_wrapper(repeat_n_return_type&& base)
 //             : repeat_n_return_type{std::forward<repeat_n_return_type>(base)} {}
 
-//         [[nodiscard]] auto operator[](const std::any& /* don't care */) const -> const Val& {
+//         auto operator[](const std::any& /* don't care */) const -> const Val& {
 //             return *this->begin();
 //         }
 //     };
@@ -43,7 +43,7 @@ template <typename C> class shift_array : public C {
         return C::operator[](index - this->_start);
     }
 
-    [[nodiscard]] auto operator[](const size_t& index) -> value_type& {
+    auto operator[](const size_t& index) -> value_type& {
         return C::operator[](index - this->_start);
     }
 };

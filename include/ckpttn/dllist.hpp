@@ -53,7 +53,7 @@ template <typename T> class Dllist {
      * @return true
      * @return false
      */
-    [[nodiscard]] constexpr auto is_empty() const noexcept -> bool {
+    constexpr auto is_empty() const noexcept -> bool {
         return this->head.next == &this->head;
     }
 

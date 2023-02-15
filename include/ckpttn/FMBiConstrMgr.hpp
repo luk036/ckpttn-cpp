@@ -33,7 +33,7 @@ template <typename Gnl> class FMBiConstrMgr : public FMConstrMgr<Gnl> {
      *
      * @return std::uint8_t
      */
-    [[nodiscard]] auto select_togo() const -> std::uint8_t {
+    auto select_togo() const -> std::uint8_t {
         return this->diff[0] < this->diff[1] ? 0 : 1;
     }
 };

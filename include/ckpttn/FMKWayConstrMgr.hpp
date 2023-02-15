@@ -36,7 +36,7 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
      *
      * @return std::uint8_t
      */
-    [[nodiscard]] auto select_togo() const -> std::uint8_t;
+    auto select_togo() const -> std::uint8_t;
 
     /**
      * @brief

@@ -37,14 +37,14 @@ endif()
 
 CPMAddPackage(
   NAME Py2Cpp
-  GIT_TAG 1.2
+  GIT_TAG 1.3
   GITHUB_REPOSITORY luk036/py2cpp
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )
 
 CPMAddPackage(
   NAME XNetwork
-  GIT_TAG 1.4
+  GIT_TAG 1.6
   GITHUB_REPOSITORY luk036/xnetwork-cpp
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )

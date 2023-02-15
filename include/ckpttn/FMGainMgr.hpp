@@ -62,7 +62,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @return true
      * @return false
      */
-    [[nodiscard]] auto is_empty_togo(uint8_t to_part) const -> bool {
+    auto is_empty_togo(uint8_t to_part) const -> bool {
         return this->gainbucket[to_part].is_empty();
     }
 
@@ -72,7 +72,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @return true
      * @return false
      */
-    [[nodiscard]] auto is_empty() const -> bool {
+    auto is_empty() const -> bool {
         return std::all_of(this->gainbucket.cbegin(), this->gainbucket.cend(),
                            [&](const auto& bckt) { return bckt.is_empty(); });
     }

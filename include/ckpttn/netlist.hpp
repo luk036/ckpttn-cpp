@@ -69,21 +69,21 @@ template <typename graph_t> struct Netlist {
      *
      * @return size_t
      */
-    [[nodiscard]] auto number_of_modules() const -> size_t { return this->num_modules; }
+    auto number_of_modules() const -> size_t { return this->num_modules; }
 
     /**
      * @brief Get the number of nets
      *
      * @return size_t
      */
-    [[nodiscard]] auto number_of_nets() const -> size_t { return this->num_nets; }
+    auto number_of_nets() const -> size_t { return this->num_nets; }
 
     /**
      * @brief Get the number of nodes
      *
      * @return size_t
      */
-    [[nodiscard]] auto number_of_nodes() const -> size_t { return this->gr.number_of_nodes(); }
+    auto number_of_nodes() const -> size_t { return this->gr.number_of_nodes(); }
 
     // /**
     //  * @brief
@@ -98,14 +98,14 @@ template <typename graph_t> struct Netlist {
      *
      * @return size_t
      */
-    [[nodiscard]] auto get_max_degree() const -> size_t { return this->max_degree; }
+    auto get_max_degree() const -> size_t { return this->max_degree; }
 
     /**
      * @brief Get the max net degree
      *
      * @return index_t
      */
-    [[nodiscard]] auto get_max_net_degree() const -> size_t { return this->max_net_degree; }
+    auto get_max_net_degree() const -> size_t { return this->max_net_degree; }
 
     /**
      * @brief Get the module weight
