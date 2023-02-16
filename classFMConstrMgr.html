@@ -49,59 +49,64 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMConstrMgr_8hpp.html">&lt;ckpttn/FMConstrMgr.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           FMConstrMgr <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMConstrMgr_8hpp.html">&lt;ckpttn/FMConstrMgr.hpp&gt;</a></div>
         </h1>
         <p>FM Partition Constraint Manager.</p>
-        <div class="m-block m-default">
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Gnl</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
                 <li><a href="#derived-classes">Derived classes</a></li>
-                <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pro-types">Protected types</a></li>
                 <li><a href="#pro-attribs">Protected variables</a></li>
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
         <section id="derived-classes">
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
             <dt>
+              <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
               class <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a>
             </dt>
             <dd>Constraint Manager.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
               class <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a>
             </dt>
-            <dd>FM K-Way Partition Constraint Manager.</dd>
-          </dl>
-        </section>
-        <section id="pub-types">
-          <h2><a href="#pub-types">Public types</a></h2>
-          <dl class="m-doc">
-            <dt id="a95d8b496f8c1c3b9b08ec285e76edad1">
-              using <a href="#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc-self">node_t</a> = typename <a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">SimpleNetlist::<wbr />node_t</a>
-            </dt>
-            <dd><span></span></dd>
+            <dd>FM num_parts-Way Partition Constraint Manager.</dd>
           </dl>
         </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#afbd1eca9a9eb64dd775a7865ed470917" class="m-doc">FMConstrMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              double BalTol) <span class="m-label m-flat m-warning">protected</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a766ac20847b8775880d9a6df911475cf" class="m-doc">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              double bal_tol) <span class="m-label m-flat m-warning">protected</span></span>
             </dt>
             <dd>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ab7ab66ab984e09e1dd4ff35a37d4ec73" class="m-doc">FMConstrMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              double BalTol,
-              std::uint8_t K) <span class="m-label m-flat m-warning">protected</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ab64eb9b2fae44a68658228d58035aeb7" class="m-doc">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              double bal_tol,
+              std::uint8_t num_parts) <span class="m-label m-flat m-warning">protected</span></span>
             </dt>
             <dd>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</dd>
           </dl>
@@ -110,46 +115,58 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a95479bfbce0fc7e564b2e8602d1db0c6" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1112e0cf7bd285981aabc554b23f9e04" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a59159399f8dcf5f503f2c58a2c49e919" class="m-doc">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; LegalCheck -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1f4c012283e08caa5f8a95702cc317eb" class="m-doc">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; LegalCheck -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2494f4d02860a40fd10dd5e17ea6d32e" class="m-doc">check_constraints</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; bool -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae1e576fc6b7e65fcec46f43b1a5adde5" class="m-doc">check_constraints</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; bool -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a9fe634257cb23ccb6307bc41f5034e9d" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2cbe15e25375df537ba01c916f55aa38" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void -&gt; auto</span>
             </dt>
             <dd></dd>
+          </dl>
+        </section>
+        <section id="pro-types">
+          <h2><a href="#pro-types">Protected types</a></h2>
+          <dl class="m-doc">
+            <dt id="ad9c3956e7666d36de98c5bd1b835a996">
+              using <a href="#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc-self">node_t</a> = typename Gnl::node_t
+            </dt>
+            <dd><span></span></dd>
           </dl>
         </section>
         <section id="pro-attribs">
           <h2><a href="#pro-attribs">Protected variables</a></h2>
           <dl class="m-doc">
-            <dt id="a98f7e0b575c52bc8890d5ef874ce9daa">
-              std::vector&lt;unsigned int&gt; <a href="#a98f7e0b575c52bc8890d5ef874ce9daa" class="m-doc-self">diff</a>
+            <dt id="a6d376190b80cdc02bd64f65a0c6f598a">
+              std::vector&lt;unsigned int&gt; <a href="#a6d376190b80cdc02bd64f65a0c6f598a" class="m-doc-self">diff</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="a91d3bf040c81e1ca9b9e319eeb9334b5">
-              unsigned int <a href="#a91d3bf040c81e1ca9b9e319eeb9334b5" class="m-doc-self">lowerbound</a>
+            <dt id="aff063a76f7e53ebda659dd50d8d8270e">
+              unsigned int <a href="#aff063a76f7e53ebda659dd50d8d8270e" class="m-doc-self">lowerbound</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="aa69989de4fd5a42f709a4ddd8cfcf9cc">
-              std::uint8_t <a href="#aa69989de4fd5a42f709a4ddd8cfcf9cc" class="m-doc-self">K</a>
+            <dt id="a87338245103a69344c30541a6a7e33a3">
+              std::uint8_t <a href="#a87338245103a69344c30541a6a7e33a3" class="m-doc-self">num_parts</a>
             </dt>
             <dd><span></span></dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="afbd1eca9a9eb64dd775a7865ed470917"><div>
+          <section class="m-doc-details" id="a766ac20847b8775880d9a6df911475cf"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> FMConstrMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afbd1eca9a9eb64dd775a7865ed470917" class="m-doc-self">FMConstrMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              double BalTol) <span class="m-label m-warning">protected</span></span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a766ac20847b8775880d9a6df911475cf" class="m-doc-self">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              double bal_tol) <span class="m-label m-warning">protected</span></span></span>
             </h3>
             <p>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -158,21 +175,24 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">H&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>BalTol&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ab7ab66ab984e09e1dd4ff35a37d4ec73"><div>
+          <section class="m-doc-details" id="ab64eb9b2fae44a68658228d58035aeb7"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> FMConstrMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab7ab66ab984e09e1dd4ff35a37d4ec73" class="m-doc-self">FMConstrMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              double BalTol,
-              std::uint8_t K) <span class="m-label m-warning">protected</span></span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab64eb9b2fae44a68658228d58035aeb7" class="m-doc-self">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              double bal_tol,
+              std::uint8_t num_parts) <span class="m-label m-warning">protected</span></span></span>
             </h3>
             <p>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -181,23 +201,26 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">H&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>BalTol&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>K&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a95479bfbce0fc7e564b2e8602d1db0c6"><div>
+          <section class="m-doc-details" id="a1112e0cf7bd285981aabc554b23f9e04"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMConstrMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a95479bfbce0fc7e564b2e8602d1db0c6" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1112e0cf7bd285981aabc554b23f9e04" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -211,9 +234,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a59159399f8dcf5f503f2c58a2c49e919"><div>
+          <section class="m-doc-details" id="a1f4c012283e08caa5f8a95702cc317eb"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMConstrMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a59159399f8dcf5f503f2c58a2c49e919" class="m-doc-self">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; LegalCheck</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1f4c012283e08caa5f8a95702cc317eb" class="m-doc-self">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; LegalCheck</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -233,9 +259,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a2494f4d02860a40fd10dd5e17ea6d32e"><div>
+          <section class="m-doc-details" id="ae1e576fc6b7e65fcec46f43b1a5adde5"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMConstrMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2494f4d02860a40fd10dd5e17ea6d32e" class="m-doc-self">check_constraints</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; bool</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1e576fc6b7e65fcec46f43b1a5adde5" class="m-doc-self">check_constraints</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; bool</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -255,9 +284,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a9fe634257cb23ccb6307bc41f5034e9d"><div>
+          <section class="m-doc-details" id="a2cbe15e25375df537ba01c916f55aa38"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMConstrMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9fe634257cb23ccb6307bc41f5034e9d" class="m-doc-self">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#a95d8b496f8c1c3b9b08ec285e76edad1" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2cbe15e25375df537ba01c916f55aa38" class="m-doc-self">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -310,13 +342,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

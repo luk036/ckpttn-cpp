@@ -49,181 +49,11 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="dllist_8hpp.html">&lt;ckpttn/dllist.hpp&gt;</a></div>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="dllink_8hpp.html">&lt;ckpttn/dllink.hpp&gt;</a></div>
           <div class="m-doc-template">template&lt;typename T&gt;</div>
           dll_iterator <span class="m-thin">class</span>
         </h1>
-        <p>list iterator</p>
-        <div class="m-block m-default">
-          <h3>Contents</h3>
-          <ul>
-            <li>
-              Reference
-              <ul>
-                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
-                <li><a href="#pub-methods">Public functions</a></li>
-                <li><a href="#friends">Friends</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-<p>List iterator. Traverse the list from the first item. Usually it is safe to attach/detach list items during the iterator is active.</p>
-        <section id="typeless-methods">
-          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a17d7c85e3a3ff1260dd1ad256345e339" class="m-doc">dll_iterator</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">dllink</a>&lt;T&gt;* cur) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
-            </dt>
-            <dd>Construct a new dll iterator object.</dd>
-          </dl>
-        </section>
-        <section id="pub-methods">
-          <h2><a href="#pub-methods">Public functions</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a155e880f77d1390d991729b1b895b221" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) noexcept -&gt; dll_iterator &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>move to the next item</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad0e1e11be7ba20a99edaab68f3c62212" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">) noexcept -&gt; dllink&lt; T &gt; &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>get the reference of the current item</dd>
-          </dl>
-        </section>
-        <section id="friends">
-          <h2><a href="#friends">Friends</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a980533be7519da1f90ebade58c76dc4e" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; lhs,
-              const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; rhs) noexcept -&gt; bool -&gt; auto</span>
-            </dt>
-            <dd>eq operator</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#adf158de09b8097bebf42e6227723d7b3" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; lhs,
-              const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; rhs) noexcept -&gt; bool -&gt; auto</span>
-            </dt>
-            <dd>neq operator</dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a17d7c85e3a3ff1260dd1ad256345e339"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"> dll_<wbr />iterator&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a17d7c85e3a3ff1260dd1ad256345e339" class="m-doc-self">dll_iterator</a>(</span><span class="m-doc-wrap"><a href="classdllink.html" class="m-doc">dllink</a>&lt;T&gt;* cur) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
-            </h3>
-            <p>Construct a new dll iterator object.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">cur&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a155e880f77d1390d991729b1b895b221"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto dll_<wbr />iterator&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a155e880f77d1390d991729b1b895b221" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">) noexcept -&gt; dll_iterator &amp; <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>move to the next item</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>dllink&amp;</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ad0e1e11be7ba20a99edaab68f3c62212"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto dll_<wbr />iterator&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad0e1e11be7ba20a99edaab68f3c62212" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) noexcept -&gt; dllink&lt; T &gt; &amp; <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>get the reference of the current item</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>dllink&amp;</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a980533be7519da1f90ebade58c76dc4e"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a980533be7519da1f90ebade58c76dc4e" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; lhs,
-              const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; rhs) noexcept -&gt; bool</span></span>
-            </h3>
-            <p>eq operator</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>true</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="adf158de09b8097bebf42e6227723d7b3"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adf158de09b8097bebf42e6227723d7b3" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; lhs,
-              const <a href="classdll__iterator.html" class="m-doc">dll_<wbr />iterator</a>&amp; rhs) noexcept -&gt; bool</span></span>
-            </h3>
-            <p>neq operator</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>true</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-        </section>
+        <p><span></span></p>
       </div>
     </div>
   </div>
@@ -262,13 +92,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>FMKWayConstrMgr class | CkPttn</title>
+  <title>DllIterator class | CkPttn</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,161 +49,176 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMKWayConstrMgr_8hpp.html">&lt;ckpttn/FMKWayConstrMgr.hpp&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
-          FMKWayConstrMgr <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="dllist_8hpp.html">&lt;ckpttn/dllist.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
+          DllIterator <span class="m-thin">class</span>
         </h1>
-        <p>FM num_parts-Way Partition Constraint Manager.</p>
-        <table class="m-table m-fullwidth m-flat">
-          <thead>
-            <tr><th colspan="2">Template parameters</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="width: 1%">Gnl</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <p>list iterator</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="base-classes">
-          <h2><a href="#base-classes">Base classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
-              class <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr&lt;Gnl&gt;</a>
-            </dt>
-            <dd>FM Partition Constraint Manager.</dd>
-          </dl>
-        </section>
+<p>List iterator. Traverse the list from the first item. Usually it is safe to attach/detach list items during the iterator is active.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ad36767d15a2abf91a28b7bdb269aa43c" class="m-doc">FMKWayConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
-              double bal_tol,
-              std::uint8_t num_parts)</span>
+              <span class="m-doc-wrap-bumper"><a href="#aa7bed31fcb170569f705742dc9f8f610" class="m-doc">DllIterator</a>(</span><span class="m-doc-wrap"><a href="classDllink.html" class="m-doc">Dllink</a>&lt;T&gt;* cur) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Construct a new <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object.</dd>
+            <dd>Construct a new dll iterator object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a0fc88d05831473b6bac19adc34b78344" class="m-doc">select_togo</a>(</span><span class="m-doc-wrap">) const -&gt; std::uint8_t -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab46750c24eea9c3c7d68652a12860613" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) noexcept -&gt; DllIterator &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd></dd>
+            <dd>move to the next item</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ab896e9788616f7fdbfc1e34960752979" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#af4f7f3471672b96f5a102ab8def924db" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">) noexcept -&gt; Dllink&lt; T &gt; &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd></dd>
+            <dd>get the reference of the current item</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a89e04fbb723cf7f6a046a934c599d564" class="m-doc">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;typename Gnl::node_t&gt;&amp; move_info_v) -&gt; LegalCheck -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0ed894a362835a930f9799f8e9378959" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; lhs,
+              const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; rhs) noexcept -&gt; bool -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>eq operator</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a97f56db216c9ca68a575b9af1dfe58ba" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; lhs,
+              const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; rhs) noexcept -&gt; bool -&gt; auto</span>
+            </dt>
+            <dd>neq operator</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ad36767d15a2abf91a28b7bdb269aa43c"><div>
+          <section class="m-doc-details" id="aa7bed31fcb170569f705742dc9f8f610"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename Gnl&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad36767d15a2abf91a28b7bdb269aa43c" class="m-doc-self">FMKWayConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
-              double bal_tol,
-              std::uint8_t num_parts)</span></span>
+              <span class="m-doc-wrap-bumper"> DllIterator&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa7bed31fcb170569f705742dc9f8f610" class="m-doc-self">DllIterator</a>(</span><span class="m-doc-wrap"><a href="classDllink.html" class="m-doc">Dllink</a>&lt;T&gt;* cur) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
-            <p>Construct a new <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object.</p>
+            <p>Construct a new dll iterator object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">cur&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a0fc88d05831473b6bac19adc34b78344"><div>
+          <section class="m-doc-details" id="ab46750c24eea9c3c7d68652a12860613"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename Gnl&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0fc88d05831473b6bac19adc34b78344" class="m-doc-self">select_togo</a>(</span><span class="m-doc-wrap">) const -&gt; std::uint8_t</span></span>
+              <span class="m-doc-wrap-bumper">auto DllIterator&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab46750c24eea9c3c7d68652a12860613" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">) noexcept -&gt; DllIterator &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
+            <p>move to the next item</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>std::uint8_t</td>
+                  <td><a href="classDllist.html" class="m-doc">Dllist</a>&amp;</td>
                 </tr>
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ab896e9788616f7fdbfc1e34960752979"><div>
+          <section class="m-doc-details" id="af4f7f3471672b96f5a102ab8def924db"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename Gnl&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab896e9788616f7fdbfc1e34960752979" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void</span></span>
+              <span class="m-doc-wrap-bumper">auto DllIterator&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4f7f3471672b96f5a102ab8def924db" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) noexcept -&gt; Dllink&lt; T &gt; &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
+            <p>get the reference of the current item</p>
             <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
+              <tfoot>
                 <tr>
-                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <th style="width: 1%">Returns</th>
+                  <td><a href="classDllist.html" class="m-doc">Dllist</a>&amp;</td>
                 </tr>
-              </tbody>
+              </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a89e04fbb723cf7f6a046a934c599d564"><div>
+          <section class="m-doc-details" id="a0ed894a362835a930f9799f8e9378959"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename Gnl&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a89e04fbb723cf7f6a046a934c599d564" class="m-doc-self">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;typename Gnl::node_t&gt;&amp; move_info_v) -&gt; LegalCheck</span></span>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0ed894a362835a930f9799f8e9378959" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; lhs,
+              const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; rhs) noexcept -&gt; bool</span></span>
             </h3>
+            <p>eq operator</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>LegalCheck</td>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a97f56db216c9ca68a575b9af1dfe58ba"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a97f56db216c9ca68a575b9af1dfe58ba" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; lhs,
+              const <a href="classDllIterator.html" class="m-doc">DllIterator</a>&amp; rhs) noexcept -&gt; bool</span></span>
+            </h3>
+            <p>neq operator</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
                 </tr>
               </tfoot>
             </table>

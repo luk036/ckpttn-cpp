@@ -49,11 +49,23 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMBiGainMgr_8hpp.html">&lt;ckpttn/FMBiGainMgr.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           FMBiGainMgr <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMBiGainMgr_8hpp.html">&lt;ckpttn/FMBiGainMgr.hpp&gt;</a></div>
         </h1>
         <p><a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a>.</p>
-        <div class="m-block m-default">
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Gnl</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -66,13 +78,13 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
         <section id="base-classes">
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename GainCalc, class Derived&gt;</div>
-              class <a href="classFMGainMgr.html" class="m-doc">FMGainMgr&lt;FMBiGainCalc, FMBiGainMgr&gt;</a>
+              <div class="m-doc-template">template&lt;typename Gnl, typename GainCalc, class Derived&gt;</div>
+              class <a href="classFMGainMgr.html" class="m-doc">FMGainMgr&lt;Gnl, FMBiGainCalc&lt;Gnl&gt;, FMBiGainMgr&lt;Gnl&gt;&gt;</a>
             </dt>
             <dd></dd>
           </dl>
@@ -80,16 +92,16 @@
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt id="a5ff0c5415e1a357437a33bac577edf84">
-              using <a href="#a5ff0c5415e1a357437a33bac577edf84" class="m-doc-self">Base</a> = <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a>&lt;<a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a>, <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a>&gt;
+            <dt id="a89e87d8531d1bd60f0f7d3d80a56934a">
+              using <a href="#a89e87d8531d1bd60f0f7d3d80a56934a" class="m-doc-self">Base</a> = <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a>&lt;Gnl, <a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a>&lt;Gnl&gt;, <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a>&lt;Gnl&gt;&gt;
             </dt>
             <dd><span></span></dd>
-            <dt id="acec3e2e05bb372d334375d95eca21b87">
-              using <a href="#acec3e2e05bb372d334375d95eca21b87" class="m-doc-self">GainCalc_</a> = <a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a>
+            <dt id="a4ffb079839f83b15828a5ed1b8ab4389">
+              using <a href="#a4ffb079839f83b15828a5ed1b8ab4389" class="m-doc-self">GainCalc_</a> = <a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a>&lt;Gnl&gt;
             </dt>
             <dd><span></span></dd>
-            <dt id="a8cd753ad235c2dcdf1da1d649a411554">
-              using <a href="#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc-self">node_t</a> = typename <a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">SimpleNetlist::<wbr />node_t</a>
+            <dt id="ac6efe4f1b44405d9006e8c9fabca19ba">
+              using <a href="#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc-self">node_t</a> = typename Gnl::node_t
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -97,12 +109,12 @@
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="aea11997af53ee5de91c8c0f7e9bb7c43">
-              <span class="m-doc-wrap-bumper"><a href="#aea11997af53ee5de91c8c0f7e9bb7c43" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H) <span class="m-label m-flat m-info">explicit</span> </span>
+            <dt id="a955df0be369c7bce559c3836813d0368">
+              <span class="m-doc-wrap-bumper"><a href="#a955df0be369c7bce559c3836813d0368" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
             <dd><span></span></dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a96bc38bb3d95c535fe4a8e4ac5d15e95" class="m-doc">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
+              <span class="m-doc-wrap-bumper"><a href="#a1481702bd276060211e03d86f3d68a32" class="m-doc">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
               std::uint8_t)</span>
             </dt>
             <dd>Construct a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object.</dd>
@@ -112,37 +124,40 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2c391379d4f50774b0c8e033b7bd0c9f" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7c05204b20333c6ba362034632577eb4" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a59d04a691fc1724eee3034938d3d7358" class="m-doc">modify_key</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&amp; w,
+              <span class="m-doc-wrap-bumper">auto <a href="#ada43b1bf758cf5a1462b172d73440d1d" class="m-doc">modify_key</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; w,
               std::uint8_t part_w,
               int key) -&gt; void -&gt; auto</span>
             </dt>
             <dd>(needed by base class)</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a43f2322de0281778b987a8f759f39c07" class="m-doc">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
+              <span class="m-doc-wrap-bumper">auto <a href="#ad4f00813d8ced871bcd9fe3bc11329e1" class="m-doc">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
               int gain) -&gt; void -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aac24f1c855d704b4fad53b90a94b9b13" class="m-doc">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
-              const <a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a36e1eb22cac3c00270f9eb2b9d457f3f" class="m-doc">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
+              const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
             </dt>
             <dd>lock</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a17a14cf54533ea374c7ce972082237d5" class="m-doc">lock_all</a>(</span><span class="m-doc-wrap">uint8_t fromPart,
-              const <a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7b3caaabf43949bbc7d85cb64a409265" class="m-doc">lock_all</a>(</span><span class="m-doc-wrap">uint8_t from_part,
+              const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
             </dt>
             <dd>lock_all</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a96bc38bb3d95c535fe4a8e4ac5d15e95"><div>
+          <section class="m-doc-details" id="a1481702bd276060211e03d86f3d68a32"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> FMBiGainMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a96bc38bb3d95c535fe4a8e4ac5d15e95" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1481702bd276060211e03d86f3d68a32" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
               std::uint8_t)</span></span>
             </h3>
             <p>Construct a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object.</p>
@@ -152,15 +167,18 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">H&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a2c391379d4f50774b0c8e033b7bd0c9f"><div>
+          <section class="m-doc-details" id="a7c05204b20333c6ba362034632577eb4"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMBiGainMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2c391379d4f50774b0c8e033b7bd0c9f" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c05204b20333c6ba362034632577eb4" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -180,9 +198,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a59d04a691fc1724eee3034938d3d7358"><div>
+          <section class="m-doc-details" id="ada43b1bf758cf5a1462b172d73440d1d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMBiGainMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a59d04a691fc1724eee3034938d3d7358" class="m-doc-self">modify_key</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&amp; w,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ada43b1bf758cf5a1462b172d73440d1d" class="m-doc-self">modify_key</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; w,
               std::uint8_t part_w,
               int key) -&gt; void</span></span>
             </h3>
@@ -207,9 +228,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a43f2322de0281778b987a8f759f39c07"><div>
+          <section class="m-doc-details" id="ad4f00813d8ced871bcd9fe3bc11329e1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMBiGainMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a43f2322de0281778b987a8f759f39c07" class="m-doc-self">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad4f00813d8ced871bcd9fe3bc11329e1" class="m-doc-self">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
               int gain) -&gt; void</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -228,10 +252,13 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aac24f1c855d704b4fad53b90a94b9b13"><div>
+          <section class="m-doc-details" id="a36e1eb22cac3c00270f9eb2b9d457f3f"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMBiGainMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aac24f1c855d704b4fad53b90a94b9b13" class="m-doc-self">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
-              const <a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a36e1eb22cac3c00270f9eb2b9d457f3f" class="m-doc-self">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
+              const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
             </h3>
             <p>lock</p>
             <table class="m-table m-fullwidth m-flat">
@@ -250,10 +277,13 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a17a14cf54533ea374c7ce972082237d5"><div>
+          <section class="m-doc-details" id="a7b3caaabf43949bbc7d85cb64a409265"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMBiGainMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a17a14cf54533ea374c7ce972082237d5" class="m-doc-self">lock_all</a>(</span><span class="m-doc-wrap">uint8_t fromPart,
-              const <a href="classFMBiGainMgr.html#a8cd753ad235c2dcdf1da1d649a411554" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b3caaabf43949bbc7d85cb64a409265" class="m-doc-self">lock_all</a>(</span><span class="m-doc-wrap">uint8_t from_part,
+              const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
             </h3>
             <p>lock_all</p>
             <table class="m-table m-fullwidth m-flat">
@@ -262,7 +292,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">fromPart&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">from_part&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
@@ -311,13 +341,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

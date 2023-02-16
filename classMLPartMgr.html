@@ -53,7 +53,7 @@
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="MLPartMgr_8hpp.html">&lt;ckpttn/MLPartMgr.hpp&gt;</a></div>
         </h1>
         <p>Multilevel Partition Manager.</p>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -65,17 +65,17 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a9d38c269fcba4b643e5216235fd5ed54" class="m-doc">MLPartMgr</a>(</span><span class="m-doc-wrap">double BalTol) <span class="m-label m-flat m-info">explicit</span> </span>
+              <span class="m-doc-wrap-bumper"><a href="#a127f585031cc9a36e0e8b54ee300b942" class="m-doc">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
             <dd>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a25c02ddc0125c02c5544a4dd6cf845e8" class="m-doc">MLPartMgr</a>(</span><span class="m-doc-wrap">double BalTol,
-              std::uint8_t K)</span>
+              <span class="m-doc-wrap-bumper"><a href="#ab9280baff113f8ebbdcf38492f265e88" class="m-doc">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
+              std::uint8_t num_parts)</span>
             </dt>
             <dd>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</dd>
           </dl>
@@ -88,8 +88,8 @@
             </dt>
             <dd><span></span></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename PartMgr&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a7decae4babd44cbf7c1a49e4c9336563" class="m-doc">run_FMPartition</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
+              <div class="m-doc-template">template&lt;typename Gnl, typename PartMgr&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7b027be60c3757b94c8b42c57c7de779" class="m-doc">run_FMPartition</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
               gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck -&gt; auto</span>
             </dt>
             <dd>run_Partition</dd>
@@ -106,9 +106,9 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a9d38c269fcba4b643e5216235fd5ed54"><div>
+          <section class="m-doc-details" id="a127f585031cc9a36e0e8b54ee300b942"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9d38c269fcba4b643e5216235fd5ed54" class="m-doc-self">MLPartMgr</a>(</span><span class="m-doc-wrap">double BalTol) <span class="m-label m-info">explicit</span> </span></span>
+              <span class="m-doc-wrap-bumper"> MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a127f585031cc9a36e0e8b54ee300b942" class="m-doc-self">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol) <span class="m-label m-info">explicit</span> </span></span>
             </h3>
             <p>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -117,16 +117,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">BalTol&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a25c02ddc0125c02c5544a4dd6cf845e8"><div>
+          <section class="m-doc-details" id="ab9280baff113f8ebbdcf38492f265e88"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a25c02ddc0125c02c5544a4dd6cf845e8" class="m-doc-self">MLPartMgr</a>(</span><span class="m-doc-wrap">double BalTol,
-              std::uint8_t K)</span></span>
+              <span class="m-doc-wrap-bumper"> MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab9280baff113f8ebbdcf38492f265e88" class="m-doc-self">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
+              std::uint8_t num_parts)</span></span>
             </h3>
             <p>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -135,22 +135,22 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">BalTol&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>K&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a7decae4babd44cbf7c1a49e4c9336563"><div>
+          <section class="m-doc-details" id="a7b027be60c3757b94c8b42c57c7de779"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename PartMgr&gt;
+                template&lt;typename Gnl, typename PartMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7decae4babd44cbf7c1a49e4c9336563" class="m-doc-self">run_FMPartition</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
+              <span class="m-doc-wrap-bumper">auto MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b027be60c3757b94c8b42c57c7de779" class="m-doc-self">run_FMPartition</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
               gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck</span></span>
             </h3>
             <p>run_Partition</p>
@@ -160,7 +160,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">PartMgr</td>
+                  <td style="width: 1%">Gnl</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>PartMgr</td>
                   <td></td>
                 </tr>
               </tbody>
@@ -169,7 +173,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>H&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
@@ -224,13 +228,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

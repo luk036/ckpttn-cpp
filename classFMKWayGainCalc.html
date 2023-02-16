@@ -49,11 +49,23 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMKWayGainCalc_8hpp.html">&lt;ckpttn/FMKWayGainCalc.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           FMKWayGainCalc <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="FMKWayGainCalc_8hpp.html">&lt;ckpttn/FMKWayGainCalc.hpp&gt;</a></div>
         </h1>
         <p><a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a>.</p>
-        <div class="m-block m-default">
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Gnl</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -66,12 +78,12 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </nav>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt id="acef65667ec2af50320fc5a4acc6d4d09">
-              using <a href="#acef65667ec2af50320fc5a4acc6d4d09" class="m-doc-self">ret_info</a> = std::vector&lt;std::vector&lt;int&gt;&gt;
+            <dt id="a51da918028bcbaa42cdf1bad84a5b66e">
+              using <a href="#a51da918028bcbaa42cdf1bad84a5b66e" class="m-doc-self">ret_info</a> = std::vector&lt;std::vector&lt;int&gt;&gt;
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -80,8 +92,8 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ac6b8eed4d0668aea820c7e956c2acdae" class="m-doc">FMKWayGainCalc</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              std::uint8_t K)</span>
+              <span class="m-doc-wrap-bumper"><a href="#ad9a14ae95bc3459aa9f7f53b1ff80696" class="m-doc">FMKWayGainCalc</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              std::uint8_t num_parts)</span>
             </dt>
             <dd>Construct a new <a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a> object.</dd>
           </dl>
@@ -90,30 +102,30 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a3f9ac48d521e34dad5e72f9acb268448" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a974a185ef0db3151095a784f61a05a88" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
             <dd></dd>
-            <dt id="a0176877d4e4fb2e6009fa7877f551a5d">
-              <span class="m-doc-wrap-bumper">auto <a href="#a0176877d4e4fb2e6009fa7877f551a5d" class="m-doc-self">update_move_init</a>(</span><span class="m-doc-wrap">) -&gt; void -&gt; auto</span>
+            <dt id="ab882dc6f4f4b409999929d84fb415aeb">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab882dc6f4f4b409999929d84fb415aeb" class="m-doc-self">update_move_init</a>(</span><span class="m-doc-wrap">) -&gt; void -&gt; auto</span>
             </dt>
             <dd><span></span></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a8a71bcff2c8ecb17c43c1355a9cb4ae8" class="m-doc">update_move_2pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#a79227e80ca937abb2e8cbc7e36fb9ee4" class="m-doc">update_move_2pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; node_t -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#ab92bf7445f72d923ea8d02da1acdc694" class="m-doc">init_IdVec</a>(</span><span class="m-doc-wrap">const node_t&amp; v,
+              <span class="m-doc-wrap-bumper">void <a href="#a389b36c7daf9c2028fd82573fd2307cc" class="m-doc">init_idx_vec</a>(</span><span class="m-doc-wrap">const node_t&amp; v,
               const node_t&amp; net)</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#af52a9180621298ddf49028c2754f8bdb" class="m-doc">update_move_3pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#a4364a7c009b9bc14336f392e98b56bcf" class="m-doc">update_move_3pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a7e768eefb6ac624988b4f136eed39b6d" class="m-doc">update_move_general_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#ad2030ecbbd06752c12d7f961ba700e5d" class="m-doc">update_move_general_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info -&gt; auto</span>
             </dt>
             <dd></dd>
@@ -122,26 +134,29 @@
         <section id="pub-attribs">
           <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt id="a5fb684f3031787808591ca17bf940dd6">
-              FMPmr::vector&lt;int&gt; <a href="#a5fb684f3031787808591ca17bf940dd6" class="m-doc-self">deltaGainW</a>
+            <dt id="ab070ea468fd6680096709ae131746103">
+              FMPmr::vector&lt;int&gt; <a href="#ab070ea468fd6680096709ae131746103" class="m-doc-self">delta_gain_w</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="a31eb8c16c8820286fc2d444a38b1da4b">
-              FMPmr::vector&lt;node_t&gt; <a href="#a31eb8c16c8820286fc2d444a38b1da4b" class="m-doc-self">IdVec</a>
+            <dt id="a95e557aee7793c9a41f396db2a1959a0">
+              FMPmr::vector&lt;node_t&gt; <a href="#a95e557aee7793c9a41f396db2a1959a0" class="m-doc-self">idx_vec</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="a45a229b2fa0c07289773bc4007459023">
-              bool <a href="#a45a229b2fa0c07289773bc4007459023" class="m-doc-self">special_handle_2pin_nets</a>
+            <dt id="afb4fac21ef6bbc6868c58aa3c85196cb">
+              bool <a href="#afb4fac21ef6bbc6868c58aa3c85196cb" class="m-doc-self">special_handle_2pin_nets</a>
             </dt>
             <dd><span></span></dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ac6b8eed4d0668aea820c7e956c2acdae"><div>
+          <section class="m-doc-details" id="ad9a14ae95bc3459aa9f7f53b1ff80696"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> FMKWayGainCalc::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6b8eed4d0668aea820c7e956c2acdae" class="m-doc-self">FMKWayGainCalc</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              std::uint8_t K)</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad9a14ae95bc3459aa9f7f53b1ff80696" class="m-doc-self">FMKWayGainCalc</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              std::uint8_t num_parts)</span></span>
             </h3>
             <p>Construct a new <a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -150,19 +165,22 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">H&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td><a href="structNetlist.html" class="m-doc">Netlist</a></td>
                 </tr>
                 <tr>
-                  <td>K&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>number of partitions</td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a3f9ac48d521e34dad5e72f9acb268448"><div>
+          <section class="m-doc-details" id="a974a185ef0db3151095a784f61a05a88"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3f9ac48d521e34dad5e72f9acb268448" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a974a185ef0db3151095a784f61a05a88" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -176,9 +194,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a8a71bcff2c8ecb17c43c1355a9cb4ae8"><div>
+          <section class="m-doc-details" id="a79227e80ca937abb2e8cbc7e36fb9ee4"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8a71bcff2c8ecb17c43c1355a9cb4ae8" class="m-doc-self">update_move_2pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79227e80ca937abb2e8cbc7e36fb9ee4" class="m-doc-self">update_move_2pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; node_t</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -203,9 +224,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ab92bf7445f72d923ea8d02da1acdc694"><div>
+          <section class="m-doc-details" id="a389b36c7daf9c2028fd82573fd2307cc"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void FMKWayGainCalc::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab92bf7445f72d923ea8d02da1acdc694" class="m-doc-self">init_IdVec</a>(</span><span class="m-doc-wrap">const node_t&amp; v,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a389b36c7daf9c2028fd82573fd2307cc" class="m-doc-self">init_idx_vec</a>(</span><span class="m-doc-wrap">const node_t&amp; v,
               const node_t&amp; net)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -224,9 +248,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="af52a9180621298ddf49028c2754f8bdb"><div>
+          <section class="m-doc-details" id="a4364a7c009b9bc14336f392e98b56bcf"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af52a9180621298ddf49028c2754f8bdb" class="m-doc-self">update_move_3pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4364a7c009b9bc14336f392e98b56bcf" class="m-doc-self">update_move_3pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -251,9 +278,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a7e768eefb6ac624988b4f136eed39b6d"><div>
+          <section class="m-doc-details" id="ad2030ecbbd06752c12d7f961ba700e5d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7e768eefb6ac624988b4f136eed39b6d" class="m-doc-self">update_move_general_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad2030ecbbd06752c12d7f961ba700e5d" class="m-doc-self">update_move_general_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -317,13 +347,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

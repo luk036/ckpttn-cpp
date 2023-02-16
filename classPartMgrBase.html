@@ -50,7 +50,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="PartMgrBase_8hpp.html">&lt;ckpttn/PartMgrBase.hpp&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename GainMgr, typename ConstrMgr, template&lt;typename _gainMgr, typename _constrMgr&gt; class Derived&gt;</div>
+          <div class="m-doc-template">template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;</div>
           PartMgrBase <span class="m-thin">class</span>
         </h1>
         <p>Partition Manager Base.</p>
@@ -60,25 +60,26 @@
           </thead>
           <tbody>
             <tr>
-              <td style="width: 1%">GainMgr</td>
+              <td style="width: 1%">Gnl</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>GainMgr</td>
               <td></td>
             </tr>
             <tr>
               <td>ConstrMgr</td>
               <td></td>
             </tr>
-            <tr>
-              <td>Derived</td>
-              <td>Iterative Improvement Partitioning Base Class. In this partitioning method, the next solution $s&#x27;$ considered after solution $s$ is dervied by first applying a sequence of $t$ changes (moves) to $s$ (with $t$ dependent from $s$ and from the specific heuristic method), thus obtaining a sequence of solution $s,...,s_t$ and by successively choosing the best among these solutions.</td>
-            </tr>
           </tbody>
         </table>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
                 <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
@@ -87,25 +88,31 @@
               </ul>
             </li>
           </ul>
-        </div>
-<p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p><p>Reference: G. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
+        </nav>
+<p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p><p>Reference: gr. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;</div>
+              class <a href="classFMPartMgr.html" class="m-doc">FMPartMgr</a>
+            </dt>
+            <dd>FM Partition Manager.</dd>
+          </dl>
+        </section>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt id="aa1f878e7fec9a808c218440dae76a9ea">
-              using <a href="#aa1f878e7fec9a808c218440dae76a9ea" class="m-doc-self">GainCalc_</a> = typename GainMgr::GainCalc_
+            <dt id="a7700725109e522b101abb88810a9f9fd">
+              using <a href="#a7700725109e522b101abb88810a9f9fd" class="m-doc-self">GainCalc_</a> = typename GainMgr::GainCalc_
             </dt>
             <dd><span></span></dd>
-            <dt id="abe3196da03b048b9cde41cda3c6c3e84">
-              using <a href="#abe3196da03b048b9cde41cda3c6c3e84" class="m-doc-self">GainMgr_</a> = GainMgr
+            <dt id="a895f3cea3c24eb7d294dadb8e3a287fd">
+              using <a href="#a895f3cea3c24eb7d294dadb8e3a287fd" class="m-doc-self">GainMgr_</a> = GainMgr
             </dt>
             <dd><span></span></dd>
-            <dt id="afbd1ef33b9bfb5bd67584e63ca80c58d">
-              using <a href="#afbd1ef33b9bfb5bd67584e63ca80c58d" class="m-doc-self">ConstrMgr_</a> = ConstrMgr
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a65afc8ad0d924bb849d3b09dbc8d7abc">
-              using <a href="#a65afc8ad0d924bb849d3b09dbc8d7abc" class="m-doc-self">Der</a> = Derived&lt;GainMgr, ConstrMgr&gt;
+            <dt id="aaa6fb4b7797a39aa7f96d250bed0dd4e">
+              using <a href="#aaa6fb4b7797a39aa7f96d250bed0dd4e" class="m-doc-self">ConstrMgr_</a> = ConstrMgr
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -114,10 +121,10 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a7de97ab7bb5972457c77694199ac97b6" class="m-doc">PartMgrBase</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              GainMgr&amp; gainMgr,
-              ConstrMgr&amp; constrMgr,
-              size_t K)</span>
+              <span class="m-doc-wrap-bumper"><a href="#a40a33525507847c22693c59d13a3b28b" class="m-doc">PartMgrBase</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              GainMgr&amp; gain_mgr,
+              ConstrMgr&amp; constr_mgr,
+              size_t num_parts)</span>
             </dt>
             <dd>Construct a new Part Mgr Base object.</dd>
           </dl>
@@ -126,15 +133,15 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a2122625554150b4235a7f8e8824e7913" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#af340ee05d0713ac1983a4eebb52ae479" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a3937aef9092f321ea00747d2f1e468b4" class="m-doc">legalize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a20c96b9937fb64c9f7b4bc47746e8a05" class="m-doc">legalize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck -&gt; auto</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a5f68652866391acf73b215c6d4c07acc" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#aa9142f0b7afb4204f078a0da1318bfef" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span>
             </dt>
             <dd></dd>
           </dl>
@@ -142,8 +149,8 @@
         <section id="pub-attribs">
           <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt id="a3d2a862ac1329cd619831161ce73a360">
-              int <a href="#a3d2a862ac1329cd619831161ce73a360" class="m-doc-self">totalcost</a>
+            <dt id="a8b28f848d7fd569fe06adfc214f65b25">
+              int <a href="#a8b28f848d7fd569fe06adfc214f65b25" class="m-doc-self">totalcost</a>
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -151,39 +158,35 @@
         <section id="pro-attribs">
           <h2><a href="#pro-attribs">Protected variables</a></h2>
           <dl class="m-doc">
-            <dt id="a42b7e587ed54ab8e8e50491b0ebdd264">
-              <a href="classPartMgrBase.html#a65afc8ad0d924bb849d3b09dbc8d7abc" class="m-doc">Der</a>&amp; <a href="#a42b7e587ed54ab8e8e50491b0ebdd264" class="m-doc-self">self</a>
+            <dt id="ac206b74645973ed5981eb16d3d39be7d">
+              const Gnl&amp; <a href="#ac206b74645973ed5981eb16d3d39be7d" class="m-doc-self">hgr</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="a3160afe4632575fcf78ee96f38fc9bac">
-              const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; <a href="#a3160afe4632575fcf78ee96f38fc9bac" class="m-doc-self">H</a>
+            <dt id="a87d6a70db75bcb86cac2fc3fd4fcbbfd">
+              GainMgr&amp; <a href="#a87d6a70db75bcb86cac2fc3fd4fcbbfd" class="m-doc-self">gain_mgr</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="a5b483eecebf0d1ad98014ac9f3f272cd">
-              GainMgr&amp; <a href="#a5b483eecebf0d1ad98014ac9f3f272cd" class="m-doc-self">gainMgr</a>
+            <dt id="ae718a21223df29d2905be126df005198">
+              ConstrMgr&amp; <a href="#ae718a21223df29d2905be126df005198" class="m-doc-self">validator</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="a99f061c734ce5ce6efb9ff9bd6b1adce">
-              ConstrMgr&amp; <a href="#a99f061c734ce5ce6efb9ff9bd6b1adce" class="m-doc-self">validator</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a51b1ac368bbf72b6770d49530e7b0936">
-              size_t <a href="#a51b1ac368bbf72b6770d49530e7b0936" class="m-doc-self">K</a>
+            <dt id="a284e27f1e55e6b378624323e2cd6806d">
+              size_t <a href="#a284e27f1e55e6b378624323e2cd6806d" class="m-doc-self">num_parts</a>
             </dt>
             <dd><span></span></dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a7de97ab7bb5972457c77694199ac97b6"><div>
+          <section class="m-doc-details" id="a40a33525507847c22693c59d13a3b28b"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename GainMgr, typename ConstrMgr, template&lt;typename _gainMgr, typename _constrMgr&gt; class Derived&gt;
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> PartMgrBase&lt;GainMgr, ConstrMgr, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7de97ab7bb5972457c77694199ac97b6" class="m-doc-self">PartMgrBase</a>(</span><span class="m-doc-wrap">const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; H,
-              GainMgr&amp; gainMgr,
-              ConstrMgr&amp; constrMgr,
-              size_t K)</span></span>
+              <span class="m-doc-wrap-bumper"> PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40a33525507847c22693c59d13a3b28b" class="m-doc-self">PartMgrBase</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              GainMgr&amp; gain_mgr,
+              ConstrMgr&amp; constr_mgr,
+              size_t num_parts)</span></span>
             </h3>
             <p>Construct a new Part Mgr Base object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -192,30 +195,30 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">H&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>gainMgr&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>gain_mgr&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>constrMgr&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>constr_mgr&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>K&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a2122625554150b4235a7f8e8824e7913"><div>
+          <section class="m-doc-details" id="af340ee05d0713ac1983a4eebb52ae479"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename GainMgr, typename ConstrMgr, template&lt;typename _gainMgr, typename _constrMgr&gt; class Derived&gt;
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void PartMgrBase&lt;GainMgr, ConstrMgr, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2122625554150b4235a7f8e8824e7913" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span></span>
+              <span class="m-doc-wrap-bumper">void PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af340ee05d0713ac1983a4eebb52ae479" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -229,12 +232,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a3937aef9092f321ea00747d2f1e468b4"><div>
+          <section class="m-doc-details" id="a20c96b9937fb64c9f7b4bc47746e8a05"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename GainMgr, typename ConstrMgr, template&lt;typename _gainMgr, typename _constrMgr&gt; class Derived&gt;
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto PartMgrBase&lt;GainMgr, ConstrMgr, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3937aef9092f321ea00747d2f1e468b4" class="m-doc-self">legalize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck</span></span>
+              <span class="m-doc-wrap-bumper">auto PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a20c96b9937fb64c9f7b4bc47746e8a05" class="m-doc-self">legalize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -254,12 +257,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a5f68652866391acf73b215c6d4c07acc"><div>
+          <section class="m-doc-details" id="aa9142f0b7afb4204f078a0da1318bfef"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename GainMgr, typename ConstrMgr, template&lt;typename _gainMgr, typename _constrMgr&gt; class Derived&gt;
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void PartMgrBase&lt;GainMgr, ConstrMgr, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5f68652866391acf73b215c6d4c07acc" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span></span>
+              <span class="m-doc-wrap-bumper">void PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa9142f0b7afb4204f078a0da1318bfef" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">gsl::span&lt;std::uint8_t&gt; part)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -312,13 +315,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

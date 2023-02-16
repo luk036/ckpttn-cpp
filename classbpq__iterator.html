@@ -50,11 +50,11 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bpqueue_8hpp.html">&lt;ckpttn/bpqueue.hpp&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename _Tp, typename Int = int32_t&gt;</div>
+          <div class="m-doc-template">template&lt;typename Tp, typename Int = int32_t&gt;</div>
           bpq_iterator <span class="m-thin">class</span>
         </h1>
         <p>Bounded Priority Queue Iterator.</p>
-        <div class="m-block m-default">
+        <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
@@ -66,13 +66,13 @@
               </ul>
             </li>
           </ul>
-        </div>
-<p>Bounded Priority Queue Iterator. Traverse the queue in descending order. Detaching queue items may invalidate the iterator because the iterator makes a copy of current key.</p>
+        </nav>
+<p>Traverse the queue in descending order. Detaching a queue items may invalidate the iterator because the iterator makes a copy of the current key.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ade76515f884e641baa2113fb807e15dc" class="m-doc">bpq_iterator</a>(</span><span class="m-doc-wrap"><a href="classbpqueue.html" class="m-doc">bpqueue</a>&lt;_Tp, Int&gt;&amp; bpq,
+              <span class="m-doc-wrap-bumper"><a href="#adff3397799816be9bd12e7fc41a1365c" class="m-doc">bpq_iterator</a>(</span><span class="m-doc-wrap"><a href="classBPQueue.html" class="m-doc">BPQueue</a>&lt;Tp, Int&gt;&amp; bpq,
               UInt curkey) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Construct a new bpq iterator object.</dd>
@@ -82,13 +82,13 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa620bd75e9763310694373adbcc001c1" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#acc14ac63afb9ff95b8f7af2d9477452d" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>move to the next item</dd>
+            <dd>Move to the next item.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa3a8325a2fe687195511ac8abfea40e9" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">) -&gt; Item &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0f4185b489bc710b605ca39e44d18ad7" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">) -&gt; Item &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>get the reference of the current item</dd>
+            <dd>Get the reference of the current item.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -108,12 +108,12 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ade76515f884e641baa2113fb807e15dc"><div>
+          <section class="m-doc-details" id="adff3397799816be9bd12e7fc41a1365c"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename _Tp, typename Int&gt;
+                template&lt;typename Tp, typename Int&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> bpq_<wbr />iterator&lt;_Tp, Int&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ade76515f884e641baa2113fb807e15dc" class="m-doc-self">bpq_iterator</a>(</span><span class="m-doc-wrap"><a href="classbpqueue.html" class="m-doc">bpqueue</a>&lt;_Tp, Int&gt;&amp; bpq,
+              <span class="m-doc-wrap-bumper"> bpq_<wbr />iterator&lt;Tp, Int&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adff3397799816be9bd12e7fc41a1365c" class="m-doc-self">bpq_iterator</a>(</span><span class="m-doc-wrap"><a href="classBPQueue.html" class="m-doc">BPQueue</a>&lt;Tp, Int&gt;&amp; bpq,
               UInt curkey) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Construct a new bpq iterator object.</p>
@@ -133,14 +133,14 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aa620bd75e9763310694373adbcc001c1"><div>
+          <section class="m-doc-details" id="acc14ac63afb9ff95b8f7af2d9477452d"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename _Tp, typename Int&gt;
+                template&lt;typename Tp, typename Int&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto bpq_<wbr />iterator&lt;_Tp, Int&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa620bd75e9763310694373adbcc001c1" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator &amp; <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto bpq_<wbr />iterator&lt;Tp, Int&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acc14ac63afb9ff95b8f7af2d9477452d" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>move to the next item</p>
+            <p>Move to the next item.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
@@ -150,19 +150,19 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aa3a8325a2fe687195511ac8abfea40e9"><div>
+          <section class="m-doc-details" id="a0f4185b489bc710b605ca39e44d18ad7"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename _Tp, typename Int&gt;
+                template&lt;typename Tp, typename Int&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto bpq_<wbr />iterator&lt;_Tp, Int&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa3a8325a2fe687195511ac8abfea40e9" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) -&gt; Item &amp; <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto bpq_<wbr />iterator&lt;Tp, Int&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f4185b489bc710b605ca39e44d18ad7" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) -&gt; Item &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>get the reference of the current item</p>
+            <p>Get the reference of the current item.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td><a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a>&amp;</td>
+                  <td>Item&amp;</td>
                 </tr>
               </tfoot>
             </table>
@@ -170,7 +170,7 @@
           <section class="m-doc-details" id="a2de686efbc72b903333a50b92d7b6841"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename _Tp, typename Int&gt;
+                template&lt;typename Tp, typename Int&gt;
               </div>
               <span class="m-doc-wrap-bumper">friend auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2de686efbc72b903333a50b92d7b6841" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a>&amp; lhs,
               const <a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a>&amp; rhs) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
@@ -201,7 +201,7 @@
           <section class="m-doc-details" id="aaa8686479c97e65523e84d96daa1a621"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename _Tp, typename Int&gt;
+                template&lt;typename Tp, typename Int&gt;
               </div>
               <span class="m-doc-wrap-bumper">friend auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa8686479c97e65523e84d96daa1a621" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a>&amp; lhs,
               const <a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a>&amp; rhs) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
@@ -268,13 +268,13 @@
     </div>
   </div>
 </div>
-<script src="search-v1.js"></script>
-<script src="searchdata-v1.js" async="async"></script>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
 <footer><nav>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
