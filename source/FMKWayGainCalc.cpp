@@ -26,7 +26,6 @@ using namespace std;
  *
  * @param[in] net
  * @param[in] part
- * @param[in] vertex_list
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,

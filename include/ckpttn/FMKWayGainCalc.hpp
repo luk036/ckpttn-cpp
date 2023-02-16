@@ -155,14 +155,14 @@ private:
     }
   }
 
-  /**
-   * @brief
-   *
-   * @tparam Ts
-   * @param[in] weight
-   * @param[in] k
-   * @param[in] v
-   */
+  // /**
+  //  * @brief
+  //  *
+  //  * @tparam Ts
+  //  * @param[in] weight
+  //  * @param[in] k
+  //  * @param[in] v
+  //  */
   // template <typename... Ts> auto _modify_vertex_va(unsigned int weight,
   // std::uint8_t k, Ts... v)
   //     -> void {
@@ -216,14 +216,14 @@ private:
   //     this->vertex_list[k][v3].data.second += weight;
   // }
 
-  /**
-   * @brief
-   *
-   * @tparam Ts
-   * @param[in] weight
-   * @param[in] part_v
-   * @param[in] v
-   */
+  // /**
+  //  * @brief
+  //  *
+  //  * @tparam Ts
+  //  * @param[in] weight
+  //  * @param[in] part_v
+  //  * @param[in] v
+  //  */
   // template <typename... Ts>
   // auto _modify_gain_va(unsigned int weight, std::uint8_t part_v, Ts... v) ->
   // void {
