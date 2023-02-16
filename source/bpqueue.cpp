@@ -1,6 +1,6 @@
 #include <ckpttn/bpqueue.hpp>
 #include <ckpttn/dllist.hpp>
-#include <cstdint>  // for int32_t
+#include <cstdint> // for int32_t
 /**
  * @brief sentinel
  *
