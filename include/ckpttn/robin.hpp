@@ -34,8 +34,8 @@ private:
   struct iterable_wrapper {
     Robin<T> *rr;
     T from_part;
-    auto begin() { return iterator{rr->cycle[from_part].next}; }
-    auto end() { return iterator{&rr->cycle[from_part]}; }
+    auto begin() -> iterator { return iterator{rr->cycle[from_part].next}; }
+    auto end() -> iterator { return iterator{&rr->cycle[from_part]}; }
     // auto size() const -> size_t { return rr->cycle.size() - 1; }
   };
 
@@ -60,5 +60,7 @@ public:
     }
   }
 
-  auto exclude(T from_part) { return iterable_wrapper{this, from_part}; }
+  auto exclude(T from_part) -> iterable_wrapper {
+    return iterable_wrapper{this, from_part};
+  }
 };
