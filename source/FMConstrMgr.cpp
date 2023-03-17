@@ -7,22 +7,23 @@
 #include <ckpttn/moveinfo.hpp>    // for MoveInfoV
 #include <cmath>                  // for round
 #include <gsl/span>               // for span
-#include <vector>                 // for vector<>::iterator, vector
-// #include <transrangers.hpp>
+#include <transrangers.hpp>
+#include <vector> // for vector<>::iterator, vector
 
 using namespace std;
 
 template <typename Gnl>
 FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hgr, double bal_tol, uint8_t num_parts)
     : hgr{hgr}, bal_tol{bal_tol}, diff(num_parts, 0), num_parts{num_parts} {
-  // using namespace transrangers;
-  // this->totalweight
-  //     = accumulate(transform([&](const auto& v) { return
-  //     hgr.get_module_weight(v); }, all(hgr)), 0U);
+  using namespace transrangers;
+  this->totalweight = accumulate(
+      transform([&](const auto &v) { return hgr.get_module_weight(v); },
+                all(hgr)),
+      0U);
   // this->totalweight = 0U;
-  for (const auto &v : hgr) {
-    this->totalweight += hgr.get_module_weight(v);
-  }
+  // for (const auto &v : hgr) {
+  //   this->totalweight += hgr.get_module_weight(v);
+  // }
   const auto totalweightK = this->totalweight * (2.0 / this->num_parts);
   this->lowerbound = uint32_t(round(totalweightK * this->bal_tol));
 }

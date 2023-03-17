@@ -5,12 +5,11 @@ add_requires("doctest", {alias = "doctest"})
 add_requires("range-v3", {alias = "range-v3"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 
-set_languages("c++20")
+set_languages("c++17")
 
 if is_plat("linux") then
-    -- set_warnings("all", "error")
-    -- add_cxflags("-Wconversion", {force = true})
-    -- add_cxflags("-fconcepts", {force = true})
+    set_warnings("all", "error")
+    add_cxflags("-Wconversion", {force = true})
 elseif is_plat("windows") then
     add_cxflags("/W4 /WX /wd4819 /wd4127", {force = true})
 end

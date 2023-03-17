@@ -9,7 +9,7 @@ CPMAddPackage(
 
 if(benchmark_ADDED)
   # enable c++11 to avoid compilation errors
-  set_target_properties(benchmark PROPERTIES CXX_STANDARD 11)
+  set_target_properties(benchmark PROPERTIES CXX_STANDARD 17)
 endif()
 
 # ---- Create binary ----
@@ -27,7 +27,7 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
 
   add_executable(${TARGET_NAME} ${ONE_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC})
-  set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 14)
+  set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17)
 
   target_link_libraries(
     ${TARGET_NAME} benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}

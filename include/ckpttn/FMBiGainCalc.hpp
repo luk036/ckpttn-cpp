@@ -123,7 +123,7 @@ private:
    * @param[in] w
    * @param[in] weight
    */
-  auto _modify_gain(const node_t &w, unsigned int weight) -> void {
+  auto _modify_gain(const node_t &w, int weight) -> void {
     this->vertex_list[w].data.second += weight;
   }
 
