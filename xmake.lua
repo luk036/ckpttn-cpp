@@ -3,6 +3,7 @@ add_requires("fmt", {alias = "fmt"})
 add_requires("boost", {configs = {context = true, container = true}})
 add_requires("doctest", {alias = "doctest"})
 add_requires("range-v3", {alias = "range-v3"})
+add_requires("microsoft-gsl", {alias = "msgsl"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 
 set_languages("c++17")
@@ -22,14 +23,14 @@ target("CkPttn")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
-    add_packages("boost", "range-v3")
+    add_packages("boost", "range-v3", "msgsl")
 
 target("test_ckpttn")
     set_kind("binary")
     add_deps("CkPttn")
     add_includedirs("include", {public = true})
     add_files("test/source/*.cpp")
-    add_packages("fmt", "boost", "doctest", "range-v3")
+    add_packages("fmt", "boost", "doctest", "range-v3", "msgsl")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
