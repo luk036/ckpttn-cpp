@@ -18,7 +18,7 @@ template <typename Gnl>
 class FMKWayGainMgr
     : public FMGainMgr<Gnl, FMKWayGainCalc<Gnl>, FMKWayGainMgr<Gnl>> {
 private:
-  Robin<std::uint8_t> rr;
+  fun::Robin<std::uint8_t> rr;
 
 public:
   using Base = FMGainMgr<Gnl, FMKWayGainCalc<Gnl>, FMKWayGainMgr<Gnl>>;

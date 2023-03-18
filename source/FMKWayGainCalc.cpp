@@ -7,19 +7,20 @@
 #include <algorithm>                 // for fill
 #include <ckpttn/FMKWayGainCalc.hpp> // for FMKWayG...
 #include <ckpttn/FMPmrConfig.hpp>    // for FM_MAX_...
+#include <ckpttn/dllist.hpp>         // for Dllink
+#include <ckpttn/moveinfo.hpp>       // for MoveInfo
+#include <ckpttn/robin.hpp>          // for fun::Robin<>...
 #include <cstddef>                   // for byte
 #include <gsl/span>                  // for span
 #include <initializer_list>          // for initial...
+#include <transrangers.hpp>          // for all, filter, zip2
+#include <transrangers_ext.hpp>      // for enumerate
 #include <type_traits>               // for swap
 #include <utility>                   // for pair
 #include <vector>                    // for vector
 
-#include "ckpttn/dllist.hpp"   // for Dllink
-#include "ckpttn/moveinfo.hpp" // for MoveInfo
-#include "ckpttn/robin.hpp"    // for Robin<>...
-
-// using namespace ranges;
 using namespace std;
+using namespace transrangers;
 
 /**
  * @brief
@@ -150,34 +151,39 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
   FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
                                              sizeof StackBufLocal);
   auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
-  // auto idx_vec = FMPmr::vector<typename Gnl::node_t>(&rsrc);
+  auto rng = all(this->hgr.gr[net]);
+  rng([&](const auto &wc) {
+    num[part[*wc]] += 1;
+    return true;
+  });
 
-  for (const auto &w : this->hgr.gr[net]) {
-    num[part[w]] += 1;
-    // idx_vec.push_back(w);
-  }
   const auto weight = this->hgr.get_net_weight(net);
-  for (const auto &c : num) {
-    if (c > 0) {
-      this->totalcost += weight;
-    }
-  }
-  this->totalcost -= weight;
+  auto rng2 = all(num);
+  auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
 
+  this->totalcost = -weight;
+  rng3([&](const auto & /* c */) {
+    this->totalcost += weight;
+    return true;
+  });
+
+  // auto rng4 = enumerate(rng2);
   // for (const auto& [k, c] : views::enumerate(num))
   auto k = 0U;
   for (const auto &c : num) {
     if (c == 0) {
-      for (const auto &w : this->hgr.gr[net]) {
-        vertex_list[k][w].data.second -= weight;
-      }
+      rng([&](const auto &wc) {
+        vertex_list[k][*wc].data.second -= weight;
+        return true;
+      });
     } else if (c == 1) {
-      for (const auto &w : this->hgr.gr[net]) {
-        if (part[w] == k) {
-          this->_modify_gain(w, part[w], weight);
-          break;
+      rng([&](const auto &wc) {
+        if (part[*wc] == k) {
+          this->_modify_gain(*wc, part[*wc], weight);
+          return false;
         }
-      }
+        return true;
+      });
     }
     ++k;
   }
@@ -203,23 +209,20 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(
   auto net_cur = this->hgr.gr[move_info.net].begin();
   auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
   fill(this->delta_gain_w.begin(), this->delta_gain_w.end(), 0);
+  auto rng1 = all(this->delta_gain_w);
+  auto rng2 = all(this->delta_gain_v);
+  auto rng3 = zip2(rng1, rng2);
 
   // #pragma unroll
   for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
     if (part[w] == l_part) {
-      // for (auto i = 0U; i != delta_gain_w.size(); ++i)
-      // {
-      //     delta_gain_w[i] += weight;
-      //     delta_gain_v[i] += weight;
-      // }
-      for (auto &dgw : delta_gain_w) {
-        dgw += weight;
-      }
-      for (auto &dgv : delta_gain_v) {
-        dgv += weight;
-      }
+      rng3([&weight](const auto &zc) {
+        std::get<0>(*zc) += weight;
+        std::get<1>(*zc) += weight;
+        return true;
+      });
     }
-    delta_gain_w[l_part] -= weight;
+    this->delta_gain_w[l_part] -= weight;
     weight = -weight;
   }
   return w;
@@ -236,12 +239,12 @@ template <typename Gnl>
 void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
                                        const typename Gnl::node_t &net) {
   this->idx_vec.clear();
-  for (const auto &w : this->hgr.gr[net]) {
-    if (w == v) {
-      continue;
-    }
-    this->idx_vec.push_back(w);
-  }
+  auto rng1 = all(this->hgr.gr[net]);
+  auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
+  rng([&](const auto &wc) {
+    this->idx_vec.push_back(*wc);
+    return true;
+  });
 }
 
 /**
@@ -264,6 +267,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
   const auto part_u = part[this->idx_vec[1]];
   auto l = move_info.from_part;
   auto u = move_info.to_part;
+  auto rngv = all(this->delta_gain_v);
 
   if (part_w == part_u) {
     // #pragma unroll
@@ -272,9 +276,13 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
         delta_gain[0][l] -= weight;
         delta_gain[1][l] -= weight;
         if (part_w == u) {
-          for (auto &dgv : this->delta_gain_v) {
-            dgv -= weight;
-          }
+          // for (auto &dgv : this->delta_gain_v) {
+          //   dgv -= weight;
+          // }
+          rngv([&weight](const auto &dgcv) {
+            *dgcv -= weight;
+            return true;
+          });
         }
       }
       weight = -weight;
@@ -283,23 +291,29 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
     return delta_gain;
   }
 
+  auto rng0 = all(delta_gain[0]);
+  auto rng1 = all(delta_gain[1]);
+
   // #pragma unroll
   for (auto i = 0; i != 2; ++i) {
     if (part_w == l) {
-      for (auto &dg0 : delta_gain[0]) {
-        dg0 += weight;
-      }
+      rng0([&weight](const auto &dgc0) {
+        *dgc0 += weight;
+        return true;
+      });
     } else if (part_u == l) {
-      for (auto &dg1 : delta_gain[1]) {
-        dg1 += weight;
-      }
+      rng1([&weight](const auto &dgc1) {
+        *dgc1 += weight;
+        return true;
+      });
     } else {
       delta_gain[0][l] -= weight;
       delta_gain[1][l] -= weight;
       if (part_w == u || part_u == u) {
-        for (auto &dgv : this->delta_gain_v) {
-          dgv -= weight;
-        }
+        rngv([&weight](const auto &dgcv) {
+          *dgcv -= weight;
+          return true;
+        });
       }
     }
     weight = -weight;
@@ -326,20 +340,12 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
   FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
                                              sizeof StackBufLocal);
   auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
+  auto rng1 = all(this->idx_vec);
+  rng1([&](const auto &wc) {
+    num[part[*wc]] += 1;
+    return true;
+  });
 
-  // auto idx_vec = vector<typename Gnl::node_t> {};
-  // for (const auto& w : this->hgr.gr[move_info.net])
-  // {
-  //     if (w == move_info.v)
-  //     {
-  //         continue;
-  //     }
-  //     num[part[w]] += 1;
-  //     idx_vec.push_back(w);
-  // }
-  for (const auto &w : this->idx_vec) {
-    num[part[w]] += 1;
-  }
   const auto degree = idx_vec.size();
   auto delta_gain =
       vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
@@ -348,26 +354,37 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
   auto l = move_info.from_part;
   auto u = move_info.to_part;
 
+  auto rng2 = all(delta_gain);
+  auto rng3 = zip2(rng1, rng2);
+  auto rng4 = all(this->delta_gain_v);
+
   // #pragma unroll
   for (auto i = 0; i != 2; ++i) {
     if (num[l] == 0) {
-      for (size_t index = 0U; index != degree; ++index) {
-        delta_gain[index][l] -= weight;
-      }
+      rng2([&weight, &l](const auto &dgc) {
+        (*dgc)[l] -= weight;
+        return true;
+      });
+
       if (num[u] > 0) {
-        for (auto &dgv : this->delta_gain_v) {
-          dgv -= weight;
-        }
+        rng4([&weight](const auto &dgvc) {
+          *dgvc -= weight;
+          return true;
+        });
       }
     } else if (num[l] == 1) {
-      for (size_t index = 0U; index != degree; ++index) {
-        if (part[this->idx_vec[index]] == l) {
-          for (auto &dg : delta_gain[index]) {
-            dg += weight;
-          }
-          break;
+      rng3([&weight, &l, &part](const auto &zc) {
+        auto part_w = part[std::get<0>(*zc)];
+        if (part_w == l) {
+          auto rng = all(std::get<1>(*zc));
+          rng([&weight](const auto &dgc) {
+            *dgc += weight;
+            return true;
+          });
+          return false;
         }
-      }
+        return true;
+      });
     }
     weight = -weight;
     swap(l, u);
@@ -377,9 +394,8 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
 
 // instantiation
 
+#include "ckpttn/netlist.hpp"         // for Netlist
 #include <py2cpp/set.hpp>             // for set
 #include <xnetwork/classes/graph.hpp> // for Graph
-
-#include "ckpttn/netlist.hpp" // for Netlist
 
 template class FMKWayGainCalc<SimpleNetlist>;

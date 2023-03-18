@@ -39,22 +39,22 @@ auto create_contraction_subgraph(const SimpleNetlist &hgr,
     -> std::unique_ptr<SimpleHierNetlist> {
   using namespace transrangers;
 
-  auto weight = py::dict<node_t, unsigned int>{};
+  auto weight_dict = py::dict<node_t, unsigned int>{};
   for (const auto &net : hgr.nets) {
-    weight[net] = accumulate(
-        transform([&](const auto &v) { return hgr.get_module_weight(v); },
-                  all(hgr.gr[net])),
-        0U);
     // auto sum = 0U;
     // for (const auto &v : hgr.gr[net]) {
     //   sum += hgr.get_module_weight(v);
     // }
     // weight[net] = sum;
+    weight_dict[net] = accumulate(
+        transform([&](const auto &v) { return hgr.get_module_weight(v); },
+                  all(hgr.gr[net])),
+        0U);
   }
 
   auto S = py::set<node_t>{};
   auto dep = DontSelect.copy();
-  min_maximal_matching(hgr, weight, S, dep);
+  min_maximal_matching(hgr, weight_dict, S, dep);
 
   auto module_up_map = py::dict<node_t, node_t>{};
   module_up_map.reserve(hgr.number_of_modules());
@@ -183,7 +183,7 @@ auto create_contraction_subgraph(const SimpleNetlist &hgr,
   for (const auto &i_v : py::range(numModules)) {
     if (cluster_down_map.contains(i_v)) {
       const auto net = cluster_down_map[i_v];
-      module_weight.push_back(weight[net]);
+      module_weight.push_back(weight_dict[net]);
     } else {
       const auto v2 = node_down_map[i_v];
       module_weight.push_back(hgr.get_module_weight(v2));

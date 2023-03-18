@@ -2,7 +2,6 @@ add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
 add_requires("boost", {configs = {context = true, container = true}})
 add_requires("doctest", {alias = "doctest"})
-add_requires("range-v3", {alias = "range-v3"})
 add_requires("microsoft-gsl", {alias = "msgsl"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 

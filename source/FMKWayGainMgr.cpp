@@ -11,7 +11,7 @@
 #include "ckpttn/bpqueue.hpp"  // for BPQueue
 #include "ckpttn/dllist.hpp"   // for Dllink
 #include "ckpttn/moveinfo.hpp" // for MoveInfoV
-#include "ckpttn/robin.hpp"    // for Robin<>::iterable_wrapper
+#include "ckpttn/robin.hpp"    // for fun::Robin<>::iterable_wrapper
 
 using namespace std;
 

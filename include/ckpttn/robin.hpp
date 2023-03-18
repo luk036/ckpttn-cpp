@@ -1,55 +1,46 @@
 #pragma once
 
-// #include "dllist.hpp" // import Dllink
 #include <vector>
 
-#include "FMPmrConfig.hpp"
+namespace fun {
 
-template <typename T> class Robin {
-private:
-  struct SlNode {
-    SlNode *next;
-    T key;
-  };
+// Forward declaration
+template <typename T> struct Robin;
 
-  char stack_buf[FM_MAX_NUM_PARTITIONS * sizeof(SlNode)];
-  FMPmr::monotonic_buffer_resource rsrc;
-  FMPmr::vector<SlNode> cycle;
+namespace detail {
+template <typename T> struct RobinSlNode {
+  RobinSlNode *next;
+  T key;
+};
 
-  struct iterator {
-    SlNode *cur;
-    auto operator!=(const iterator &other) const -> bool {
-      return cur != other.cur;
-    }
-    auto operator==(const iterator &other) const -> bool {
-      return cur == other.cur;
-    }
-    auto operator++() -> iterator & {
-      cur = cur->next;
-      return *this;
-    }
-    auto operator*() const -> const T & { return cur->key; }
-  };
+template <typename T> struct RobinIterator {
+  const RobinSlNode<T> *cur;
+  auto operator!=(const RobinIterator &other) const -> bool {
+    return cur != other.cur;
+  }
+  auto operator==(const RobinIterator &other) const -> bool {
+    return cur == other.cur;
+  }
+  auto operator++() -> RobinIterator & {
+    cur = cur->next;
+    return *this;
+  }
+  auto operator*() const -> const T & { return cur->key; }
+};
 
-  struct iterable_wrapper {
-    Robin<T> *rr;
-    T from_part;
-    auto begin() -> iterator { return iterator{rr->cycle[from_part].next}; }
-    auto end() -> iterator { return iterator{&rr->cycle[from_part]}; }
-    // auto size() const -> size_t { return rr->cycle.size() - 1; }
-  };
+template <typename T> struct RobinIterableWrapper {
+  const fun::Robin<T> *rr;
+  T from_part;
+  auto begin() const -> RobinIterator<T>;
+  auto end() const -> RobinIterator<T>;
+  // auto size() const -> size_t { return rr->cycle.size() - 1; }
+};
+} // namespace detail
 
-public:
-  explicit Robin(T num_parts) : cycle(num_parts, &rsrc) {
-    // num_parts -= 1;
-    // for (auto k = 0U; k != num_parts; ++k)
-    // {
-    //     this->cycle[k].next = &this->cycle[k + 1];
-    //     this->cycle[k].key = k;
-    // }
-    // this->cycle[num_parts].next = &this->cycle[0];
-    // this->cycle[num_parts].key = num_parts;
+template <typename T> struct Robin {
+  std::vector<detail::RobinSlNode<T>> cycle;
 
+  explicit Robin(T num_parts) : cycle(num_parts) {
     auto *slptr = &this->cycle[num_parts - 1];
     auto k = T(0);
     for (auto &sl : this->cycle) {
@@ -60,7 +51,22 @@ public:
     }
   }
 
-  auto exclude(T from_part) -> iterable_wrapper {
-    return iterable_wrapper{this, from_part};
+  auto exclude(T from_part) const -> detail::RobinIterableWrapper<T> {
+    return detail::RobinIterableWrapper<T>{this, from_part};
   }
 };
+
+namespace detail {
+
+template <typename T>
+inline auto RobinIterableWrapper<T>::begin() const -> RobinIterator<T> {
+  return RobinIterator<T>{this->rr->cycle[from_part].next};
+}
+
+template <typename T>
+inline auto RobinIterableWrapper<T>::end() const -> RobinIterator<T> {
+  return RobinIterator<T>{&this->rr->cycle[from_part]};
+}
+} // namespace detail
+
+} // namespace fun

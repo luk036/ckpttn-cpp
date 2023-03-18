@@ -9,7 +9,7 @@
 
 #include "FMPmrConfig.hpp"
 #include "dllist.hpp" // for Dllink
-#include "robin.hpp"  // for Robin<>...
+#include "robin.hpp"  // for fun::Robin<>...
 
 // forward declare
 template <typename Gnl> class FMKWayGainMgr;
@@ -29,7 +29,7 @@ template <typename Gnl> class FMKWayGainCalc {
 private:
   const Gnl &hgr;
   std::uint8_t num_parts;
-  Robin<std::uint8_t> rr;
+  fun::Robin<std::uint8_t> rr;
   // size_t num_modules;
   int totalcost{0};
   uint8_t stack_buf[20000];

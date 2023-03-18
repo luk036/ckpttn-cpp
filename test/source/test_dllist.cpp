@@ -2,7 +2,7 @@
 // #include <__config>                        // for std
 #include <cinttypes>         // for uint8_t
 #include <ckpttn/dllist.hpp> // for Dllist, dll_iterator, oper...
-#include <ckpttn/robin.hpp>  // for Robin, Robin<>::iterable_w...
+#include <ckpttn/robin.hpp>  // for Robin, fun::Robin<>::iterable_w...
 #include <utility>           // for pair
 
 using namespace std;
@@ -34,7 +34,7 @@ TEST_CASE("Test dllist") {
 }
 
 TEST_CASE("Test Robin") {
-  Robin<uint8_t> rr(6U);
+  fun::Robin<uint8_t> rr(6U);
   auto count = 0U;
   for (auto _i : rr.exclude(2)) {
     static_assert(sizeof _i >= 0, "make compiler happy");
