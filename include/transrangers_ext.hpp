@@ -151,13 +151,109 @@ template <typename Ranger> auto enumerate(Ranger rgr) {
 
 // partial sum (cummutative sum)
 template <typename Ranger, typename T> T partial_sum(Ranger rgr, T init) {
-  rgr([&](const auto &p) TRANSRANGERS_HOT {
+  rgr([&init](const auto &p) TRANSRANGERS_HOT {
     init = std::move(init) + *p;
     *p = init;
     return true;
   });
   return init;
 }
+
+// zip
+template <std::size_t I, typename Ranger, typename... Rangers>
+class __lambda_255_33 {
+  using cursor = zip_cursor<Ranger, Rangers...>;
+
+public:
+  template <class type_parameter_4_0>
+  TRANSRANGERS_HOT inline auto
+  operator()(const type_parameter_4_0 &p) const {
+    std::get<I + 1>(zp.ps) = p;
+    return false;
+  }
+
+private:
+  cursor &zp;
+
+public:
+  __lambda_255_33(cursor &_zp) : zp{_zp} {}
+};
+
+template <typename Ranger, typename... Rangers> class __lambda_249_18 {
+  using cursor = zip_cursor<Ranger, Rangers...>;
+
+public:
+  template <std::size_t... I>
+  TRANSRANGERS_HOT inline auto
+  operator()(std::index_sequence<I...>) const {
+    return (std::get<I>(rgrs)(__lambda_255_33<I, Ranger, Rangers...>{zp}) ||
+            ...);
+  }
+
+private:
+  cursor &zp;
+  std::tuple<Rangers...> &rgrs;
+
+public:
+  __lambda_249_18(cursor &_zp, std::tuple<Rangers...> &_rgrs)
+      : zp{_zp}, rgrs{_rgrs} {}
+};
+
+template <typename type_parameter_1_0, typename Ranger, typename... Rangers>
+class __lambda_246_16 {
+  using cursor = zip_cursor<Ranger, Rangers...>;
+
+public:
+  template <class type_parameter_2_0>
+  TRANSRANGERS_HOT inline auto
+  operator()(const type_parameter_2_0 &p) const {
+    std::get<0>(zp.ps) = p;
+    if (__lambda_249_18{zp, rgrs}(std::index_sequence_for<Rangers...>{})) {
+      finished = true;
+      return false;
+    }
+
+    return dst(zp);
+  }
+
+private:
+  bool &finished;
+  type_parameter_1_0 &dst;
+  cursor &zp;
+  std::tuple<Rangers...> &rgrs;
+
+public:
+  __lambda_246_16(bool &_finished, type_parameter_1_0 &_dst, cursor &_zp,
+                  std::tuple<Rangers...> &_rgrs)
+      : finished{_finished}, dst{_dst}, zp{_zp}, rgrs{_rgrs} {}
+};
+
+template <typename Ranger, typename... Rangers> class __lambda_244_25 {
+  using cursor = zip_cursor<Ranger, Rangers...>;
+
+public:
+  template <class type_parameter_1_0>
+  TRANSRANGERS_HOT inline auto operator()(type_parameter_1_0 dst) {
+    bool finished = false;
+    return rgr(__lambda_246_16{finished, dst, zp, rgrs}) || finished;
+  }
+
+private:
+  cursor zp;
+  Ranger rgr;
+  std::tuple<Rangers...> rgrs;
+
+public:
+  __lambda_244_25(cursor _zp, const Ranger &_rgr, const Rangers &..._rgrs)
+      : zp{_zp}, rgr{_rgr}, rgrs{_rgrs...} {}
+};
+
+template <typename Ranger, typename... Rangers>
+auto zip(Ranger rgr, Rangers... rgrs) {
+  using cursor = zip_cursor<Ranger, Rangers...>;
+  return ranger<cursor>(__lambda_244_25{cursor{}, rgr, rgrs...});
+}
+
 } // namespace transrangers
 
 #undef TRANSRANGERS_HOT_MUTABLE

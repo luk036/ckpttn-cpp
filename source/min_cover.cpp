@@ -1,16 +1,7 @@
-#include <ckpttn/netlist.hpp>      // for SimpleNetlist, index_t, Netlist
-#include <ckpttn/netlist_algo.hpp> // for min_maximal_matching
-// #include <range/v3/all.hpp>
-// #include <range/v3/core.hpp>
-// #include <range/v3/numeric/accumulate.hpp>
-// #include <range/v3/view/enumerate.hpp>
-// #include <range/v3/view/remove_if.hpp>
-// #include <range/v3/view/transform.hpp>
-#include <cstdint> // for uint32_t
-// #include <__config>                    // for std
-// #include <__hash_table>                // for operator!=,
-// __hash_const_iterator
 #include <ckpttn/HierNetlist.hpp>     // for SimpleHierNetlist, HierNetlist
+#include <ckpttn/netlist.hpp>         // for SimpleNetlist, index_t, Netlist
+#include <ckpttn/netlist_algo.hpp>    // for min_maximal_matching
+#include <cstdint>                    // for uint32_t
 #include <memory>                     // for unique_ptr, make_unique
 #include <py2cpp/dict.hpp>            // for dict, dict<>::Base
 #include <py2cpp/range.hpp>           // for _iterator, iterable_wrapper
@@ -40,17 +31,20 @@ auto create_contraction_subgraph(const SimpleNetlist &hgr,
   using namespace transrangers;
 
   auto weight_dict = py::dict<node_t, unsigned int>{};
-  for (const auto &net : hgr.nets) {
-    // auto sum = 0U;
-    // for (const auto &v : hgr.gr[net]) {
-    //   sum += hgr.get_module_weight(v);
-    // }
-    // weight[net] = sum;
-    weight_dict[net] = accumulate(
+  auto rng_nets = all(hgr.nets);
+  rng_nets([&](const auto &netcur) {
+    weight_dict[*netcur] = accumulate(
         transform([&](const auto &v) { return hgr.get_module_weight(v); },
-                  all(hgr.gr[net])),
+                  all(hgr.gr[*netcur])),
         0U);
-  }
+    return true;
+  });
+  // for (const auto &net : hgr.nets) {
+  //   weight_dict[net] = accumulate(
+  //       transform([&](const auto &v) { return hgr.get_module_weight(v); },
+  //                 all(hgr.gr[net])),
+  //       0U);
+  // }
 
   auto S = py::set<node_t>{};
   auto dep = DontSelect.copy();

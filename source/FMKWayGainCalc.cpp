@@ -167,13 +167,11 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
     return true;
   });
 
-  // auto rng4 = enumerate(rng2);
-  // for (const auto& [k, c] : views::enumerate(num))
   auto k = 0U;
   for (const auto &c : num) {
     if (c == 0) {
       rng([&](const auto &wc) {
-        vertex_list[k][*wc].data.second -= weight;
+        this->vertex_list[k][*wc].data.second -= weight;
         return true;
       });
     } else if (c == 1) {
@@ -187,6 +185,27 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
     }
     ++k;
   }
+
+  // auto rng4 = enumerate(rng2);
+  // rng4([&](const auto &cursor) {
+  //   auto k = std::get<0>(*cursor);
+  //   auto c = std::get<1>(*cursor);
+  //   if (c == 0) {
+  //     rng([&, k](const auto &wc) {
+  //       this->vertex_list[k][*wc].data.second -= weight;
+  //       return true;
+  //     });
+  //   } else if (c == 1) {
+  //     rng([&, k](const auto &wc) {
+  //       if (part[*wc] == k) {
+  //         this->_modify_gain(*wc, part[*wc], weight);
+  //         return false;
+  //       }
+  //       return true;
+  //     });
+  //   }
+  //   return true;
+  // });
 }
 
 /**

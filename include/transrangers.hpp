@@ -244,15 +244,16 @@ template <typename... Rangers> struct zip_cursor {
 //   return ranger<cursor>([=, zp = cursor{}](auto dst) TRANSRANGERS_HOT_MUTABLE
 //   {
 //     bool finished = false;
-//     return rgr([&](const auto &p) TRANSRANGERS_HOT {
+//     return rgr([&finished, &zp, &dst,
+//                 &rgrs...](const auto &p) TRANSRANGERS_HOT {
 //              std::get<0>(zp.ps) = p;
-//              if ([&]<std::size_t... I>(std::index_sequence<I...>
+//              if ([&zp, &rgrs... ]<std::size_t... I>(std::index_sequence<I...>
 // #ifdef _MSC_VER
-//                                        ,
-//                                        auto &...rgrs
+//                                                     ,
+//                                                     auto &...rgrs
 // #endif
-//                                        ) TRANSRANGERS_HOT {
-//                    return (rgrs([&](const auto &p) TRANSRANGERS_HOT {
+//                                                     ) TRANSRANGERS_HOT {
+//                    return (rgrs([&zp](const auto &p) TRANSRANGERS_HOT {
 //                              std::get<I + 1>(zp.ps) = p;
 //                              return false;
 //                            }) ||
