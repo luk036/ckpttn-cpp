@@ -86,7 +86,7 @@
             </li>
           </ul>
         </nav>
-<p>Bounded Priority Queue with integer keys in [a..b]. Implemented by an array (bucket) of doubly-linked lists. Efficient if the keys are bounded by a small integer value.</p><p>Note that this class does not own PQ nodes. This feature allows these nodes sharable in both doubly linked list class and this class. In the FM algorithm, nodes are either attached to the gain buckets (PQ) or to the waitinglist (doubly-linked list), but cannot be in both at the same time.</p><p>Another improvement is to increase the size of the array by one element, i.e. (b - a + 2). The extra dummy array element (called sentinel) is used to reduce the boundary checking during updates.</p><p>All the member functions assume that the keys are inside the bounds.</p>
+<p>Bounded Priority Queue with integer keys in [a..b]. Implemented by an array (bucket) of doubly-linked lists. Efficient if the keys are bounded by a small integer value.</p><p>Note that this class does not own PQ nodes. This feature allows these nodes sharable in both doubly linked list class and this class. In the FM algorithm, nodes are either attached to the gain buckets (PQ) or to the waiting_list (doubly-linked list), but cannot be in both at the same time.</p><p>Another improvement is to increase the size of the array by one element, i.e. (b - a + 2). The extra dummy array element (called sentinel) is used to reduce the boundary checking during updates.</p><p>All the member functions assume that the keys are inside the bounds.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
@@ -195,11 +195,11 @@
             </dt>
             <dd>Detach the item from <a href="classBPQueue.html" class="m-doc">BPQueue</a>.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a79eca8098a1d32be31ab558eb2e625cf" class="m-doc">begin</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; Tp, Int &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0450e1f3883c79b9399b7713e3da92e1" class="m-doc">begin</a>(</span><span class="m-doc-wrap">) -&gt; BpqIterator&lt; Tp, Int &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Iterator point to the begin.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a0764b322e7e61b2a0bd5a7f77bce6fe7" class="m-doc">end</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; Tp, Int &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a86289fbc79b910685782ad94ccb1c15e" class="m-doc">end</a>(</span><span class="m-doc-wrap">) -&gt; BpqIterator&lt; Tp, Int &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Iterator point to the end.</dd>
           </dl>
@@ -450,36 +450,36 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a79eca8098a1d32be31ab558eb2e625cf"><div>
+          <section class="m-doc-details" id="a0450e1f3883c79b9399b7713e3da92e1"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Tp, typename Int, typename Sequence&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto BPQueue&lt;Tp, Int, Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79eca8098a1d32be31ab558eb2e625cf" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; Tp, Int &gt; <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto BPQueue&lt;Tp, Int, Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0450e1f3883c79b9399b7713e3da92e1" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; BpqIterator&lt; Tp, Int &gt; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Iterator point to the begin.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td><a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a></td>
+                  <td><a href="classBpqIterator.html" class="m-doc">BpqIterator</a></td>
                 </tr>
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a0764b322e7e61b2a0bd5a7f77bce6fe7"><div>
+          <section class="m-doc-details" id="a86289fbc79b910685782ad94ccb1c15e"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Tp, typename Int, typename Sequence&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto BPQueue&lt;Tp, Int, Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0764b322e7e61b2a0bd5a7f77bce6fe7" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; bpq_iterator&lt; Tp, Int &gt; <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto BPQueue&lt;Tp, Int, Sequence&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a86289fbc79b910685782ad94ccb1c15e" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; BpqIterator&lt; Tp, Int &gt; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Iterator point to the end.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td><a href="classbpq__iterator.html" class="m-doc">bpq_<wbr />iterator</a></td>
+                  <td><a href="classBpqIterator.html" class="m-doc">BpqIterator</a></td>
                 </tr>
               </tfoot>
             </table>
