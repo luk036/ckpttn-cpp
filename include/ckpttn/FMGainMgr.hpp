@@ -1,6 +1,6 @@
 #pragma once
 
-#include <algorithm> // for all_of
+// #include <algorithm> // for all_of
 #include <cinttypes> // for uint8_t, uint32_t
 #include <gsl/span>  // for span
 #include <tuple>     // for tuple
@@ -23,21 +23,19 @@ template <typename Node> struct MoveInfoV;
 template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
   Derived &self = *static_cast<Derived *>(this);
   using node_t = typename Gnl::node_t;
-  // friend Derived;
   using Item = Dllink<std::pair<node_t, uint32_t>>;
 
 protected:
-  Dllist<std::pair<node_t, uint32_t>> waitinglist{
+  Dllist<std::pair<node_t, uint32_t>> waiting_list{
       std::make_pair(node_t{}, uint32_t(0))};
   const Gnl &hgr;
-  std::vector<BPQueue<node_t>> gainbucket;
-  // size_t pmax;
+  std::vector<BPQueue<node_t>> gain_bucket;
   std::uint8_t num_parts;
 
 public:
   GainCalc gain_calc;
 
-  // int totalcost;
+  // int total_cost;
 
   // FMGainMgr(FMGainMgr&&) = default;
 
@@ -64,19 +62,20 @@ public:
    * @return false
    */
   auto is_empty_togo(uint8_t to_part) const -> bool {
-    return this->gainbucket[to_part].is_empty();
+    return this->gain_bucket[to_part].is_empty();
   }
 
-  /**
-   * @brief
-   *
-   * @return true
-   * @return false
-   */
-  auto is_empty() const -> bool {
-    return std::all_of(this->gainbucket.cbegin(), this->gainbucket.cend(),
-                       [&](const auto &bckt) { return bckt.is_empty(); });
-  }
+  // /**
+  //  * @brief
+  //  *
+  //  * @return true
+  //  * @return false
+  //  */
+  // auto is_empty() const -> bool {
+  //   return std::all_of(this->gain_bucket.cbegin(), this->gain_bucket.cend(),
+  //                      [](const auto &bckt) { return bckt.is_empty(); });
+  // }
+  auto is_empty() const -> bool;
 
   /**
    * @brief

@@ -5,7 +5,7 @@ add_requires("doctest", {alias = "doctest"})
 add_requires("microsoft-gsl", {alias = "msgsl"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 
-set_languages("c++17")
+set_languages("c++23")
 
 if is_plat("linux") then
     set_warnings("all", "error")

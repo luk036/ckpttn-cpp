@@ -1,6 +1,6 @@
 #pragma once
 
-#include <algorithm>   // for fill
+// #include <algorithm>   // for fill
 #include <cstdint>     // for uint8_t
 #include <gsl/span>    // for span
 #include <type_traits> // for move
@@ -31,7 +31,7 @@ private:
   std::uint8_t num_parts;
   fun::Robin<std::uint8_t> rr;
   // size_t num_modules;
-  int totalcost{0};
+  int total_cost{0};
   uint8_t stack_buf[20000];
   FMPmr::monotonic_buffer_resource rsrc;
   std::vector<std::vector<Item>> vertex_list;
@@ -80,7 +80,7 @@ public:
    * @param[in] part
    */
   auto init(gsl::span<const std::uint8_t> part) -> int {
-    this->totalcost = 0;
+    this->total_cost = 0;
     for (auto &vec : this->vertex_list) {
       for (auto &vlink : vec) {
         vlink.data.second = 0U;
@@ -89,16 +89,17 @@ public:
     for (const auto &net : this->hgr.nets) {
       this->_init_gain(net, part);
     }
-    return this->totalcost;
+    return this->total_cost;
   }
 
-  /**
-   * @brief
-   *
-   */
-  auto update_move_init() -> void {
-    std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
-  }
+  // /**
+  //  * @brief
+  //  *
+  //  */
+  // auto update_move_init() -> void {
+  //   std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
+  // }
+  auto update_move_init() -> void;
 
   /**
    * @brief

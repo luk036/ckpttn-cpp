@@ -8,7 +8,7 @@
 #include <vector>                     // for vector
 #include <xnetwork/classes/graph.hpp> // for SimpleGraph, Graph, Graph<>::n...
 
-#include "array_like.hpp" // for shift_array
+#include "array_like.hpp" // for ShiftArray
 #include "netlist.hpp"    // for Netlist, Netlist<>::nodeview_t
 
 // using node_t = int;
@@ -38,7 +38,7 @@ public:
   std::vector<node_t> node_up_map;
   std::vector<node_t> node_down_map;
   py::dict<index_t, node_t> cluster_down_map;
-  shift_array<std::vector<int>> net_weight{};
+  ShiftArray<std::vector<int>> net_weight{};
 
   /**
    * @brief Construct a new Hier Netlist object

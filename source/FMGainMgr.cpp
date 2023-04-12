@@ -1,14 +1,11 @@
-// #include <__config>                        // for std
-// #include <__hash_table>                    // for __hash_const_iterator,
-// ope... #include <boost/container/pmr/vector.hpp>  // for vector #include
-// <boost/container/vector.hpp>      // for operator!=, vec_iterator
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp> // for FM_MAX_DEGREE
 #include <gsl/gsl_util>           // for narrow_cast
-#include <iterator>               // for distance
-#include <py2cpp/set.hpp>         // for set
-#include <type_traits>            // for is_base_of, integral_const...
-#include <vector>                 // for vector<>::iterator, vector
+
+#include <algorithm>      // for all_of, max_element
+#include <iterator>       // for distance
+#include <type_traits>    // for is_base_of, integral_const...
+#include <vector>         // for vector<>::iterator, vector
 
 #include "ckpttn/bpqueue.hpp"  // for BPQueue
 #include "ckpttn/dllist.hpp"   // for Dllink
@@ -32,8 +29,8 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl &hgr, uint8_t num_parts)
   static_assert(is_base_of<FMGainMgr<Gnl, GainCalc, Derived>, Derived>::value,
                 "base derived consistence");
   const auto pmax = int(hgr.get_max_degree());
-  for (auto k = 0U; k != this->num_parts; ++k) {
-    this->gainbucket.emplace_back(BPQueue<typename Gnl::node_t>(-pmax, pmax));
+  for (auto _k = 0U; _k != this->num_parts; ++_k) {
+    this->gain_bucket.emplace_back(BPQueue<typename Gnl::node_t>(-pmax, pmax));
   }
 }
 
@@ -48,10 +45,21 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl &hgr, uint8_t num_parts)
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::init(gsl::span<const uint8_t> part)
     -> int {
-  auto totalcost = this->gain_calc.init(part);
-  // this->totalcost = this->gain_calc.totalcost;
-  this->waitinglist.clear();
-  return totalcost;
+  auto total_cost = this->gain_calc.init(part);
+  this->waiting_list.clear();
+  return total_cost;
+}
+
+/**
+ * @brief
+ *
+ * @return true
+ * @return false
+ */
+template <typename Gnl, typename GainCalc, class Derived>
+auto FMGainMgr<Gnl, GainCalc, Derived>::is_empty() const -> bool {
+  return std::all_of(this->gain_bucket.cbegin(), this->gain_bucket.cend(),
+                     [](const auto &bckt) { return bckt.is_empty(); });
 }
 
 /**
@@ -65,16 +73,17 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::init(gsl::span<const uint8_t> part)
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
     -> pair<MoveInfoV<typename Gnl::node_t>, int> {
-  const auto it = max_element(this->gainbucket.begin(), this->gainbucket.end(),
-                              [](const auto &bckt1, const auto &bckt2) {
-                                return bckt1.get_max() < bckt2.get_max();
-                              });
+  const auto it =
+      max_element(this->gain_bucket.begin(), this->gain_bucket.end(),
+                  [](const auto &bckt1, const auto &bckt2) {
+                    return bckt1.get_max() < bckt2.get_max();
+                  });
 
   const auto to_part =
-      gsl::narrow_cast<uint8_t>(distance(this->gainbucket.begin(), it));
+      gsl::narrow_cast<uint8_t>(distance(this->gain_bucket.begin(), it));
   const auto gainmax = it->get_max();
   auto &vlink = it->popleft();
-  this->waitinglist.append(vlink);
+  this->waiting_list.append(vlink);
   // typename Gnl::node_t v = &vlink - this->gain_calc.start_ptr(to_part);
   const auto v = vlink.data.first;
   // const auto v =
@@ -95,9 +104,9 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t to_part)
     -> pair<typename Gnl::node_t, int> {
-  const auto gainmax = this->gainbucket[to_part].get_max();
-  auto &vlink = this->gainbucket[to_part].popleft();
-  this->waitinglist.append(vlink);
+  const auto gainmax = this->gain_bucket[to_part].get_max();
+  auto &vlink = this->gain_bucket[to_part].popleft();
+  this->waiting_list.append(vlink);
   const auto v = vlink.data.first;
   // const auto v =
   //     typename Gnl::node_t(distance(this->gain_calc.start_ptr(to_part),

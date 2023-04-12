@@ -23,7 +23,7 @@ void run_FMBiGainMgr(const SimpleNetlist &hgr, gsl::span<uint8_t> part) {
   FMBiGainMgr<SimpleNetlist> mgr{hgr};
   mgr.init(part);
   while (!mgr.is_empty()) {
-    // Take the gainmax with v from gainbucket
+    // Take the gainmax with v from gain_bucket
     // auto [move_info_v, gainmax] = mgr.select(part);
     auto result = mgr.select(part);
     auto move_info_v = result.first;

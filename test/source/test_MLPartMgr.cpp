@@ -34,7 +34,7 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
   part_mgr.run_FMPartition<SimpleNetlist,
                            FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
-  CHECK(part_mgr.totalcost == 2U);
+  CHECK(part_mgr.total_cost == 2U);
 }
 
 TEST_CASE("Test MLKWayPartMgr dwarf") {
@@ -44,7 +44,7 @@ TEST_CASE("Test MLKWayPartMgr dwarf") {
   part_mgr.run_FMPartition<
       SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
                                FMKWayConstrMgr<SimpleNetlist>>>(hgr, part);
-  CHECK(part_mgr.totalcost == 4U);
+  CHECK(part_mgr.total_cost == 4U);
 }
 
 TEST_CASE("Test MLBiPartMgr p1") {
@@ -63,12 +63,12 @@ TEST_CASE("Test MLBiPartMgr p1") {
     part_mgr.run_FMPartition<
         SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                  FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
-    if (mincost > part_mgr.totalcost) {
-      mincost = part_mgr.totalcost;
+    if (mincost > part_mgr.total_cost) {
+      mincost = part_mgr.total_cost;
     }
   }
-  // CHECK(part_mgr.totalcost >= 50);
-  // CHECK(part_mgr.totalcost <= 50);
+  // CHECK(part_mgr.total_cost >= 50);
+  // CHECK(part_mgr.total_cost <= 50);
   CHECK(mincost >= 29U);
   CHECK(mincost <= 73U);
 }
@@ -90,12 +90,12 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     part_mgr.run_FMPartition<
         SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                  FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
-    if (mincost > part_mgr.totalcost) {
-      mincost = part_mgr.totalcost;
+    if (mincost > part_mgr.total_cost) {
+      mincost = part_mgr.total_cost;
     }
   }
-  // CHECK(part_mgr.totalcost >= 650);
-  // CHECK(part_mgr.totalcost <= 650);
+  // CHECK(part_mgr.total_cost >= 650);
+  // CHECK(part_mgr.total_cost <= 650);
   CHECK(mincost >= 221U);
   CHECK(mincost <= 695U);
 }
@@ -113,8 +113,8 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
   chrono::duration<double> last = chrono::steady_clock::now() - begin;
   cout << "time: " << last.count() << endl;
-  CHECK(part_mgr.totalcost >= 1104U);
-  CHECK(part_mgr.totalcost <= 2041U);
+  CHECK(part_mgr.total_cost >= 1104U);
+  CHECK(part_mgr.total_cost <= 2041U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm18") {
@@ -130,8 +130,8 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
   chrono::duration<double> last = chrono::steady_clock::now() - begin;
   cout << "time: " << last.count() << endl;
-  CHECK(part_mgr.totalcost >= 1104U);
-  CHECK(part_mgr.totalcost <= 5112U);
+  CHECK(part_mgr.total_cost >= 1104U);
+  CHECK(part_mgr.total_cost <= 5112U);
 }
 
 /*

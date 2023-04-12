@@ -1,8 +1,9 @@
 #pragma once
 
-#include <any>
+// #include <any>
 #include <cassert>
 #include <cstddef>
+#include <utility>
 // #include <range/v3/view/repeat_n.hpp>
 // #include <type_traits>
 
@@ -28,25 +29,25 @@
 //     return iterable_wrapper{ranges::views::repeat_n(a, n)};
 // }
 
-template <typename C> class shift_array : public C {
-  using value_type = typename C::value_type;
+template <typename Container> class ShiftArray : public Container {
+  using value_type = typename Container::value_type;
 
 private:
   size_t _start{0U};
 
 public:
-  shift_array() : C{} {}
+  ShiftArray() : Container{} {}
 
-  explicit shift_array(C &&base) : C{std::forward<C>(base)} {}
+  explicit ShiftArray(Container &&base) : Container{std::forward<Container>(base)} {}
 
   void set_start(const size_t &start) { this->_start = start; }
 
   auto operator[](const size_t &index) const -> const value_type & {
     assert(index >= this->_start);
-    return C::operator[](index - this->_start);
+    return Container::operator[](index - this->_start);
   }
 
   auto operator[](const size_t &index) -> value_type & {
-    return C::operator[](index - this->_start);
+    return Container::operator[](index - this->_start);
   }
 };

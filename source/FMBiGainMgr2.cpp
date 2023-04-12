@@ -19,20 +19,20 @@ using namespace std;
  */
 template <typename Gnl>
 auto FMBiGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
-  auto totalcost = Base::init(part);
-  for (auto &bckt : this->gainbucket) {
+  auto total_cost = Base::init(part);
+  for (auto &bckt : this->gain_bucket) {
     bckt.clear();
   }
 
   for (const auto &v : this->hgr) {
     auto &vlink = this->gain_calc.vertex_list[v];
     // auto to_part = 1 - part[v];
-    this->gainbucket[1 - part[v]].append_direct(vlink);
+    this->gain_bucket[1 - part[v]].append_direct(vlink);
   }
   for (const auto &v : this->hgr.module_fixed) {
     this->lock_all(part[v], v);
   }
-  return totalcost;
+  return total_cost;
 }
 
 // instantiation

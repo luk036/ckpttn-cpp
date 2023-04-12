@@ -46,7 +46,7 @@ auto create_dwarf() -> SimpleNetlist {
   // using IndexMap =
   //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
   // IndexMap index = boost::get(boost::vertex_index, g);
-  // auto gr = py::grAdaptor<graph_t>(move(g));
+  // auto gr = py::GraphAdaptor<graph_t>(move(g));
 
   // vector<node_t> module_list(7);
   // vector<node_t> net_list(5);
@@ -77,7 +77,7 @@ auto create_test_netlist() -> SimpleNetlist {
   // index_t indices[] = {0, 1, 2, 3, 4, 5};
   // auto num_arcs = sizeof(edge_array) / sizeof(Edge);
   // auto g = graph_t{edge_array, edge_array + num_arcs, num_nodes};
-  // auto gr = py::grAdaptor<graph_t>{move(g)};
+  // auto gr = py::GraphAdaptor<graph_t>{move(g)};
   // const auto R = py::range(num_nodes);
   graph_t g(num_nodes);
   for (const auto &e : edge_array) {

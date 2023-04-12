@@ -62,7 +62,7 @@ protected:
   // std::vector<std::uint8_t> part;
 
 public:
-  int totalcost{};
+  int total_cost{};
 
   /**
    * @brief Construct a new Part Mgr Base object

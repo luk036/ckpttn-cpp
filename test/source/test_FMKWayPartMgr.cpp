@@ -32,14 +32,14 @@ void run_FMKWayPartMgr(const SimpleNetlist &hgr, uint8_t num_parts) {
   vector<uint8_t> part(hgr.number_of_modules(), 0);
 
   part_mgr.legalize(part);
-  auto totalcostbefore = part_mgr.totalcost;
+  auto totalcostbefore = part_mgr.total_cost;
   part_mgr.optimize(part);
   CHECK(totalcostbefore >= 0);
-  CHECK(part_mgr.totalcost <= totalcostbefore);
-  CHECK(part_mgr.totalcost >= 0);
-  totalcostbefore = part_mgr.totalcost;
+  CHECK(part_mgr.total_cost <= totalcostbefore);
+  CHECK(part_mgr.total_cost >= 0);
+  totalcostbefore = part_mgr.total_cost;
   part_mgr.init(part);
-  CHECK(part_mgr.totalcost == totalcostbefore);
+  CHECK(part_mgr.total_cost == totalcostbefore);
 }
 
 TEST_CASE("Test FMKWayPartMgr") {

@@ -23,25 +23,25 @@ using namespace std;
  */
 template <typename Gnl>
 auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
-  auto totalcost = Base::init(part);
+  auto total_cost = Base::init(part);
 
-  for (auto &bckt : this->gainbucket) {
+  for (auto &bckt : this->gain_bucket) {
     bckt.clear();
   }
   for (const auto &v : this->hgr) {
     const auto pv = part[v];
     for (const auto &k : this->rr.exclude(pv)) {
       auto &vlink = this->gain_calc.vertex_list[k][v];
-      this->gainbucket[k].append_direct(vlink);
+      this->gain_bucket[k].append_direct(vlink);
     }
     auto &vlink = this->gain_calc.vertex_list[pv][v];
-    this->gainbucket[pv].set_key(vlink, 0);
-    this->waitinglist.append(vlink);
+    this->gain_bucket[pv].set_key(vlink, 0);
+    this->waiting_list.append(vlink);
   }
   for (const auto &v : this->hgr.module_fixed) {
     this->lock_all(part[v], v);
   }
-  return totalcost;
+  return total_cost;
 }
 
 /**
@@ -60,7 +60,7 @@ void FMKWayGainMgr<Gnl>::update_move_v(
     if (move_info_v.from_part == k || move_info_v.to_part == k) {
       continue;
     }
-    this->gainbucket[k].modify_key(
+    this->gain_bucket[k].modify_key(
         this->gain_calc.vertex_list[k][move_info_v.v],
         this->gain_calc.delta_gain_v[k]);
   }

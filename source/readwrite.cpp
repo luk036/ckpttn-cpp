@@ -150,7 +150,7 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
   // using IndexMap =
   //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
   // auto index = boost::get(boost::vertex_index, g);
-  // auto gr = py::grAdaptor<graph_t>{move(g)};
+  // auto gr = py::GraphAdaptor<graph_t>{move(g)};
   auto hgr = SimpleNetlist{move(g), numModules, numNets};
   hgr.num_pads = numModules - padOffset - 1;
   return hgr;

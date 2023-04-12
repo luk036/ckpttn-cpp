@@ -60,7 +60,7 @@ void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
 
   const auto weight = this->hgr.get_net_weight(net);
   if (part[w] != part[v]) {
-    this->totalcost += weight;
+    this->total_cost += weight;
     this->_modify_gain(w, weight);
     this->_modify_gain(v, weight);
   } else {
@@ -99,7 +99,7 @@ void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
   } else {
     this->_modify_gain(v, weight);
   }
-  this->totalcost += weight;
+  this->total_cost += weight;
 }
 
 /**
@@ -141,7 +141,7 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
   }
 
   if (num[0] > 0 && num[1] > 0) {
-    this->totalcost += weight;
+    this->total_cost += weight;
   }
 }
 

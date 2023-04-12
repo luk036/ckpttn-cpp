@@ -34,7 +34,7 @@ private:
   size_t limitsize{7U};
 
 public:
-  int totalcost{};
+  int total_cost{};
 
   /**
    * @brief Construct a new MLPartMgr object

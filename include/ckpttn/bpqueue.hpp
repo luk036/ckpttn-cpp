@@ -6,10 +6,10 @@
 #include <utility>     // for pair
 #include <vector>      // for vector, vector<>::value_type, vector<>::const...
 
-#include "dllist.hpp" // for Dllink, dll_iterator
+#include "dllist.hpp" // for Dllink, DllIterator
 
 // Forward declaration for begin() end()
-template <typename Tp, typename Int> class bpq_iterator;
+template <typename Tp, typename Int> class BpqIterator;
 
 /**
  * @brief Bounded priority queue
@@ -21,7 +21,7 @@ template <typename Tp, typename Int> class bpq_iterator;
  * Note that this class does not own PQ nodes. This feature
  * allows these nodes sharable in both doubly linked list class and
  * this class. In the FM algorithm, nodes are either attached to
- * the gain buckets (PQ) or to the waitinglist (doubly-linked list),
+ * the gain buckets (PQ) or to the waiting_list (doubly-linked list),
  * but cannot be in both at the same time.
  *
  * Another improvement is to increase the size of the array by one
@@ -41,7 +41,7 @@ template <typename Tp, typename Int = int32_t,
 class BPQueue {
   using UInt = std::make_unsigned_t<Int>;
 
-  friend bpq_iterator<Tp, Int>;
+  friend BpqIterator<Tp, Int>;
   using Item = Dllink<std::pair<Tp, UInt>>;
 
   // static_assert(std::is_same<Item, typename _Sequence::value_type>::value,
@@ -242,16 +242,16 @@ public:
   /**
    * @brief Iterator point to the begin
    *
-   * @return bpq_iterator
+   * @return BpqIterator
    */
-  constexpr auto begin() -> bpq_iterator<Tp, Int>;
+  constexpr auto begin() -> BpqIterator<Tp, Int>;
 
   /**
    * @brief Iterator point to the end
    *
-   * @return bpq_iterator
+   * @return BpqIterator
    */
-  constexpr auto end() -> bpq_iterator<Tp, Int>;
+  constexpr auto end() -> BpqIterator<Tp, Int>;
 };
 
 /**
@@ -261,7 +261,7 @@ public:
  * Detaching a queue items may invalidate the iterator because
  * the iterator makes a copy of the current key.
  */
-template <typename Tp, typename Int = int32_t> class bpq_iterator {
+template <typename Tp, typename Int = int32_t> class BpqIterator {
   using UInt = std::make_unsigned_t<Int>;
 
   // using value_type = Tp;
@@ -288,15 +288,15 @@ public:
    * @param[in] bpq
    * @param[in] curkey
    */
-  constexpr bpq_iterator(BPQueue<Tp, Int> &bpq, UInt curkey)
+  constexpr BpqIterator(BPQueue<Tp, Int> &bpq, UInt curkey)
       : bpq{bpq}, curkey{curkey}, curitem{bpq.bucket[curkey].begin()} {}
 
   /**
    * @brief Move to the next item
    *
-   * @return bpq_iterator&
+   * @return BpqIterator&
    */
-  constexpr auto operator++() -> bpq_iterator & {
+  constexpr auto operator++() -> BpqIterator & {
     ++this->curitem;
     while (this->curitem == this->curlist().end()) {
       do {
@@ -322,8 +322,8 @@ public:
    * @return true
    * @return false
    */
-  friend constexpr auto operator==(const bpq_iterator &lhs,
-                                   const bpq_iterator &rhs) -> bool {
+  friend constexpr auto operator==(const BpqIterator &lhs,
+                                   const BpqIterator &rhs) -> bool {
     return lhs.curitem == rhs.curitem;
   }
 
@@ -335,8 +335,8 @@ public:
    * @return true
    * @return false
    */
-  friend constexpr auto operator!=(const bpq_iterator &lhs,
-                                   const bpq_iterator &rhs) -> bool {
+  friend constexpr auto operator!=(const BpqIterator &lhs,
+                                   const BpqIterator &rhs) -> bool {
     return !(lhs == rhs);
   }
 };
@@ -344,21 +344,21 @@ public:
 /**
  * @brief
  *
- * @return bpq_iterator
+ * @return BpqIterator
  */
 template <typename Tp, typename Int, class Sequence>
 inline constexpr auto BPQueue<Tp, Int, Sequence>::begin()
-    -> bpq_iterator<Tp, Int> {
+    -> BpqIterator<Tp, Int> {
   return {*this, this->max};
 }
 
 /**
  * @brief
  *
- * @return bpq_iterator
+ * @return BpqIterator
  */
 template <typename Tp, typename Int, class Sequence>
 inline constexpr auto BPQueue<Tp, Int, Sequence>::end()
-    -> bpq_iterator<Tp, Int> {
+    -> BpqIterator<Tp, Int> {
   return {*this, 0};
 }

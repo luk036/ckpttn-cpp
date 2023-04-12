@@ -25,7 +25,7 @@ template <typename Gnl> class FMConstrMgr {
 private:
   const Gnl &hgr;
   double bal_tol;
-  unsigned int totalweight{0};
+  unsigned int total_weight{0};
   unsigned int weight{}; // cache value
 
 protected:

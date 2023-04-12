@@ -72,7 +72,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
     this->_modify_gain(v, part_v, -weight);
     // this->_modify_gain_va(-weight, part_v, w, v);
   } else {
-    this->totalcost += weight;
+    this->total_cost += weight;
     this->vertex_list[part_v][w].data.second += weight;
     this->vertex_list[part_w][v].data.second += weight;
   }
@@ -112,7 +112,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
   } else if (part_w == part_u) {
     a = v, b = u, c = w;
   } else {
-    this->totalcost += 2 * weight;
+    this->total_cost += 2 * weight;
     // this->_modify_vertex_va(weight, part_v, u, w);
     // this->_modify_vertex_va(weight, part_w, u, v);
     // this->_modify_vertex_va(weight, part_u, v, w);
@@ -135,7 +135,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
   // this->_modify_vertex_va(weight, part[a], b, c);
   // this->_modify_vertex_va(weight, part[b], a);
 
-  this->totalcost += weight;
+  this->total_cost += weight;
 }
 
 /**
@@ -161,9 +161,9 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
   auto rng2 = all(num);
   auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
 
-  this->totalcost = -weight;
+  this->total_cost = -weight;
   rng3([&](const auto & /* c */) {
-    this->totalcost += weight;
+    this->total_cost += weight;
     return true;
   });
 
@@ -207,6 +207,15 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
   //   return true;
   // });
 }
+
+  /**
+   * @brief
+   *
+   */
+template <typename Gnl>
+auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
+    std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
+  }
 
 /**
  * @brief

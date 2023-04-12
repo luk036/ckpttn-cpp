@@ -4,7 +4,6 @@
 #include <utility> // for std::move()
 
 // Forward declaration for begin() end()
-template <typename T> class dll_iterator;
 template <typename T> class Dllist;
 template <typename T> class DllIterator;
 
@@ -21,7 +20,7 @@ template <typename T> class DllIterator;
  */
 #pragma pack(push, 1)
 template <typename T> class Dllink {
-  friend dll_iterator<T>;
+  friend DllIterator<T>;
   friend Dllist<T>;
   friend DllIterator<T>;
 
@@ -155,16 +154,16 @@ private:
   // /**
   //  * @brief
   //  *
-  //  * @return dll_iterator
+  //  * @return DllIterator
   //  */
-  // constexpr auto begin() noexcept -> dll_iterator<T>;
+  // constexpr auto begin() noexcept -> DllIterator<T>;
 
   // /**
   //  * @brief
   //  *
-  //  * @return dll_iterator
+  //  * @return DllIterator
   //  */
-  // constexpr auto end() noexcept -> dll_iterator<T>;
+  // constexpr auto end() noexcept -> DllIterator<T>;
 
   // using coro_t = boost::coroutines2::coroutine<Dllink&>;
   // using pull_t = typename coro_t::pull_type;
@@ -195,7 +194,7 @@ private:
 //  * List iterator. Traverse the list from the first item. Usually it is
 //  * safe to attach/detach list items during the iterator is active.
 //  */
-// template <typename T> class dll_iterator {
+// template <typename T> class DllIterator {
 //   private:
 //     Dllink<T>* cur; /**< pointer to the current item */
 
@@ -205,14 +204,14 @@ private:
 //      *
 //      * @param[in] cur
 //      */
-//     constexpr explicit dll_iterator(Dllink<T>* cur) noexcept : cur{cur} {}
+//     constexpr explicit DllIterator(Dllink<T>* cur) noexcept : cur{cur} {}
 
 //     /**
 //      * @brief move to the next item
 //      *
 //      * @return Dllink&
 //      */
-//     constexpr auto operator++() noexcept -> dll_iterator& {
+//     constexpr auto operator++() noexcept -> DllIterator& {
 //         this->cur = this->cur->next;
 //         return *this;
 //     }
@@ -232,7 +231,7 @@ private:
 //      * @return true
 //      * @return false
 //      */
-//     friend auto operator==(const dll_iterator& lhs, const dll_iterator& rhs)
+//     friend auto operator==(const DllIterator& lhs, const DllIterator& rhs)
 //     noexcept -> bool {
 //         return lhs.cur == rhs.cur;
 //     }
@@ -245,7 +244,7 @@ private:
 //      * @return true
 //      * @return false
 //      */
-//     friend auto operator!=(const dll_iterator& lhs, const dll_iterator& rhs)
+//     friend auto operator!=(const DllIterator& lhs, const DllIterator& rhs)
 //     noexcept -> bool {
 //         return !(lhs == rhs);
 //     }
@@ -254,19 +253,19 @@ private:
 // /**
 //  * @brief begin
 //  *
-//  * @return dll_iterator
+//  * @return DllIterator
 //  */
 // template <typename T> inline constexpr auto Dllink<T>::begin() noexcept ->
-// dll_iterator<T> {
-//     return dll_iterator<T>{this->next};
+// DllIterator<T> {
+//     return DllIterator<T>{this->next};
 // }
 
 // /**
 //  * @brief end
 //  *
-//  * @return dll_iterator
+//  * @return DllIterator
 //  */
 // template <typename T> inline constexpr auto Dllink<T>::end() noexcept ->
-// dll_iterator<T> {
-//     return dll_iterator<T>{this};
+// DllIterator<T> {
+//     return DllIterator<T>{this};
 // }

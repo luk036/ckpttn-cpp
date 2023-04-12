@@ -45,7 +45,7 @@ public:
    * @param[in] key
    */
   auto modify_key(const node_t &w, std::uint8_t part_w, int key) -> void {
-    this->gainbucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w],
+    this->gain_bucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w],
                                             key);
   }
 
@@ -69,7 +69,7 @@ public:
    */
   auto lock(uint8_t whichPart, const node_t &v) -> void {
     auto &vlink = this->gain_calc.vertex_list[v];
-    this->gainbucket[whichPart].detach(vlink);
+    this->gain_bucket[whichPart].detach(vlink);
     vlink.lock();
   }
 
@@ -92,6 +92,6 @@ private:
    * @param[in] key
    */
   auto _set_key(uint8_t whichPart, const node_t &v, int key) -> void {
-    this->gainbucket[whichPart].set_key(this->gain_calc.vertex_list[v], key);
+    this->gain_bucket[whichPart].set_key(this->gain_calc.vertex_list[v], key);
   }
 };

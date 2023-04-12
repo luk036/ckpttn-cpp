@@ -30,7 +30,7 @@ public:
 private:
   const Gnl &hgr;
   std::vector<Item> vertex_list;
-  int totalcost{0};
+  int total_cost{0};
   uint8_t stack_buf[8192]; // TODO
   FMPmr::monotonic_buffer_resource rsrc;
 
@@ -58,14 +58,14 @@ public:
    * @param[in] part
    */
   auto init(gsl::span<const std::uint8_t> part) -> int {
-    this->totalcost = 0;
+    this->total_cost = 0;
     for (auto &vlink : this->vertex_list) {
       vlink.data.second = 0;
     }
     for (const auto &net : this->hgr.nets) {
       this->_init_gain(net, part);
     }
-    return this->totalcost;
+    return this->total_cost;
   }
 
   /**

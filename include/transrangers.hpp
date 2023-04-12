@@ -16,7 +16,7 @@
 #endif
 
 #include <iterator>
-#include <optional>
+// #include <optional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -191,30 +191,30 @@ struct identity_adaption {
   }
 };
 
-template <typename Ranger, typename Adaption = identity_adaption>
-auto join(Ranger rgr) {
-  using cursor = typename Ranger::cursor;
-  using subranger =
-      std::remove_cv_t<std::remove_reference_t<decltype(Adaption::adapt(
-          *std::declval<const cursor &>()))>>;
-  using subranger_cursor = typename subranger::cursor;
+// template <typename Ranger, typename Adaption = identity_adaption>
+// auto join(Ranger rgr) {
+//   using cursor = typename Ranger::cursor;
+//   using subranger =
+//       std::remove_cv_t<std::remove_reference_t<decltype(Adaption::adapt(
+//           *std::declval<const cursor &>()))>>;
+//   using subranger_cursor = typename subranger::cursor;
 
-  return ranger<subranger_cursor>([=, osrgr = std::optional<subranger>{}](
-                                      auto dst) TRANSRANGERS_HOT_MUTABLE {
-    if (osrgr) {
-      if (!(*osrgr)(dst))
-        return false;
-    }
-    return rgr([&](const auto &p) TRANSRANGERS_HOT {
-      auto srgr = Adaption::adapt(*p);
-      if (!srgr(dst)) {
-        osrgr.emplace(std::move(srgr));
-        return false;
-      } else
-        return true;
-    });
-  });
-}
+//   return ranger<subranger_cursor>([=, osrgr = std::optional<subranger>{}](
+//                                       auto dst) TRANSRANGERS_HOT_MUTABLE {
+//     if (osrgr) {
+//       if (!(*osrgr)(dst))
+//         return false;
+//     }
+//     return rgr([&](const auto &p) TRANSRANGERS_HOT {
+//       auto srgr = Adaption::adapt(*p);
+//       if (!srgr(dst)) {
+//         osrgr.emplace(std::move(srgr));
+//         return false;
+//       } else
+//         return true;
+//     });
+//   });
+// }
 
 struct all_adaption {
   template <typename T> static auto adapt(T &&srgn) {
@@ -222,9 +222,9 @@ struct all_adaption {
   }
 };
 
-template <typename Ranger> auto ranger_join(Ranger rgr) {
-  return join<Ranger, all_adaption>(std::move(rgr));
-}
+// template <typename Ranger> auto ranger_join(Ranger rgr) {
+//   return join<Ranger, all_adaption>(std::move(rgr));
+// }
 
 // zip
 template <typename... Rangers> struct zip_cursor {

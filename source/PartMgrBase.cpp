@@ -23,7 +23,7 @@
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr> //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(gsl::span<std::uint8_t> part) {
-  this->totalcost = this->gain_mgr.init(part);
+  this->total_cost = this->gain_mgr.init(part);
   this->validator.init(part);
 }
 
@@ -71,15 +71,15 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(
     if (legalcheck == LegalCheck::NotSatisfied) { // NotSatisfied
       continue;
     }
-    // Update v and its neigbours (even they are in waitinglist);
+    // Update v and its neigbours (even they are in waiting_list);
     // Put neigbours to bucket
     this->gain_mgr.update_move(part, move_info_v);
     this->gain_mgr.update_move_v(move_info_v, gainmax);
     this->validator.update_move(move_info_v);
     part[v] = to_part;
     // totalgain += gainmax;
-    this->totalcost -= gainmax;
-    assert(this->totalcost >= 0);
+    this->total_cost -= gainmax;
+    assert(this->total_cost >= 0);
   }
   return legalcheck;
 }
@@ -104,7 +104,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(
   auto besttotalgain = 0;
 
   while (!this->gain_mgr.is_empty()) {
-    // Take the gainmax with v from gainbucket
+    // Take the gainmax with v from gain_bucket
     // auto [move_info_v, gainmax] = this->gain_mgr.select(part);
     auto result = this->gain_mgr.select(part);
     auto move_info_v = result.first;
@@ -128,7 +128,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(
       besttotalgain = totalgain + gainmax;
       deferredsnapshot = false;
     }
-    // Update v and its neigbours (even they are in waitinglist);
+    // Update v and its neigbours (even they are in waiting_list);
     // Put neigbours to bucket
     // const auto& [v, _, to_part] = move_info_v;
     this->gain_mgr.lock(move_info_v.to_part, move_info_v.v);
@@ -144,7 +144,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(
     this->restore_part(snapshot, part);
     totalgain = besttotalgain;
   }
-  this->totalcost -= totalgain;
+  this->total_cost -= totalgain;
 }
 
 /**
@@ -160,17 +160,17 @@ template <typename Gnl, typename GainMgr, typename ConstrMgr> //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(
     gsl::span<std::uint8_t> part) {
   // this->init(part);
-  // auto totalcostafter = this->totalcost;
+  // auto totalcostafter = this->total_cost;
   while (true) {
     this->init(part);
-    auto totalcostbefore = this->totalcost;
+    auto totalcostbefore = this->total_cost;
     // assert(totalcostafter == totalcostbefore);
     this->_optimize_1pass(part);
-    assert(this->totalcost <= totalcostbefore);
-    if (this->totalcost == totalcostbefore) {
+    assert(this->total_cost <= totalcostbefore);
+    if (this->total_cost == totalcostbefore) {
       break;
     }
-    // totalcostafter = this->totalcost;
+    // totalcostafter = this->total_cost;
   }
 }
 
