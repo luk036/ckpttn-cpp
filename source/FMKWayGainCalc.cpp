@@ -161,7 +161,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
   auto rng2 = all(num);
   auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
 
-  this->total_cost = -weight;
+  this->total_cost -= weight;
   rng3([&](const auto & /* c */) {
     this->total_cost += weight;
     return true;
@@ -208,14 +208,13 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
   // });
 }
 
-  /**
-   * @brief
-   *
-   */
-template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
-    std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
-  }
+/**
+ * @brief
+ *
+ */
+template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
+  std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
+}
 
 /**
  * @brief
