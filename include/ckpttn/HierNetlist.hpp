@@ -38,7 +38,7 @@ public:
   std::vector<node_t> node_up_map;
   std::vector<node_t> node_down_map;
   py::dict<index_t, node_t> cluster_down_map;
-  ShiftArray<std::vector<int>> net_weight{};
+  ShiftArray<std::vector<uint32_t>> net_weight{};
 
   /**
    * @brief Construct a new Hier Netlist object
@@ -72,8 +72,8 @@ public:
    *
    * @return int
    */
-  auto get_net_weight(const node_t &net) const -> int {
-    return this->net_weight.empty() ? 1 : this->net_weight[net];
+  auto get_net_weight(const node_t &net) const -> uint32_t {
+    return this->net_weight.empty() ? 1U : this->net_weight[net];
   }
 };
 

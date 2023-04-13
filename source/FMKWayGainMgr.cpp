@@ -32,7 +32,7 @@ auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
     const auto pv = part[v];
     for (const auto &k : this->rr.exclude(pv)) {
       auto &vlink = this->gain_calc.vertex_list[k][v];
-      this->gain_bucket[k].append_direct(vlink);
+      this->gain_bucket[k].append(vlink, this->gain_calc.init_gain_list[k][v]);
     }
     auto &vlink = this->gain_calc.vertex_list[pv][v];
     this->gain_bucket[pv].set_key(vlink, 0);

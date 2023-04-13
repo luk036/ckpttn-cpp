@@ -68,13 +68,15 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
   const auto part_v = part[v];
   const auto weight = this->hgr.get_net_weight(net);
   if (part_v == part_w) {
-    this->_modify_gain(w, part_v, -weight);
-    this->_modify_gain(v, part_v, -weight);
+    this->_decrease_gain(w, part_v, weight);
+    this->_decrease_gain(v, part_v, weight);
     // this->_modify_gain_va(-weight, part_v, w, v);
   } else {
     this->total_cost += weight;
-    this->vertex_list[part_v][w].data.second += weight;
-    this->vertex_list[part_w][v].data.second += weight;
+    // this->vertex_list[part_v][w].data.second += weight;
+    this->init_gain_list[part_v][w] += weight;
+    // this->vertex_list[part_w][v].data.second += weight;
+    this->init_gain_list[part_w][v] += weight;
   }
 }
 
@@ -101,9 +103,9 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
 
   if (part_u == part_v) {
     if (part_w == part_v) {
-      this->_modify_gain(u, part_v, -weight);
-      this->_modify_gain(v, part_v, -weight);
-      this->_modify_gain(w, part_v, -weight);
+      this->_decrease_gain(u, part_v, weight);
+      this->_decrease_gain(v, part_v, weight);
+      this->_decrease_gain(w, part_v, weight);
       // this->_modify_gain_va(-weight, part_v, u, v, w);
       return;
     }
@@ -116,20 +118,22 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
     // this->_modify_vertex_va(weight, part_v, u, w);
     // this->_modify_vertex_va(weight, part_w, u, v);
     // this->_modify_vertex_va(weight, part_u, v, w);
-    this->_modify_gain(u, part_v, weight);
-    this->_modify_gain(w, part_v, weight);
-    this->_modify_gain(u, part_w, weight);
-    this->_modify_gain(v, part_w, weight);
-    this->_modify_gain(v, part_u, weight);
-    this->_modify_gain(w, part_u, weight);
+    this->_increase_gain(u, part_v, weight);
+    this->_increase_gain(w, part_v, weight);
+    this->_increase_gain(u, part_w, weight);
+    this->_increase_gain(v, part_w, weight);
+    this->_increase_gain(v, part_u, weight);
+    this->_increase_gain(w, part_u, weight);
     return;
   }
 
   for (const auto &e : {b, c}) {
-    this->_modify_gain(e, part[b], -weight);
-    this->vertex_list[part[a]][e].data.second += weight;
+    this->_decrease_gain(e, part[b], weight);
+    // this->vertex_list[part[a]][e].data.second += weight;
+    this->init_gain_list[part[a]][e] += weight;
   }
-  this->vertex_list[part[b]][a].data.second += weight;
+  // this->vertex_list[part[b]][a].data.second += weight;
+  this->init_gain_list[part[b]][a] += weight;
 
   // this->_modify_gain_va(-weight, part[b], b, c);
   // this->_modify_vertex_va(weight, part[a], b, c);
@@ -157,27 +161,28 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
     return true;
   });
 
-  const auto weight = this->hgr.get_net_weight(net);
+  const uint32_t weight = this->hgr.get_net_weight(net);
   auto rng2 = all(num);
   auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
 
-  this->total_cost -= weight;
   rng3([&](const auto & /* c */) {
     this->total_cost += weight;
     return true;
   });
+  this->total_cost -= weight;
 
   auto k = 0U;
   for (const auto &c : num) {
     if (c == 0) {
       rng([&](const auto &wc) {
-        this->vertex_list[k][*wc].data.second -= weight;
+        // this->vertex_list[k][*wc].data.second -= weight;
+        this->init_gain_list[k][*wc] -= int(weight);
         return true;
       });
     } else if (c == 1) {
       rng([&](const auto &wc) {
         if (part[*wc] == k) {
-          this->_modify_gain(*wc, part[*wc], weight);
+          this->_increase_gain(*wc, part[*wc], weight);
           return false;
         }
         return true;
@@ -231,7 +236,7 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(
   // const auto& [net, v, from_part, to_part] = move_info;
   assert(part[move_info.v] == move_info.from_part);
 
-  auto weight = this->hgr.get_net_weight(move_info.net);
+  auto gain = int(this->hgr.get_net_weight(move_info.net));
   // auto delta_gain_w = vector<int>(this->num_parts, 0);
   auto net_cur = this->hgr.gr[move_info.net].begin();
   auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
@@ -243,14 +248,14 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(
   // #pragma unroll
   for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
     if (part[w] == l_part) {
-      rng3([&weight](const auto &zc) {
-        std::get<0>(*zc) += weight;
-        std::get<1>(*zc) += weight;
+      rng3([&gain](const auto &zc) {
+        std::get<0>(*zc) += gain;
+        std::get<1>(*zc) += gain;
         return true;
       });
     }
-    this->delta_gain_w[l_part] -= weight;
-    weight = -weight;
+    this->delta_gain_w[l_part] -= gain;
+    gain = -gain;
   }
   return w;
 }
@@ -289,7 +294,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
   const auto degree = this->idx_vec.size();
   auto delta_gain =
       vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
-  auto weight = this->hgr.get_net_weight(move_info.net);
+  auto gain = int(this->hgr.get_net_weight(move_info.net));
   const auto part_w = part[this->idx_vec[0]];
   const auto part_u = part[this->idx_vec[1]];
   auto l = move_info.from_part;
@@ -300,19 +305,19 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
     // #pragma unroll
     for (auto i = 0; i != 2; ++i) {
       if (part_w != l) {
-        delta_gain[0][l] -= weight;
-        delta_gain[1][l] -= weight;
+        delta_gain[0][l] -= gain;
+        delta_gain[1][l] -= gain;
         if (part_w == u) {
           // for (auto &dgv : this->delta_gain_v) {
           //   dgv -= weight;
           // }
-          rngv([&weight](const auto &dgcv) {
-            *dgcv -= weight;
+          rngv([&gain](const auto &dgcv) {
+            *dgcv -= gain;
             return true;
           });
         }
       }
-      weight = -weight;
+      gain = -gain;
       swap(l, u);
     }
     return delta_gain;
@@ -324,26 +329,26 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
   // #pragma unroll
   for (auto i = 0; i != 2; ++i) {
     if (part_w == l) {
-      rng0([&weight](const auto &dgc0) {
-        *dgc0 += weight;
+      rng0([&gain](const auto &dgc0) {
+        *dgc0 += gain;
         return true;
       });
     } else if (part_u == l) {
-      rng1([&weight](const auto &dgc1) {
-        *dgc1 += weight;
+      rng1([&gain](const auto &dgc1) {
+        *dgc1 += gain;
         return true;
       });
     } else {
-      delta_gain[0][l] -= weight;
-      delta_gain[1][l] -= weight;
+      delta_gain[0][l] -= gain;
+      delta_gain[1][l] -= gain;
       if (part_w == u || part_u == u) {
-        rngv([&weight](const auto &dgcv) {
-          *dgcv -= weight;
+        rngv([&gain](const auto &dgcv) {
+          *dgcv -= gain;
           return true;
         });
       }
     }
-    weight = -weight;
+    gain = -gain;
     swap(l, u);
   }
   return delta_gain;
@@ -376,7 +381,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
   const auto degree = idx_vec.size();
   auto delta_gain =
       vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
-  auto weight = this->hgr.get_net_weight(move_info.net);
+  auto gain = int(this->hgr.get_net_weight(move_info.net));
 
   auto l = move_info.from_part;
   auto u = move_info.to_part;
@@ -388,24 +393,24 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
   // #pragma unroll
   for (auto i = 0; i != 2; ++i) {
     if (num[l] == 0) {
-      rng2([&weight, &l](const auto &dgc) {
-        (*dgc)[l] -= weight;
+      rng2([&gain, &l](const auto &dgc) {
+        (*dgc)[l] -= gain;
         return true;
       });
 
       if (num[u] > 0) {
-        rng4([&weight](const auto &dgvc) {
-          *dgvc -= weight;
+        rng4([&gain](const auto &dgvc) {
+          *dgvc -= gain;
           return true;
         });
       }
     } else if (num[l] == 1) {
-      rng3([&weight, &l, &part](const auto &zc) {
+      rng3([&gain, &l, &part](const auto &zc) {
         auto part_w = part[std::get<0>(*zc)];
         if (part_w == l) {
           auto rng = all(std::get<1>(*zc));
-          rng([&weight](const auto &dgc) {
-            *dgc += weight;
+          rng([&gain](const auto &dgc) {
+            *dgc += gain;
             return true;
           });
           return false;
@@ -413,7 +418,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
         return true;
       });
     }
-    weight = -weight;
+    gain = -gain;
     swap(l, u);
   };
   return delta_gain;

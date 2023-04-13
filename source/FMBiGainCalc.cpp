@@ -61,11 +61,11 @@ void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
   const auto weight = this->hgr.get_net_weight(net);
   if (part[w] != part[v]) {
     this->total_cost += weight;
-    this->_modify_gain(w, weight);
-    this->_modify_gain(v, weight);
+    this->_increase_gain(w, weight);
+    this->_increase_gain(v, weight);
   } else {
-    this->_modify_gain(w, -weight);
-    this->_modify_gain(v, -weight);
+    this->_decrease_gain(w, weight);
+    this->_decrease_gain(v, weight);
   }
 }
 
@@ -87,17 +87,17 @@ void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
   if (part[u] == part[v]) {
     if (part[w] == part[v]) {
       // this->_modify_gain_va(-weight, u, v, w);
-      this->_modify_gain(u, -weight);
-      this->_modify_gain(v, -weight);
-      this->_modify_gain(w, -weight);
+      this->_decrease_gain(u, weight);
+      this->_decrease_gain(v, weight);
+      this->_decrease_gain(w, weight);
       return;
     }
     // this->_modify_gain_va(weight, w);
-    this->_modify_gain(w, weight);
+    this->_increase_gain(w, weight);
   } else if (part[w] == part[v]) {
-    this->_modify_gain(u, weight);
+    this->_increase_gain(u, weight);
   } else {
-    this->_modify_gain(v, weight);
+    this->_increase_gain(v, weight);
   }
   this->total_cost += weight;
 }
@@ -119,20 +119,20 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
     return true;
   });
 
-  const auto weight = this->hgr.get_net_weight(net);
+  const uint32_t weight = this->hgr.get_net_weight(net);
 
   // #pragma unroll
   for (const auto &k : {0U, 1U}) {
     if (num[k] == 0) {
       rng([&](const auto &wc) {
-        this->_modify_gain(*wc, -weight);
+        this->_decrease_gain(*wc, weight);
         return true;
       });
 
     } else if (num[k] == 1) {
       rng([&](const auto &wc) {
         if (part[*wc] == k) {
-          this->_modify_gain(*wc, weight);
+          this->_increase_gain(*wc, weight);
           return false;
         }
         return true;
@@ -198,18 +198,18 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(
   // const auto& [net, v, from_part, _] = move_info;
 
   auto delta_gain = vector<int>{0, 0};
-  auto weight = this->hgr.get_net_weight(move_info.net);
+  auto gain = int(this->hgr.get_net_weight(move_info.net));
   const auto part_w = part[this->idx_vec[0]];
 
   if (part_w != move_info.from_part) {
-    weight = -weight;
+    gain = -gain;
   }
   if (part_w == part[this->idx_vec[1]]) {
-    delta_gain[0] += weight;
-    delta_gain[1] += weight;
+    delta_gain[0] += gain;
+    delta_gain[1] += gain;
   } else {
-    delta_gain[0] += weight;
-    delta_gain[1] -= weight;
+    delta_gain[0] += gain;
+    delta_gain[1] -= gain;
   }
   return delta_gain;
 }

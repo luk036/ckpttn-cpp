@@ -122,11 +122,11 @@ public:
    *
    * @return int
    */
-  auto get_net_weight(const node_t & /*net*/) const -> int {
+  auto get_net_weight(const node_t & /*net*/) const -> uint32_t {
     // return this->net_weight.is_empty() ? 1
     //                                 :
     //                                 this->net_weight[this->net_map[net]];
-    return 1;
+    return 1U;
   }
 };
 

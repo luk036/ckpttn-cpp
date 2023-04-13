@@ -30,6 +30,7 @@ public:
 private:
   const Gnl &hgr;
   std::vector<Item> vertex_list;
+  std::vector<int> init_gain_list;
   int total_cost{0};
   uint8_t stack_buf[8192]; // TODO
   FMPmr::monotonic_buffer_resource rsrc;
@@ -46,9 +47,10 @@ public:
    */
   explicit FMBiGainCalc(const Gnl &hgr, std::uint8_t /*num_parts*/)
       : hgr{hgr}, vertex_list(hgr.number_of_modules()),
+        init_gain_list(hgr.number_of_modules(), 0),
         rsrc(stack_buf, sizeof stack_buf), idx_vec(&rsrc) {
     for (const auto &v : this->hgr) {
-      this->vertex_list[v].data = std::make_pair(v, int32_t(0));
+      this->vertex_list[v].data = std::make_pair(v, uint32_t(0));
     }
   }
 
@@ -60,7 +62,10 @@ public:
   auto init(gsl::span<const std::uint8_t> part) -> int {
     this->total_cost = 0;
     for (auto &vlink : this->vertex_list) {
-      vlink.data.second = 0;
+      vlink.data.second = 0U;
+    }
+    for (auto &elem : this->init_gain_list) {
+      elem = 0;
     }
     for (const auto &net : this->hgr.nets) {
       this->_init_gain(net, part);
@@ -124,62 +129,31 @@ private:
    * @param[in] weight
    */
   auto _modify_gain(const node_t &w, int weight) -> void {
-    this->vertex_list[w].data.second += weight;
+    // this->vertex_list[w].data.second += weight;
+    this->init_gain_list[w] += weight;
   }
 
-  // /**
-  //  * @brief
-  //  *
-  //  * @tparam Ts
-  //  * @param[in] weight
-  //  * @param[in] w
-  //  */
-  // template <typename... Ts> auto _modify_gain_va(unsigned int weight, Ts...
-  // w) -> void {
-  //     ((this->vertex_list[w].data.second += weight), ...);
-  // }
+  /**
+   * @brief
+   *
+   * @param[in] w
+   * @param[in] weight
+   */
+  auto _increase_gain(const node_t &w, uint32_t weight) -> void {
+    // this->vertex_list[w].data.second += weight;
+    this->init_gain_list[w] += weight;
+  }
 
-  // /**
-  //  * @brief
-  //  *
-  //  * @tparam Ts
-  //  * @param[in] weight
-  //  * @param[in] w
-  //  */
-  // auto _modify_gain_va(unsigned int weight, const node_t& w1) -> void
-  // {
-  //     this->vertex_list[w1].data.second += weight;
-  // }
-
-  // /**
-  //  * @brief
-  //  *
-  //  * @tparam Ts
-  //  * @param[in] weight
-  //  * @param[in] w
-  //  */
-  // auto _modify_gain_va(unsigned int weight, const node_t& w1, const node_t&
-  // w2) -> void
-  // {
-  //     this->vertex_list[w1].data.second += weight;
-  //     this->vertex_list[w2].data.second += weight;
-  // }
-
-  // /**
-  //  * @brief
-  //  *
-  //  * @tparam Ts
-  //  * @param[in] weight
-  //  * @param[in] w
-  //  */
-  // auto _modify_gain_va(unsigned int weight, const node_t& w1, const node_t&
-  // w2,
-  //     const node_t& w3) -> void
-  // {
-  //     this->vertex_list[w1].data.second += weight;
-  //     this->vertex_list[w2].data.second += weight;
-  //     this->vertex_list[w3].data.second += weight;
-  // }
+  /**
+   * @brief
+   *
+   * @param[in] w
+   * @param[in] weight
+   */
+  auto _decrease_gain(const node_t &w, uint32_t weight) -> void {
+    // this->vertex_list[w].data.second += weight;
+    this->init_gain_list[w] -= weight;
+  }
 
   /**
    * @brief
