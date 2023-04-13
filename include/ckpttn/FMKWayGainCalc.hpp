@@ -156,8 +156,7 @@ private:
    * @param[in] part_v
    * @param[in] weight
    */
-  auto _modify_gain(const node_t &v, std::uint8_t part_v, int weight)
-      -> void {
+  auto _modify_gain(const node_t &v, std::uint8_t part_v, int weight) -> void {
     for (const auto &k : this->rr.exclude(part_v)) {
       // this->vertex_list[k][v].data.second += weight;
       this->init_gain_list[k][v] += weight;

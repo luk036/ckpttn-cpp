@@ -198,7 +198,8 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
       //     break;
       //   }
       // }
-      auto rng_new = all(this->hgr.gr[net]); // reinitialize after breaking (fix for Termux's clang 16)
+      auto rng_new = all(this->hgr.gr[net]); // reinitialize after breaking (fix
+                                             // for Termux's clang 16)
       rng_new([&part, k, weight, this](const auto &wc) {
         if (part[*wc] == k) {
           this->_increase_gain(*wc, part[*wc], weight);

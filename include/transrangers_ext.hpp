@@ -166,8 +166,7 @@ class __lambda_255_33 {
 
 public:
   template <class type_parameter_4_0>
-  TRANSRANGERS_HOT inline auto
-  operator()(const type_parameter_4_0 &p) const {
+  TRANSRANGERS_HOT inline auto operator()(const type_parameter_4_0 &p) const {
     std::get<I + 1>(zp.ps) = p;
     return false;
   }
@@ -184,8 +183,7 @@ template <typename Ranger, typename... Rangers> class __lambda_249_18 {
 
 public:
   template <std::size_t... I>
-  TRANSRANGERS_HOT inline auto
-  operator()(std::index_sequence<I...>) const {
+  TRANSRANGERS_HOT inline auto operator()(std::index_sequence<I...>) const {
     return (std::get<I>(rgrs)(__lambda_255_33<I, Ranger, Rangers...>{zp}) ||
             ...);
   }
@@ -205,8 +203,7 @@ class __lambda_246_16 {
 
 public:
   template <class type_parameter_2_0>
-  TRANSRANGERS_HOT inline auto
-  operator()(const type_parameter_2_0 &p) const {
+  TRANSRANGERS_HOT inline auto operator()(const type_parameter_2_0 &p) const {
     std::get<0>(zp.ps) = p;
     if (__lambda_249_18{zp, rgrs}(std::index_sequence_for<Rangers...>{})) {
       finished = true;

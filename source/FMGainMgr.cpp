@@ -2,10 +2,10 @@
 #include <ckpttn/FMPmrConfig.hpp> // for FM_MAX_DEGREE
 #include <gsl/gsl_util>           // for narrow_cast
 
-#include <algorithm>      // for all_of, max_element
-#include <iterator>       // for distance
-#include <type_traits>    // for is_base_of, integral_const...
-#include <vector>         // for vector<>::iterator, vector
+#include <algorithm>   // for all_of, max_element
+#include <iterator>    // for distance
+#include <type_traits> // for is_base_of, integral_const...
+#include <vector>      // for vector<>::iterator, vector
 
 #include "ckpttn/bpqueue.hpp"  // for BPQueue
 #include "ckpttn/dllist.hpp"   // for Dllink

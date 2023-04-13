@@ -52,7 +52,7 @@ public:
                   gsl::span<const int> keys) -> void {
     for (auto k : this->rr.exclude(part_w)) {
       this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][w],
-                                     keys[k]);
+                                      keys[k]);
     }
   }
 

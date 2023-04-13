@@ -38,7 +38,8 @@ private:
 public:
   ShiftArray() : Container{} {}
 
-  explicit ShiftArray(Container &&base) : Container{std::forward<Container>(base)} {}
+  explicit ShiftArray(Container &&base)
+      : Container{std::forward<Container>(base)} {}
 
   void set_start(const size_t &start) { this->_start = start; }
 

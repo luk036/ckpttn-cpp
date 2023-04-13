@@ -46,7 +46,7 @@ public:
    */
   auto modify_key(const node_t &w, std::uint8_t part_w, int key) -> void {
     this->gain_bucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w],
-                                            key);
+                                             key);
   }
 
   /**
