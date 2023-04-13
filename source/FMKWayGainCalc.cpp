@@ -151,42 +151,60 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_general_net(
     const typename Gnl::node_t &net, gsl::span<const uint8_t> part) {
-  uint8_t StackBufLocal[2048];
-  FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
-                                             sizeof StackBufLocal);
-  auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
-  auto rng = all(this->hgr.gr[net]);
-  rng([&](const auto &wc) {
-    num[part[*wc]] += 1;
-    return true;
-  });
+  // uint8_t StackBufLocal[2048];
+  // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
+  //                                            sizeof StackBufLocal);
+  // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
+  auto num = std::vector<uint8_t>(this->num_parts, 0);
+  for (const auto &w : this->hgr.gr[net]) {
+    num[part[w]] += 1;
+  }
+  // auto rng = all(this->hgr.gr[net]);
+  // rng([&](const auto &wc) {
+  //   num[part[*wc]] += 1;
+  //   return true;
+  // });
 
   const uint32_t weight = this->hgr.get_net_weight(net);
-  auto rng2 = all(num);
-  auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
-
-  rng3([&](const auto & /* c */) {
-    this->total_cost += weight;
-    return true;
-  });
+  for (const auto &c : num) {
+    if (c > 0) {
+      this->total_cost += weight;
+    }
+  }
+  // auto rng2 = all(num);
+  // auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
+  //
+  // rng3([&](const auto & /* c */) {
+  //   this->total_cost += weight;
+  //   return true;
+  // });
   this->total_cost -= weight;
 
   auto k = 0U;
   for (const auto &c : num) {
     if (c == 0) {
-      rng([&](const auto &wc) {
-        // this->vertex_list[k][*wc].data.second -= weight;
-        this->init_gain_list[k][*wc] -= int(weight);
-        return true;
-      });
+      for (const auto &w : this->hgr.gr[net]) {
+        this->init_gain_list[k][w] -= int(weight);
+      }
+      // rng([&](const auto &wc) {
+      //   // this->vertex_list[k][*wc].data.second -= weight;
+      //   this->init_gain_list[k][*wc] -= int(weight);
+      //   return true;
+      // });
     } else if (c == 1) {
-      rng([&](const auto &wc) {
-        if (part[*wc] == k) {
-          this->_increase_gain(*wc, part[*wc], weight);
-          return false;
+      for (const auto &w : this->hgr.gr[net]) {
+        if (part[w] == k) {
+          this->_increase_gain(w, part[w], weight);
+          break;
         }
-        return true;
-      });
+      }
+      // rng([&](const auto &wc) {
+      //   if (part[*wc] == k) {
+      //     this->_increase_gain(*wc, part[*wc], weight);
+      //     return false;
+      //   }
+      //   return true;
+      // });
     }
     ++k;
   }
@@ -241,16 +259,26 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(
   auto net_cur = this->hgr.gr[move_info.net].begin();
   auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
   fill(this->delta_gain_w.begin(), this->delta_gain_w.end(), 0);
-  auto rng1 = all(this->delta_gain_w);
-  auto rng2 = all(this->delta_gain_v);
-  auto rng3 = zip2(rng1, rng2);
+  auto rng_w = all(this->delta_gain_w);
+  auto rng_v = all(this->delta_gain_v);
 
   // #pragma unroll
   for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
     if (part[w] == l_part) {
-      rng3([&gain](const auto &zc) {
-        std::get<0>(*zc) += gain;
-        std::get<1>(*zc) += gain;
+      // for (auto &dgw : delta_gain_w) {
+      //   dgw += gain;
+      // }
+      // for (auto &dgv : delta_gain_v) {
+      //   dgv += gain;
+      // }
+
+      // luk: two ranges cannot zipped because of different lengths
+      rng_w([&gain](const auto &dgwc) {
+        *dgwc += gain;
+        return true;
+      });
+      rng_v([&gain](const auto &dgvc) {
+        *dgvc += gain;
         return true;
       });
     }
@@ -368,10 +396,11 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
     const MoveInfo<typename Gnl::node_t> &move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
   // const auto& [net, v, from_part, to_part] = move_info;
-  uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
-  FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
-                                             sizeof StackBufLocal);
-  auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
+  // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
+  // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
+  //                                            sizeof StackBufLocal);
+  // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
+  auto num = std::vector<uint8_t>(this->num_parts, 0);
   auto rng1 = all(this->idx_vec);
   rng1([&](const auto &wc) {
     num[part[*wc]] += 1;

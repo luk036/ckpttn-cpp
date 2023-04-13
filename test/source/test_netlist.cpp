@@ -46,15 +46,15 @@ auto create_dwarf() -> SimpleNetlist {
   // using IndexMap =
   //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
   // IndexMap index = boost::get(boost::vertex_index, g);
-  // auto gr = py::GraphAdaptor<graph_t>(move(g));
+  // auto gr = py::GraphAdaptor<graph_t>(std::move(g));
 
   // vector<node_t> module_list(7);
   // vector<node_t> net_list(5);
   vector<unsigned int> module_weight = {1, 3, 4, 2, 0, 0, 0};
-  // auto hgr = Netlist{move(g), py::range(7), py::range(7, 13),
+  // auto hgr = Netlist{std::move(g), py::range(7), py::range(7, 13),
   // py::range(7),
   //                  py::range(-7, 6)};
-  SimpleNetlist hgr(move(g), 7, 6);
+  SimpleNetlist hgr(std::move(g), 7, 6);
 
   hgr.module_weight = module_weight;
   hgr.num_pads = 3;
@@ -77,7 +77,7 @@ auto create_test_netlist() -> SimpleNetlist {
   // index_t indices[] = {0, 1, 2, 3, 4, 5};
   // auto num_arcs = sizeof(edge_array) / sizeof(Edge);
   // auto g = graph_t{edge_array, edge_array + num_arcs, num_nodes};
-  // auto gr = py::GraphAdaptor<graph_t>{move(g)};
+  // auto gr = py::GraphAdaptor<graph_t>{std::move(g)};
   // const auto R = py::range(num_nodes);
   graph_t g(num_nodes);
   for (const auto &e : edge_array) {
@@ -85,8 +85,8 @@ auto create_test_netlist() -> SimpleNetlist {
   }
 
   auto module_weight = vector<unsigned int>{3, 4, 2};
-  auto hgr = SimpleNetlist{move(g), 3, 3};
-  hgr.module_weight = move(module_weight);
+  auto hgr = SimpleNetlist{std::move(g), 3, 3};
+  hgr.module_weight = std::move(module_weight);
   return hgr;
 }
 

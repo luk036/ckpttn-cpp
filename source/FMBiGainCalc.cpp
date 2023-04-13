@@ -159,8 +159,8 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(
     const MoveInfo<typename Gnl::node_t> &move_info) -> typename Gnl::node_t {
   auto net_cur = this->hgr.gr[move_info.net].begin();
   auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
-  const auto weight = this->hgr.get_net_weight(move_info.net);
-  const int delta = (part[w] == move_info.from_part) ? weight : -weight;
+  const auto gain = int(this->hgr.get_net_weight(move_info.net));
+  const int delta = (part[w] == move_info.from_part) ? gain : -gain;
   this->delta_gain_w = 2 * delta;
   return w;
 }
@@ -226,7 +226,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(
     gsl::span<const uint8_t> part,
     const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
   // const auto& [net, v, from_part, to_part] = move_info;
-  auto num = array<uint8_t, 2>{0, 0};
+  auto num = array<size_t, 2>{0, 0};
   auto rng1 = all(this->idx_vec);
   rng1([&](const auto &wc) {
     num[part[*wc]] += 1;
