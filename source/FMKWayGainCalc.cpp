@@ -156,55 +156,56 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
   //                                            sizeof StackBufLocal);
   // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
   auto num = std::vector<uint8_t>(this->num_parts, 0);
-  for (const auto &w : this->hgr.gr[net]) {
-    num[part[w]] += 1;
-  }
-  // auto rng = all(this->hgr.gr[net]);
-  // rng([&](const auto &wc) {
-  //   num[part[*wc]] += 1;
-  //   return true;
-  // });
+  // for (const auto &w : this->hgr.gr[net]) {
+  //   num[part[w]] += 1;
+  // }
+  auto rng = all(this->hgr.gr[net]);
+  rng([&](const auto &wc) {
+    num[part[*wc]] += 1;
+    return true;
+  });
 
   const uint32_t weight = this->hgr.get_net_weight(net);
-  for (const auto &c : num) {
-    if (c > 0) {
-      this->total_cost += weight;
-    }
-  }
-  // auto rng2 = all(num);
-  // auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
-  //
-  // rng3([&](const auto & /* c */) {
-  //   this->total_cost += weight;
-  //   return true;
-  // });
+  // for (const auto &c : num) {
+  //   if (c > 0) {
+  //     this->total_cost += weight;
+  //   }
+  // }
+  auto rng2 = all(num);
+  auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
+
+  rng3([&](const auto & /* c */) {
+    this->total_cost += weight;
+    return true;
+  });
   this->total_cost -= weight;
 
   auto k = 0U;
   for (const auto &c : num) {
     if (c == 0) {
-      for (const auto &w : this->hgr.gr[net]) {
-        this->init_gain_list[k][w] -= int(weight);
-      }
-      // rng([&](const auto &wc) {
-      //   // this->vertex_list[k][*wc].data.second -= weight;
-      //   this->init_gain_list[k][*wc] -= int(weight);
-      //   return true;
-      // });
+      // for (const auto &w : this->hgr.gr[net]) {
+      //   this->init_gain_list[k][w] -= int(weight);
+      // }
+      rng([&](const auto &wc) {
+        // this->vertex_list[k][*wc].data.second -= weight;
+        this->init_gain_list[k][*wc] -= int(weight);
+        return true;
+      });
     } else if (c == 1) {
-      for (const auto &w : this->hgr.gr[net]) {
-        if (part[w] == k) {
-          this->_increase_gain(w, part[w], weight);
-          break;
-        }
-      }
-      // rng([&](const auto &wc) {
-      //   if (part[*wc] == k) {
-      //     this->_increase_gain(*wc, part[*wc], weight);
-      //     return false;
+      // for (const auto &w : this->hgr.gr[net]) {
+      //   if (part[w] == k) {
+      //     this->_increase_gain(w, part[w], weight);
+      //     break;
       //   }
-      //   return true;
-      // });
+      // }
+      auto rng_new = all(this->hgr.gr[net]); // reinitialize after breaking (fix for Termux's clang 16)
+      rng_new([&part, k, weight, this](const auto &wc) {
+        if (part[*wc] == k) {
+          this->_increase_gain(*wc, part[*wc], weight);
+          return false;
+        }
+        return true;
+      });
     }
     ++k;
   }

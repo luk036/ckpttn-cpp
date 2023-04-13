@@ -128,7 +128,6 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
         this->_decrease_gain(*wc, weight);
         return true;
       });
-
     } else if (num[k] == 1) {
       rng([&](const auto &wc) {
         if (part[*wc] == k) {
@@ -235,7 +234,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(
 
   const auto degree = this->idx_vec.size();
   auto delta_gain = vector<int>(degree, 0);
-  auto weight = this->hgr.get_net_weight(move_info.net);
+  auto gain = int(this->hgr.get_net_weight(move_info.net));
   auto rng2 = all(delta_gain);
   auto rng3 = zip2(rng1, rng2);
 
@@ -243,20 +242,20 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(
   for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
     if (num[l_part] == 0) {
       rng2([&](const auto &dgc) {
-        *dgc -= weight;
+        *dgc -= gain;
         return true;
       });
     } else if (num[l_part] == 1) {
       rng3([&](const auto &zc) {
         auto part_w = part[std::get<0>(*zc)];
         if (part_w == l_part) {
-          std::get<1>(*zc) += weight;
+          std::get<1>(*zc) += gain;
           return false;
         }
         return true;
       });
     }
-    weight = -weight;
+    gain = -gain;
   }
   return delta_gain;
 }
