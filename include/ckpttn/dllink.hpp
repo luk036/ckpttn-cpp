@@ -57,7 +57,7 @@ public:
    * @brief lock the node (and don't append it to any list)
    *
    */
-  constexpr auto lock() noexcept -> void { this->next = nullptr; }
+  constexpr auto lock() noexcept -> void { this->next = this; }
 
   /**
    * @brief whether the node is locked
@@ -66,7 +66,7 @@ public:
    * @return false
    */
   constexpr auto is_locked() const noexcept -> bool {
-    return this->next == nullptr;
+    return this->next == this;
   }
 
   // /**

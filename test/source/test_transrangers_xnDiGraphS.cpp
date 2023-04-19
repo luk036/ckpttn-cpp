@@ -18,37 +18,37 @@ inline auto create_test_case4(const Container &weights) {
                           Edge{"D", "E"}, Edge{"E", "A"}};
   // constexpr auto weights = std::array<int, 5> {-5, 1, 1, 1, 1};
 
-  auto G = xnetwork::DiGraphS<std::vector<std::string>>{nodes};
-  G.add_edges_from(edges, weights);
-  return G;
+  auto gra = xnetwork::DiGraphS<std::vector<std::string>>{nodes};
+  gra.add_edges_from(edges, weights);
+  return gra;
 }
 
 /**
  * @brief
  *
  * @tparam Graph
- * @param G
+ * @param gra
  */
-template <typename Graph> static void do_case(const Graph &G) {
+template <typename Graph> static void do_case(const Graph &gra) {
   using namespace transrangers;
 
   auto count = 0U;
-  auto rng = all(G);
+  auto rng = all(gra);
   rng([&count](const auto & /* node */) {
     ++count;
     return true;
   });
 
-  CHECK(G.number_of_nodes() == count);
+  CHECK(gra.number_of_nodes() == count);
 
   auto deg = 0U;
   typename Graph::Node node{std::string{"B"}};
-  auto rng2 = all(G[node]);
+  auto rng2 = all(gra[node]);
   rng2([&deg](const auto & /* x */) {
     ++deg;
     return true;
   });
-  CHECK_EQ(G.degree(node), deg);
+  CHECK_EQ(gra.degree(node), deg);
 }
 
 /**
@@ -57,7 +57,7 @@ template <typename Graph> static void do_case(const Graph &G) {
  */
 TEST_CASE("Test xnetwork Negative Cycle") {
   auto weights = std::array<int, 5>{-5, 1, 1, 1, 1};
-  auto G = create_test_case4(weights);
-  do_case(G);
+  auto gra = create_test_case4(weights);
+  do_case(gra);
   // CHECK(hasNeg);
 }
