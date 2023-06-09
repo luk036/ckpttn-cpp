@@ -4,9 +4,6 @@
 
 namespace fun {
 
-// Forward declaration
-template <typename T> struct Robin;
-
 namespace detail {
 template <typename T> struct RobinSlNode {
   RobinSlNode *next;
@@ -29,10 +26,13 @@ template <typename T> struct RobinIterator {
 };
 
 template <typename T> struct RobinIterableWrapper {
-  const fun::Robin<T> *rr;
-  T from_part;
-  auto begin() const -> RobinIterator<T>;
-  auto end() const -> RobinIterator<T>;
+  const detail::RobinSlNode<T> *node;
+  // const Robin<T> *rr;
+  // T from_part;
+  auto begin() const -> RobinIterator<T> {
+    return RobinIterator<T>{node->next};
+  }
+  auto end() const -> RobinIterator<T> { return RobinIterator<T>{node}; }
   // auto size() const -> size_t { return rr->cycle.size() - 1; }
 };
 } // namespace detail
@@ -52,21 +52,8 @@ template <typename T> struct Robin {
   }
 
   auto exclude(T from_part) const -> detail::RobinIterableWrapper<T> {
-    return detail::RobinIterableWrapper<T>{this, from_part};
+    return detail::RobinIterableWrapper<T>{&this->cycle[from_part]};
   }
 };
-
-namespace detail {
-
-template <typename T>
-inline auto RobinIterableWrapper<T>::begin() const -> RobinIterator<T> {
-  return RobinIterator<T>{this->rr->cycle[from_part].next};
-}
-
-template <typename T>
-inline auto RobinIterableWrapper<T>::end() const -> RobinIterator<T> {
-  return RobinIterator<T>{&this->rr->cycle[from_part]};
-}
-} // namespace detail
 
 } // namespace fun
