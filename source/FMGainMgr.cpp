@@ -7,10 +7,10 @@
 #include <type_traits> // for is_base_of, integral_const...
 #include <vector>      // for vector<>::iterator, vector
 
-#include <transrangers.hpp>
 #include "ckpttn/bpqueue.hpp"  // for BPQueue
 #include "ckpttn/dllist.hpp"   // for Dllink
 #include "ckpttn/moveinfo.hpp" // for MoveInfoV, MoveInfo
+#include <transrangers.hpp>
 
 // using node_t = typename SimpleNetlist::node_t;
 // using namespace ranges;
@@ -61,7 +61,7 @@ template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::is_empty() const -> bool {
   using namespace transrangers;
   auto rng = all(this->gain_bucket);
-  return rng([](const auto& cursor) { return cursor->is_empty(); });
+  return rng([](const auto &cursor) { return cursor->is_empty(); });
   // return std::all_of(this->gain_bucket.cbegin(), this->gain_bucket.cend(),
   //                    [](const auto &bckt) { return bckt.is_empty(); });
 }
