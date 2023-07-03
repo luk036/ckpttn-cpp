@@ -17,15 +17,14 @@
 enum class LegalCheck;
 
 /**
- * @brief Partition Manager Base
+ * @brief Fiduccia-Mattheyses Partitioning Algorithm Manager Base
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @tparam Derived
+ * `PartMgrBase` is a base class for managing the Fiduccia-Mattheyses
+ * Partitioning Algorithm. It takes three template parameters: `Gnl` (graph
+ * type), `GainMgr` (gain manager type), and `ConstrMgr` (constraint manager
+ * type).
  *
- * Iterative Improvement Partitioning Base Class. In this
- * partitioning method, the next solution $s'$ considered after
+ * In this partitioning method, the next solution $s'$ considered after
  * solution $s$ is dervied by first applying a sequence of
  * $t$ changes (moves) to $s$ (with $t$ dependent from
  * $s$ and from the specific heuristic method), thus obtaining a
@@ -41,6 +40,11 @@ enum class LegalCheck;
  * Reference:
  *   gr. Ausiello et al., Complexity and Approximation: Combinatorial
  * Optimization Problems and Their Approximability Properties, Section 10.3.2.
+ *
+ * @tparam Gnl
+ * @tparam GainMgr
+ * @tparam ConstrMgr
+ * @tparam Derived
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr> //
 class PartMgrBase {

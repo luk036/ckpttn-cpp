@@ -13,7 +13,13 @@ template <typename Gnl, typename GainMgr, typename ConstrMgr> //
 class FMPartMgr;
 
 /**
- * @brief FM Partition Manager
+ * @brief Fiduccia-Mattheyses Partitioning Algorithm Manager
+ *
+ * The `FMPartMgr` class is a subclass of `PartMgrBase` and is used for managing
+ * the partitioning of a hypergraph (`Gnl`) using the FM algorithm. It takes a
+ * hypergraph, a gain manager, a constraint manager, and the number of
+ * partitions as input. It provides methods for taking a snapshot of the current
+ * partition and restoring a partition from a snapshot.
  *
  * @tparam Gnl
  * @tparam GainMgr

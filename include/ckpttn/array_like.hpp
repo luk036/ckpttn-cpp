@@ -30,9 +30,22 @@
 // }
 
 /**
- * @brief 
- * 
- * @tparam Container 
+ * @brief
+ *
+ * @tparam Container
+ */
+
+/**
+ * @brief Shift Array
+ *
+ * The `ShiftArray` class is a template class that extends a given container
+ * type. It allows accessing elements of the container using shifted indices.
+ * The shift value is set using the `set_start` method, and the shifted indices
+ * are calculated by subtracting the shift value from the original index. The
+ * class provides `operator[]` overloads to access elements using shifted
+ * indices.
+ *
+ * @tparam Container
  */
 template <typename Container> class ShiftArray : public Container {
   using value_type = typename Container::value_type;
@@ -43,30 +56,30 @@ private:
 public:
   /**
    * @brief Construct a new Shift Array object
-   * 
+   *
    */
   ShiftArray() : Container{} {}
 
   /**
    * @brief Construct a new Shift Array object
-   * 
-   * @param base 
+   *
+   * @param base
    */
   explicit ShiftArray(Container &&base)
       : Container{std::forward<Container>(base)} {}
 
   /**
    * @brief Set the start object
-   * 
-   * @param start 
+   *
+   * @param start
    */
   void set_start(const size_t &start) { this->_start = start; }
 
   /**
-   * @brief 
-   * 
-   * @param index 
-   * @return const value_type& 
+   * @brief
+   *
+   * @param index
+   * @return const value_type&
    */
   auto operator[](const size_t &index) const -> const value_type & {
     assert(index >= this->_start);
@@ -74,10 +87,10 @@ public:
   }
 
   /**
-   * @brief 
-   * 
-   * @param index 
-   * @return value_type& 
+   * @brief
+   *
+   * @param index
+   * @return value_type&
    */
   auto operator[](const size_t &index) -> value_type & {
     return Container::operator[](index - this->_start);
