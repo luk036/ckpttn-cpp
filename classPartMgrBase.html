@@ -53,7 +53,7 @@
           <div class="m-doc-template">template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;</div>
           PartMgrBase <span class="m-thin">class</span>
         </h1>
-        <p>Partition Manager Base.</p>
+        <p>Fiduccia-Mattheyses Partitioning Algorithm Manager Base.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -89,7 +89,7 @@
             </li>
           </ul>
         </nav>
-<p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p><p>Reference: gr. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
+<p><code><a href="classPartMgrBase.html" class="m-doc">PartMgrBase</a></code> is a base class for managing the Fiduccia-Mattheyses Partitioning Algorithm. It takes three template parameters: <code>Gnl</code> (graph type), <code>GainMgr</code> (gain manager type), and <code>ConstrMgr</code> (constraint manager type).</p><p>In this partitioning method, the next solution $s&#x27;$ considered after solution $s$ is dervied by first applying a sequence of $t$ changes (moves) to $s$ (with $t$ dependent from $s$ and from the specific heuristic method), thus obtaining a sequence of solution $s,...,s_t$ and by successively choosing the best among these solutions.</p><p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p><p>Reference: gr. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
         <section id="derived-classes">
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
@@ -97,7 +97,7 @@
               <div class="m-doc-template">template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;</div>
               class <a href="classFMPartMgr.html" class="m-doc">FMPartMgr</a>
             </dt>
-            <dd>FM Partition Manager.</dd>
+            <dd>Fiduccia-Mattheyses Partitioning Algorithm Manager.</dd>
           </dl>
         </section>
         <section id="pub-types">
