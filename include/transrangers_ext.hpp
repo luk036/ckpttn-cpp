@@ -32,10 +32,10 @@ namespace transrangers {
 
 /**
  * @brief skip_first, skip_first_copy (assume the next item is available)
- * 
- * @tparam Range 
- * @param rng 
- * @return auto 
+ *
+ * @tparam Range
+ * @param rng
+ * @return auto
  */
 template <typename Range> auto skip_first(Range &&rng) {
   using std::begin;
@@ -56,20 +56,20 @@ template <typename Range> auto skip_first(Range &&rng) {
 }
 
 /**
- * @brief 
- * 
- * @tparam Range 
+ * @brief
+ *
+ * @tparam Range
  */
 template <typename Range> struct skip_first_copy {
   using ranger = decltype(skip_first(std::declval<Range &>()));
   using cursor = typename ranger::cursor;
 
   /**
-   * @brief 
-   * 
-   * @tparam F 
-   * @param p 
-   * @return auto 
+   * @brief
+   *
+   * @tparam F
+   * @param p
+   * @return auto
    */
   template <typename F> auto operator()(const F &p) { return rgr(p); }
 
@@ -78,12 +78,12 @@ template <typename Range> struct skip_first_copy {
 };
 
 /**
- * @brief 
- * 
- * @tparam Range 
- * @param rng 
+ * @brief
+ *
+ * @tparam Range
+ * @param rng
  * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
- * skip_first_copy<Range>>::type 
+ * skip_first_copy<Range>>::type
  */
 template <typename Range>
 typename std::enable_if<std::is_rvalue_reference<Range &&>::value,
@@ -94,10 +94,10 @@ skip_first(Range &&rng) {
 
 /**
  * @brief skip_last, skip_last_copy (assume the previous item is available)
- * 
- * @tparam Range 
- * @param rng 
- * @return auto 
+ *
+ * @tparam Range
+ * @param rng
+ * @return auto
  */
 template <typename Range> auto skip_last(Range &&rng) {
   using std::begin;
@@ -118,20 +118,20 @@ template <typename Range> auto skip_last(Range &&rng) {
 }
 
 /**
- * @brief 
- * 
- * @tparam Range 
+ * @brief
+ *
+ * @tparam Range
  */
 template <typename Range> struct skip_last_copy {
   using ranger = decltype(skip_last(std::declval<Range &>()));
   using cursor = typename ranger::cursor;
 
   /**
-   * @brief 
-   * 
-   * @tparam F 
-   * @param p 
-   * @return auto 
+   * @brief
+   *
+   * @tparam F
+   * @param p
+   * @return auto
    */
   template <typename F> auto operator()(const F &p) { return rgr(p); }
 
@@ -140,12 +140,12 @@ template <typename Range> struct skip_last_copy {
 };
 
 /**
- * @brief 
- * 
- * @tparam Range 
- * @param rng 
+ * @brief
+ *
+ * @tparam Range
+ * @param rng
  * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
- * skip_last_copy<Range>>::type 
+ * skip_last_copy<Range>>::type
  */
 template <typename Range>
 typename std::enable_if<std::is_rvalue_reference<Range &&>::value,
@@ -155,11 +155,12 @@ skip_last(Range &&rng) {
 }
 
 /**
- * @brief skip_both, skip_both_copy (assume the next and prev items are available)
- * 
- * @tparam Range 
- * @param rng 
- * @return auto 
+ * @brief skip_both, skip_both_copy (assume the next and prev items are
+ * available)
+ *
+ * @tparam Range
+ * @param rng
+ * @return auto
  */
 template <typename Range> auto skip_both(Range &&rng) {
   using std::begin;
@@ -180,20 +181,20 @@ template <typename Range> auto skip_both(Range &&rng) {
 }
 
 /**
- * @brief 
- * 
- * @tparam Range 
+ * @brief
+ *
+ * @tparam Range
  */
 template <typename Range> struct skip_both_copy {
   using ranger = decltype(skip_both(std::declval<Range &>()));
   using cursor = typename ranger::cursor;
 
   /**
-   * @brief 
-   * 
-   * @tparam F 
-   * @param p 
-   * @return auto 
+   * @brief
+   *
+   * @tparam F
+   * @param p
+   * @return auto
    */
   template <typename F> auto operator()(const F &p) { return rgr(p); }
 
@@ -202,12 +203,12 @@ template <typename Range> struct skip_both_copy {
 };
 
 /**
- * @brief 
- * 
- * @tparam Range 
- * @param rng 
+ * @brief
+ *
+ * @tparam Range
+ * @param rng
  * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
- * skip_both_copy<Range>>::type 
+ * skip_both_copy<Range>>::type
  */
 template <typename Range>
 typename std::enable_if<std::is_rvalue_reference<Range &&>::value,
@@ -218,10 +219,10 @@ skip_both(Range &&rng) {
 
 /**
  * @brief enumerate
- * 
- * @tparam Ranger 
- * @param rgr 
- * @return auto 
+ *
+ * @tparam Ranger
+ * @param rgr
+ * @return auto
  */
 template <typename Ranger> auto enumerate(Ranger rgr) {
   return transform(
@@ -235,12 +236,12 @@ template <typename Ranger> auto enumerate(Ranger rgr) {
 
 /**
  * @brief partial sum (cummutative sum)
- * 
- * @tparam Ranger 
- * @tparam T 
- * @param rgr 
- * @param init 
- * @return T 
+ *
+ * @tparam Ranger
+ * @tparam T
+ * @param rgr
+ * @param init
+ * @return T
  */
 template <typename Ranger, typename T> T partial_sum(Ranger rgr, T init) {
   rgr([&init](const auto &p) TRANSRANGERS_HOT {
@@ -253,10 +254,10 @@ template <typename Ranger, typename T> T partial_sum(Ranger rgr, T init) {
 
 /**
  * @brief zip
- * 
- * @tparam I 
- * @tparam Ranger 
- * @tparam Rangers 
+ *
+ * @tparam I
+ * @tparam Ranger
+ * @tparam Rangers
  */
 template <std::size_t I, typename Ranger, typename... Rangers>
 class __lambda_255_33 {
@@ -264,10 +265,10 @@ class __lambda_255_33 {
 
 public:
   /**
-   * @brief 
-   * 
-   * @tparam type_parameter_4_0 
-   * @param p 
+   * @brief
+   *
+   * @tparam type_parameter_4_0
+   * @param p
    */
   template <class type_parameter_4_0>
   TRANSRANGERS_HOT inline auto operator()(const type_parameter_4_0 &p) const {
@@ -281,26 +282,26 @@ private:
 public:
   /**
    * @brief Construct a new lambda 255 33 object
-   * 
-   * @param _zp 
+   *
+   * @param _zp
    */
   __lambda_255_33(cursor &_zp) : zp{_zp} {}
 };
 
 /**
- * @brief 
- * 
- * @tparam Ranger 
- * @tparam Rangers 
+ * @brief
+ *
+ * @tparam Ranger
+ * @tparam Rangers
  */
 template <typename Ranger, typename... Rangers> class __lambda_249_18 {
   using cursor = zip_cursor<Ranger, Rangers...>;
 
 public:
   /**
-   * @brief 
-   * 
-   * @tparam I 
+   * @brief
+   *
+   * @tparam I
    */
   template <std::size_t... I>
   TRANSRANGERS_HOT inline auto operator()(std::index_sequence<I...>) const {
@@ -315,20 +316,20 @@ private:
 public:
   /**
    * @brief Construct a new lambda 249 18 object
-   * 
-   * @param _zp 
-   * @param _rgrs 
+   *
+   * @param _zp
+   * @param _rgrs
    */
   __lambda_249_18(cursor &_zp, std::tuple<Rangers...> &_rgrs)
       : zp{_zp}, rgrs{_rgrs} {}
 };
 
 /**
- * @brief 
- * 
- * @tparam type_parameter_1_0 
- * @tparam Ranger 
- * @tparam Rangers 
+ * @brief
+ *
+ * @tparam type_parameter_1_0
+ * @tparam Ranger
+ * @tparam Rangers
  */
 template <typename type_parameter_1_0, typename Ranger, typename... Rangers>
 class __lambda_246_16 {
@@ -336,10 +337,10 @@ class __lambda_246_16 {
 
 public:
   /**
-   * @brief 
-   * 
-   * @tparam type_parameter_2_0 
-   * @param p 
+   * @brief
+   *
+   * @tparam type_parameter_2_0
+   * @param p
    */
   template <class type_parameter_2_0>
   TRANSRANGERS_HOT inline auto operator()(const type_parameter_2_0 &p) const {
@@ -385,13 +386,13 @@ public:
 };
 
 /**
- * @brief 
- * 
- * @tparam Ranger 
- * @tparam Rangers 
- * @param rgr 
- * @param rgrs 
- * @return auto 
+ * @brief
+ *
+ * @tparam Ranger
+ * @tparam Rangers
+ * @param rgr
+ * @param rgrs
+ * @return auto
  */
 template <typename Ranger, typename... Rangers>
 auto zip(Ranger rgr, Rangers... rgrs) {
