@@ -78,8 +78,8 @@ public:
    */
   PartMgrBase(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr,
               size_t num_parts)
-      : hgr{hgr}, gain_mgr{gain_mgr}, validator{constr_mgr},
-        num_parts{num_parts} {}
+      : hgr{hgr}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{
+                                                                 num_parts} {}
 
   /**
    * @brief
