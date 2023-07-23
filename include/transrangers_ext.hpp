@@ -381,7 +381,7 @@ private:
   std::tuple<Rangers...> rgrs;
 
 public:
-  __lambda_244_25(cursor _zp, const Ranger &_rgr, const Rangers &..._rgrs)
+  __lambda_244_25(cursor _zp, const Ranger &_rgr, const Rangers &... _rgrs)
       : zp{_zp}, rgr{_rgr}, rgrs{_rgrs...} {}
 };
 

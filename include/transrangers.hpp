@@ -79,8 +79,9 @@ all(Range &&rng) {
 
 // filter
 template <typename Pred> auto pred_box(Pred pred) {
-  return
-      [=](auto &&...x) -> int { return pred(std::forward<decltype(x)>(x)...); };
+  return [=](auto &&... x) -> int {
+    return pred(std::forward<decltype(x)>(x)...);
+  };
 }
 
 template <typename Pred, typename Ranger> auto filter(Pred pred_, Ranger rgr) {
@@ -230,7 +231,7 @@ struct all_adaption {
 template <typename... Rangers> struct zip_cursor {
   auto operator*() const {
     return std::apply(
-        [](const auto &...ps) { return std::tuple<decltype(*ps)...>{*ps...}; },
+        [](const auto &... ps) { return std::tuple<decltype(*ps)...>{*ps...}; },
         ps);
   }
 

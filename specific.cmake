@@ -19,14 +19,13 @@ CPMAddPackage("gh:microsoft/GSL@3.1.0")
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  # using GCC
-  add_compile_options(-fcoroutines)
+  # using GCC add_compile_options(-fcoroutines)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
   add_compile_options(/std:c++latest /await)
 else() # (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   # using clang
-  add_compile_options(-fcoroutines-ts -stdlib=libc++)
+  add_compile_options(-stdlib=libc++)
 endif()
 
 CPMAddPackage(

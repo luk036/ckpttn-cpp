@@ -28,8 +28,8 @@ struct sentinel {};
 
 template <typename Iterator, typename Ranger> class iterator_base {
 public:
-  using value_type = std::remove_cv_t<std::remove_reference_t<
-      decltype(*std::declval<typename Ranger::cursor>())>>;
+  using value_type = std::remove_cv_t<std::remove_reference_t<decltype(
+      *std::declval<typename Ranger::cursor>())>>;
   using difference_type = std::ptrdiff_t;
 
   iterator_base() = default;

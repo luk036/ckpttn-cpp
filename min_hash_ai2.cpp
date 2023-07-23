@@ -17,7 +17,8 @@ public:
     // Generate k random masks
     masks.resize(k);
     for (int i = 0; i < k; i++) {
-      masks[i] = rng(); // Use the random number generator to get a 64-bit integer
+      masks[i] =
+          rng(); // Use the random number generator to get a 64-bit integer
     }
 
     // Initialize the hashes vector with the maximum int64 value
@@ -62,7 +63,8 @@ public:
     }
 
     // Return the Jaccard similarity
-    return static_cast<double>(count) / k; // Divide the count by k and cast it to double
+    return static_cast<double>(count) /
+           k; // Divide the count by k and cast it to double
   }
 
 private:
