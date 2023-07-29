@@ -21,14 +21,14 @@ extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
 using node_t = SimpleNetlist::node_t;
 
 TEST_CASE("Test min_vertex_cover dwarf") {
-  const auto hgr = create_dwarf();
-  py::dict<node_t, int> weight{};
-  py::set<node_t> covset{};
-  for (auto node : hgr) {
-    weight[node] = 1;
-    // covset[node] = false;
-  }
-  min_vertex_cover(hgr, weight, covset);
+    const auto hgr = create_dwarf();
+    py::dict<node_t, int> weight{};
+    py::set<node_t> covset{};
+    for (auto node : hgr) {
+        weight[node] = 1;
+        // covset[node] = false;
+    }
+    min_vertex_cover(hgr, weight, covset);
 }
 
 //
@@ -36,18 +36,18 @@ TEST_CASE("Test min_vertex_cover dwarf") {
 //
 
 TEST_CASE("Test min_maximal_matching dwarf") {
-  const auto hgr = create_dwarf();
-  // const auto N = hgr.number_of_nets();
-  py::dict<node_t, int> weight{};
-  py::set<node_t> matchset{};
-  py::set<node_t> dep{};
-  for (auto net : hgr.nets) {
-    // matchset[net] = false;
-    weight[net] = 1;
-  }
-  // for (auto v : hgr)
-  // {
-  //     dep[v] = false;
-  // }
-  min_maximal_matching(hgr, weight, matchset, dep);
+    const auto hgr = create_dwarf();
+    // const auto N = hgr.number_of_nets();
+    py::dict<node_t, int> weight{};
+    py::set<node_t> matchset{};
+    py::set<node_t> dep{};
+    for (auto net : hgr.nets) {
+        // matchset[net] = false;
+        weight[net] = 1;
+    }
+    // for (auto v : hgr)
+    // {
+    //     dep[v] = false;
+    // }
+    min_maximal_matching(hgr, weight, matchset, dep);
 }

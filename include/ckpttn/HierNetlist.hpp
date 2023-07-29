@@ -28,53 +28,53 @@
  * @tparam graph_t
  */
 template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
-public:
-  using nodeview_t = typename graph_t::nodeview_t;
-  using node_t = typename graph_t::node_t;
-  using index_t = typename nodeview_t::key_type;
+  public:
+    using nodeview_t = typename graph_t::nodeview_t;
+    using node_t = typename graph_t::node_t;
+    using index_t = typename nodeview_t::key_type;
 
-  /* For multi-level algorithms */
-  const Netlist<graph_t> *parent;
-  std::vector<node_t> node_up_map;
-  std::vector<node_t> node_down_map;
-  py::dict<index_t, node_t> cluster_down_map;
-  ShiftArray<std::vector<uint32_t>> net_weight{};
+    /* For multi-level algorithms */
+    const Netlist<graph_t> *parent;
+    std::vector<node_t> node_up_map;
+    std::vector<node_t> node_down_map;
+    py::dict<index_t, node_t> cluster_down_map;
+    ShiftArray<std::vector<uint32_t>> net_weight{};
 
-  /**
-   * @brief Construct a new Hier Netlist object
-   *
-   * @param[in] gr
-   * @param[in] modules
-   * @param[in] nets
-   */
-  HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets);
+    /**
+     * @brief Construct a new Hier Netlist object
+     *
+     * @param[in] gr
+     * @param[in] modules
+     * @param[in] nets
+     */
+    HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets);
 
-  /**
-   * @brief projection down
-   *
-   * @param[in] part
-   * @param[out] part_down
-   */
-  void projection_down(gsl::span<const std::uint8_t> part,
-                       gsl::span<std::uint8_t> part_down) const;
+    /**
+     * @brief projection down
+     *
+     * @param[in] part
+     * @param[out] part_down
+     */
+    void projection_down(gsl::span<const std::uint8_t> part,
+                         gsl::span<std::uint8_t> part_down) const;
 
-  /**
-   * @brief projection up
-   *
-   * @param[in] part
-   * @param[out] part_up
-   */
-  void projection_up(gsl::span<const std::uint8_t> part,
-                     gsl::span<std::uint8_t> part_up) const;
+    /**
+     * @brief projection up
+     *
+     * @param[in] part
+     * @param[out] part_up
+     */
+    void projection_up(gsl::span<const std::uint8_t> part,
+                       gsl::span<std::uint8_t> part_up) const;
 
-  /**
-   * @brief Get the net weight
-   *
-   * @return int
-   */
-  auto get_net_weight(const node_t &net) const -> uint32_t {
-    return this->net_weight.empty() ? 1U : this->net_weight[net];
-  }
+    /**
+     * @brief Get the net weight
+     *
+     * @return int
+     */
+    auto get_net_weight(const node_t &net) const -> uint32_t {
+        return this->net_weight.empty() ? 1U : this->net_weight[net];
+    }
 };
 
 template <typename graph_t>

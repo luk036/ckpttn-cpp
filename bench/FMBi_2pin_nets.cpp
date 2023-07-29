@@ -22,20 +22,20 @@ extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
  * @param[in] option
  */
 void run_FMBiPartMgr(const SimpleNetlist &hgr, bool option) {
-  FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
-  gain_mgr.gain_calc.special_handle_2pin_nets = option;
+    FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
+    gain_mgr.gain_calc.special_handle_2pin_nets = option;
 
-  FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.45};
-  FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-            FMBiConstrMgr<SimpleNetlist>>
-      part_mgr{hgr, gain_mgr, constr_mgr};
-  std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
-  part_mgr.legalize(part);
-  // auto totalcostbefore = part_mgr.total_cost;
-  part_mgr.optimize(part);
-  // CHECK(totalcostbefore >= 0);
-  // CHECK(part_mgr.total_cost <= totalcostbefore);
-  // CHECK(part_mgr.total_cost >= 0);
+    FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.45};
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+              FMBiConstrMgr<SimpleNetlist>>
+        part_mgr{hgr, gain_mgr, constr_mgr};
+    std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
+    part_mgr.legalize(part);
+    // auto totalcostbefore = part_mgr.total_cost;
+    part_mgr.optimize(part);
+    // CHECK(totalcostbefore >= 0);
+    // CHECK(part_mgr.total_cost <= totalcostbefore);
+    // CHECK(part_mgr.total_cost >= 0);
 }
 
 /**
@@ -44,12 +44,12 @@ void run_FMBiPartMgr(const SimpleNetlist &hgr, bool option) {
  * @param[in] state
  */
 static void BM_with_2pin_nets(benchmark::State &state) {
-  auto hgr = readNetD("../../testcases/ibm03.net");
-  readAre(hgr, "../../testcases/ibm03.are");
+    auto hgr = readNetD("../../testcases/ibm03.net");
+    readAre(hgr, "../../testcases/ibm03.are");
 
-  while (state.KeepRunning()) {
-    run_FMBiPartMgr(hgr, true);
-  }
+    while (state.KeepRunning()) {
+        run_FMBiPartMgr(hgr, true);
+    }
 }
 
 // Register the function as a benchmark
@@ -63,12 +63,12 @@ BENCHMARK(BM_with_2pin_nets);
  * @param[in] state
  */
 static void BM_without_2pin_nets(benchmark::State &state) {
-  auto hgr = readNetD("../../testcases/ibm03.net");
-  readAre(hgr, "../../testcases/ibm03.are");
+    auto hgr = readNetD("../../testcases/ibm03.net");
+    readAre(hgr, "../../testcases/ibm03.are");
 
-  while (state.KeepRunning()) {
-    run_FMBiPartMgr(hgr, false);
-  }
+    while (state.KeepRunning()) {
+        run_FMBiPartMgr(hgr, false);
+    }
 }
 BENCHMARK(BM_without_2pin_nets);
 

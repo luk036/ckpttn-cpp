@@ -21,23 +21,23 @@
  * @param gra
  */
 template <typename Graph> static void do_case(const Graph &gra) {
-  using namespace transrangers;
+    using namespace transrangers;
 
-  auto count = 0U;
-  auto rng = all(gra);
-  rng([&count](const auto & /* x */) {
-    ++count;
-    return true;
-  });
-  CHECK(gra.number_of_nodes() == count);
+    auto count = 0U;
+    auto rng = all(gra);
+    rng([&count](const auto & /* x */) {
+        ++count;
+        return true;
+    });
+    CHECK(gra.number_of_nodes() == count);
 
-  auto deg = 0U;
-  auto rng2 = all(gra[1U]);
-  rng2([&deg](const auto & /* x */) {
-    ++deg;
-    return true;
-  });
-  CHECK(gra.degree(1U) == deg);
+    auto deg = 0U;
+    auto rng2 = all(gra[1U]);
+    rng2([&deg](const auto & /* x */) {
+        ++deg;
+        return true;
+    });
+    CHECK(gra.degree(1U) == deg);
 }
 
 /**
@@ -46,16 +46,16 @@ template <typename Graph> static void do_case(const Graph &gra) {
  * @return Netlist
  */
 TEST_CASE("Test xnetwork::Graph") {
-  constexpr auto num_nodes = 6;
-  enum nodes { a1, a2, a3, n1, n2, n3 };
-  // const auto R = py::range<std::uint8_t>(0, num_nodes);
-  auto gra = xnetwork::SimpleGraph{num_nodes};
-  gra.add_edge(a1, n1);
-  gra.add_edge(a1, n1);
-  gra.add_edge(a1, n2);
-  gra.add_edge(a2, n2);
+    constexpr auto num_nodes = 6;
+    enum nodes { a1, a2, a3, n1, n2, n3 };
+    // const auto R = py::range<std::uint8_t>(0, num_nodes);
+    auto gra = xnetwork::SimpleGraph{num_nodes};
+    gra.add_edge(a1, n1);
+    gra.add_edge(a1, n1);
+    gra.add_edge(a1, n2);
+    gra.add_edge(a2, n2);
 
-  do_case(gra);
+    do_case(gra);
 }
 
 /**
@@ -64,17 +64,17 @@ TEST_CASE("Test xnetwork::Graph") {
  * @return Netlist
  */
 TEST_CASE("Test xnetwork::Graph (not simple graph)") {
-  // constexpr auto num_nodes = 6;
-  enum nodes_name { a1, a2, a3, n1, n2, n3 };
+    // constexpr auto num_nodes = 6;
+    enum nodes_name { a1, a2, a3, n1, n2, n3 };
 
-  std::vector<uint8_t> nodes{a2, a3, n1, n3, n2};
+    std::vector<uint8_t> nodes{a2, a3, n1, n3, n2};
 
-  // const auto R = py::range<std::uint8_t>(0, num_nodes);
-  auto gra = xnetwork::Graph<std::vector<uint8_t>>{nodes};
-  gra.add_edge(a2, n1);
-  gra.add_edge(a3, n2);
-  gra.add_edge(a3, n3);
-  gra.add_edge(a2, n2);
+    // const auto R = py::range<std::uint8_t>(0, num_nodes);
+    auto gra = xnetwork::Graph<std::vector<uint8_t>>{nodes};
+    gra.add_edge(a2, n1);
+    gra.add_edge(a3, n2);
+    gra.add_edge(a3, n3);
+    gra.add_edge(a2, n2);
 
-  do_case(gra);
+    do_case(gra);
 }

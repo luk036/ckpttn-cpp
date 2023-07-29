@@ -19,22 +19,22 @@ using namespace std;
  */
 template <typename Gnl>
 auto FMBiGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
-  auto total_cost = Base::init(part);
-  for (auto &bckt : this->gain_bucket) {
-    bckt.clear();
-  }
+    auto total_cost = Base::init(part);
+    for (auto &bckt : this->gain_bucket) {
+        bckt.clear();
+    }
 
-  for (const auto &v : this->hgr) {
-    auto &vlink = this->gain_calc.vertex_list[v];
-    // auto to_part = 1 - part[v];
-    // this->gain_bucket[1 - part[v]].append_direct(vlink);
-    this->gain_bucket[1 - part[v]].append(vlink,
-                                          this->gain_calc.init_gain_list[v]);
-  }
-  for (const auto &v : this->hgr.module_fixed) {
-    this->lock_all(part[v], v);
-  }
-  return total_cost;
+    for (const auto &v : this->hgr) {
+        auto &vlink = this->gain_calc.vertex_list[v];
+        // auto to_part = 1 - part[v];
+        // this->gain_bucket[1 - part[v]].append_direct(vlink);
+        this->gain_bucket[1 - part[v]].append(
+            vlink, this->gain_calc.init_gain_list[v]);
+    }
+    for (const auto &v : this->hgr.module_fixed) {
+        this->lock_all(part[v], v);
+    }
+    return total_cost;
 }
 
 // instantiation

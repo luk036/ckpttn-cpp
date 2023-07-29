@@ -29,48 +29,50 @@ extern auto create_contraction_subgraph(const SimpleNetlist &,
 template <typename Gnl, typename PartMgr>
 auto MLPartMgr::run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part)
     -> LegalCheck {
-  using GainMgr = typename PartMgr::GainMgr_;
-  using ConstrMgr = typename PartMgr::ConstrMgr_;
+    using GainMgr = typename PartMgr::GainMgr_;
+    using ConstrMgr = typename PartMgr::ConstrMgr_;
 
-  auto legalcheck_fn = [&]() {
-    GainMgr gain_mgr(hgr, this->num_parts);
-    ConstrMgr constr_mgr(hgr, this->bal_tol, this->num_parts);
-    PartMgr part_mgr(hgr, gain_mgr, constr_mgr, this->num_parts);
-    auto legalcheck = part_mgr.legalize(part);
-    return std::make_pair(legalcheck, part_mgr.total_cost);
-    // release memory resource all memory saving
-  };
+    auto legalcheck_fn = [&]() {
+        GainMgr gain_mgr(hgr, this->num_parts);
+        ConstrMgr constr_mgr(hgr, this->bal_tol, this->num_parts);
+        PartMgr part_mgr(hgr, gain_mgr, constr_mgr, this->num_parts);
+        auto legalcheck = part_mgr.legalize(part);
+        return std::make_pair(legalcheck, part_mgr.total_cost);
+        // release memory resource all memory saving
+    };
 
-  auto optimize_fn = [&]() {
-    GainMgr gain_mgr(hgr, this->num_parts);
-    ConstrMgr constr_mgr(hgr, this->bal_tol, this->num_parts);
-    PartMgr part_mgr(hgr, gain_mgr, constr_mgr, this->num_parts);
-    part_mgr.optimize(part);
-    return part_mgr.total_cost;
-    // release memory resource all memory saving
-  };
+    auto optimize_fn = [&]() {
+        GainMgr gain_mgr(hgr, this->num_parts);
+        ConstrMgr constr_mgr(hgr, this->bal_tol, this->num_parts);
+        PartMgr part_mgr(hgr, gain_mgr, constr_mgr, this->num_parts);
+        part_mgr.optimize(part);
+        return part_mgr.total_cost;
+        // release memory resource all memory saving
+    };
 
-  auto legalcheck_cost = legalcheck_fn();
-  if (legalcheck_cost.first != LegalCheck::AllSatisfied) {
-    this->total_cost = legalcheck_cost.second;
-    return legalcheck_cost.first;
-  }
-
-  if (hgr.number_of_modules() >= this->limitsize) { // OK
-    const auto hgr2 =
-        create_contraction_subgraph(hgr, py::set<typename Gnl::node_t>{});
-    if (hgr2->number_of_modules() <= hgr.number_of_modules()) {
-      auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
-      hgr2->projection_up(part, part2);
-      auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
-      if (legalcheck_recur == LegalCheck::AllSatisfied) {
-        hgr2->projection_down(part2, part);
-      }
+    auto legalcheck_cost = legalcheck_fn();
+    if (legalcheck_cost.first != LegalCheck::AllSatisfied) {
+        this->total_cost = legalcheck_cost.second;
+        return legalcheck_cost.first;
     }
-  }
 
-  this->total_cost = optimize_fn();
-  return legalcheck_cost.first;
+    if (hgr.number_of_modules() >= this->limitsize) { // OK
+        const auto hgr2 =
+            create_contraction_subgraph(hgr, py::set<typename Gnl::node_t>{});
+        if (hgr2->number_of_modules() <= hgr.number_of_modules()) {
+            auto part2 =
+                std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
+            hgr2->projection_up(part, part2);
+            auto legalcheck_recur =
+                this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
+            if (legalcheck_recur == LegalCheck::AllSatisfied) {
+                hgr2->projection_down(part2, part);
+            }
+        }
+    }
+
+    this->total_cost = optimize_fn();
+    return legalcheck_cost.first;
 }
 
 #include <ckpttn/FMBiConstrMgr.hpp>   // for FMBiConstrMgr

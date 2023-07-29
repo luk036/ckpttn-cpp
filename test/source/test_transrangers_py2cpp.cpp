@@ -11,29 +11,30 @@
 #include <vector>        // for vector
 
 TEST_CASE("Test py2cpp::set") {
-  using namespace transrangers;
+    using namespace transrangers;
 
-  py::set<int> S{1, 2, 4, 1, 1};
-  auto count = 0U;
-  auto rng = all(S);
-  rng([&count](const auto & /* x */) {
-    ++count;
-    return true;
-  });
-  CHECK_EQ(count, 3);
+    py::set<int> S{1, 2, 4, 1, 1};
+    auto count = 0U;
+    auto rng = all(S);
+    rng([&count](const auto & /* x */) {
+        ++count;
+        return true;
+    });
+    CHECK_EQ(count, 3);
 }
 
 TEST_CASE("Test py2cpp::dict") {
-  using namespace transrangers;
+    using namespace transrangers;
 
-  using KV = std::pair<int, int>;
+    using KV = std::pair<int, int>;
 
-  const py::dict<int, int> S{KV{0, 2}, KV{1, 2}, KV{0, 4}, KV{3, 1}, KV{4, 1}};
-  auto count = 0U;
-  auto rng = all(S);
-  rng([&count](const auto & /* x */) {
-    ++count;
-    return true;
-  });
-  CHECK_EQ(count, 4);
+    const py::dict<int, int> S{KV{0, 2}, KV{1, 2}, KV{0, 4}, KV{3, 1},
+                               KV{4, 1}};
+    auto count = 0U;
+    auto rng = all(S);
+    rng([&count](const auto & /* x */) {
+        ++count;
+        return true;
+    });
+    CHECK_EQ(count, 4);
 }

@@ -24,38 +24,38 @@ extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
  * @param[in] num_parts
  */
 void run_FMKWayPartMgr(const SimpleNetlist &hgr, uint8_t num_parts) {
-  FMKWayGainMgr<SimpleNetlist> gain_mgr{hgr, num_parts};
-  FMKWayConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4, num_parts};
-  FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-            FMKWayConstrMgr<SimpleNetlist>>
-      part_mgr{hgr, gain_mgr, constr_mgr, num_parts};
-  vector<uint8_t> part(hgr.number_of_modules(), 0);
+    FMKWayGainMgr<SimpleNetlist> gain_mgr{hgr, num_parts};
+    FMKWayConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4, num_parts};
+    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
+              FMKWayConstrMgr<SimpleNetlist>>
+        part_mgr{hgr, gain_mgr, constr_mgr, num_parts};
+    vector<uint8_t> part(hgr.number_of_modules(), 0);
 
-  part_mgr.legalize(part);
-  auto totalcostbefore = part_mgr.total_cost;
-  part_mgr.optimize(part);
-  CHECK(totalcostbefore >= 0);
-  CHECK(part_mgr.total_cost <= totalcostbefore);
-  CHECK(part_mgr.total_cost >= 0);
-  totalcostbefore = part_mgr.total_cost;
-  part_mgr.init(part);
-  CHECK(part_mgr.total_cost == totalcostbefore);
+    part_mgr.legalize(part);
+    auto totalcostbefore = part_mgr.total_cost;
+    part_mgr.optimize(part);
+    CHECK(totalcostbefore >= 0);
+    CHECK(part_mgr.total_cost <= totalcostbefore);
+    CHECK(part_mgr.total_cost >= 0);
+    totalcostbefore = part_mgr.total_cost;
+    part_mgr.init(part);
+    CHECK(part_mgr.total_cost == totalcostbefore);
 }
 
 TEST_CASE("Test FMKWayPartMgr") {
-  const auto hgr = create_dwarf();
-  run_FMKWayPartMgr(hgr, 3);
+    const auto hgr = create_dwarf();
+    run_FMKWayPartMgr(hgr, 3);
 }
 
 TEST_CASE("Test FMKWayPartMgr p1") {
-  const auto hgr = readNetD("../../testcases/p1.net");
-  run_FMKWayPartMgr(hgr, 3);
+    const auto hgr = readNetD("../../testcases/p1.net");
+    run_FMKWayPartMgr(hgr, 3);
 }
 
 TEST_CASE("Test FMKWayPartMgr ibm01") {
-  auto hgr = readNetD("../../testcases/ibm01.net");
-  readAre(hgr, "../../testcases/ibm01.are");
-  run_FMKWayPartMgr(hgr, 3);
+    auto hgr = readNetD("../../testcases/ibm01.net");
+    readAre(hgr, "../../testcases/ibm01.are");
+    run_FMKWayPartMgr(hgr, 3);
 }
 
 // TEST_CASE("Test FMKWayPartMgr ibm18")

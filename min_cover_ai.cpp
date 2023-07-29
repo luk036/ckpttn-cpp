@@ -33,84 +33,84 @@ using Tuple = pair<Set, int>;
  */
 Tuple min_maximal_matching(HierNetlist *hgr, MutableMapping weight,
                            Set *matchset = nullptr, Set *dep = nullptr, ) {
-  // If the `matchset` parameter is not provided, create a new set
-  if (matchset == nullptr) {
-    matchset = new Set();
-  }
-
-  // If the `dep` parameter is not provided, create a new set
-  if (dep == nullptr) {
-    dep = new Set();
-  }
-
-  // The `cover` function takes a net as input and adds all the vertices
-  // connected to that net
-  auto cover = [](string net) {
-    for (auto vtx : hgr->gra[net]) {
-      dep->insert(vtx);
+    // If the `matchset` parameter is not provided, create a new set
+    if (matchset == nullptr) {
+        matchset = new Set();
     }
-  };
 
-  // The `any_of_dep` function returns `true` if the net is already covered by
-  // the matching
-  auto any_of_dep = [](string net) {
+    // If the `dep` parameter is not provided, create a new set
+    if (dep == nullptr) {
+        dep = new Set();
+    }
+
+    // The `cover` function takes a net as input and adds all the vertices
+    // connected to that net
+    auto cover = [](string net) {
+        for (auto vtx : hgr->gra[net]) {
+            dep->insert(vtx);
+        }
+    };
+
+    // The `any_of_dep` function returns `true` if the net is already covered by
+    // the matching
+    auto any_of_dep = [](string net) {
     return any(vtx == net for vtx in hgr->gra[net]);
-  };
+    };
 
-  // Initialize the primal and dual costs
-  int total_primal_cost = 0;
-  int total_dual_cost = 0;
+    // Initialize the primal and dual costs
+    int total_primal_cost = 0;
+    int total_dual_cost = 0;
 
-  // Create a copy of the weight mapping
-  MutableMapping gap = weight;
+    // Create a copy of the weight mapping
+    MutableMapping gap = weight;
 
-  // Iterate over all the nets in the hypergraph
-  for (string net : hgr->nets) {
-    // If the net is already covered, skip it
-    if (any_of_dep(net)) {
-      continue;
-    }
-
-    // Initialize the minimum value
-    int min_val = gap[net];
-    string min_net = net;
-
-    // Iterate over all the vertices connected to the net
-    for (string vtx : hgr->gra[net]) {
-      // Iterate over all the nets connected to the vertex
-      for (string net2 : hgr->gra[vtx]) {
+    // Iterate over all the nets in the hypergraph
+    for (string net : hgr->nets) {
         // If the net is already covered, skip it
-        if (any_of_dep(net2)) {
-          continue;
+        if (any_of_dep(net)) {
+            continue;
         }
 
-        // Update the minimum value if necessary
-        if (min_val > gap[net2]) {
-          min_val = gap[net2];
-          min_net = net2;
+        // Initialize the minimum value
+        int min_val = gap[net];
+        string min_net = net;
+
+        // Iterate over all the vertices connected to the net
+        for (string vtx : hgr->gra[net]) {
+            // Iterate over all the nets connected to the vertex
+            for (string net2 : hgr->gra[vtx]) {
+                // If the net is already covered, skip it
+                if (any_of_dep(net2)) {
+                    continue;
+                }
+
+                // Update the minimum value if necessary
+                if (min_val > gap[net2]) {
+                    min_val = gap[net2];
+                    min_net = net2;
+                }
+            }
         }
-      }
-    }
 
-    // Add the net to the matching and update the costs
-    cover(min_net);
-    matchset->insert(min_net);
-    total_primal_cost += weight[min_net];
-    total_dual_cost += min_val;
+        // Add the net to the matching and update the costs
+        cover(min_net);
+        matchset->insert(min_net);
+        total_primal_cost += weight[min_net];
+        total_dual_cost += min_val;
 
-    // Update the gap values
-    if (min_net == net) {
-      continue;
+        // Update the gap values
+        if (min_net == net) {
+            continue;
+        }
+        gap[net] -= min_val;
+        for (string vtx : hgr->gra[net]) {
+            for (string net2 : hgr->gra[vtx]) {
+                // if net2 == net:
+                //     continue
+                gap[net2] -= min_val;
+            }
+        }
     }
-    gap[net] -= min_val;
-    for (string vtx : hgr->gra[net]) {
-      for (string net2 : hgr->gra[vtx]) {
-        // if net2 == net:
-        //     continue
-        gap[net2] -= min_val;
-      }
-    }
-  }
-  assert(total_dual_cost <= total_primal_cost);
-  return {*matchset, total_primal_cost};
+    assert(total_dual_cost <= total_primal_cost);
+    return {*matchset, total_primal_cost};
 }

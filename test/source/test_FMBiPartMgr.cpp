@@ -23,36 +23,36 @@ extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
  * @param[in] hgr
  */
 void run_FMBiPartMgr(const SimpleNetlist &hgr) {
-  FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
-  FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4};
-  FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-            FMBiConstrMgr<SimpleNetlist>>
-      part_mgr{hgr, gain_mgr, constr_mgr};
-  vector<uint8_t> part(hgr.number_of_modules(), 0);
-  part_mgr.legalize(part);
-  auto totalcostbefore = part_mgr.total_cost;
-  part_mgr.optimize(part);
-  CHECK(totalcostbefore >= 0);
-  CHECK(part_mgr.total_cost <= totalcostbefore);
-  CHECK(part_mgr.total_cost >= 0);
-  totalcostbefore = part_mgr.total_cost;
-  part_mgr.init(part);
-  CHECK(part_mgr.total_cost == totalcostbefore);
+    FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
+    FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4};
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+              FMBiConstrMgr<SimpleNetlist>>
+        part_mgr{hgr, gain_mgr, constr_mgr};
+    vector<uint8_t> part(hgr.number_of_modules(), 0);
+    part_mgr.legalize(part);
+    auto totalcostbefore = part_mgr.total_cost;
+    part_mgr.optimize(part);
+    CHECK(totalcostbefore >= 0);
+    CHECK(part_mgr.total_cost <= totalcostbefore);
+    CHECK(part_mgr.total_cost >= 0);
+    totalcostbefore = part_mgr.total_cost;
+    part_mgr.init(part);
+    CHECK(part_mgr.total_cost == totalcostbefore);
 }
 
 TEST_CASE("Test FMBiPartMgr") {
-  const auto hgr = create_test_netlist();
-  run_FMBiPartMgr(hgr);
+    const auto hgr = create_test_netlist();
+    run_FMBiPartMgr(hgr);
 }
 
 TEST_CASE("Test FMBiPartMgr dwarf") {
-  const auto hgr = create_dwarf();
-  run_FMBiPartMgr(hgr);
+    const auto hgr = create_dwarf();
+    run_FMBiPartMgr(hgr);
 }
 
 TEST_CASE("Test FMBiPartMgr p1") {
-  const auto hgr = readNetD("../../testcases/p1.net");
-  run_FMBiPartMgr(hgr);
+    const auto hgr = readNetD("../../testcases/p1.net");
+    run_FMBiPartMgr(hgr);
 }
 
 // TEST_CASE("Test FMBiPartMgr ibm01")

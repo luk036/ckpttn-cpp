@@ -41,64 +41,64 @@ extern auto create_contraction_subgraph(const SimpleNetlist &,
 // }
 
 TEST_CASE("Test contraction subgraph dwarf") {
-  const auto hgr = create_dwarf();
-  const auto hgr2 = create_contraction_subgraph(hgr, py::set<node_t>{});
-  // auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t> {});
-  CHECK(hgr2->number_of_modules() < 7);
-  CHECK(hgr2->number_of_nets() == 3);
-  // CHECK(hgr2->number_of_pins() < 14);
-  CHECK(hgr2->get_max_net_degree() <= 3);
+    const auto hgr = create_dwarf();
+    const auto hgr2 = create_contraction_subgraph(hgr, py::set<node_t>{});
+    // auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t> {});
+    CHECK(hgr2->number_of_modules() < 7);
+    CHECK(hgr2->number_of_nets() == 3);
+    // CHECK(hgr2->number_of_pins() < 14);
+    CHECK(hgr2->get_max_net_degree() <= 3);
 
-  auto part = vector<uint8_t>(hgr.number_of_modules(), 0);
-  auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
-  auto part3 = vector<uint8_t>(hgr2->number_of_modules(), 0);
-  part2[0] = part2[2] = 1;
-  part2[1] = 2;
-  hgr2->projection_down(part2, part);
-  hgr2->projection_up(part, part3);
-  CHECK(part2 == part3);
+    auto part = vector<uint8_t>(hgr.number_of_modules(), 0);
+    auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
+    auto part3 = vector<uint8_t>(hgr2->number_of_modules(), 0);
+    part2[0] = part2[2] = 1;
+    part2[1] = 2;
+    hgr2->projection_down(part2, part);
+    hgr2->projection_up(part, part3);
+    CHECK(part2 == part3);
 }
 
 TEST_CASE("Test contraction subgraph ibm01") {
-  auto hgr = readNetD("../../testcases/ibm01.net");
-  readAre(hgr, "../../testcases/ibm01.are");
-  auto hgr2 = create_contraction_subgraph(hgr, py::set<node_t>{});
-  auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t>{});
-  CHECK(hgr2->number_of_modules() < hgr.number_of_modules());
-  CHECK(hgr2->number_of_nets() < hgr.number_of_nets());
-  // CHECK(hgr2->number_of_pins() < hgr.number_of_pins());
-  CHECK(hgr2->get_max_net_degree() <= hgr.get_max_net_degree());
+    auto hgr = readNetD("../../testcases/ibm01.net");
+    readAre(hgr, "../../testcases/ibm01.are");
+    auto hgr2 = create_contraction_subgraph(hgr, py::set<node_t>{});
+    auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t>{});
+    CHECK(hgr2->number_of_modules() < hgr.number_of_modules());
+    CHECK(hgr2->number_of_nets() < hgr.number_of_nets());
+    // CHECK(hgr2->number_of_pins() < hgr.number_of_pins());
+    CHECK(hgr2->get_max_net_degree() <= hgr.get_max_net_degree());
 
-  auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
-  auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
-  auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
-  auto i = uint8_t(0);
+    auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
+    auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
+    auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
+    auto i = uint8_t(0);
 
-  for (auto &item : part3) {
-    item = ++i % 6;
-  }
-  H3->projection_down(part3, part2);
-  H3->projection_up(part2, part4);
-  CHECK(part3 == part4);
+    for (auto &item : part3) {
+        item = ++i % 6;
+    }
+    H3->projection_down(part3, part2);
+    H3->projection_up(part2, part4);
+    CHECK(part3 == part4);
 }
 
 TEST_CASE("Test contraction subgraph ibm18") {
-  auto hgr = readNetD("../../testcases/ibm18.net");
-  readAre(hgr, "../../testcases/ibm18.are");
-  auto hgr2 = create_contraction_subgraph(hgr, py::set<node_t>{});
-  auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t>{});
-  CHECK(hgr2->number_of_modules() < hgr.number_of_modules());
-  CHECK(hgr2->number_of_nets() < hgr.number_of_nets());
-  // CHECK(hgr2->number_of_pins() < hgr.number_of_pins());
-  CHECK(hgr2->get_max_net_degree() <= hgr.get_max_net_degree());
+    auto hgr = readNetD("../../testcases/ibm18.net");
+    readAre(hgr, "../../testcases/ibm18.are");
+    auto hgr2 = create_contraction_subgraph(hgr, py::set<node_t>{});
+    auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t>{});
+    CHECK(hgr2->number_of_modules() < hgr.number_of_modules());
+    CHECK(hgr2->number_of_nets() < hgr.number_of_nets());
+    // CHECK(hgr2->number_of_pins() < hgr.number_of_pins());
+    CHECK(hgr2->get_max_net_degree() <= hgr.get_max_net_degree());
 
-  auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
-  auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
-  auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
-  for (auto i = 0u; i != H3->number_of_modules(); ++i) {
-    part3[i] = uint8_t(i) % 6;
-  }
-  H3->projection_down(part3, part2);
-  H3->projection_up(part2, part4);
-  CHECK(part3 == part4);
+    auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
+    auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
+    auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
+    for (auto i = 0u; i != H3->number_of_modules(); ++i) {
+        part3[i] = uint8_t(i) % 6;
+    }
+    H3->projection_down(part3, part2);
+    H3->projection_up(part2, part4);
+    CHECK(part3 == part4);
 }

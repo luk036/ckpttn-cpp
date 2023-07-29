@@ -23,25 +23,26 @@ using namespace std;
  */
 template <typename Gnl>
 auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
-  auto total_cost = Base::init(part);
+    auto total_cost = Base::init(part);
 
-  for (auto &bckt : this->gain_bucket) {
-    bckt.clear();
-  }
-  for (const auto &v : this->hgr) {
-    const auto pv = part[v];
-    for (const auto &k : this->rr.exclude(pv)) {
-      auto &vlink = this->gain_calc.vertex_list[k][v];
-      this->gain_bucket[k].append(vlink, this->gain_calc.init_gain_list[k][v]);
+    for (auto &bckt : this->gain_bucket) {
+        bckt.clear();
     }
-    auto &vlink = this->gain_calc.vertex_list[pv][v];
-    this->gain_bucket[pv].set_key(vlink, 0);
-    this->waiting_list.append(vlink);
-  }
-  for (const auto &v : this->hgr.module_fixed) {
-    this->lock_all(part[v], v);
-  }
-  return total_cost;
+    for (const auto &v : this->hgr) {
+        const auto pv = part[v];
+        for (const auto &k : this->rr.exclude(pv)) {
+            auto &vlink = this->gain_calc.vertex_list[k][v];
+            this->gain_bucket[k].append(vlink,
+                                        this->gain_calc.init_gain_list[k][v]);
+        }
+        auto &vlink = this->gain_calc.vertex_list[pv][v];
+        this->gain_bucket[pv].set_key(vlink, 0);
+        this->waiting_list.append(vlink);
+    }
+    for (const auto &v : this->hgr.module_fixed) {
+        this->lock_all(part[v], v);
+    }
+    return total_cost;
 }
 
 /**
@@ -54,18 +55,18 @@ auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
 template <typename Gnl>
 void FMKWayGainMgr<Gnl>::update_move_v(
     const MoveInfoV<typename Gnl::node_t> &move_info_v, int gain) {
-  // const auto& [v, from_part, to_part] = move_info_v;
+    // const auto& [v, from_part, to_part] = move_info_v;
 
-  for (auto k = 0U; k != this->num_parts; ++k) {
-    if (move_info_v.from_part == k || move_info_v.to_part == k) {
-      continue;
+    for (auto k = 0U; k != this->num_parts; ++k) {
+        if (move_info_v.from_part == k || move_info_v.to_part == k) {
+            continue;
+        }
+        this->gain_bucket[k].modify_key(
+            this->gain_calc.vertex_list[k][move_info_v.v],
+            this->gain_calc.delta_gain_v[k]);
     }
-    this->gain_bucket[k].modify_key(
-        this->gain_calc.vertex_list[k][move_info_v.v],
-        this->gain_calc.delta_gain_v[k]);
-  }
-  this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
-  // this->_set_key(to_part, v, -2*this->pmax);
+    this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
+    // this->_set_key(to_part, v, -2*this->pmax);
 }
 
 // instantiation

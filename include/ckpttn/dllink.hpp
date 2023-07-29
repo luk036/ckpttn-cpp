@@ -20,171 +20,173 @@ template <typename T> class DllIterator;
  */
 #pragma pack(push, 1)
 template <typename T> class Dllink {
-  friend DllIterator<T>;
-  friend Dllist<T>;
-  friend DllIterator<T>;
+    friend DllIterator<T>;
+    friend Dllist<T>;
+    friend DllIterator<T>;
 
-private:
-  Dllink *next{this}; /**< pointer to the next node */
-  Dllink *prev{this}; /**< pointer to the previous node */
+  private:
+    Dllink *next{this}; /**< pointer to the next node */
+    Dllink *prev{this}; /**< pointer to the previous node */
 
-public:
-  T data{}; /**< data */
-  // Int key{}; /**< key */
+  public:
+    T data{}; /**< data */
+    // Int key{}; /**< key */
 
-  /**
-   * @brief Construct a new Dllink object
-   *
-   * @param[in] data the data
-   */
-  constexpr explicit Dllink(T data) noexcept : data{std::move(data)} {
-    static_assert(sizeof(Dllink) <= 24, "keep this class small");
-  }
+    /**
+     * @brief Construct a new Dllink object
+     *
+     * @param[in] data the data
+     */
+    constexpr explicit Dllink(T data) noexcept : data{std::move(data)} {
+        static_assert(sizeof(Dllink) <= 24, "keep this class small");
+    }
 
-  /**
-   * @brief Copy construct a new Dllink object (deleted intentionally)
-   *
-   */
-  constexpr Dllink() = default;
-  ~Dllink() = default;
-  Dllink(const Dllink &) = delete;                               // don't copy
-  constexpr auto operator=(const Dllink &) -> Dllink & = delete; // don't assign
-  constexpr Dllink(Dllink &&) noexcept = default;
-  constexpr auto operator=(Dllink &&) noexcept
-      -> Dllink & = default; // don't assign
+    /**
+     * @brief Copy construct a new Dllink object (deleted intentionally)
+     *
+     */
+    constexpr Dllink() = default;
+    ~Dllink() = default;
+    Dllink(const Dllink &) = delete; // don't copy
+    constexpr auto operator=(const Dllink &)
+        -> Dllink & = delete; // don't assign
+    constexpr Dllink(Dllink &&) noexcept = default;
+    constexpr auto operator=(Dllink &&) noexcept
+        -> Dllink & = default; // don't assign
 
-  /**
-   * @brief lock the node (and don't append it to any list)
-   *
-   */
-  constexpr auto lock() noexcept -> void { this->next = this; }
+    /**
+     * @brief lock the node (and don't append it to any list)
+     *
+     */
+    constexpr auto lock() noexcept -> void { this->next = this; }
 
-  /**
-   * @brief whether the node is locked
-   *
-   * @return true
-   * @return false
-   */
-  constexpr auto is_locked() const noexcept -> bool {
-    return this->next == this;
-  }
+    /**
+     * @brief whether the node is locked
+     *
+     * @return true
+     * @return false
+     */
+    constexpr auto is_locked() const noexcept -> bool {
+        return this->next == this;
+    }
 
-  // /**
-  //  * @brief whether the list is empty
-  //  *
-  //  * @return true
-  //  * @return false
-  //  */
-  // constexpr auto is_empty() const noexcept -> bool { return this->next ==
-  // this; }
+    // /**
+    //  * @brief whether the list is empty
+    //  *
+    //  * @return true
+    //  * @return false
+    //  */
+    // constexpr auto is_empty() const noexcept -> bool { return this->next ==
+    // this; }
 
-  // /**
-  //  * @brief reset the list
-  //  *
-  //  */
-  // constexpr auto clear() noexcept -> void { this->next = this->prev = this; }
+    // /**
+    //  * @brief reset the list
+    //  *
+    //  */
+    // constexpr auto clear() noexcept -> void { this->next = this->prev = this;
+    // }
 
-  /**
-   * @brief detach from a list
-   *
-   */
-  constexpr auto detach() noexcept -> void {
-    assert(!this->is_locked());
-    const auto n = this->next;
-    const auto p = this->prev;
-    p->next = n;
-    n->prev = p;
-  }
+    /**
+     * @brief detach from a list
+     *
+     */
+    constexpr auto detach() noexcept -> void {
+        assert(!this->is_locked());
+        const auto n = this->next;
+        const auto p = this->prev;
+        p->next = n;
+        n->prev = p;
+    }
 
-private:
-  /**
-   * @brief append the node to the front
-   *
-   * @param[in,out] node
-   */
-  constexpr auto appendleft(Dllink &node) noexcept -> void {
-    node.next = this->next;
-    this->next->prev = &node;
-    this->next = &node;
-    node.prev = this;
-  }
+  private:
+    /**
+     * @brief append the node to the front
+     *
+     * @param[in,out] node
+     */
+    constexpr auto appendleft(Dllink &node) noexcept -> void {
+        node.next = this->next;
+        this->next->prev = &node;
+        this->next = &node;
+        node.prev = this;
+    }
 
-  /**
-   * @brief append the node to the back
-   *
-   * @param[in,out] node
-   */
-  constexpr auto append(Dllink &node) noexcept -> void {
-    node.prev = this->prev;
-    this->prev->next = &node;
-    this->prev = &node;
-    node.next = this;
-  }
+    /**
+     * @brief append the node to the back
+     *
+     * @param[in,out] node
+     */
+    constexpr auto append(Dllink &node) noexcept -> void {
+        node.prev = this->prev;
+        this->prev->next = &node;
+        this->prev = &node;
+        node.next = this;
+    }
 
-  /**
-   * @brief pop a node from the front
-   *
-   * @return Dllink&
-   *
-   * Precondition: list is not empty
-   */
-  constexpr auto popleft() noexcept -> Dllink & {
-    auto res = this->next;
-    this->next = res->next;
-    this->next->prev = this;
-    return *res;
-  }
+    /**
+     * @brief pop a node from the front
+     *
+     * @return Dllink&
+     *
+     * Precondition: list is not empty
+     */
+    constexpr auto popleft() noexcept -> Dllink & {
+        auto res = this->next;
+        this->next = res->next;
+        this->next->prev = this;
+        return *res;
+    }
 
-  /**
-   * @brief pop a node from the back
-   *
-   * @return Dllink&
-   *
-   * Precondition: list is not empty
-   */
-  constexpr auto pop() noexcept -> Dllink & {
-    auto res = this->prev;
-    this->prev = res->prev;
-    this->prev->next = this;
-    return *res;
-  }
+    /**
+     * @brief pop a node from the back
+     *
+     * @return Dllink&
+     *
+     * Precondition: list is not empty
+     */
+    constexpr auto pop() noexcept -> Dllink & {
+        auto res = this->prev;
+        this->prev = res->prev;
+        this->prev->next = this;
+        return *res;
+    }
 
-  // For iterator
+    // For iterator
 
-  // /**
-  //  * @brief
-  //  *
-  //  * @return DllIterator
-  //  */
-  // constexpr auto begin() noexcept -> DllIterator<T>;
+    // /**
+    //  * @brief
+    //  *
+    //  * @return DllIterator
+    //  */
+    // constexpr auto begin() noexcept -> DllIterator<T>;
 
-  // /**
-  //  * @brief
-  //  *
-  //  * @return DllIterator
-  //  */
-  // constexpr auto end() noexcept -> DllIterator<T>;
+    // /**
+    //  * @brief
+    //  *
+    //  * @return DllIterator
+    //  */
+    // constexpr auto end() noexcept -> DllIterator<T>;
 
-  // using coro_t = boost::coroutines2::coroutine<Dllink&>;
-  // using pull_t = typename coro_t::pull_type;
+    // using coro_t = boost::coroutines2::coroutine<Dllink&>;
+    // using pull_t = typename coro_t::pull_type;
 
-  // /**
-  //  * @brief item generator
-  //  *
-  //  * @return pull_t
-  //  */
-  // auto items() noexcept -> pull_t
-  // {
-  //     auto func = [&](typename coro_t::push_type& yield) {
-  //         auto cur = this->next;
-  //         while (cur != this)
-  //         {
-  //             yield(*cur);
-  //             cur = cur->next;
-  //         }
-  //     };
-  //     return pull_t(func);
-  // }
+    // /**
+    //  * @brief item generator
+    //  *
+    //  * @return pull_t
+    //  */
+    // auto items() noexcept -> pull_t
+    // {
+    //     auto func = [&](typename coro_t::push_type& yield) {
+    //         auto cur = this->next;
+    //         while (cur != this)
+    //         {
+    //             yield(*cur);
+    //             cur = cur->next;
+    //         }
+    //     };
+    //     return pull_t(func);
+    // }
 };
 #pragma pack(pop)
 

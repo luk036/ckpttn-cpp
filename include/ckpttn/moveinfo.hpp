@@ -8,10 +8,10 @@
  * @tparam Node
  */
 template <typename Node> struct MoveInfo {
-  Node net;
-  Node v;
-  std::uint8_t from_part;
-  std::uint8_t to_part;
+    Node net;
+    Node v;
+    std::uint8_t from_part;
+    std::uint8_t to_part;
 };
 
 /**
@@ -20,8 +20,8 @@ template <typename Node> struct MoveInfo {
  * @tparam Node
  */
 template <typename Node> struct MoveInfoV {
-  Node v;
-  std::uint8_t from_part;
-  std::uint8_t to_part;
-  // node_t v;
+    Node v;
+    std::uint8_t from_part;
+    std::uint8_t to_part;
+    // node_t v;
 };
