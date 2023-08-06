@@ -12,16 +12,14 @@ class MinHash {
         // Generate k random numbers
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(
-            std::numeric_limits<int64_t>::min(),
-            std::numeric_limits<int64_t>::max());
+        std::uniform_int_distribution<> dis(std::numeric_limits<int64_t>::min(),
+                                            std::numeric_limits<int64_t>::max());
         for (int i = 0; i < k; i++) {
             _masks[i] = dis(gen);
         }
         // Initialize the hashes vector to the maximum value
         _hashes = std::vector<int64_t>(k);
-        std::fill(_hashes.begin(), _hashes.end(),
-                  std::numeric_limits<int64_t>::max());
+        std::fill(_hashes.begin(), _hashes.end(), std::numeric_limits<int64_t>::max());
     }
 
     // Add a document to the MinHash signature

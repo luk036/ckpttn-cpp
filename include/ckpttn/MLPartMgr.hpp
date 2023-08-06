@@ -6,8 +6,8 @@
 // #include "FMPartMgr.hpp" // import FMPartMgr
 // #include "netlist.hpp"
 #include <cassert>
-#include <gsl/span> // for span
-#include <memory>   // std::unique_ptr
+#include <gsl/span>  // for span
+#include <memory>    // std::unique_ptr
 // #include <py2cpp/range.hpp>  // for range
 // #include <ckpttn/FMConstrMgr.hpp>   // import LegalCheck
 
@@ -49,8 +49,7 @@ class MLPartMgr {
      * @param[in] bal_tol
      * @param[in] num_parts
      */
-    MLPartMgr(double bal_tol, std::uint8_t num_parts)
-        : bal_tol{bal_tol}, num_parts{num_parts} {}
+    MLPartMgr(double bal_tol, std::uint8_t num_parts) : bal_tol{bal_tol}, num_parts{num_parts} {}
 
     void set_limitsize(size_t limit) { this->limitsize = limit; }
 
@@ -64,6 +63,5 @@ class MLPartMgr {
      * @return LegalCheck
      */
     template <typename Gnl, typename PartMgr>
-    auto run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part)
-        -> LegalCheck;
+    auto run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part) -> LegalCheck;
 };

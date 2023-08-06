@@ -1,14 +1,14 @@
 #pragma once
 
 // #include <algorithm> // for all_of
-#include <cinttypes> // for uint8_t, uint32_t
-#include <gsl/span>  // for span
-#include <tuple>     // for tuple
-#include <utility>   // for pair
-#include <vector>    // for vector<>::const_iterator, vector
+#include <cinttypes>  // for uint8_t, uint32_t
+#include <gsl/span>   // for span
+#include <tuple>      // for tuple
+#include <utility>    // for pair
+#include <vector>     // for vector<>::const_iterator, vector
 
-#include "bpqueue.hpp" // for BPQueue
-#include "dllist.hpp"  // for Dllink
+#include "bpqueue.hpp"  // for BPQueue
+#include "dllist.hpp"   // for Dllink
 
 template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
@@ -26,8 +26,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   protected:
-    Dllist<std::pair<node_t, uint32_t>> waiting_list{
-        std::make_pair(node_t{}, uint32_t(0))};
+    Dllist<std::pair<node_t, uint32_t>> waiting_list{std::make_pair(node_t{}, uint32_t(0))};
     const Gnl &hgr;
     std::vector<BPQueue<node_t>> gain_bucket;
     std::uint8_t num_parts;
@@ -84,8 +83,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @return std::pair<MoveInfoV<node_t>, int>
      */
-    auto select(gsl::span<const std::uint8_t> part)
-        -> std::pair<MoveInfoV<node_t>, int>;
+    auto select(gsl::span<const std::uint8_t> part) -> std::pair<MoveInfoV<node_t>, int>;
 
     /**
      * @brief
@@ -101,8 +99,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @param[in] move_info_v
      */
-    auto update_move(gsl::span<const std::uint8_t> part,
-                     const MoveInfoV<node_t> &move_info_v) -> void;
+    auto update_move(gsl::span<const std::uint8_t> part, const MoveInfoV<node_t> &move_info_v)
+        -> void;
 
   private:
     /**

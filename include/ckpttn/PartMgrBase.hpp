@@ -4,10 +4,10 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 
-#include <cstdint> // for uint8_t
+#include <cstdint>  // for uint8_t
 #include <gsl/span>
-#include <gsl/span> // for span
-#include <vector>   // for vector
+#include <gsl/span>  // for span
+#include <vector>    // for vector
 // #include <xnetwork/classes/graph.hpp>
 
 // forward declare
@@ -46,7 +46,7 @@ enum class LegalCheck;
  * @tparam ConstrMgr
  * @tparam Derived
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr> //
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 class PartMgrBase {
   public:
     using GainCalc_ = typename GainMgr::GainCalc_;
@@ -76,10 +76,8 @@ class PartMgrBase {
      * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    PartMgrBase(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr,
-                size_t num_parts)
-        : hgr{hgr}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{
-                                                                   num_parts} {}
+    PartMgrBase(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
+        : hgr{hgr}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
 
     /**
      * @brief
@@ -117,8 +115,7 @@ class PartMgrBase {
      * @param[in] part
      * @return std::vector<std::uint8_t>
      */
-    auto take_snapshot(gsl::span<const std::uint8_t> part)
-        -> std::vector<std::uint8_t> {
+    auto take_snapshot(gsl::span<const std::uint8_t> part) -> std::vector<std::uint8_t> {
         // const auto N = part.size();
         // auto snapshot = std::vector<std::uint8_t>(N, 0U);
         // // snapshot.reserve(N);
@@ -136,8 +133,8 @@ class PartMgrBase {
      * @param[in] snapshot
      * @param[in,out] part
      */
-    auto restore_part(const std::vector<std::uint8_t> &snapshot,
-                      gsl::span<std::uint8_t> part) -> void {
+    auto restore_part(const std::vector<std::uint8_t> &snapshot, gsl::span<std::uint8_t> part)
+        -> void {
         // std::copy(snapshot.begin(), snapshot.end(), part.begin());
         const auto N = part.size();
         for (auto i = 0U; i != N; ++i) {

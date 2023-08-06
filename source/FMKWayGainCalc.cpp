@@ -1,23 +1,23 @@
-#include <cassert> // for assert
-#include <cstdint> // for uint8_t
+#include <cassert>  // for assert
+#include <cstdint>  // for uint8_t
 
 // #include <__config>                                           // for std
 // #include <__hash_table>                                       // for
 // __hash_...
-#include <algorithm>                 // for fill
-#include <ckpttn/FMKWayGainCalc.hpp> // for FMKWayG...
-#include <ckpttn/FMPmrConfig.hpp>    // for FM_MAX_...
-#include <ckpttn/dllist.hpp>         // for Dllink
-#include <ckpttn/moveinfo.hpp>       // for MoveInfo
-#include <ckpttn/robin.hpp>          // for fun::Robin<>...
-#include <cstddef>                   // for byte
-#include <gsl/span>                  // for span
-#include <initializer_list>          // for initial...
-#include <transrangers.hpp>          // for all, filter, zip2
-#include <transrangers_ext.hpp>      // for enumerate
-#include <type_traits>               // for swap
-#include <utility>                   // for pair
-#include <vector>                    // for vector
+#include <algorithm>                  // for fill
+#include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayG...
+#include <ckpttn/FMPmrConfig.hpp>     // for FM_MAX_...
+#include <ckpttn/dllist.hpp>          // for Dllink
+#include <ckpttn/moveinfo.hpp>        // for MoveInfo
+#include <ckpttn/robin.hpp>           // for fun::Robin<>...
+#include <cstddef>                    // for byte
+#include <gsl/span>                   // for span
+#include <initializer_list>           // for initial...
+#include <transrangers.hpp>           // for all, filter, zip2
+#include <transrangers_ext.hpp>       // for enumerate
+#include <type_traits>                // for swap
+#include <utility>                    // for pair
+#include <vector>                     // for vector
 
 using namespace std;
 using namespace transrangers;
@@ -28,27 +28,26 @@ using namespace transrangers;
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
-                                     gsl::span<const uint8_t> part) {
+template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
+                                                             gsl::span<const uint8_t> part) {
     const auto degree = this->hgr.gr.degree(net);
-    if (degree < 2 || degree > FM_MAX_DEGREE) // [[unlikely]]
+    if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
-        return; // does not provide any gain when moving
+        return;  // does not provide any gain when moving
     }
     if (!special_handle_2pin_nets) {
         this->_init_gain_general_net(net, part);
         return;
     }
     switch (degree) {
-    case 2:
-        this->_init_gain_2pin_net(net, part);
-        break;
-    case 3:
-        this->_init_gain_3pin_net(net, part);
-        break;
-    default:
-        this->_init_gain_general_net(net, part);
+        case 2:
+            this->_init_gain_2pin_net(net, part);
+            break;
+        case 3:
+            this->_init_gain_3pin_net(net, part);
+            break;
+        default:
+            this->_init_gain_general_net(net, part);
     }
 }
 
@@ -149,8 +148,8 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
  * @param[in] part
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_general_net(
-    const typename Gnl::node_t &net, gsl::span<const uint8_t> part) {
+void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
+                                                 gsl::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
     //                                            sizeof StackBufLocal);
@@ -198,9 +197,8 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(
             //     break;
             //   }
             // }
-            auto rng_new =
-                all(this->hgr.gr[net]); // reinitialize after breaking (fix
-                                        // for Termux's clang 16)
+            auto rng_new = all(this->hgr.gr[net]);  // reinitialize after breaking (fix
+                                                    // for Termux's clang 16)
             rng_new([&part, k, weight, this](const auto &wc) {
                 if (part[*wc] == k) {
                     this->_increase_gain(*wc, part[*wc], weight);
@@ -251,9 +249,9 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
  * @return ret_2pin_info
  */
 template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_2pin_net(
-    gsl::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info) -> typename Gnl::node_t {
+auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
+                                               const MoveInfo<typename Gnl::node_t> &move_info) ->
+    typename Gnl::node_t {
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
 
@@ -298,9 +296,8 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
-                                       const typename Gnl::node_t &net) {
+template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+                                                               const typename Gnl::node_t &net) {
     this->idx_vec.clear();
     auto rng1 = all(this->hgr.gr[net]);
     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
@@ -318,13 +315,11 @@ void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
  * @return ret_info
  */
 template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
-    gsl::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info)
+auto FMKWayGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
+                                               const MoveInfo<typename Gnl::node_t> &move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
-    auto delta_gain =
-        vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
+    auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
     auto gain = int(this->hgr.get_net_weight(move_info.net));
     const auto part_w = part[this->idx_vec[0]];
     const auto part_u = part[this->idx_vec[1]];
@@ -394,9 +389,8 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
  * @return ret_info
  */
 template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_general_net(
-    gsl::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info)
+auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
+                                                  const MoveInfo<typename Gnl::node_t> &move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, from_part, to_part] = move_info;
     // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
@@ -411,8 +405,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
     });
 
     const auto degree = idx_vec.size();
-    auto delta_gain =
-        vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
+    auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
     auto gain = int(this->hgr.get_net_weight(move_info.net));
 
     auto l = move_info.from_part;
@@ -458,8 +451,9 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(
 
 // instantiation
 
-#include "ckpttn/netlist.hpp"         // for Netlist
-#include <py2cpp/set.hpp>             // for set
-#include <xnetwork/classes/graph.hpp> // for Graph
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph
+
+#include "ckpttn/netlist.hpp"  // for Netlist
 
 template class FMKWayGainCalc<SimpleNetlist>;

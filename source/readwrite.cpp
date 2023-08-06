@@ -1,18 +1,18 @@
-#include <cctype>                     // for isspace, isdigit
-#include <ckpttn/netlist.hpp>         // for SimpleNetlist, index_t, Netlist
-#include <cstdint>                    // for uint32_t
-#include <cstdlib>                    // for exit, size_t
-#include <fstream>                    // for operator<<, basic_ostream, cha...
-#include <iostream>                   // for cerr
-#include <py2cpp/range.hpp>           // for _iterator
-#include <py2cpp/set.hpp>             // for set
-#include <xnetwork/classes/graph.hpp> // for Graph
+#include <cctype>                      // for isspace, isdigit
+#include <ckpttn/netlist.hpp>          // for SimpleNetlist, index_t, Netlist
+#include <cstdint>                     // for uint32_t
+#include <cstdlib>                     // for exit, size_t
+#include <fstream>                     // for operator<<, basic_ostream, cha...
+#include <iostream>                    // for cerr
+#include <py2cpp/range.hpp>            // for _iterator
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>      // for std
 // #include <__hash_table>  // for __hash_const_iterator, operator!=
-#include <boost/utility/string_view.hpp> // for boost::string_view
-#include <type_traits>                   // for move
-#include <vector>                        // for vector
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <type_traits>                    // for move
+#include <vector>                         // for vector
 
 // using graph_t =
 //     boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;
@@ -77,7 +77,7 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
     uint32_t numModules = 0;
     index_t padOffset = 0;
 
-    netD >> t; // eat 1st 0
+    netD >> t;  // eat 1st 0
     netD >> numPins >> numNets >> numModules >> padOffset;
 
     // using Edge = pair<int, int>;
@@ -87,7 +87,7 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
     auto g = graph_t(num_vertices);
 
     constexpr index_t bufferSize = 100;
-    char lineBuffer[bufferSize]; // Does it work for other compiler?
+    char lineBuffer[bufferSize];  // Does it work for other compiler?
     netD.getline(lineBuffer, bufferSize);
 
     node_t w = 0;

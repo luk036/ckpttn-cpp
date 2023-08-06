@@ -8,8 +8,8 @@ class MinHash {
   public:
     // Constructor
     MinHash(int k, int seed = 10) {
-        this->k = k;       // Set the number of hash functions
-        this->seed = seed; // Set the seed for the random number generator
+        this->k = k;        // Set the number of hash functions
+        this->seed = seed;  // Set the seed for the random number generator
 
         // Initialize the random number generator
         std::mt19937_64 rng(seed);
@@ -17,8 +17,8 @@ class MinHash {
         // Generate k random masks
         masks.resize(k);
         for (int i = 0; i < k; i++) {
-            masks[i] = rng(); // Use the random number generator to get a 64-bit
-                              // integer
+            masks[i] = rng();  // Use the random number generator to get a 64-bit
+                               // integer
         }
 
         // Initialize the hashes vector with the maximum int64 value
@@ -30,16 +30,14 @@ class MinHash {
         // Compute the hashes for the value using the masks
         std::vector<int64_t> hashes_v(k);
         for (int i = 0; i < k; i++) {
-            hashes_v[i] = masks[i] ^ std::hash<int64_t>()(
-                                         v); // Use bitwise XOR to combine the
-                                             // mask and the hash of the value
+            hashes_v[i] = masks[i] ^ std::hash<int64_t>()(v);  // Use bitwise XOR to combine the
+                                                               // mask and the hash of the value
         }
 
         // Update the hashes vector with the minimum hashes
         for (int i = 0; i < k; i++) {
-            hashes[i] = std::min(
-                hashes[i],
-                hashes_v[i]); // Use std::min to compare and update the hashes
+            hashes[i] = std::min(hashes[i],
+                                 hashes_v[i]);  // Use std::min to compare and update the hashes
         }
     }
 
@@ -48,9 +46,10 @@ class MinHash {
         // Check if the masks are the same
         for (int i = 0; i < k; i++) {
             if (masks[i] != other.masks[i]) {
-                throw std::runtime_error("Can only calculate similarity "
-                                         "between MinHashes with the same hash "
-                                         "functions.");
+                throw std::runtime_error(
+                    "Can only calculate similarity "
+                    "between MinHashes with the same hash "
+                    "functions.");
             }
         }
 
@@ -58,18 +57,17 @@ class MinHash {
         int count = 0;
         for (int i = 0; i < k; i++) {
             if (hashes[i] == other.hashes[i]) {
-                count++; // Increment the count if the hashes are equal
+                count++;  // Increment the count if the hashes are equal
             }
         }
 
         // Return the Jaccard similarity
-        return static_cast<double>(count) /
-               k; // Divide the count by k and cast it to double
+        return static_cast<double>(count) / k;  // Divide the count by k and cast it to double
     }
 
   private:
-    int k;                       // The number of hash functions
-    int seed;                    // The seed for the random number generator
-    std::vector<int64_t> masks;  // The random masks for hashing
-    std::vector<int64_t> hashes; // The minimum hashes for each hash function
+    int k;                        // The number of hash functions
+    int seed;                     // The seed for the random number generator
+    std::vector<int64_t> masks;   // The random masks for hashing
+    std::vector<int64_t> hashes;  // The minimum hashes for each hash function
 };

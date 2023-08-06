@@ -4,7 +4,7 @@
 
 #include "FMBiGainCalc.hpp"
 #include "FMGainMgr.hpp"
-#include "moveinfo.hpp" // for MoveInfo
+#include "moveinfo.hpp"  // for MoveInfo
 
 // struct FMBiGainMgr;
 
@@ -13,8 +13,8 @@
  *
  * @tparam Gnl
  */
-template <typename Gnl>
-class FMBiGainMgr : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
+template <typename Gnl> class FMBiGainMgr
+    : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
   public:
     using Base = FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>>;
     using GainCalc_ = FMBiGainCalc<Gnl>;
@@ -45,8 +45,7 @@ class FMBiGainMgr : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
      * @param[in] key
      */
     auto modify_key(const node_t &w, std::uint8_t part_w, int key) -> void {
-        this->gain_bucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w],
-                                                 key);
+        this->gain_bucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w], key);
     }
 
     /**
@@ -79,9 +78,7 @@ class FMBiGainMgr : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
      * @param[in] from_part
      * @param[in] v
      */
-    auto lock_all(uint8_t from_part, const node_t &v) -> void {
-        this->lock(1 - from_part, v);
-    }
+    auto lock_all(uint8_t from_part, const node_t &v) -> void { this->lock(1 - from_part, v); }
 
   private:
     /**
@@ -92,7 +89,6 @@ class FMBiGainMgr : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
      * @param[in] key
      */
     auto _set_key(uint8_t whichPart, const node_t &v, int key) -> void {
-        this->gain_bucket[whichPart].set_key(this->gain_calc.vertex_list[v],
-                                             key);
+        this->gain_bucket[whichPart].set_key(this->gain_calc.vertex_list[v], key);
     }
 };

@@ -1,17 +1,17 @@
-#include <ckpttn/HierNetlist.hpp>     // for SimpleHierNetlist, HierNetlist
-#include <ckpttn/netlist.hpp>         // for SimpleNetlist, index_t, Netlist
-#include <ckpttn/netlist_algo.hpp>    // for min_maximal_matching
-#include <cstdint>                    // for uint32_t
-#include <memory>                     // for unique_ptr, make_unique
-#include <py2cpp/dict.hpp>            // for dict, dict<>::Base
-#include <py2cpp/range.hpp>           // for _iterator, iterable_wrapper
-#include <py2cpp/set.hpp>             // for set
-#include <transrangers.hpp>           // for accumlate, transform, all
-#include <type_traits>                // for move
-#include <unordered_map>              // for __hash_map_iterator, operator!=
-#include <utility>                    // for get
-#include <vector>                     // for vector<>::iterator, vector
-#include <xnetwork/classes/graph.hpp> // for Graph, Graph<>::nodeview_t
+#include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
+#include <ckpttn/netlist.hpp>          // for SimpleNetlist, index_t, Netlist
+#include <ckpttn/netlist_algo.hpp>     // for min_maximal_matching
+#include <cstdint>                     // for uint32_t
+#include <memory>                      // for unique_ptr, make_unique
+#include <py2cpp/dict.hpp>             // for dict, dict<>::Base
+#include <py2cpp/range.hpp>            // for _iterator, iterable_wrapper
+#include <py2cpp/set.hpp>              // for set
+#include <transrangers.hpp>            // for accumlate, transform, all
+#include <type_traits>                 // for move
+#include <unordered_map>               // for __hash_map_iterator, operator!=
+#include <utility>                     // for get
+#include <vector>                      // for vector<>::iterator, vector
+#include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
 
 using node_t = typename SimpleNetlist::node_t;
 // using namespace std;
@@ -25,18 +25,17 @@ using node_t = typename SimpleNetlist::node_t;
  * @return unique_ptr<SimpleHierNetlist>
  * @todo simplify this function
  */
-auto create_contraction_subgraph(const SimpleNetlist &hgr,
-                                 const py::set<node_t> &DontSelect)
+auto create_contraction_subgraph(const SimpleNetlist &hgr, const py::set<node_t> &DontSelect)
     -> std::unique_ptr<SimpleHierNetlist> {
     using namespace transrangers;
 
     auto weight_dict = py::dict<node_t, unsigned int>{};
     auto rng_nets = all(hgr.nets);
     rng_nets([&](const auto &netcur) {
-        weight_dict[*netcur] = accumulate(
-            transform([&](const auto &v) { return hgr.get_module_weight(v); },
-                      all(hgr.gr[*netcur])),
-            0U);
+        weight_dict[*netcur]
+            = accumulate(transform([&](const auto &v) { return hgr.get_module_weight(v); },
+                                   all(hgr.gr[*netcur])),
+                         0U);
         return true;
     });
     // for (const auto &net : hgr.nets) {
@@ -65,10 +64,10 @@ auto create_contraction_subgraph(const SimpleNetlist &hgr,
     auto nets = std::vector<node_t>{};
     nets.reserve(hgr.nets.size() - S.size());
 
-    { // localize C and clusters
+    {  // localize C and clusters
         auto C = py::set<node_t>{};
         auto clusters = std::vector<node_t>{};
-        C.reserve(3 * S.size()); // TODO
+        C.reserve(3 * S.size());  // TODO
         clusters.reserve(S.size());
 
         for (const auto &net : hgr.nets) {
@@ -102,7 +101,7 @@ auto create_contraction_subgraph(const SimpleNetlist &hgr,
     auto numModules = uint32_t(modules.size());
     auto numNets = uint32_t(nets.size());
 
-    { // localize module_map and net_map
+    {  // localize module_map and net_map
         auto module_map = py::dict<node_t, index_t>{};
         module_map.reserve(numModules);
         auto i_v = index_t(0);
@@ -145,9 +144,8 @@ auto create_contraction_subgraph(const SimpleNetlist &hgr,
     // auto gr = py::GraphAdaptor<graph_t>(move(g));
     auto gr = std::move(g);
 
-    auto hgr2 = std::make_unique<SimpleHierNetlist>(
-        std::move(gr), py::range(numModules),
-        py::range(numModules, numModules + numNets));
+    auto hgr2 = std::make_unique<SimpleHierNetlist>(std::move(gr), py::range(numModules),
+                                                    py::range(numModules, numModules + numNets));
 
     auto node_down_map = std::vector<node_t>{};
     node_down_map.resize(numModules);

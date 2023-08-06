@@ -1,15 +1,14 @@
-#include <doctest/doctest.h> // for TestCase, TEST_CASE
+#include <doctest/doctest.h>  // for TestCase, TEST_CASE
 // #include <__config>                // for std
-#include <ckpttn/FMBiGainMgr.hpp> // for FMBiGainMgr
-#include <ckpttn/netlist.hpp>     // for SimpleNetlist
-#include <cstdint>                // for uint8_t
-#include <gsl/span>               // for span
-#include <tuple>                  // for tuple_element<>::type
-#include <vector>                 // for vector
+#include <ckpttn/FMBiGainMgr.hpp>  // for FMBiGainMgr
+#include <ckpttn/netlist.hpp>      // for SimpleNetlist
+#include <cstdint>                 // for uint8_t
+#include <gsl/span>                // for span
+#include <tuple>                   // for tuple_element<>::type
+#include <vector>                  // for vector
 
-extern auto create_test_netlist()
-    -> SimpleNetlist;                        // import create_test_netlist
-extern auto create_dwarf() -> SimpleNetlist; // import create_dwarf
+extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
+extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 
 using namespace std;
 

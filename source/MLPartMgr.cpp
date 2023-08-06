@@ -1,19 +1,18 @@
-#include <ckpttn/FMConstrMgr.hpp> // for LegalCheck, LegalCheck::AllSatisfied
-#include <ckpttn/MLPartMgr.hpp>   // for MLPartMgr
-#include <cstdint>                // for uint8_t
-#include <gsl/span>               // for span
-#include <memory>                 // for unique_ptr
-#include <py2cpp/set.hpp>         // for set
-#include <utility>                // for pair
-#include <vector>                 // for vector
+#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::AllSatisfied
+#include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
+#include <cstdint>                 // for uint8_t
+#include <gsl/span>                // for span
+#include <memory>                  // for unique_ptr
+#include <py2cpp/set.hpp>          // for set
+#include <utility>                 // for pair
+#include <vector>                  // for vector
 
-#include "ckpttn/HierNetlist.hpp" // for HierNetlist, SimpleHierNetlist
-#include "ckpttn/netlist.hpp"     // for SimpleNetlist
+#include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
+#include "ckpttn/netlist.hpp"      // for SimpleNetlist
 // #include <iostream>
 
 using node_t = typename SimpleNetlist::node_t;
-extern auto create_contraction_subgraph(const SimpleNetlist &,
-                                        const py::set<node_t> &)
+extern auto create_contraction_subgraph(const SimpleNetlist &, const py::set<node_t> &)
     -> std::unique_ptr<SimpleHierNetlist>;
 
 /**
@@ -27,8 +26,7 @@ extern auto create_contraction_subgraph(const SimpleNetlist &,
  * @return LegalCheck
  */
 template <typename Gnl, typename PartMgr>
-auto MLPartMgr::run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part)
-    -> LegalCheck {
+auto MLPartMgr::run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part) -> LegalCheck {
     using GainMgr = typename PartMgr::GainMgr_;
     using ConstrMgr = typename PartMgr::ConstrMgr_;
 
@@ -56,15 +54,12 @@ auto MLPartMgr::run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part)
         return legalcheck_cost.first;
     }
 
-    if (hgr.number_of_modules() >= this->limitsize) { // OK
-        const auto hgr2 =
-            create_contraction_subgraph(hgr, py::set<typename Gnl::node_t>{});
+    if (hgr.number_of_modules() >= this->limitsize) {  // OK
+        const auto hgr2 = create_contraction_subgraph(hgr, py::set<typename Gnl::node_t>{});
         if (hgr2->number_of_modules() <= hgr.number_of_modules()) {
-            auto part2 =
-                std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
+            auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
             hgr2->projection_up(part, part2);
-            auto legalcheck_recur =
-                this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
+            auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
             if (legalcheck_recur == LegalCheck::AllSatisfied) {
                 hgr2->projection_down(part2, part);
             }
@@ -75,19 +70,18 @@ auto MLPartMgr::run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part)
     return legalcheck_cost.first;
 }
 
-#include <ckpttn/FMBiConstrMgr.hpp>   // for FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>     // for FMBiGainMgr
-#include <ckpttn/FMKWayConstrMgr.hpp> // for FMKWayConstrMgr
-#include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr
-#include <ckpttn/FMPartMgr.hpp>       // for FMPartMgr
+#include <ckpttn/FMBiConstrMgr.hpp>    // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>      // for FMBiGainMgr
+#include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
+#include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
+#include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
 
-template auto
-MLPartMgr::run_FMPartition<SimpleNetlist,
-                           FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                     FMBiConstrMgr<SimpleNetlist>>>(
+template auto MLPartMgr::run_FMPartition<
+    SimpleNetlist,
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist &hgr, gsl::span<std::uint8_t> part) -> LegalCheck;
 
 template auto MLPartMgr::run_FMPartition<
-    SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-                             FMKWayConstrMgr<SimpleNetlist>>>(
+    SimpleNetlist,
+    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist &hgr, gsl::span<std::uint8_t> part) -> LegalCheck;

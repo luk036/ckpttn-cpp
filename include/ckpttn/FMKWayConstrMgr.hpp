@@ -1,10 +1,10 @@
 #pragma once
 
-#include <cstdint>  // for uint8_t
-#include <gsl/span> // for span
-#include <vector>   // for vector
+#include <cstdint>   // for uint8_t
+#include <gsl/span>  // for span
+#include <vector>    // for vector
 
-#include "FMConstrMgr.hpp" // for FMConstrMgr, FMConstrMgr::node_t, Lega...
+#include "FMConstrMgr.hpp"  // for FMConstrMgr, FMConstrMgr::node_t, Lega...
 // #include "moveinfo.hpp"     // for MoveInfo
 
 // forward declare
@@ -58,6 +58,5 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
      * @param[in] move_info_v
      * @return LegalCheck
      */
-    auto check_legal(const MoveInfoV<typename Gnl::node_t> &move_info_v)
-        -> LegalCheck;
+    auto check_legal(const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck;
 };

@@ -10,8 +10,7 @@ class BPQueue {
         _offset = a - 1;
         _high = b - _offset;
         _bucket = std::vector<Dllist<std::vector<int>>>(
-            this->_high + 1,
-            Dllist<std::vector<int>>({std::vector<int>{i, 4848}}));
+            this->_high + 1, Dllist<std::vector<int>>({std::vector<int>{i, 4848}}));
         _bucket[0].push_back(sentinel);
     }
     void clear() {

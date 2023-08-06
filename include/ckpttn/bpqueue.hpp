@@ -1,12 +1,12 @@
 #pragma once
 
-#include <cassert>     // for assert
-#include <cstdint>     // for int32_t
-#include <type_traits> // for make_unsigned_t, is_integral, integral_consta...
-#include <utility>     // for pair
-#include <vector>      // for vector, vector<>::value_type, vector<>::const...
+#include <cassert>      // for assert
+#include <cstdint>      // for int32_t
+#include <type_traits>  // for make_unsigned_t, is_integral, integral_consta...
+#include <utility>      // for pair
+#include <vector>       // for vector, vector<>::value_type, vector<>::const...
 
-#include "dllist.hpp" // for Dllink, DllIterator
+#include "dllist.hpp"  // for Dllink, DllIterator
 
 // Forward declaration for begin() end()
 template <typename Tp, typename Int> class BpqIterator;
@@ -36,8 +36,7 @@ template <typename Tp, typename Int> class BpqIterator;
  * @tparam std::make_unsigned_t<Int>>>>
  */
 template <typename Tp, typename Int = int32_t,
-          typename Sequence =
-              std::vector<Dllist<std::pair<Tp, std::make_unsigned_t<Int>>>>>
+          typename Sequence = std::vector<Dllist<std::pair<Tp, std::make_unsigned_t<Int>>>>>
 class BPQueue {
     using UInt = std::make_unsigned_t<Int>;
 
@@ -55,11 +54,11 @@ class BPQueue {
     using container_type = Sequence;
 
   private:
-    Item sentinel{}; //!< sentinel */
-    Sequence bucket; //!< bucket, array of lists
-    UInt max{};      //!< max value
-    Int offset;      //!< a - 1
-    UInt high;       //!< b - a + 1
+    Item sentinel{};  //!< sentinel */
+    Sequence bucket;  //!< bucket, array of lists
+    UInt max{};       //!< max value
+    Int offset;       //!< a - 1
+    UInt high;        //!< b - a + 1
 
   public:
     /**
@@ -69,21 +68,19 @@ class BPQueue {
      * @param[in] b upper bound
      */
     constexpr BPQueue(Int a, Int b)
-        : bucket(static_cast<UInt>(b - a) + 2U), offset(a - 1),
+        : bucket(static_cast<UInt>(b - a) + 2U),
+          offset(a - 1),
           high(static_cast<UInt>(b - offset)) {
         assert(a <= b);
-        static_assert(std::is_integral<Int>::value,
-                      "bucket's key must be an integer");
-        bucket[0].append(this->sentinel); // sentinel
+        static_assert(std::is_integral<Int>::value, "bucket's key must be an integer");
+        bucket[0].append(this->sentinel);  // sentinel
     }
 
-    BPQueue(const BPQueue &) = delete; // don't copy
+    BPQueue(const BPQueue &) = delete;  // don't copy
     ~BPQueue() = default;
-    constexpr auto operator=(const BPQueue &)
-        -> BPQueue & = delete; // don't assign
+    constexpr auto operator=(const BPQueue &) -> BPQueue & = delete;  // don't assign
     constexpr BPQueue(BPQueue &&) noexcept = default;
-    constexpr auto operator=(BPQueue &&) noexcept
-        -> BPQueue & = default; // don't assign
+    constexpr auto operator=(BPQueue &&) noexcept -> BPQueue & = default;  // don't assign
 
     /**
      * @brief Whether the %BPQueue is empty.
@@ -108,9 +105,7 @@ class BPQueue {
      *
      * @return Int maximum value
      */
-    constexpr auto get_max() const noexcept -> Int {
-        return this->offset + Int(this->max);
-    }
+    constexpr auto get_max() const noexcept -> Int { return this->offset + Int(this->max); }
 
     /**
      * @brief Clear reset the PQ
@@ -175,7 +170,7 @@ class BPQueue {
         it.data.second -= delta;
         assert(it.data.second > 0);
         assert(it.data.second <= this->high);
-        this->bucket[it.data.second].append(it); // FIFO
+        this->bucket[it.data.second].append(it);  // FIFO
         if (this->max < it.data.second) {
             this->max = it.data.second;
             return;
@@ -200,7 +195,7 @@ class BPQueue {
         it.data.second += delta;
         assert(it.data.second > 0);
         assert(it.data.second <= this->high);
-        this->bucket[it.data.second].appendleft(it); // LIFO
+        this->bucket[it.data.second].appendleft(it);  // LIFO
         if (this->max < it.data.second) {
             this->max = it.data.second;
         }
@@ -269,19 +264,16 @@ template <typename Tp, typename Int = int32_t> class BpqIterator {
     using Item = Dllink<std::pair<Tp, UInt>>;
 
   private:
-    BPQueue<Tp, Int> &bpq; //!< the priority queue
-    UInt curkey;           //!< the current key value
-    DllIterator<std::pair<Tp, UInt>>
-        curitem; //!< list iterator pointed to the current item.
+    BPQueue<Tp, Int> &bpq;                     //!< the priority queue
+    UInt curkey;                               //!< the current key value
+    DllIterator<std::pair<Tp, UInt>> curitem;  //!< list iterator pointed to the current item.
 
     /**
      * @brief Get the reference of the current list
      *
      * @return Item&
      */
-    constexpr auto curlist() -> Item & {
-        return this->bpq.bucket[this->curkey];
-    }
+    constexpr auto curlist() -> Item & { return this->bpq.bucket[this->curkey]; }
 
   public:
     /**
@@ -324,8 +316,7 @@ template <typename Tp, typename Int = int32_t> class BpqIterator {
      * @return true
      * @return false
      */
-    friend constexpr auto operator==(const BpqIterator &lhs,
-                                     const BpqIterator &rhs) -> bool {
+    friend constexpr auto operator==(const BpqIterator &lhs, const BpqIterator &rhs) -> bool {
         return lhs.curitem == rhs.curitem;
     }
 
@@ -337,8 +328,7 @@ template <typename Tp, typename Int = int32_t> class BpqIterator {
      * @return true
      * @return false
      */
-    friend constexpr auto operator!=(const BpqIterator &lhs,
-                                     const BpqIterator &rhs) -> bool {
+    friend constexpr auto operator!=(const BpqIterator &lhs, const BpqIterator &rhs) -> bool {
         return !(lhs == rhs);
     }
 };
@@ -349,8 +339,7 @@ template <typename Tp, typename Int = int32_t> class BpqIterator {
  * @return BpqIterator
  */
 template <typename Tp, typename Int, class Sequence>
-inline constexpr auto BPQueue<Tp, Int, Sequence>::begin()
-    -> BpqIterator<Tp, Int> {
+inline constexpr auto BPQueue<Tp, Int, Sequence>::begin() -> BpqIterator<Tp, Int> {
     return {*this, this->max};
 }
 
@@ -360,7 +349,6 @@ inline constexpr auto BPQueue<Tp, Int, Sequence>::begin()
  * @return BpqIterator
  */
 template <typename Tp, typename Int, class Sequence>
-inline constexpr auto BPQueue<Tp, Int, Sequence>::end()
-    -> BpqIterator<Tp, Int> {
+inline constexpr auto BPQueue<Tp, Int, Sequence>::end() -> BpqIterator<Tp, Int> {
     return {*this, 0};
 }

@@ -1,14 +1,14 @@
 // -*- coding: utf-8 -*-
-#include <doctest/doctest.h> // for ResultBuilder, CHECK, TestCase
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 
-#include <ckpttn/netlist.hpp>         // for Netlist, SimpleNetlist, graph_t
-#include <xnetwork/classes/graph.hpp> // for SimpleGraph, Graph
+#include <ckpttn/netlist.hpp>          // for Netlist, SimpleNetlist, graph_t
+#include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>     // for std
-#include <cstdint>     // for uint32_t
-#include <type_traits> // for move
-#include <utility>     // for pair
-#include <vector>      // for vector
+#include <cstdint>      // for uint32_t
+#include <type_traits>  // for move
+#include <utility>      // for pair
+#include <vector>       // for vector
 
 using namespace std;
 
@@ -30,10 +30,9 @@ auto create_dwarf() -> SimpleNetlist {
     // static vector<nodes> net__name_list = {n1, n2, n3};
 
     // char name[] = "ABCDE";
-    vector<Edge> edge_array{
-        Edge(p1, n1), Edge(a0, n1), Edge(a1, n1), Edge(a0, n2), Edge(a2, n2),
-        Edge(a3, n2), Edge(a1, n3), Edge(a2, n3), Edge(a3, n3), Edge(a2, n4),
-        Edge(p2, n4), Edge(a3, n5), Edge(p3, n5), Edge(a0, n6)};
+    vector<Edge> edge_array{Edge(p1, n1), Edge(a0, n1), Edge(a1, n1), Edge(a0, n2), Edge(a2, n2),
+                            Edge(a3, n2), Edge(a1, n3), Edge(a2, n3), Edge(a3, n3), Edge(a2, n4),
+                            Edge(p2, n4), Edge(a3, n5), Edge(p3, n5), Edge(a0, n6)};
     // index_t indices[] = {0, 1, 2, 3, 4, 5};
     // int num_arcs = sizeof(edge_array) / sizeof(Edge);
     // auto R = py::range(num_nodes);

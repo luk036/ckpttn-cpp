@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cassert>
-#include <utility> // for std::move()
+#include <utility>  // for std::move()
 
 // Forward declaration for begin() end()
 template <typename T> class Dllist;
@@ -47,12 +47,10 @@ template <typename T> class Dllink {
      */
     constexpr Dllink() = default;
     ~Dllink() = default;
-    Dllink(const Dllink &) = delete; // don't copy
-    constexpr auto operator=(const Dllink &)
-        -> Dllink & = delete; // don't assign
+    Dllink(const Dllink &) = delete;                                // don't copy
+    constexpr auto operator=(const Dllink &) -> Dllink & = delete;  // don't assign
     constexpr Dllink(Dllink &&) noexcept = default;
-    constexpr auto operator=(Dllink &&) noexcept
-        -> Dllink & = default; // don't assign
+    constexpr auto operator=(Dllink &&) noexcept -> Dllink & = default;  // don't assign
 
     /**
      * @brief lock the node (and don't append it to any list)
@@ -66,9 +64,7 @@ template <typename T> class Dllink {
      * @return true
      * @return false
      */
-    constexpr auto is_locked() const noexcept -> bool {
-        return this->next == this;
-    }
+    constexpr auto is_locked() const noexcept -> bool { return this->next == this; }
 
     // /**
     //  * @brief whether the list is empty

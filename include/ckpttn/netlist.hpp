@@ -1,12 +1,12 @@
 #pragma once
 
-#include <cstddef>          // for size_t
-#include <cstdint>          // for uint32_t, uint8_t
-#include <py2cpp/dict.hpp>  // for dict
-#include <py2cpp/range.hpp> // for range, _iterator, iterable_wra...
-#include <py2cpp/set.hpp>   // for set
-#include <type_traits>      // for move
-#include <vector>           // for vector
+#include <cstddef>           // for size_t
+#include <cstdint>           // for uint32_t, uint8_t
+#include <py2cpp/dict.hpp>   // for dict
+#include <py2cpp/range.hpp>  // for range, _iterator, iterable_wra...
+#include <py2cpp/set.hpp>    // for set
+#include <type_traits>       // for move
+#include <vector>            // for vector
 
 // using node_t = int;
 
@@ -83,9 +83,7 @@ template <typename graph_t> struct Netlist {
      *
      * @return size_t
      */
-    auto number_of_nodes() const -> size_t {
-        return this->gr.number_of_nodes();
-    }
+    auto number_of_nodes() const -> size_t { return this->gr.number_of_nodes(); }
 
     // /**
     //  * @brief
@@ -133,10 +131,12 @@ template <typename graph_t> struct Netlist {
 };
 
 template <typename graph_t>
-Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t &modules,
-                          const nodeview_t &nets)
-    : gr{std::move(gr)}, modules{modules}, nets{nets},
-      num_modules(modules.size()), num_nets(nets.size()) {
+Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets)
+    : gr{std::move(gr)},
+      modules{modules},
+      nets{nets},
+      num_modules(modules.size()),
+      num_nets(nets.size()) {
     this->has_fixed_modules = (!this->module_fixed.empty());
 
     // Some compilers does not accept py::range()->iterator as a forward
@@ -169,10 +169,9 @@ Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t &modules,
 
 template <typename graph_t>
 Netlist<graph_t>::Netlist(graph_t gr, uint32_t numModules, uint32_t numNets)
-    : Netlist{std::move(gr), py::range(numModules),
-              py::range(numModules, numModules + numNets)} {}
+    : Netlist{std::move(gr), py::range(numModules), py::range(numModules, numModules + numNets)} {}
 
-#include <xnetwork/classes/graph.hpp> // for Graph, Graph<>::nodeview_t
+#include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
 
 // using RngIter = decltype(py::range(1));
 using graph_t = xnetwork::SimpleGraph;

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <cassert>
-#include <utility> // import std::move()
+#include <utility>  // import std::move()
 
-#include "dllink.hpp" // for Dllink
+#include "dllink.hpp"  // for Dllink
 
 // Forward declaration for begin() end()
 template <typename T> class DllIterator;
@@ -42,12 +42,10 @@ template <typename T> class Dllist {
      */
     constexpr Dllist() = default;
     ~Dllist() = default;
-    Dllist(const Dllist &) = delete; // don't copy
-    constexpr auto operator=(const Dllist &)
-        -> Dllist & = delete; // don't assign
+    Dllist(const Dllist &) = delete;                                // don't copy
+    constexpr auto operator=(const Dllist &) -> Dllist & = delete;  // don't assign
     constexpr Dllist(Dllist &&) noexcept = default;
-    constexpr auto operator=(Dllist &&) noexcept
-        -> Dllist & = default; // don't assign
+    constexpr auto operator=(Dllist &&) noexcept -> Dllist & = default;  // don't assign
 
     /**
      * @brief whether the list is empty
@@ -55,35 +53,27 @@ template <typename T> class Dllist {
      * @return true
      * @return false
      */
-    constexpr auto is_empty() const noexcept -> bool {
-        return this->head.next == &this->head;
-    }
+    constexpr auto is_empty() const noexcept -> bool { return this->head.next == &this->head; }
 
     /**
      * @brief reset the list
      *
      */
-    constexpr auto clear() noexcept -> void {
-        this->head.next = this->head.prev = &this->head;
-    }
+    constexpr auto clear() noexcept -> void { this->head.next = this->head.prev = &this->head; }
 
     /**
      * @brief append the node to the front
      *
      * @param[in,out] node
      */
-    constexpr auto appendleft(Dllink<T> &node) noexcept -> void {
-        this->head.appendleft(node);
-    }
+    constexpr auto appendleft(Dllink<T> &node) noexcept -> void { this->head.appendleft(node); }
 
     /**
      * @brief append the node to the back
      *
      * @param[in,out] node
      */
-    constexpr auto append(Dllink<T> &node) noexcept -> void {
-        this->head.append(node);
-    }
+    constexpr auto append(Dllink<T> &node) noexcept -> void { this->head.append(node); }
 
     /**
      * @brief pop a node from the front
@@ -92,9 +82,7 @@ template <typename T> class Dllist {
      *
      * Precondition: list is not empty
      */
-    constexpr auto popleft() noexcept -> Dllink<T> & {
-        return this->head.popleft();
-    }
+    constexpr auto popleft() noexcept -> Dllink<T> & { return this->head.popleft(); }
 
     /**
      * @brief pop a node from the back
@@ -187,8 +175,7 @@ template <typename T> class DllIterator {
      * @return true
      * @return false
      */
-    friend auto operator==(const DllIterator &lhs,
-                           const DllIterator &rhs) noexcept -> bool {
+    friend auto operator==(const DllIterator &lhs, const DllIterator &rhs) noexcept -> bool {
         return lhs.cur == rhs.cur;
     }
 
@@ -200,8 +187,7 @@ template <typename T> class DllIterator {
      * @return true
      * @return false
      */
-    friend auto operator!=(const DllIterator &lhs,
-                           const DllIterator &rhs) noexcept -> bool {
+    friend auto operator!=(const DllIterator &lhs, const DllIterator &rhs) noexcept -> bool {
         return !(lhs == rhs);
     }
 };
@@ -211,8 +197,7 @@ template <typename T> class DllIterator {
  *
  * @return DllIterator
  */
-template <typename T>
-inline constexpr auto Dllist<T>::begin() noexcept -> DllIterator<T> {
+template <typename T> inline constexpr auto Dllist<T>::begin() noexcept -> DllIterator<T> {
     return DllIterator<T>{this->head.next};
 }
 
@@ -221,7 +206,6 @@ inline constexpr auto Dllist<T>::begin() noexcept -> DllIterator<T> {
  *
  * @return DllIterator
  */
-template <typename T>
-inline constexpr auto Dllist<T>::end() noexcept -> DllIterator<T> {
+template <typename T> inline constexpr auto Dllist<T>::end() noexcept -> DllIterator<T> {
     return DllIterator<T>{&this->head};
 }

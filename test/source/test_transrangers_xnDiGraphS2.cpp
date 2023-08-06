@@ -1,10 +1,10 @@
 // -*- coding: utf-8 -*-
-#include <doctest/doctest.h> // for TestCase, ResultBuilder
+#include <doctest/doctest.h>  // for TestCase, ResultBuilder
 
-#include <array> // for array
+#include <array>  // for array
 #include <transrangers_ext.hpp>
-#include <xnetwork/classes/digraphs.hpp>     // for DiGraphS
-#include <xnetwork/generators/testcases.hpp> // for create_test_case1, crea...
+#include <xnetwork/classes/digraphs.hpp>      // for DiGraphS
+#include <xnetwork/generators/testcases.hpp>  // for create_test_case1, crea...
 
 /**
  * @brief

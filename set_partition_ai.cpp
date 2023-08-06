@@ -88,8 +88,7 @@ int main() {
         for (int j = 1; j < k; j++) {
             std::cout << b[j] << " ";
         }
-        std::cout << "]: Move " << i << " from block " << old << " to " << b[i]
-                  << std::endl;
+        std::cout << "]: Move " << i << " from block " << old << " to " << b[i] << std::endl;
     }
     assert(stirling2nd(n, k) == cnt);
     std::cout << "Done." << std::endl;

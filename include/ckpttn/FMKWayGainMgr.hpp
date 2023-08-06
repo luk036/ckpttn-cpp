@@ -14,8 +14,7 @@ template <typename Node> struct MoveInfoV;
  *
  * @tparam Gnl
  */
-template <typename Gnl>
-class FMKWayGainMgr
+template <typename Gnl> class FMKWayGainMgr
     : public FMGainMgr<Gnl, FMKWayGainCalc<Gnl>, FMKWayGainMgr<Gnl>> {
   private:
     fun::Robin<std::uint8_t> rr;
@@ -31,8 +30,7 @@ class FMKWayGainMgr
      * @param[in] hgr
      * @param[in] num_parts
      */
-    FMKWayGainMgr(const Gnl &hgr, std::uint8_t num_parts)
-        : Base{hgr, num_parts}, rr{num_parts} {}
+    FMKWayGainMgr(const Gnl &hgr, std::uint8_t num_parts) : Base{hgr, num_parts}, rr{num_parts} {}
 
     /**
      * @brief
@@ -48,11 +46,9 @@ class FMKWayGainMgr
      * @param[in] part_w
      * @param[in] keys
      */
-    auto modify_key(const node_t &w, std::uint8_t part_w,
-                    gsl::span<const int> keys) -> void {
+    auto modify_key(const node_t &w, std::uint8_t part_w, gsl::span<const int> keys) -> void {
         for (auto k : this->rr.exclude(part_w)) {
-            this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][w],
-                                            keys[k]);
+            this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][w], keys[k]);
         }
     }
 
@@ -88,7 +84,7 @@ class FMKWayGainMgr
         for (auto &vlist : this->gain_calc.vertex_list) {
             auto &vlink = vlist[v];
             bckt_it->detach(vlink);
-            vlink.lock(); // lock
+            vlink.lock();  // lock
             ++bckt_it;
         }
     }
@@ -102,7 +98,6 @@ class FMKWayGainMgr
      * @param[in] key
      */
     auto _set_key(uint8_t whichPart, const node_t &v, int key) -> void {
-        this->gain_bucket[whichPart].set_key(
-            this->gain_calc.vertex_list[whichPart][v], key);
+        this->gain_bucket[whichPart].set_key(this->gain_calc.vertex_list[whichPart][v], key);
     }
 };

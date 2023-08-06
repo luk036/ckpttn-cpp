@@ -1,15 +1,15 @@
 #pragma once
 
-#include <cstdint>                    // for uint8_t
-#include <gsl/span>                   // for span
-#include <py2cpp/dict.hpp>            // for dict
-#include <py2cpp/set.hpp>             // for set
-#include <type_traits>                // for move
-#include <vector>                     // for vector
-#include <xnetwork/classes/graph.hpp> // for SimpleGraph, Graph, Graph<>::n...
+#include <cstdint>                     // for uint8_t
+#include <gsl/span>                    // for span
+#include <py2cpp/dict.hpp>             // for dict
+#include <py2cpp/set.hpp>              // for set
+#include <type_traits>                 // for move
+#include <vector>                      // for vector
+#include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph, Graph<>::n...
 
-#include "array_like.hpp" // for ShiftArray
-#include "netlist.hpp"    // for Netlist, Netlist<>::nodeview_t
+#include "array_like.hpp"  // for ShiftArray
+#include "netlist.hpp"     // for Netlist, Netlist<>::nodeview_t
 
 // using node_t = int;
 
@@ -64,8 +64,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param[in] part
      * @param[out] part_up
      */
-    void projection_up(gsl::span<const std::uint8_t> part,
-                       gsl::span<std::uint8_t> part_up) const;
+    void projection_up(gsl::span<const std::uint8_t> part, gsl::span<std::uint8_t> part_up) const;
 
     /**
      * @brief Get the net weight
@@ -78,8 +77,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
 };
 
 template <typename graph_t>
-HierNetlist<graph_t>::HierNetlist(graph_t gr, const nodeview_t &modules,
-                                  const nodeview_t &nets)
+HierNetlist<graph_t>::HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets)
     : Netlist<graph_t>{std::move(gr), modules, nets} {}
 
 // template <typename graph_t>

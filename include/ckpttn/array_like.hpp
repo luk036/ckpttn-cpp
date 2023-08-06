@@ -65,8 +65,7 @@ template <typename Container> class ShiftArray : public Container {
      *
      * @param base
      */
-    explicit ShiftArray(Container &&base)
-        : Container{std::forward<Container>(base)} {}
+    explicit ShiftArray(Container &&base) : Container{std::forward<Container>(base)} {}
 
     /**
      * @brief Set the start object

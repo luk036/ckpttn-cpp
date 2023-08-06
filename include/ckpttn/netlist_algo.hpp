@@ -18,8 +18,7 @@
  * @return C1::mapped_type
  */
 template <typename Gnl, typename C1, typename C2>
-auto min_vertex_cover(const Gnl &hgr, const C1 &weight, C2 &coverset) ->
-    typename C1::mapped_type {
+auto min_vertex_cover(const Gnl &hgr, const C1 &weight, C2 &coverset) -> typename C1::mapped_type {
     using T = typename C1::mapped_type;
     auto in_coverset = [&](const auto &v) { return coverset.contains(v); };
     auto total_dual_cost = T(0);
@@ -31,9 +30,9 @@ auto min_vertex_cover(const Gnl &hgr, const C1 &weight, C2 &coverset) ->
             continue;
         }
 
-        auto min_vtx = *std::min_element(
-            hgr.gr[net].begin(), hgr.gr[net].end(),
-            [&](const auto &v1, const auto &v2) { return gap[v1] < gap[v2]; });
+        auto min_vtx
+            = *std::min_element(hgr.gr[net].begin(), hgr.gr[net].end(),
+                                [&](const auto &v1, const auto &v2) { return gap[v1] < gap[v2]; });
         auto min_val = gap[min_vtx];
         coverset.insert(min_vtx);
         total_primal_cost += weight[min_vtx];
@@ -63,8 +62,8 @@ auto min_vertex_cover(const Gnl &hgr, const C1 &weight, C2 &coverset) ->
  * @return C1::value_type
  */
 template <typename Gnl, typename C1, typename C2>
-auto min_maximal_matching(const Gnl &hgr, const C1 &weight, C2 &matchset,
-                          C2 &dep) -> typename C1::mapped_type {
+auto min_maximal_matching(const Gnl &hgr, const C1 &weight, C2 &matchset, C2 &dep) ->
+    typename C1::mapped_type {
     auto cover = [&](const auto &net) {
         for (const auto &v : hgr.gr[net]) {
             dep.insert(v);
@@ -88,7 +87,7 @@ auto min_maximal_matching(const Gnl &hgr, const C1 &weight, C2 &matchset,
         if (std::any_of(hgr.gr[net].begin(), hgr.gr[net].end(), in_dep)) {
             continue;
         }
-        if (matchset.contains(net)) { // pre-define independant
+        if (matchset.contains(net)) {  // pre-define independant
             cover(net);
             continue;
         }
@@ -96,8 +95,7 @@ auto min_maximal_matching(const Gnl &hgr, const C1 &weight, C2 &matchset,
         auto min_net = net;
         for (const auto &v : hgr.gr[net]) {
             for (const auto &net2 : hgr.gr[v]) {
-                if (std::any_of(hgr.gr[net2].begin(), hgr.gr[net2].end(),
-                                in_dep)) {
+                if (std::any_of(hgr.gr[net2].begin(), hgr.gr[net2].end(), in_dep)) {
                     continue;
                 }
                 if (min_val > gap[net2]) {

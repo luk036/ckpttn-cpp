@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FMConstrMgr.hpp" // import FMConstrMgr
+#include "FMConstrMgr.hpp"  // import FMConstrMgr
 
 /**
  * @brief Constraint Manager
@@ -17,8 +17,7 @@ template <typename Gnl> class FMBiConstrMgr : public FMConstrMgr<Gnl> {
      * @param[in] hgr
      * @param[in] bal_tol
      */
-    FMBiConstrMgr(const Gnl &hgr, double bal_tol)
-        : FMConstrMgr<Gnl>{hgr, bal_tol, 2} {}
+    FMBiConstrMgr(const Gnl &hgr, double bal_tol) : FMConstrMgr<Gnl>{hgr, bal_tol, 2} {}
 
     /**
      * @brief Construct a new FMBiConstrMgr object (for general framework)
@@ -34,7 +33,5 @@ template <typename Gnl> class FMBiConstrMgr : public FMConstrMgr<Gnl> {
      *
      * @return std::uint8_t
      */
-    auto select_togo() const -> std::uint8_t {
-        return this->diff[0] < this->diff[1] ? 0 : 1;
-    }
+    auto select_togo() const -> std::uint8_t { return this->diff[0] < this->diff[1] ? 0 : 1; }
 };

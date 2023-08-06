@@ -1,10 +1,10 @@
-#include <doctest/doctest.h> // for ResultBuilder, CHECK, Expression_lhs
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 // #include <__config>            // for std
-#include <ckpttn/bpqueue.hpp> // for BPQueue
-#include <ckpttn/dllist.hpp>  // for Dllink
-#include <cstdint>            // for int32_t, uint32_t
-#include <utility>            // for pair
-#include <vector>             // for vector
+#include <ckpttn/bpqueue.hpp>  // for BPQueue
+#include <ckpttn/dllist.hpp>   // for Dllink
+#include <cstdint>             // for int32_t, uint32_t
+#include <utility>             // for pair
+#include <vector>              // for vector
 
 using namespace std;
 
@@ -26,7 +26,7 @@ TEST_CASE("Test BPQueue") {
     bpq1.append(f, -PMAX);
     bpq1.append(d, 5);
 
-    bpq2.append(bpq1.popleft(), -6); // d
+    bpq2.append(bpq1.popleft(), -6);  // d
     bpq2.append(bpq1.popleft(), 3);
     bpq2.append(bpq1.popleft(), 0);
 

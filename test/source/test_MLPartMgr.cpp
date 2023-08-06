@@ -1,15 +1,15 @@
-#include <doctest/doctest.h> // for ResultBuilder, TestCase, CHECK
+#include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 
-#include <boost/utility/string_view.hpp> // for boost::string_view
-#include <chrono>               // for duration, operator-, steady_clock
-#include <ckpttn/MLPartMgr.hpp> // for MLPartMgr
-#include <cstdint>              // for uint8_t
-#include <iostream>             // for operator<<, basic_ostream, endl, cout
-#include <ratio>                // for ratio
-#include <vector>               // for vector
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <chrono>                         // for duration, operator-, steady_clock
+#include <ckpttn/MLPartMgr.hpp>           // for MLPartMgr
+#include <cstdint>                        // for uint8_t
+#include <iostream>                       // for operator<<, basic_ostream, endl, cout
+#include <ratio>                          // for ratio
+#include <vector>                         // for vector
 
-#include "ckpttn/PartMgrBase.hpp" // for SimpleNetlist
-#include "ckpttn/netlist.hpp"     // for Netlist
+#include "ckpttn/PartMgrBase.hpp"  // for SimpleNetlist
+#include "ckpttn/netlist.hpp"      // for Netlist
 
 template <typename Gnl> class FMBiConstrMgr;
 template <typename Gnl> class FMBiGainMgr;
@@ -21,9 +21,8 @@ using namespace std;
 
 // using experimental::randint;
 
-extern auto create_test_netlist()
-    -> SimpleNetlist;                        // import create_test_netlist
-extern auto create_dwarf() -> SimpleNetlist; // import create_dwarf
+extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
+extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
 
@@ -31,19 +30,17 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto hgr = create_dwarf();
     MLPartMgr part_mgr{0.3};
     vector<uint8_t> part(hgr.number_of_modules(), 0);
-    part_mgr.run_FMPartition<
-        SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                 FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
     CHECK(part_mgr.total_cost == 2U);
 }
 
 TEST_CASE("Test MLKWayPartMgr dwarf") {
     const auto hgr = create_dwarf();
-    MLPartMgr part_mgr{0.4, 3}; // 0.3???
+    MLPartMgr part_mgr{0.4, 3};  // 0.3???
     vector<uint8_t> part(hgr.number_of_modules(), 0);
-    part_mgr.run_FMPartition<
-        SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-                                 FMKWayConstrMgr<SimpleNetlist>>>(hgr, part);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
+                                                      FMKWayConstrMgr<SimpleNetlist>>>(hgr, part);
     CHECK(part_mgr.total_cost == 4U);
 }
 
@@ -60,9 +57,8 @@ TEST_CASE("Test MLBiPartMgr p1") {
             whichPart ^= 1;
             elem = whichPart;
         }
-        part_mgr.run_FMPartition<
-            SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                     FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+        part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
         if (mincost > part_mgr.total_cost) {
             mincost = part_mgr.total_cost;
         }
@@ -87,9 +83,8 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
             whichPart ^= 1;
             elem = whichPart;
         }
-        part_mgr.run_FMPartition<
-            SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                     FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+        part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
         if (mincost > part_mgr.total_cost) {
             mincost = part_mgr.total_cost;
         }
@@ -108,9 +103,8 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     vector<uint8_t> part(hgr.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    part_mgr.run_FMPartition<
-        SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                 FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(part_mgr.total_cost >= 1104U);
@@ -125,9 +119,8 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     vector<uint8_t> part(hgr.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    part_mgr.run_FMPartition<
-        SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                 FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+    part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(part_mgr.total_cost >= 1104U);

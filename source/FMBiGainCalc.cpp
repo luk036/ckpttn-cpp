@@ -1,16 +1,16 @@
 // #include <__config>                    // for std
-#include <array>                          // for array
-#include <boost/container/pmr/vector.hpp> // for vector
-#include <boost/container/vector.hpp>     // for operator!=, vec_iterator
-#include <ckpttn/FMBiGainCalc.hpp>        // for FMBiGainCalc, part, net
-#include <ckpttn/FMPmrConfig.hpp>         // for FM_MAX_DEGREE
-#include <ckpttn/moveinfo.hpp>            // for MoveInfo
-#include <cstddef>                        // for size_t
-#include <cstdint>                        // for uint8_t
-#include <gsl/span>                       // for span
-#include <initializer_list>               // for initializer_list
-#include <transrangers.hpp>               // for all, filter, zip2
-#include <vector>                         // for vector
+#include <array>                           // for array
+#include <boost/container/pmr/vector.hpp>  // for vector
+#include <boost/container/vector.hpp>      // for operator!=, vec_iterator
+#include <ckpttn/FMBiGainCalc.hpp>         // for FMBiGainCalc, part, net
+#include <ckpttn/FMPmrConfig.hpp>          // for FM_MAX_DEGREE
+#include <ckpttn/moveinfo.hpp>             // for MoveInfo
+#include <cstddef>                         // for size_t
+#include <cstdint>                         // for uint8_t
+#include <gsl/span>                        // for span
+#include <initializer_list>                // for initializer_list
+#include <transrangers.hpp>                // for all, filter, zip2
+#include <vector>                          // for vector
 
 using namespace std;
 using namespace transrangers;
@@ -22,26 +22,25 @@ using namespace transrangers;
  * @param[in] part
  */
 template <typename Gnl>
-void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
-                                   gsl::span<const uint8_t> part) {
+void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, gsl::span<const uint8_t> part) {
     const auto degree = this->hgr.gr.degree(net);
-    if (degree < 2 || degree > FM_MAX_DEGREE) // [[unlikely]]
+    if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
-        return; // does not provide any gain when moving
+        return;  // does not provide any gain when moving
     }
     if (!special_handle_2pin_nets) {
         this->_init_gain_general_net(net, part);
         return;
     }
     switch (degree) {
-    case 2:
-        this->_init_gain_2pin_net(net, part);
-        break;
-    case 3:
-        this->_init_gain_3pin_net(net, part);
-        break;
-    default:
-        this->_init_gain_general_net(net, part);
+        case 2:
+            this->_init_gain_2pin_net(net, part);
+            break;
+        case 3:
+            this->_init_gain_3pin_net(net, part);
+            break;
+        default:
+            this->_init_gain_general_net(net, part);
     }
 }
 
@@ -51,9 +50,8 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl>
-void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
-                                            gsl::span<const uint8_t> part) {
+template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
+                                                                    gsl::span<const uint8_t> part) {
     auto net_cur = this->hgr.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
@@ -75,9 +73,8 @@ void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl>
-void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
-                                            gsl::span<const uint8_t> part) {
+template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
+                                                                    gsl::span<const uint8_t> part) {
     auto net_cur = this->hgr.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
@@ -153,9 +150,9 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
  * @return int
  */
 template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_2pin_net(
-    gsl::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info) -> typename Gnl::node_t {
+auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
+                                             const MoveInfo<typename Gnl::node_t> &move_info) ->
+    typename Gnl::node_t {
     auto net_cur = this->hgr.gr[move_info.net].begin();
     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
     const auto gain = int(this->hgr.get_net_weight(move_info.net));
@@ -171,9 +168,8 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
-                                     const typename Gnl::node_t &net) {
+template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+                                                             const typename Gnl::node_t &net) {
     this->idx_vec.clear();
     auto rng1 = all(this->hgr.gr[net]);
     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
@@ -191,9 +187,9 @@ void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
  * @return ret_info
  */
 template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_3pin_net(
-    gsl::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
+auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
+                                             const MoveInfo<typename Gnl::node_t> &move_info)
+    -> vector<int> {
     // const auto& [net, v, from_part, _] = move_info;
 
     auto delta_gain = vector<int>{0, 0};
@@ -221,9 +217,9 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(
  * @return ret_info
  */
 template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_general_net(
-    gsl::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
+auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
+                                                const MoveInfo<typename Gnl::node_t> &move_info)
+    -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};
     auto rng1 = all(this->idx_vec);
@@ -262,9 +258,9 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(
 
 // instantiation
 
-#include <py2cpp/set.hpp>             // for set
-#include <xnetwork/classes/graph.hpp> // for Graph
+#include <py2cpp/set.hpp>              // for set
+#include <xnetwork/classes/graph.hpp>  // for Graph
 
-#include "ckpttn/netlist.hpp" // for Netlist, SimpleNetlist
+#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
 
 template class FMBiGainCalc<SimpleNetlist>;

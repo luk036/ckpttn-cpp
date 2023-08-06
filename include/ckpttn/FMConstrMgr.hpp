@@ -1,8 +1,8 @@
 #pragma once
 
-#include <cinttypes> // for uint8_t
-#include <gsl/span>  // for span
-#include <vector>    // for vector
+#include <cinttypes>  // for uint8_t
+#include <gsl/span>   // for span
+#include <vector>     // for vector
 
 // #include "moveinfo.hpp"  // for MoveInfo
 
@@ -26,7 +26,7 @@ template <typename Gnl> class FMConstrMgr {
     const Gnl &hgr;
     double bal_tol;
     unsigned int total_weight{0};
-    unsigned int weight{}; // cache value
+    unsigned int weight{};  // cache value
 
   protected:
     std::vector<unsigned int> diff;
@@ -41,8 +41,7 @@ template <typename Gnl> class FMConstrMgr {
      * @param[in] hgr
      * @param[in] bal_tol
      */
-    FMConstrMgr(const Gnl &hgr, double bal_tol)
-        : FMConstrMgr(hgr, bal_tol, 2) {}
+    FMConstrMgr(const Gnl &hgr, double bal_tol) : FMConstrMgr(hgr, bal_tol, 2) {}
 
     /**
      * @brief Construct a new FMConstrMgr object

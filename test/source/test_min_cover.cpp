@@ -1,26 +1,24 @@
-#include <doctest/doctest.h> // for ResultBuilder, CHECK, TestCase
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 // #include <__config>                // for std
-#include <boost/utility/string_view.hpp> // for boost::string_view
-#include <ckpttn/HierNetlist.hpp>        // for HierNetlist, SimpleHierNetlist
-#include <ckpttn/netlist.hpp>            // for Netlist, SimpleNetlist
-#include <cstdint>                       // for uint8_t
-#include <memory>                        // for unique_ptr
-#include <py2cpp/set.hpp>                // for set
-#include <vector>                        // for vector, operator==
+#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <ckpttn/HierNetlist.hpp>         // for HierNetlist, SimpleHierNetlist
+#include <ckpttn/netlist.hpp>             // for Netlist, SimpleNetlist
+#include <cstdint>                        // for uint8_t
+#include <memory>                         // for unique_ptr
+#include <py2cpp/set.hpp>                 // for set
+#include <vector>                         // for vector, operator==
 
 using namespace std;
 
-extern auto create_test_netlist()
-    -> SimpleNetlist;                        // import create_test_netlist
-extern auto create_dwarf() -> SimpleNetlist; // import create_dwarf
+extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
+extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
 // extern tuple<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
-extern auto create_contraction_subgraph(const SimpleNetlist &,
-                                        const py::set<node_t> &)
+extern auto create_contraction_subgraph(const SimpleNetlist &, const py::set<node_t> &)
     -> unique_ptr<SimpleHierNetlist>;
 
 //

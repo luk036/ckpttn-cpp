@@ -4,12 +4,12 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 
-#include <cstddef> // for size_t
+#include <cstddef>  // for size_t
 
-#include "PartMgrBase.hpp" // for PartMgrBase, SimpleNetlist
+#include "PartMgrBase.hpp"  // for PartMgrBase, SimpleNetlist
 
 // forward declaration
-template <typename Gnl, typename GainMgr, typename ConstrMgr> //
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 class FMPartMgr;
 
 /**
@@ -25,7 +25,7 @@ class FMPartMgr;
  * @tparam GainMgr
  * @tparam ConstrMgr
  */
-template <typename Gnl, typename GainMgr, typename ConstrMgr> //
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
     using Base = PartMgrBase<Gnl, GainMgr, ConstrMgr>;
 
@@ -38,8 +38,7 @@ class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
      * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    FMPartMgr(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr,
-              size_t num_parts)
+    FMPartMgr(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
         : Base{hgr, gain_mgr, constr_mgr, num_parts} {}
 
     /**
