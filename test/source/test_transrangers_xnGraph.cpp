@@ -10,9 +10,9 @@
 #include <vector>                      // for vector
 #include <xnetwork/classes/graph.hpp>  // for Graph, SimpleGraph
 
-#if __cplusplus > 201703L
-#    include <cppcoro/generator.hpp>  // for operator!=, generator
-#endif
+// #if __cplusplus > 201703L
+// #    include <cppcoro/generator.hpp>  // for operator!=, generator
+// #endif
 
 /**
  * @brief
