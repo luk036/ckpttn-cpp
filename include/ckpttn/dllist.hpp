@@ -108,27 +108,6 @@ template <typename T> class Dllist {
      * @return DllIterator
      */
     constexpr auto end() noexcept -> DllIterator<T>;
-
-    // using coro_t = boost::coroutines2::coroutine<Dllist&>;
-    // using pull_t = typename coro_t::pull_type;
-
-    // /**
-    //  * @brief item generator
-    //  *
-    //  * @return pull_t
-    //  */
-    // auto items() noexcept -> pull_t
-    // {
-    //     auto func = [&](typename coro_t::push_type& yield) {
-    //         auto cur = this->next;
-    //         while (cur != this)
-    //         {
-    //             yield(*cur);
-    //             cur = cur->next;
-    //         }
-    //     };
-    //     return pull_t(func);
-    // }
 };
 #pragma pack(pop)
 
