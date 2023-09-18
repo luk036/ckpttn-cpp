@@ -85,7 +85,7 @@
             </li>
           </ul>
         </nav>
-<p>The <code><a href="classFMPartMgr.html" class="m-doc">FMPartMgr</a></code> class is a subclass of <code><a href="classPartMgrBase.html" class="m-doc">PartMgrBase</a></code> and is used for managing the partitioning of a hypergraph (<code>Gnl</code>) using the FM algorithm. It takes a hypergraph, a gain manager, a constraint manager, and the number of partitions as input. It provides methods for taking a snapshot of the current partition and restoring a partition from a snapshot.</p>
+<p>The <code><a href="classFMPartMgr.html" class="m-doc">FMPartMgr</a></code> class is a subclass of <code><a href="classPartMgrBase.html" class="m-doc">PartMgrBase</a></code> and is used for managing the partitioning of a hypergraph (<code>Gnl</code>) using the Fiduccia-Mattheyses algorithm. It takes a hypergraph, a gain manager, a constraint manager, and the number of partitions as input. It provides methods for taking a snapshot of the current partition and restoring a partition from a snapshot.</p>
         <section id="base-classes">
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
@@ -100,14 +100,14 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a50c54cbd76a5088ccf898e7b20fd40d8" class="m-doc">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              <span class="m-doc-wrap-bumper"><a href="#a88dcf7c247fc95dd4eaca179f1c7f826" class="m-doc">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               GainMgr&amp; gain_mgr,
               ConstrMgr&amp; constr_mgr,
               size_t num_parts)</span>
             </dt>
             <dd>Construct a new <a href="classFMPartMgr.html" class="m-doc">FMPartMgr</a> object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#afe9bef259c8f85bcbe7f1d88da375641" class="m-doc">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              <span class="m-doc-wrap-bumper"><a href="#aa9b3eea56c619818b67a9a9f305fb9c5" class="m-doc">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               GainMgr&amp; gain_mgr,
               ConstrMgr&amp; constr_mgr)</span>
             </dt>
@@ -116,12 +116,12 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a50c54cbd76a5088ccf898e7b20fd40d8"><div>
+          <section class="m-doc-details" id="a88dcf7c247fc95dd4eaca179f1c7f826"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> FMPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a50c54cbd76a5088ccf898e7b20fd40d8" class="m-doc-self">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              <span class="m-doc-wrap-bumper"> FMPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a88dcf7c247fc95dd4eaca179f1c7f826" class="m-doc-self">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               GainMgr&amp; gain_mgr,
               ConstrMgr&amp; constr_mgr,
               size_t num_parts)</span></span>
@@ -133,7 +133,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
@@ -151,12 +151,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="afe9bef259c8f85bcbe7f1d88da375641"><div>
+          <section class="m-doc-details" id="aa9b3eea56c619818b67a9a9f305fb9c5"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> FMPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afe9bef259c8f85bcbe7f1d88da375641" class="m-doc-self">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hgr,
+              <span class="m-doc-wrap-bumper"> FMPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa9b3eea56c619818b67a9a9f305fb9c5" class="m-doc-self">FMPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               GainMgr&amp; gain_mgr,
               ConstrMgr&amp; constr_mgr)</span></span>
             </h3>
@@ -167,7 +167,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">hgr&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>

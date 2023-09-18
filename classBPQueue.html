@@ -86,7 +86,7 @@
             </li>
           </ul>
         </nav>
-<p>Bounded Priority Queue with integer keys in [a..b]. Implemented by an array (bucket) of doubly-linked lists. Efficient if the keys are bounded by a small integer value.</p><p>Note that this class does not own PQ nodes. This feature allows these nodes sharable in both doubly linked list class and this class. In the FM algorithm, nodes are either attached to the gain buckets (PQ) or to the waiting_list (doubly-linked list), but cannot be in both at the same time.</p><p>Another improvement is to increase the size of the array by one element, i.e. (b - a + 2). The extra dummy array element (called sentinel) is used to reduce the boundary checking during updates.</p><p>All the member functions assume that the keys are inside the bounds.</p>
+<p>Bounded Priority Queue with integer keys in [a..b]. Implemented by an array (bucket) of doubly-linked lists. Efficient if the keys are bounded by a small integer value.</p><p>Note that this class does not own PQ nodes. This feature allows these nodes sharable in both doubly linked list class and this class. In the Fiduccia-Mattheyses algorithm, nodes are either attached to the gain buckets (PQ) or to the waiting_list (doubly-linked list), but cannot be in both at the same time.</p><p>Another improvement is to increase the size of the array by one element, i.e. (b - a + 2). The extra dummy array element (called sentinel) is used to reduce the boundary checking during updates.</p><p>All the member functions assume that the keys are inside the bounds.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
@@ -376,7 +376,7 @@
                 </tr>
               </tbody>
             </table>
-<p>Note that the order of items with same key will not be preserved. For the FM algorithm, this is a prefered behavior.</p>
+<p>Note that the order of items with same key will not be preserved. For the Fiduccia-Mattheyses algorithm, this is a prefered behavior.</p>
           </div></section>
           <section class="m-doc-details" id="a472dbe41b8d16795cccf700ce0e018a1"><div>
             <h3>
@@ -402,7 +402,7 @@
                 </tr>
               </tbody>
             </table>
-<p>Note that the order of items with same key will not be preserved. For the FM algorithm, this is a prefered behavior.</p>
+<p>Note that the order of items with same key will not be preserved. For the Fiduccia-Mattheyses algorithm, this is a prefered behavior.</p>
           </div></section>
           <section class="m-doc-details" id="a02f79ee9f53001718de1fef34a889ea3"><div>
             <h3>
@@ -428,7 +428,7 @@
                 </tr>
               </tbody>
             </table>
-<p>Note that the order of items with same key will not be preserved. For FM algorithm, this is a prefered behavior.</p>
+<p>Note that the order of items with same key will not be preserved. For Fiduccia-Mattheyses algorithm, this is a prefered behavior.</p>
           </div></section>
           <section class="m-doc-details" id="a37945addcdc6327ed5805e82d4ac5a8e"><div>
             <h3>
