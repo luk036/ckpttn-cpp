@@ -16,7 +16,7 @@ class FMPartMgr;
  * @brief Fiduccia-Mattheyses Partitioning Algorithm Manager
  *
  * The `FMPartMgr` class is a subclass of `PartMgrBase` and is used for managing
- * the partitioning of a hypergraph (`Gnl`) using the FM algorithm. It takes a
+ * the partitioning of a hypergraph (`Gnl`) using the Fiduccia-Mattheyses algorithm. It takes a
  * hypergraph, a gain manager, a constraint manager, and the number of
  * partitions as input. It provides methods for taking a snapshot of the current
  * partition and restoring a partition from a snapshot.
@@ -33,23 +33,23 @@ class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
     /**
      * @brief Construct a new FMPartMgr object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in,out] gain_mgr
      * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    FMPartMgr(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
-        : Base{hgr, gain_mgr, constr_mgr, num_parts} {}
+    FMPartMgr(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
+        : Base{hyprgraph, gain_mgr, constr_mgr, num_parts} {}
 
     /**
      * @brief Construct a new FMPartMgr object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in,out] gain_mgr
      * @param[in,out] constr_mgr
      */
-    FMPartMgr(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr)
-        : Base{hgr, gain_mgr, constr_mgr, 2} {}
+    FMPartMgr(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr)
+        : Base{hyprgraph, gain_mgr, constr_mgr, 2} {}
 
     // /**
     //  * @brief

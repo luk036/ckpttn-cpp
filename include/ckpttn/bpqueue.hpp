@@ -20,7 +20,7 @@ template <typename Tp, typename Int> class BpqIterator;
  *
  * Note that this class does not own PQ nodes. This feature
  * allows these nodes sharable in both doubly linked list class and
- * this class. In the FM algorithm, nodes are either attached to
+ * this class. In the Fiduccia-Mattheyses algorithm, nodes are either attached to
  * the gain buckets (PQ) or to the waiting_list (doubly-linked list),
  * but cannot be in both at the same time.
  *
@@ -162,7 +162,7 @@ class BPQueue {
      * @param[in] delta the change of the key
      *
      * Note that the order of items with same key will not be preserved.
-     * For the FM algorithm, this is a prefered behavior.
+     * For the Fiduccia-Mattheyses algorithm, this is a prefered behavior.
      */
     constexpr auto decrease_key(Item &it, UInt delta) noexcept -> void {
         // this->bucket[it.data.second].detach(it)
@@ -187,7 +187,7 @@ class BPQueue {
      * @param[in] delta the change of the key
      *
      * Note that the order of items with same key will not be preserved.
-     * For the FM algorithm, this is a prefered behavior.
+     * For the Fiduccia-Mattheyses algorithm, this is a prefered behavior.
      */
     constexpr auto increase_key(Item &it, UInt delta) noexcept -> void {
         // this->bucket[it.data.second].detach(it)
@@ -208,7 +208,7 @@ class BPQueue {
      * @param[in] delta the change of the key
      *
      * Note that the order of items with same key will not be preserved.
-     * For FM algorithm, this is a prefered behavior.
+     * For Fiduccia-Mattheyses algorithm, this is a prefered behavior.
      */
     constexpr auto modify_key(Item &it, Int delta) noexcept -> void {
         if (it.is_locked()) {

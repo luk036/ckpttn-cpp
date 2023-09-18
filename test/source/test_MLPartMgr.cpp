@@ -24,41 +24,44 @@ using namespace std;
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
+extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
 
 TEST_CASE("Test MLBiPartMgr dwarf") {
-    const auto hgr = create_dwarf();
+    const auto hyprgraph = create_dwarf();
     MLPartMgr part_mgr{0.3};
-    vector<uint8_t> part(hgr.number_of_modules(), 0);
+    vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                     part);
     CHECK(part_mgr.total_cost == 2U);
 }
 
 TEST_CASE("Test MLKWayPartMgr dwarf") {
-    const auto hgr = create_dwarf();
+    const auto hyprgraph = create_dwarf();
     MLPartMgr part_mgr{0.4, 3};  // 0.3???
-    vector<uint8_t> part(hgr.number_of_modules(), 0);
+    vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-                                                      FMKWayConstrMgr<SimpleNetlist>>>(hgr, part);
+                                                      FMKWayConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                       part);
     CHECK(part_mgr.total_cost == 4U);
 }
 
 TEST_CASE("Test MLBiPartMgr p1") {
-    const auto hgr = readNetD("../../testcases/p1.net");
+    const auto hyprgraph = readNetD("../../testcases/p1.net");
     MLPartMgr part_mgr{0.3};
     part_mgr.set_limitsize(500);
 
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
-        auto part = vector<uint8_t>(hgr.number_of_modules(), 0);
+        auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
         auto whichPart = uint8_t(0);
         for (auto &elem : part) {
             whichPart ^= 1;
             elem = whichPart;
         }
         part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                          FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
         if (mincost > part_mgr.total_cost) {
             mincost = part_mgr.total_cost;
         }
@@ -70,21 +73,22 @@ TEST_CASE("Test MLBiPartMgr p1") {
 }
 
 TEST_CASE("Test MLBiPartMgr ibm01") {
-    auto hgr = readNetD("../../testcases/ibm01.net");
-    readAre(hgr, "../../testcases/ibm01.are");
+    auto hyprgraph = readNetD("../../testcases/ibm01.net");
+    readAre(hyprgraph, "../../testcases/ibm01.are");
     MLPartMgr part_mgr{0.4};
     part_mgr.set_limitsize(400);
 
     auto mincost = 1000;
     for (auto i = 0; i != 10; ++i) {
-        auto part = vector<uint8_t>(hgr.number_of_modules(), 0);
+        auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
         auto whichPart = uint8_t(0);
         for (auto &elem : part) {
             whichPart ^= 1;
             elem = whichPart;
         }
         part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                          FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
         if (mincost > part_mgr.total_cost) {
             mincost = part_mgr.total_cost;
         }
@@ -96,15 +100,16 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
 }
 
 TEST_CASE("Test MLBiPartMgr ibm03") {
-    auto hgr = readNetD("../../testcases/ibm03.net");
-    readAre(hgr, "../../testcases/ibm03.are");
+    auto hyprgraph = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph, "../../testcases/ibm03.are");
     MLPartMgr part_mgr{0.45};
     part_mgr.set_limitsize(300);
-    vector<uint8_t> part(hgr.number_of_modules(), 0);
+    vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
     part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                     part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(part_mgr.total_cost >= 1104U);
@@ -112,15 +117,16 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
 }
 
 TEST_CASE("Test MLBiPartMgr ibm18") {
-    auto hgr = readNetD("../../testcases/ibm18.net");
-    readAre(hgr, "../../testcases/ibm18.are");
+    auto hyprgraph = readNetD("../../testcases/ibm18.net");
+    readAre(hyprgraph, "../../testcases/ibm18.are");
     MLPartMgr part_mgr{0.45};
     part_mgr.set_limitsize(24000);
-    vector<uint8_t> part(hgr.number_of_modules(), 0);
+    vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
     part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                                      FMBiConstrMgr<SimpleNetlist>>>(hgr, part);
+                                                      FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                     part);
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
     CHECK(part_mgr.total_cost >= 1104U);

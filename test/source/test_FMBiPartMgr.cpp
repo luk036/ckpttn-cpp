@@ -14,19 +14,19 @@ using namespace std;
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
+extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
 
 /**
  * @brief Run test cases
  *
- * @param[in] hgr
+ * @param[in] hyprgraph
  */
-void run_FMBiPartMgr(const SimpleNetlist &hgr) {
-    FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
-    FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4};
+void run_FMBiPartMgr(const SimpleNetlist &hyprgraph) {
+    FMBiGainMgr<SimpleNetlist> gain_mgr{hyprgraph};
+    FMBiConstrMgr<SimpleNetlist> constr_mgr{hyprgraph, 0.4};
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> part_mgr{
-        hgr, gain_mgr, constr_mgr};
-    vector<uint8_t> part(hgr.number_of_modules(), 0);
+        hyprgraph, gain_mgr, constr_mgr};
+    vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     part_mgr.legalize(part);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
@@ -39,30 +39,30 @@ void run_FMBiPartMgr(const SimpleNetlist &hgr) {
 }
 
 TEST_CASE("Test FMBiPartMgr") {
-    const auto hgr = create_test_netlist();
-    run_FMBiPartMgr(hgr);
+    const auto hyprgraph = create_test_netlist();
+    run_FMBiPartMgr(hyprgraph);
 }
 
 TEST_CASE("Test FMBiPartMgr dwarf") {
-    const auto hgr = create_dwarf();
-    run_FMBiPartMgr(hgr);
+    const auto hyprgraph = create_dwarf();
+    run_FMBiPartMgr(hyprgraph);
 }
 
 TEST_CASE("Test FMBiPartMgr p1") {
-    const auto hgr = readNetD("../../testcases/p1.net");
-    run_FMBiPartMgr(hgr);
+    const auto hyprgraph = readNetD("../../testcases/p1.net");
+    run_FMBiPartMgr(hyprgraph);
 }
 
 // TEST_CASE("Test FMBiPartMgr ibm01")
 // {
-//     auto hgr = readNetD("../../testcases/ibm01.net");
-//     readAre(hgr, "../../testcases/ibm01.are");
-//     run_FMBiPartMgr(hgr);
+//     auto hyprgraph = readNetD("../../testcases/ibm01.net");
+//     readAre(hyprgraph, "../../testcases/ibm01.are");
+//     run_FMBiPartMgr(hyprgraph);
 // }
 
 // TEST_CASE("Test FMBiPartMgr ibm18")
 // {
-//     auto hgr = readNetD("../../testcases/ibm18.net");
-//     readAre(hgr, "../../testcases/ibm18.are");
-//     run_FMBiPartMgr(hgr);
+//     auto hyprgraph = readNetD("../../testcases/ibm18.net");
+//     readAre(hyprgraph, "../../testcases/ibm18.are");
+//     run_FMBiPartMgr(hyprgraph);
 // }

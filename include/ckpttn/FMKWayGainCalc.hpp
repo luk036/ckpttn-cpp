@@ -27,7 +27,7 @@ template <typename Gnl> class FMKWayGainCalc {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
-    const Gnl &hgr;
+    const Gnl &hyprgraph;
     std::uint8_t num_parts;
     fun::Robin<std::uint8_t> rr;
     // size_t num_modules;
@@ -46,23 +46,23 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Construct a new FMKWayGainCalc object
      *
-     * @param[in] hgr Netlist
+     * @param[in] hyprgraph Netlist
      * @param[in] num_parts number of partitions
      */
-    FMKWayGainCalc(const Gnl &hgr, std::uint8_t num_parts)
-        : hgr{hgr},
+    FMKWayGainCalc(const Gnl &hyprgraph, std::uint8_t num_parts)
+        : hyprgraph{hyprgraph},
           num_parts{num_parts},
           rr{num_parts},
           rsrc(stack_buf, sizeof stack_buf),
           vertex_list{},
-          init_gain_list(num_parts, std::vector<int>(hgr.number_of_modules(), 0)),
+          init_gain_list(num_parts, std::vector<int>(hyprgraph.number_of_modules(), 0)),
           delta_gain_v(num_parts, 0, &rsrc),
           delta_gain_w(num_parts, 0, &rsrc),
           idx_vec(&rsrc) {
         for (auto k = 0U; k != this->num_parts; ++k) {
             auto vec = std::vector<Item>{};
-            vec.reserve(hgr.number_of_modules());
-            for (const auto &v : this->hgr) {
+            vec.reserve(hyprgraph.number_of_modules());
+            for (const auto &v : this->hyprgraph) {
                 vec.emplace_back(Item(std::make_pair(v, 0)));
             }
             this->vertex_list.emplace_back(std::move(vec));
@@ -97,7 +97,7 @@ template <typename Gnl> class FMKWayGainCalc {
                 elem = 0;
             }
         }
-        for (const auto &net : this->hgr.nets) {
+        for (const auto &net : this->hyprgraph.nets) {
             this->_init_gain(net, part);
         }
         return this->total_cost;

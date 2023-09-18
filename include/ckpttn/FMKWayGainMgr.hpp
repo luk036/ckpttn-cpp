@@ -27,10 +27,11 @@ template <typename Gnl> class FMKWayGainMgr
     /**
      * @brief Construct a new FMKWayGainMgr object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in] num_parts
      */
-    FMKWayGainMgr(const Gnl &hgr, std::uint8_t num_parts) : Base{hgr, num_parts}, rr{num_parts} {}
+    FMKWayGainMgr(const Gnl &hyprgraph, std::uint8_t num_parts)
+        : Base{hyprgraph, num_parts}, rr{num_parts} {}
 
     /**
      * @brief

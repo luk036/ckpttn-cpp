@@ -12,22 +12,26 @@
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
+extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
 
 /**
- * @brief run FM Bi-partitioning
+ * The function "run_FMBiPartMgr" runs the Fiduccia-Mattheyses Bi-partitioning algorithm on a given
+ * netlist.
  *
- * @param[in] hgr
- * @param[in] option
+ * @param[in] hyprgraph The parameter `hyprgraph` is of type `SimpleNetlist` and represents a
+ * netlist, which is a data structure that describes the connections between modules in a circuit
+ * design.
+ * @param[in] option The "option" parameter is a boolean value that determines whether a special
+ * handling for 2-pin nets should be applied during the gain calculation.
  */
-void run_FMBiPartMgr(const SimpleNetlist &hgr, bool option) {
-    FMBiGainMgr<SimpleNetlist> gain_mgr{hgr};
+void run_FMBiPartMgr(const SimpleNetlist &hyprgraph, bool option) {
+    FMBiGainMgr<SimpleNetlist> gain_mgr{hyprgraph};
     gain_mgr.gain_calc.special_handle_2pin_nets = option;
 
-    FMBiConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.45};
+    FMBiConstrMgr<SimpleNetlist> constr_mgr{hyprgraph, 0.45};
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> part_mgr{
-        hgr, gain_mgr, constr_mgr};
-    std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
+        hyprgraph, gain_mgr, constr_mgr};
+    std::vector<std::uint8_t> part(hyprgraph.number_of_modules(), 0);
     part_mgr.legalize(part);
     // auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
@@ -42,11 +46,11 @@ void run_FMBiPartMgr(const SimpleNetlist &hgr, bool option) {
  * @param[in] state
  */
 static void BM_with_2pin_nets(benchmark::State &state) {
-    auto hgr = readNetD("../../testcases/ibm03.net");
-    readAre(hgr, "../../testcases/ibm03.are");
+    auto hyprgraph = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMBiPartMgr(hgr, true);
+        run_FMBiPartMgr(hyprgraph, true);
     }
 }
 
@@ -61,11 +65,11 @@ BENCHMARK(BM_with_2pin_nets);
  * @param[in] state
  */
 static void BM_without_2pin_nets(benchmark::State &state) {
-    auto hgr = readNetD("../../testcases/ibm03.net");
-    readAre(hgr, "../../testcases/ibm03.are");
+    auto hyprgraph = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMBiPartMgr(hgr, false);
+        run_FMBiPartMgr(hyprgraph, false);
     }
 }
 BENCHMARK(BM_without_2pin_nets);

@@ -58,7 +58,7 @@ class PartMgrBase {
   protected:
     // Der& self = *static_cast<Der*>(this);
 
-    const Gnl &hgr;
+    const Gnl &hyprgraph;
     GainMgr &gain_mgr;
     ConstrMgr &validator;
     size_t num_parts;
@@ -71,13 +71,13 @@ class PartMgrBase {
     /**
      * @brief Construct a new Part Mgr Base object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in,out] gain_mgr
      * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    PartMgrBase(const Gnl &hgr, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
-        : hgr{hgr}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
+    PartMgrBase(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
+        : hyprgraph{hyprgraph}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
 
     /**
      * @brief

@@ -16,14 +16,15 @@ using namespace std;
 using namespace transrangers;
 
 /**
- * @brief
+ * The code snippet is defining the `_init_gain` function template for the `FMBiGainCalc` class.
+ * This function is responsible for initializing the gain values for a given net and partition.
  *
  * @param[in] net
  * @param[in] part
  */
 template <typename Gnl>
 void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, gsl::span<const uint8_t> part) {
-    const auto degree = this->hgr.gr.degree(net);
+    const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
         return;  // does not provide any gain when moving
@@ -45,18 +46,19 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, gsl::span<co
 }
 
 /**
- * @brief
+ * The `_init_gain_2pin_net` function is a member function of the `FMBiGainCalc` class. It is
+ * responsible for initializing the gain values for a 2-pin net in a given partition.
  *
  * @param[in] net
  * @param[in] part
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
                                                                     gsl::span<const uint8_t> part) {
-    auto net_cur = this->hgr.gr[net].begin();
+    auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
 
-    const auto weight = this->hgr.get_net_weight(net);
+    const auto weight = this->hyprgraph.get_net_weight(net);
     if (part[w] != part[v]) {
         this->total_cost += weight;
         this->_increase_gain(w, weight);
@@ -68,19 +70,20 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
 }
 
 /**
- * @brief
+ * The `_init_gain_3pin_net` function is a member function of the `FMBiGainCalc` class. It is
+ * responsible for initializing the gain values for a 3-pin net in a given partition.
  *
  * @param[in] net
  * @param[in] part
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
                                                                     gsl::span<const uint8_t> part) {
-    auto net_cur = this->hgr.gr[net].begin();
+    auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
     const auto u = *++net_cur;
 
-    const auto weight = this->hgr.get_net_weight(net);
+    const auto weight = this->hyprgraph.get_net_weight(net);
     if (part[u] == part[v]) {
         if (part[w] == part[v]) {
             // this->_modify_gain_va(-weight, u, v, w);
@@ -100,7 +103,9 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typena
 }
 
 /**
- * @brief
+ * The `_init_gain_general_net` function is a member function of the `FMBiGainCalc` class. It is
+ * responsible for initializing the gain values for a general net (with more than 3 pins) in a given
+ * partition.
  *
  * @param[in] net
  * @param[in] part
@@ -110,13 +115,13 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
                                                gsl::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
 
-    auto rng = all(this->hgr.gr[net]);
+    auto rng = all(this->hyprgraph.gr[net]);
     rng([&](const auto &wc) {
         num[part[*wc]] += 1;
         return true;
     });
 
-    const uint32_t weight = this->hgr.get_net_weight(net);
+    const uint32_t weight = this->hyprgraph.get_net_weight(net);
 
     // #pragma unroll
     for (const auto &k : {0U, 1U}) {
@@ -153,9 +158,9 @@ template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t> &move_info) ->
     typename Gnl::node_t {
-    auto net_cur = this->hgr.gr[move_info.net].begin();
+    auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
-    const auto gain = int(this->hgr.get_net_weight(move_info.net));
+    const auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
     const int delta = (part[w] == move_info.from_part) ? gain : -gain;
     this->delta_gain_w = 2 * delta;
     return w;
@@ -171,7 +176,7 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
 template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
                                                              const typename Gnl::node_t &net) {
     this->idx_vec.clear();
-    auto rng1 = all(this->hgr.gr[net]);
+    auto rng1 = all(this->hyprgraph.gr[net]);
     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
     rng([&](const auto &wc) {
         this->idx_vec.push_back(*wc);
@@ -193,7 +198,7 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
     // const auto& [net, v, from_part, _] = move_info;
 
     auto delta_gain = vector<int>{0, 0};
-    auto gain = int(this->hgr.get_net_weight(move_info.net));
+    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
     const auto part_w = part[this->idx_vec[0]];
 
     if (part_w != move_info.from_part) {
@@ -230,7 +235,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
 
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<int>(degree, 0);
-    auto gain = int(this->hgr.get_net_weight(move_info.net));
+    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
     auto rng2 = all(delta_gain);
     auto rng3 = zip2(rng1, rng2);
 

@@ -12,23 +12,28 @@
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hgr, boost::string_view areFileName);
+extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
 
 /**
- * @brief Run FM num_parts-way partitioning
+ * The function `run_FMKWayPartMgr` runs the Fiduccia-Mattheyses num_parts-way partitioning
+ * algorithm on a given netlist.
  *
- * @param[in] hgr
- * @param[in] num_parts
- * @param[in] option
+ * @param hyprgraph The parameter `hyprgraph` is a reference to an object of type `SimpleNetlist`,
+ * which represents a netlist (a hypergraph representation of a circuit).
+ * @param num_parts The `num_parts` parameter represents the number of partitions or groups that the
+ * Fiduccia-Mattheyses algorithm will create. It determines how many parts the netlist will be
+ * divided into.
+ * @param option The "option" parameter is a boolean flag that determines whether a special handling
+ * for 2-pin nets should be applied during the gain calculation.
  */
-void run_FMKWayPartMgr(SimpleNetlist &hgr, std::uint8_t num_parts, bool option) {
-    FMKWayGainMgr<SimpleNetlist> gain_mgr{hgr, num_parts};
+void run_FMKWayPartMgr(SimpleNetlist &hyprgraph, std::uint8_t num_parts, bool option) {
+    FMKWayGainMgr<SimpleNetlist> gain_mgr{hyprgraph, num_parts};
     gain_mgr.gain_calc.special_handle_2pin_nets = option;
 
-    FMKWayConstrMgr<SimpleNetlist> constr_mgr{hgr, 0.4, num_parts};
+    FMKWayConstrMgr<SimpleNetlist> constr_mgr{hyprgraph, 0.4, num_parts};
     FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>> part_mgr{
-        hgr, gain_mgr, constr_mgr};
-    std::vector<std::uint8_t> part(hgr.number_of_modules(), 0);
+        hyprgraph, gain_mgr, constr_mgr};
+    std::vector<std::uint8_t> part(hyprgraph.number_of_modules(), 0);
 
     part_mgr.legalize(part);
     // auto totalcostbefore = part_mgr.total_cost;
@@ -44,11 +49,11 @@ void run_FMKWayPartMgr(SimpleNetlist &hgr, std::uint8_t num_parts, bool option) 
  * @param[in] state
  */
 static void BM_with_2pin_nets(benchmark::State &state) {
-    auto hgr = readNetD("../../testcases/ibm03.net");
-    readAre(hgr, "../../testcases/ibm03.are");
+    auto hyprgraph = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMKWayPartMgr(hgr, 3, true);
+        run_FMKWayPartMgr(hyprgraph, 3, true);
     }
 }
 
@@ -63,11 +68,11 @@ BENCHMARK(BM_with_2pin_nets);
  * @param[in] state
  */
 static void BM_without_2pin_nets(benchmark::State &state) {
-    auto hgr = readNetD("../../testcases/ibm03.net");
-    readAre(hgr, "../../testcases/ibm03.are");
+    auto hyprgraph = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph, "../../testcases/ibm03.are");
 
     while (state.KeepRunning()) {
-        run_FMKWayPartMgr(hgr, 3, false);
+        run_FMKWayPartMgr(hyprgraph, 3, false);
     }
 }
 BENCHMARK(BM_without_2pin_nets);

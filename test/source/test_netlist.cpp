@@ -50,14 +50,14 @@ auto create_dwarf() -> SimpleNetlist {
     // vector<node_t> module_list(7);
     // vector<node_t> net_list(5);
     vector<unsigned int> module_weight = {1, 3, 4, 2, 0, 0, 0};
-    // auto hgr = Netlist{std::move(g), py::range(7), py::range(7, 13),
+    // auto hyprgraph = Netlist{std::move(g), py::range(7), py::range(7, 13),
     // py::range(7),
     //                  py::range(-7, 6)};
-    SimpleNetlist hgr(std::move(g), 7, 6);
+    SimpleNetlist hyprgraph(std::move(g), 7, 6);
 
-    hgr.module_weight = module_weight;
-    hgr.num_pads = 3;
-    return hgr;
+    hyprgraph.module_weight = module_weight;
+    hyprgraph.num_pads = 3;
+    return hyprgraph;
 }
 
 /**
@@ -84,31 +84,31 @@ auto create_test_netlist() -> SimpleNetlist {
     }
 
     auto module_weight = vector<unsigned int>{3, 4, 2};
-    auto hgr = SimpleNetlist{std::move(g), 3, 3};
-    hgr.module_weight = std::move(module_weight);
-    return hgr;
+    auto hyprgraph = SimpleNetlist{std::move(g), 3, 3};
+    hyprgraph.module_weight = std::move(module_weight);
+    return hyprgraph;
 }
 
 TEST_CASE("Test Netlist") {
-    const auto hgr = create_test_netlist();
+    const auto hyprgraph = create_test_netlist();
 
-    CHECK(hgr.number_of_modules() == 3);
-    CHECK(hgr.number_of_nets() == 3);
-    // CHECK(hgr.number_of_pins() == 6);
-    CHECK(hgr.get_max_degree() == 3);
-    CHECK(hgr.get_max_net_degree() == 3);
-    CHECK(!hgr.has_fixed_modules);
+    CHECK(hyprgraph.number_of_modules() == 3);
+    CHECK(hyprgraph.number_of_nets() == 3);
+    // CHECK(hyprgraph.number_of_pins() == 6);
+    CHECK(hyprgraph.get_max_degree() == 3);
+    CHECK(hyprgraph.get_max_net_degree() == 3);
+    CHECK(!hyprgraph.has_fixed_modules);
 }
 
 TEST_CASE("Test dwarf") {
     // static_assert(sizeof(double*) == 8);
-    const auto hgr = create_dwarf();
+    const auto hyprgraph = create_dwarf();
 
-    CHECK(hgr.number_of_modules() == 7);
-    CHECK(hgr.number_of_nets() == 6);
-    // CHECK(hgr.number_of_pins() == 14);
-    CHECK(hgr.get_max_degree() == 3);
-    CHECK(hgr.get_max_net_degree() == 3);
-    CHECK(!hgr.has_fixed_modules);
-    CHECK(hgr.get_module_weight(1) == 3U);
+    CHECK(hyprgraph.number_of_modules() == 7);
+    CHECK(hyprgraph.number_of_nets() == 6);
+    // CHECK(hyprgraph.number_of_pins() == 14);
+    CHECK(hyprgraph.get_max_degree() == 3);
+    CHECK(hyprgraph.get_max_net_degree() == 3);
+    CHECK(!hyprgraph.has_fixed_modules);
+    CHECK(hyprgraph.get_module_weight(1) == 3U);
 }

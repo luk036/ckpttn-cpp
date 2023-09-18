@@ -27,7 +27,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> p
     for (auto &bckt : this->gain_bucket) {
         bckt.clear();
     }
-    for (const auto &v : this->hgr) {
+    for (const auto &v : this->hyprgraph) {
         const auto pv = part[v];
         for (const auto &k : this->rr.exclude(pv)) {
             auto &vlink = this->gain_calc.vertex_list[k][v];
@@ -37,7 +37,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> p
         this->gain_bucket[pv].set_key(vlink, 0);
         this->waiting_list.append(vlink);
     }
-    for (const auto &v : this->hgr.module_fixed) {
+    for (const auto &v : this->hyprgraph.module_fixed) {
         this->lock_all(part[v], v);
     }
     return total_cost;

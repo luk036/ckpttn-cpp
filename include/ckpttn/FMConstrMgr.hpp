@@ -17,13 +17,13 @@ template <typename Node> struct MoveInfoV;
 enum class LegalCheck { NotSatisfied, GetBetter, AllSatisfied };
 
 /**
- * @brief FM Partition Constraint Manager
+ * @brief Fiduccia-Mattheyses Partition Constraint Manager
  *
  * @tparam Gnl
  */
 template <typename Gnl> class FMConstrMgr {
   private:
-    const Gnl &hgr;
+    const Gnl &hyprgraph;
     double bal_tol;
     unsigned int total_weight{0};
     unsigned int weight{};  // cache value
@@ -38,19 +38,19 @@ template <typename Gnl> class FMConstrMgr {
     /**
      * @brief Construct a new FMConstrMgr object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in] bal_tol
      */
-    FMConstrMgr(const Gnl &hgr, double bal_tol) : FMConstrMgr(hgr, bal_tol, 2) {}
+    FMConstrMgr(const Gnl &hyprgraph, double bal_tol) : FMConstrMgr(hyprgraph, bal_tol, 2) {}
 
     /**
      * @brief Construct a new FMConstrMgr object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in] bal_tol
      * @param[in] num_parts
      */
-    FMConstrMgr(const Gnl &hgr, double bal_tol, std::uint8_t num_parts);
+    FMConstrMgr(const Gnl &hyprgraph, double bal_tol, std::uint8_t num_parts);
 
   public:
     /**

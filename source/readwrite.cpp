@@ -22,7 +22,7 @@
 using namespace std;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-void writeJSON(boost::string_view jsonFileName, const SimpleNetlist &hgr) {
+void writeJSON(boost::string_view jsonFileName, const SimpleNetlist &hyprgraph) {
     auto json = ofstream{jsonFileName.data()};
     if (json.fail()) {
         cerr << "Error: Can't open file " << jsonFileName << ".\n";
@@ -34,22 +34,22 @@ void writeJSON(boost::string_view jsonFileName, const SimpleNetlist &hgr) {
  "graph": {
 )";
 
-    json << R"( "num_modules": )" << hgr.number_of_modules() << ",\n";
-    json << R"( "num_nets": )" << hgr.number_of_nets() << ",\n";
-    json << R"( "num_pads": )" << hgr.num_pads << "\n";
+    json << R"( "num_modules": )" << hyprgraph.number_of_modules() << ",\n";
+    json << R"( "num_nets": )" << hyprgraph.number_of_nets() << ",\n";
+    json << R"( "num_pads": )" << hyprgraph.num_pads << "\n";
     json << " },\n";
 
     json << R"( "nodes": [)"
          << "\n";
-    for (const auto &node : hgr.gr) {
+    for (const auto &node : hyprgraph.gr) {
         json << "  { \"id\": " << node << " },\n";
     }
     json << " ],\n";
 
     json << R"( "links": [)"
          << "\n";
-    for (const auto &v : hgr) {
-        for (const auto &net : hgr.gr[v]) {
+    for (const auto &v : hyprgraph) {
+        for (const auto &net : hyprgraph.gr[v]) {
             json << "  {\n";
             json << "   \"source\": " << v << ",\n";
             json << "   \"target\": " << net << "\n";
@@ -151,13 +151,13 @@ auto readNetD(boost::string_view netDFileName) -> SimpleNetlist {
     //     typename boost::property_map<graph_t, boost::vertex_index_t>::type;
     // auto index = boost::get(boost::vertex_index, g);
     // auto gr = py::GraphAdaptor<graph_t>{std::move(g)};
-    auto hgr = SimpleNetlist{std::move(g), numModules, numNets};
-    hgr.num_pads = numModules - padOffset - 1;
-    return hgr;
+    auto hyprgraph = SimpleNetlist{std::move(g), numModules, numNets};
+    hyprgraph.num_pads = numModules - padOffset - 1;
+    return hyprgraph;
 }
 
 // Read the IBM .are format
-void readAre(SimpleNetlist &hgr, boost::string_view areFileName) {
+void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName) {
     auto are = ifstream{areFileName.data()};
     if (are.fail()) {
         cerr << " Could not open " << areFileName << endl;
@@ -173,8 +173,8 @@ void readAre(SimpleNetlist &hgr, boost::string_view areFileName) {
     unsigned int weight = 0;
     // auto totalWeight = 0;
     // xxx index_t smallestWeight = UINT_MAX;
-    auto numModules = hgr.number_of_modules();
-    auto padOffset = numModules - hgr.num_pads - 1;
+    auto numModules = hyprgraph.number_of_modules();
+    auto padOffset = numModules - hyprgraph.num_pads - 1;
     auto module_weight = vector<unsigned int>(numModules);
 
     size_t lineno = 1;
@@ -212,5 +212,5 @@ void readAre(SimpleNetlist &hgr, boost::string_view areFileName) {
         lineno++;
     }
 
-    hgr.module_weight = std::move(module_weight);
+    hyprgraph.module_weight = std::move(module_weight);
 }

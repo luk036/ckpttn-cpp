@@ -16,7 +16,7 @@ using Tuple = pair<Set, int>;
  * The `min_maximal_matching` function performs a minimum weighted maximal
  * matching using a primal-dual approximation algorithm.
  *
- * @param hgr The `hgr` parameter is an object representing a hypergraph. It
+ * @param hyprgraph The `hyprgraph` parameter is an object representing a hypergraph. It
  * likely contains information about the vertices and edges of the hypergraph
  * @param weight The `weight` parameter is a mutable mapping that represents the
  * weight of each net in the hypergraph. It is used to determine the cost of
@@ -31,7 +31,7 @@ using Tuple = pair<Set, int>;
  * matchset (a set of matched elements) and the total primal cost (an integer or
  * float representing the total weight of the matching).
  */
-Tuple min_maximal_matching(HierNetlist *hgr, MutableMapping weight, Set *matchset = nullptr,
+Tuple min_maximal_matching(HierNetlist *hyprgraph, MutableMapping weight, Set *matchset = nullptr,
                            Set *dep = nullptr, ) {
     // If the `matchset` parameter is not provided, create a new set
     if (matchset == nullptr) {
@@ -46,14 +46,14 @@ Tuple min_maximal_matching(HierNetlist *hgr, MutableMapping weight, Set *matchse
     // The `cover` function takes a net as input and adds all the vertices
     // connected to that net
     auto cover = [](string net) {
-        for (auto vtx : hgr->gra[net]) {
+        for (auto vtx : hyprgraph->gra[net]) {
             dep->insert(vtx);
         }
     };
 
     // The `any_of_dep` function returns `true` if the net is already covered by
     // the matching
-    auto any_of_dep = [](string net) { return any(vtx == net for vtx in hgr->gra[net]); };
+    auto any_of_dep = [](string net) { return any(vtx == net for vtx in hyprgraph->gra[net]); };
 
     // Initialize the primal and dual costs
     int total_primal_cost = 0;
@@ -63,7 +63,7 @@ Tuple min_maximal_matching(HierNetlist *hgr, MutableMapping weight, Set *matchse
     MutableMapping gap = weight;
 
     // Iterate over all the nets in the hypergraph
-    for (string net : hgr->nets) {
+    for (string net : hyprgraph->nets) {
         // If the net is already covered, skip it
         if (any_of_dep(net)) {
             continue;
@@ -74,9 +74,9 @@ Tuple min_maximal_matching(HierNetlist *hgr, MutableMapping weight, Set *matchse
         string min_net = net;
 
         // Iterate over all the vertices connected to the net
-        for (string vtx : hgr->gra[net]) {
+        for (string vtx : hyprgraph->gra[net]) {
             // Iterate over all the nets connected to the vertex
-            for (string net2 : hgr->gra[vtx]) {
+            for (string net2 : hyprgraph->gra[vtx]) {
                 // If the net is already covered, skip it
                 if (any_of_dep(net2)) {
                     continue;
@@ -101,8 +101,8 @@ Tuple min_maximal_matching(HierNetlist *hgr, MutableMapping weight, Set *matchse
             continue;
         }
         gap[net] -= min_val;
-        for (string vtx : hgr->gra[net]) {
-            for (string net2 : hgr->gra[vtx]) {
+        for (string vtx : hyprgraph->gra[net]) {
+            for (string net2 : hyprgraph->gra[vtx]) {
                 // if net2 == net:
                 //     continue
                 gap[net2] -= min_val;

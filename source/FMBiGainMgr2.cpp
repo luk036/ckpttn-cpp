@@ -13,7 +13,7 @@
 using namespace std;
 
 /**
- * @brief
+ * The code snippet is defining the `init` function for the `FMBiGainMgr` class template.
  *
  * @param[in] part
  */
@@ -23,13 +23,13 @@ template <typename Gnl> auto FMBiGainMgr<Gnl>::init(gsl::span<const uint8_t> par
         bckt.clear();
     }
 
-    for (const auto &v : this->hgr) {
+    for (const auto &v : this->hyprgraph) {
         auto &vlink = this->gain_calc.vertex_list[v];
         // auto to_part = 1 - part[v];
         // this->gain_bucket[1 - part[v]].append_direct(vlink);
         this->gain_bucket[1 - part[v]].append(vlink, this->gain_calc.init_gain_list[v]);
     }
-    for (const auto &v : this->hgr.module_fixed) {
+    for (const auto &v : this->hyprgraph.module_fixed) {
         this->lock_all(part[v], v);
     }
     return total_cost;

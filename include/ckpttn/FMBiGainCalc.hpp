@@ -28,7 +28,7 @@ template <typename Gnl> class FMBiGainCalc {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
-    const Gnl &hgr;
+    const Gnl &hyprgraph;
     std::vector<Item> vertex_list;
     std::vector<int> init_gain_list;
     int total_cost{0};
@@ -43,15 +43,15 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Construct a new FMBiGainCalc object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      */
-    explicit FMBiGainCalc(const Gnl &hgr, std::uint8_t /*num_parts*/)
-        : hgr{hgr},
-          vertex_list(hgr.number_of_modules()),
-          init_gain_list(hgr.number_of_modules(), 0),
+    explicit FMBiGainCalc(const Gnl &hyprgraph, std::uint8_t /*num_parts*/)
+        : hyprgraph{hyprgraph},
+          vertex_list(hyprgraph.number_of_modules()),
+          init_gain_list(hyprgraph.number_of_modules(), 0),
           rsrc(stack_buf, sizeof stack_buf),
           idx_vec(&rsrc) {
-        for (const auto &v : this->hgr) {
+        for (const auto &v : this->hyprgraph) {
             this->vertex_list[v].data = std::make_pair(v, uint32_t(0));
         }
     }
@@ -69,7 +69,7 @@ template <typename Gnl> class FMBiGainCalc {
         for (auto &elem : this->init_gain_list) {
             elem = 0;
         }
-        for (const auto &net : this->hgr.nets) {
+        for (const auto &net : this->hyprgraph.nets) {
             this->_init_gain(net, part);
         }
         return this->total_cost;

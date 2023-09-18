@@ -15,11 +15,11 @@ using namespace std;
 /**
  * @brief
  *
- * @param[in] hgr
+ * @param[in] hyprgraph
  * @param[in] part_test
  */
-void run_FMBiGainMgr(const SimpleNetlist &hgr, gsl::span<uint8_t> part) {
-    FMBiGainMgr<SimpleNetlist> mgr{hgr};
+void run_FMBiGainMgr(const SimpleNetlist &hyprgraph, gsl::span<uint8_t> part) {
+    FMBiGainMgr<SimpleNetlist> mgr{hyprgraph};
     mgr.init(part);
     while (!mgr.is_empty()) {
         // Take the gainmax with v from gain_bucket
@@ -37,13 +37,13 @@ void run_FMBiGainMgr(const SimpleNetlist &hgr, gsl::span<uint8_t> part) {
 }
 
 TEST_CASE("Test FMBiGainMgr") {
-    const auto hgr = create_test_netlist();
+    const auto hyprgraph = create_test_netlist();
     auto part_test = vector<uint8_t>{0, 1, 0};
-    run_FMBiGainMgr(hgr, part_test);
+    run_FMBiGainMgr(hyprgraph, part_test);
 }
 
 TEST_CASE("Test FMBiGainMgr 2") {
-    const auto hgr = create_dwarf();
+    const auto hyprgraph = create_dwarf();
     auto part_test = vector<uint8_t>{0, 0, 0, 0, 1, 1, 1};
-    run_FMBiGainMgr(hgr, part_test);
+    run_FMBiGainMgr(hyprgraph, part_test);
 }

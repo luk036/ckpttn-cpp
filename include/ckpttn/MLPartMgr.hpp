@@ -58,10 +58,10 @@ class MLPartMgr {
      *
      * @tparam Gnl
      * @tparam PartMgr
-     * @param[in] hgr
+     * @param[in] hyprgraph
      * @param[in,out] part
      * @return LegalCheck
      */
     template <typename Gnl, typename PartMgr>
-    auto run_FMPartition(const Gnl &hgr, gsl::span<std::uint8_t> part) -> LegalCheck;
+    auto run_FMPartition(const Gnl &hyprgraph, gsl::span<std::uint8_t> part) -> LegalCheck;
 };

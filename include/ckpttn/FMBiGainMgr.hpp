@@ -20,14 +20,14 @@ template <typename Gnl> class FMBiGainMgr
     using GainCalc_ = FMBiGainCalc<Gnl>;
     using node_t = typename Gnl::node_t;
 
-    explicit FMBiGainMgr(const Gnl &hgr) : Base{hgr, 2} {}
+    explicit FMBiGainMgr(const Gnl &hyprgraph) : Base{hyprgraph, 2} {}
 
     /**
      * @brief Construct a new FMBiGainMgr object
      *
-     * @param[in] hgr
+     * @param[in] hyprgraph
      */
-    FMBiGainMgr(const Gnl &hgr, std::uint8_t /* num_parts */) : Base{hgr, 2} {}
+    FMBiGainMgr(const Gnl &hyprgraph, std::uint8_t /* num_parts */) : Base{hyprgraph, 2} {}
 
     /**
      * @brief

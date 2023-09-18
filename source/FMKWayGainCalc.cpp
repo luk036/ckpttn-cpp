@@ -30,7 +30,7 @@ using namespace transrangers;
  */
 template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
                                                              gsl::span<const uint8_t> part) {
-    const auto degree = this->hgr.gr.degree(net);
+    const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
         return;  // does not provide any gain when moving
@@ -60,12 +60,12 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
                                               gsl::span<const uint8_t> part) {
-    auto net_cur = this->hgr.gr[net].begin();
+    auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
     const auto part_w = part[w];
     const auto part_v = part[v];
-    const auto weight = this->hgr.get_net_weight(net);
+    const auto weight = this->hyprgraph.get_net_weight(net);
     if (part_v == part_w) {
         this->_decrease_gain(w, part_v, weight);
         this->_decrease_gain(v, part_v, weight);
@@ -88,14 +88,14 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
                                               gsl::span<const uint8_t> part) {
-    auto net_cur = this->hgr.gr[net].begin();
+    auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
     const auto u = *++net_cur;
     const auto part_w = part[w];
     const auto part_v = part[v];
     const auto part_u = part[u];
-    const auto weight = this->hgr.get_net_weight(net);
+    const auto weight = this->hyprgraph.get_net_weight(net);
     auto a = w;
     auto b = v;
     auto c = u;
@@ -155,16 +155,16 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
     //                                            sizeof StackBufLocal);
     // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
     auto num = std::vector<uint8_t>(this->num_parts, 0);
-    // for (const auto &w : this->hgr.gr[net]) {
+    // for (const auto &w : this->hyprgraph.gr[net]) {
     //   num[part[w]] += 1;
     // }
-    auto rng = all(this->hgr.gr[net]);
+    auto rng = all(this->hyprgraph.gr[net]);
     rng([&](const auto &wc) {
         num[part[*wc]] += 1;
         return true;
     });
 
-    const uint32_t weight = this->hgr.get_net_weight(net);
+    const uint32_t weight = this->hyprgraph.get_net_weight(net);
     // for (const auto &c : num) {
     //   if (c > 0) {
     //     this->total_cost += weight;
@@ -182,7 +182,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
     auto k = 0U;
     for (const auto &c : num) {
         if (c == 0) {
-            // for (const auto &w : this->hgr.gr[net]) {
+            // for (const auto &w : this->hyprgraph.gr[net]) {
             //   this->init_gain_list[k][w] -= int(weight);
             // }
             rng([&](const auto &wc) {
@@ -191,14 +191,14 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
                 return true;
             });
         } else if (c == 1) {
-            // for (const auto &w : this->hgr.gr[net]) {
+            // for (const auto &w : this->hyprgraph.gr[net]) {
             //   if (part[w] == k) {
             //     this->_increase_gain(w, part[w], weight);
             //     break;
             //   }
             // }
-            auto rng_new = all(this->hgr.gr[net]);  // reinitialize after breaking (fix
-                                                    // for Termux's clang 16)
+            auto rng_new = all(this->hyprgraph.gr[net]);  // reinitialize after breaking (fix
+                                                          // for Termux's clang 16)
             rng_new([&part, k, weight, this](const auto &wc) {
                 if (part[*wc] == k) {
                     this->_increase_gain(*wc, part[*wc], weight);
@@ -255,9 +255,9 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
 
-    auto gain = int(this->hgr.get_net_weight(move_info.net));
+    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
     // auto delta_gain_w = vector<int>(this->num_parts, 0);
-    auto net_cur = this->hgr.gr[move_info.net].begin();
+    auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
     fill(this->delta_gain_w.begin(), this->delta_gain_w.end(), 0);
     auto rng_w = all(this->delta_gain_w);
@@ -299,7 +299,7 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
 template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
                                                                const typename Gnl::node_t &net) {
     this->idx_vec.clear();
-    auto rng1 = all(this->hgr.gr[net]);
+    auto rng1 = all(this->hyprgraph.gr[net]);
     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
     rng([&](const auto &wc) {
         this->idx_vec.push_back(*wc);
@@ -320,7 +320,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
-    auto gain = int(this->hgr.get_net_weight(move_info.net));
+    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
     const auto part_w = part[this->idx_vec[0]];
     const auto part_u = part[this->idx_vec[1]];
     auto l = move_info.from_part;
@@ -406,7 +406,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
 
     const auto degree = idx_vec.size();
     auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
-    auto gain = int(this->hgr.get_net_weight(move_info.net));
+    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
 
     auto l = move_info.from_part;
     auto u = move_info.to_part;
