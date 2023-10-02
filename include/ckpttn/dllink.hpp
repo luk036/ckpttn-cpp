@@ -65,7 +65,6 @@ template <typename T> class Dllink {
      */
     constexpr auto is_locked() const noexcept -> bool { return this->next == this; }
 
-
     /**
      * @brief detach from a list
      *
@@ -132,4 +131,3 @@ template <typename T> class Dllink {
     }
 };
 #pragma pack(pop)
-
