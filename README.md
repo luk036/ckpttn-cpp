@@ -17,7 +17,7 @@ Circuit Partitioning for modern C++
 - This library requires standard library `<meomory_resource>`.
 - This library depends on GSL, XNetwork, Boost.
 
-## Features
+## ✨ Features
 
 - Lazy evaluation of Cholesky/LDLT decomposition
 - Suport semi- and strictlu positive definite.
