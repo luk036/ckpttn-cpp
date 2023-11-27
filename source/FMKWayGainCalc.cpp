@@ -191,21 +191,23 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
                 return true;
             });
         } else if (c == 1) {
-            // for (const auto &w : this->hyprgraph.gr[net]) {
-            //   if (part[w] == k) {
-            //     this->_increase_gain(w, part[w], weight);
-            //     break;
-            //   }
-            // }
-            auto rng_new = all(this->hyprgraph.gr[net]);  // reinitialize after breaking (fix
-                                                          // for Termux's clang 16)
-            rng_new([&part, k, weight, this](const auto &wc) {
-                if (part[*wc] == k) {
-                    this->_increase_gain(*wc, part[*wc], weight);
-                    return false;
+            auto it = this->hyprgraph.gr[net].begin();
+            for (;; ++it) {
+                const auto &w = *it;
+                if (part[w] == k) {
+                    this->_increase_gain(w, part[w], weight);
+                    break;
                 }
-                return true;
-            });
+            }
+            // auto rng_new = all(this->hyprgraph.gr[net]);  // reinitialize after breaking (fix
+            //                                               // for Termux's clang 16)
+            // rng_new([&part, k, weight, this](const auto &wc) {
+            //     if (part[*wc] == k) {
+            //         this->_increase_gain(*wc, part[*wc], weight);
+            //         return false;
+            //     }
+            //     return true;
+            // });
         }
         ++k;
     }
@@ -412,7 +414,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
     auto u = move_info.to_part;
 
     auto rng2 = all(delta_gain);
-    auto rng3 = zip2(rng1, rng2);
+    // auto rng3 = zip2(rng1, rng2);
     auto rng4 = all(this->delta_gain_v);
 
     // #pragma unroll
@@ -430,18 +432,32 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
                 });
             }
         } else if (num[l] == 1) {
-            rng3([&gain, &l, &part](const auto &zc) {
-                auto part_w = part[std::get<0>(*zc)];
+            auto it1 = this->idx_vec.begin();
+            auto it2 = delta_gain.begin();
+            for (;; ++it1, ++it2) {  // no need to check ending
+                auto part_w = part[*it1];
                 if (part_w == l) {
-                    auto rng = all(std::get<1>(*zc));
+                    auto rng = all(*it2);
                     rng([&gain](const auto &dgc) {
                         *dgc += gain;
                         return true;
                     });
-                    return false;
+                    break;
                 }
-                return true;
-            });
+            }
+
+            // rng3([&gain, &l, &part](const auto &zc) {
+            //     auto part_w = part[std::get<0>(*zc)];
+            //     if (part_w == l) {
+            //         auto rng = all(std::get<1>(*zc));
+            //         rng([&gain](const auto &dgc) {
+            //             *dgc += gain;
+            //             return true;
+            //         });
+            //         return false;
+            //     }
+            //     return true;
+            // });
         }
         gain = -gain;
         swap(l, u);

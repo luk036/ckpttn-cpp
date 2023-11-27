@@ -131,13 +131,13 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
                 return true;
             });
         } else if (num[k] == 1) {
-            rng([&](const auto &wc) {
-                if (part[*wc] == k) {
-                    this->_increase_gain(*wc, weight);
-                    return false;
+            auto it = this->hyprgraph.gr[net].begin();
+            for (;; ++it) {
+                if (part[*it] == k) {
+                    this->_increase_gain(*it, weight);
+                    break;
                 }
-                return true;
-            });
+            }
         }
     }
 
@@ -237,7 +237,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
     auto delta_gain = vector<int>(degree, 0);
     auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
     auto rng2 = all(delta_gain);
-    auto rng3 = zip2(rng1, rng2);
+    // auto rng3 = zip2(rng1, rng2);
 
     // #pragma unroll
     for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
@@ -247,14 +247,23 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
                 return true;
             });
         } else if (num[l_part] == 1) {
-            rng3([&](const auto &zc) {
-                auto part_w = part[std::get<0>(*zc)];
+            auto it1 = this->idx_vec.begin();
+            auto it2 = delta_gain.begin();
+            for (;; ++it1, ++it2) {  // no need to check ending
+                auto part_w = part[*it1];
                 if (part_w == l_part) {
-                    std::get<1>(*zc) += gain;
-                    return false;
+                    *it2 += gain;
+                    break;
                 }
-                return true;
-            });
+            }
+            // rng3([&](const auto &zc) {
+            //     auto part_w = part[std::get<0>(*zc)];
+            //     if (part_w == l_part) {
+            //         std::get<1>(*zc) += gain;
+            //         return false;
+            //     }
+            //     return true;
+            // });
         }
         gain = -gain;
     }
