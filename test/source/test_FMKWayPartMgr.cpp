@@ -47,13 +47,13 @@ TEST_CASE("Test FMKWayPartMgr") {
 
 TEST_CASE("Test FMKWayPartMgr p1") {
     const auto hyprgraph = readNetD("../../testcases/p1.net");
-    run_FMKWayPartMgr(hyprgraph, 3);
+    run_FMKWayPartMgr(hyprgraph, 4);
 }
 
 TEST_CASE("Test FMKWayPartMgr ibm01") {
     auto hyprgraph = readNetD("../../testcases/ibm01.net");
     readAre(hyprgraph, "../../testcases/ibm01.are");
-    run_FMKWayPartMgr(hyprgraph, 3);
+    run_FMKWayPartMgr(hyprgraph, 5);
 }
 
 // TEST_CASE("Test FMKWayPartMgr ibm18")

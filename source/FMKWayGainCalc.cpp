@@ -192,13 +192,8 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
             });
         } else if (c == 1) {
             auto it = this->hyprgraph.gr[net].begin();
-            for (;; ++it) {
-                const auto &w = *it;
-                if (part[w] == k) {
-                    this->_increase_gain(w, part[w], weight);
-                    break;
-                }
-            }
+            for (; part[*it] != k; ++it);
+            this->_increase_gain(*it, part[*it], weight);
             // auto rng_new = all(this->hyprgraph.gr[net]);  // reinitialize after breaking (fix
             //                                               // for Termux's clang 16)
             // rng_new([&part, k, weight, this](const auto &wc) {
@@ -434,17 +429,12 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
         } else if (num[l] == 1) {
             auto it1 = this->idx_vec.begin();
             auto it2 = delta_gain.begin();
-            for (;; ++it1, ++it2) {  // no need to check ending
-                auto part_w = part[*it1];
-                if (part_w == l) {
-                    auto rng = all(*it2);
-                    rng([&gain](const auto &dgc) {
-                        *dgc += gain;
-                        return true;
-                    });
-                    break;
-                }
-            }
+            for (; part[*it1] != l; ++it1, ++it2);
+            auto rng = all(*it2);
+            rng([&gain](const auto &dgc) {
+                *dgc += gain;
+                return true;
+            });
 
             // rng3([&gain, &l, &part](const auto &zc) {
             //     auto part_w = part[std::get<0>(*zc)];
