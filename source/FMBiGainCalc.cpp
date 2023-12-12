@@ -132,7 +132,8 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
             });
         } else if (num[k] == 1) {
             auto it = this->hyprgraph.gr[net].begin();
-            for (; part[*it] != k; ++it);
+            for (; part[*it] != k; ++it)
+                ;
             this->_increase_gain(*it, weight);
         }
     }
@@ -245,7 +246,8 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
         } else if (num[l_part] == 1) {
             auto it1 = this->idx_vec.begin();
             auto it2 = delta_gain.begin();
-            for (; part[*it1] != l_part; ++it1, ++it2); 
+            for (; part[*it1] != l_part; ++it1, ++it2)
+                ;
             *it2 += gain;
 
             // rng3([&](const auto &zc) {
