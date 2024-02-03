@@ -45,9 +45,14 @@ template <typename graph_t> struct Netlist {
     /**
      * @brief Construct a new Netlist object
      *
-     * @param[in] gr
-     * @param[in] modules
-     * @param[in] nets
+     * Example:
+     * ```
+     * Netlist netlist(gr, modules, nets);
+     * ```
+     *
+     * @param[in] gr graph
+     * @param[in] modules module nodes
+     * @param[in] nets net nodes
      */
     Netlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets);
 

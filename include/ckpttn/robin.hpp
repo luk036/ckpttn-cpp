@@ -27,7 +27,7 @@ namespace fun {
             /**
              * @brief
              *
-             * @param other
+             * @param[in] other
              * @return true
              * @return false
              */
@@ -36,7 +36,7 @@ namespace fun {
             /**
              * @brief
              *
-             * @param other
+             * @param[in] other
              * @return true
              * @return false
              */
@@ -104,7 +104,7 @@ namespace fun {
         /**
          * @brief Construct a new Robin object
          *
-         * @param num_parts
+         * @param[in] num_parts
          */
         explicit Robin(T num_parts) : cycle(num_parts) {
             auto *slptr = &this->cycle[num_parts - 1];
@@ -123,7 +123,7 @@ namespace fun {
          * The `exclude` method in the `Robin` class returns an iterable wrapper
          * that excludes a specified part from the cycle.
          *
-         * @param from_part
+         * @param[in] from_part
          * @return detail::RobinIterableWrapper<T>
          */
         auto exclude(T from_part) const -> detail::RobinIterableWrapper<T> {

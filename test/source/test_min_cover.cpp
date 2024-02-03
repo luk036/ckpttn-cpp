@@ -18,7 +18,7 @@ extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
-extern auto create_contraction_subgraph(const SimpleNetlist &, const py::set<node_t> &)
+extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node_t> &)
     -> unique_ptr<SimpleHierNetlist>;
 
 //
@@ -40,8 +40,8 @@ extern auto create_contraction_subgraph(const SimpleNetlist &, const py::set<nod
 
 TEST_CASE("Test contraction subgraph dwarf") {
     const auto hyprgraph = create_dwarf();
-    const auto hgr2 = create_contraction_subgraph(hyprgraph, py::set<node_t>{});
-    // auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t> {});
+    const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
+    // auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t> {});
     CHECK(hgr2->number_of_modules() < 7);
     CHECK(hgr2->number_of_nets() == 3);
     // CHECK(hgr2->number_of_pins() < 14);
@@ -60,8 +60,8 @@ TEST_CASE("Test contraction subgraph dwarf") {
 TEST_CASE("Test contraction subgraph ibm01") {
     auto hyprgraph = readNetD("../../testcases/ibm01.net");
     readAre(hyprgraph, "../../testcases/ibm01.are");
-    auto hgr2 = create_contraction_subgraph(hyprgraph, py::set<node_t>{});
-    auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t>{});
+    auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
+    auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t>{});
     CHECK(hgr2->number_of_modules() < hyprgraph.number_of_modules());
     CHECK(hgr2->number_of_nets() < hyprgraph.number_of_nets());
     // CHECK(hgr2->number_of_pins() < hyprgraph.number_of_pins());
@@ -83,8 +83,8 @@ TEST_CASE("Test contraction subgraph ibm01") {
 TEST_CASE("Test contraction subgraph ibm18") {
     auto hyprgraph = readNetD("../../testcases/ibm18.net");
     readAre(hyprgraph, "../../testcases/ibm18.are");
-    auto hgr2 = create_contraction_subgraph(hyprgraph, py::set<node_t>{});
-    auto H3 = create_contraction_subgraph(*hgr2, py::set<node_t>{});
+    auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
+    auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t>{});
     CHECK(hgr2->number_of_modules() < hyprgraph.number_of_modules());
     CHECK(hgr2->number_of_nets() < hyprgraph.number_of_nets());
     // CHECK(hgr2->number_of_pins() < hyprgraph.number_of_pins());

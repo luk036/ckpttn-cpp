@@ -12,7 +12,7 @@
 // #include <iostream>
 
 using node_t = typename SimpleNetlist::node_t;
-extern auto create_contraction_subgraph(const SimpleNetlist &, const py::set<node_t> &)
+extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node_t> &)
     -> std::unique_ptr<SimpleHierNetlist>;
 
 /**
@@ -20,7 +20,7 @@ extern auto create_contraction_subgraph(const SimpleNetlist &, const py::set<nod
  *
  * @tparam Gnl
  * @tparam PartMgr
- * @param hyprgraph
+ * @param[in] hyprgraph
  * @param[in] hyprgraph
  * @param[in,out] part
  * @return LegalCheck
@@ -55,7 +55,7 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, gsl::span<std::uint8_t> pa
     }
 
     if (hyprgraph.number_of_modules() >= this->limitsize) {  // OK
-        const auto hgr2 = create_contraction_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
+        const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
         if (hgr2->number_of_modules() <= hyprgraph.number_of_modules()) {
             auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
             hgr2->projection_up(part, part2);

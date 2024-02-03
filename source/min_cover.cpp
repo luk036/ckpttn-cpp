@@ -21,16 +21,16 @@ using node_t = typename SimpleNetlist::node_t;
  * The function creates a contraction subgraph object from a given netlist and a set of nodes to
  * exclude.
  *
- * @param hyprgraph A reference to a `SimpleNetlist` object, which represents a hierarchical
+ * @param[in] hyprgraph A reference to a `SimpleNetlist` object, which represents a hierarchical
  * netlist.
- * @param dont_select A set of nodes that should not be selected for contraction.
+ * @param[in] dont_select A set of nodes that should not be selected for contraction.
  *
- * @return The function `create_contraction_subgraph` returns a `std::unique_ptr` to a
+ * @return The function `create_contracted_subgraph` returns a `std::unique_ptr` to a
  * `SimpleHierNetlist` object.
  *
  * @todo simplify this function
  */
-auto create_contraction_subgraph(const SimpleNetlist &hyprgraph, const py::set<node_t> &dont_select)
+auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, const py::set<node_t> &dont_select)
     -> std::unique_ptr<SimpleHierNetlist> {
     using namespace transrangers;
 

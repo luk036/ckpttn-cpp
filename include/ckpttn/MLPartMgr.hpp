@@ -17,7 +17,7 @@
 // using SimpleNetlist = Netlist<RngIter, RngIter>;
 
 // using node_t = typename SimpleNetlist::node_t;
-// extern auto create_contraction_subgraph(const SimpleNetlist&, const
+// extern auto create_contracted_subgraph(const SimpleNetlist&, const
 // py::set<node_t>&)
 //     -> std::unique_ptr<SimpleHierNetlist>;
 

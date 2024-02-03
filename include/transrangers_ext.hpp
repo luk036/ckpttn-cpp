@@ -34,7 +34,7 @@ namespace transrangers {
      * @brief skip_first, skip_first_copy (assume the next item is available)
      *
      * @tparam Range
-     * @param rng
+     * @param[in] rng
      * @return auto
      */
     template <typename Range> auto skip_first(Range &&rng) {
@@ -68,7 +68,7 @@ namespace transrangers {
          * @brief
          *
          * @tparam F
-         * @param p
+         * @param[in] p
          * @return auto
          */
         template <typename F> auto operator()(const F &p) { return rgr(p); }
@@ -81,7 +81,7 @@ namespace transrangers {
      * @brief
      *
      * @tparam Range
-     * @param rng
+     * @param[in] rng
      * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
      * skip_first_copy<Range>>::type
      */
@@ -95,7 +95,7 @@ namespace transrangers {
      * @brief skip_last, skip_last_copy (assume the previous item is available)
      *
      * @tparam Range
-     * @param rng
+     * @param[in] rng
      * @return auto
      */
     template <typename Range> auto skip_last(Range &&rng) {
@@ -129,7 +129,7 @@ namespace transrangers {
          * @brief
          *
          * @tparam F
-         * @param p
+         * @param[in] p
          * @return auto
          */
         template <typename F> auto operator()(const F &p) { return rgr(p); }
@@ -142,7 +142,7 @@ namespace transrangers {
      * @brief
      *
      * @tparam Range
-     * @param rng
+     * @param[in] rng
      * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
      * skip_last_copy<Range>>::type
      */
@@ -157,7 +157,7 @@ namespace transrangers {
      * available)
      *
      * @tparam Range
-     * @param rng
+     * @param[in] rng
      * @return auto
      */
     template <typename Range> auto skip_both(Range &&rng) {
@@ -191,7 +191,7 @@ namespace transrangers {
          * @brief
          *
          * @tparam F
-         * @param p
+         * @param[in] p
          * @return auto
          */
         template <typename F> auto operator()(const F &p) { return rgr(p); }
@@ -204,7 +204,7 @@ namespace transrangers {
      * @brief
      *
      * @tparam Range
-     * @param rng
+     * @param[in] rng
      * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
      * skip_both_copy<Range>>::type
      */
@@ -218,7 +218,7 @@ namespace transrangers {
      * @brief enumerate
      *
      * @tparam Ranger
-     * @param rgr
+     * @param[in] rgr
      * @return auto
      */
     template <typename Ranger> auto enumerate(Ranger rgr) {
@@ -236,8 +236,8 @@ namespace transrangers {
      *
      * @tparam Ranger
      * @tparam T
-     * @param rgr
-     * @param init
+     * @param[in] rgr
+     * @param[in] init
      * @return T
      */
     template <typename Ranger, typename T> T partial_sum(Ranger rgr, T init) {
@@ -264,7 +264,7 @@ namespace transrangers {
          * @brief
          *
          * @tparam type_parameter_4_0
-         * @param p
+         * @param[in] p
          */
         template <class type_parameter_4_0>
         TRANSRANGERS_HOT inline auto operator()(const type_parameter_4_0 &p) const {
@@ -279,7 +279,7 @@ namespace transrangers {
         /**
          * @brief Construct a new lambda 255 33 object
          *
-         * @param _zp
+         * @param[in] _zp
          */
         __lambda_255_33(cursor &_zp) : zp{_zp} {}
     };
@@ -312,8 +312,8 @@ namespace transrangers {
         /**
          * @brief Construct a new lambda 249 18 object
          *
-         * @param _zp
-         * @param _rgrs
+         * @param[in] _zp
+         * @param[in] _rgrs
          */
         __lambda_249_18(cursor &_zp, std::tuple<Rangers...> &_rgrs) : zp{_zp}, rgrs{_rgrs} {}
     };
@@ -334,7 +334,7 @@ namespace transrangers {
          * @brief
          *
          * @tparam type_parameter_2_0
-         * @param p
+         * @param[in] p
          */
         template <class type_parameter_2_0>
         TRANSRANGERS_HOT inline auto operator()(const type_parameter_2_0 &p) const {
@@ -384,8 +384,8 @@ namespace transrangers {
      *
      * @tparam Ranger
      * @tparam Rangers
-     * @param rgr
-     * @param rgrs
+     * @param[in] rgr
+     * @param[in] rgrs
      * @return auto
      */
     template <typename Ranger, typename... Rangers> auto zip(Ranger rgr, Rangers... rgrs) {

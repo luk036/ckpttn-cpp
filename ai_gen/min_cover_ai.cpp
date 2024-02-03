@@ -16,14 +16,14 @@ using Tuple = pair<Set, int>;
  * The `min_maximal_matching` function performs a minimum weighted maximal
  * matching using a primal-dual approximation algorithm.
  *
- * @param hyprgraph The `hyprgraph` parameter is an object representing a hypergraph. It
+ * @param[in] hyprgraph The `hyprgraph` parameter is an object representing a hypergraph. It
  * likely contains information about the vertices and edges of the hypergraph
- * @param weight The `weight` parameter is a mutable mapping that represents the
+ * @param[in] weight The `weight` parameter is a mutable mapping that represents the
  * weight of each net in the hypergraph. It is used to determine the cost of
  * each net in the matching
- * @param matchset The `matchset` parameter is a set that represents the initial
+ * @param[in] matchset The `matchset` parameter is a set that represents the initial
  * matching. It contains the nets (networks) that are already matched
- * @param dep The `dep` parameter is a set that keeps track of the vertices that
+ * @param[in] dep The `dep` parameter is a set that keeps track of the vertices that
  * have been covered by the matching. It is initially set to an empty set, and
  * is updated by the `cover` function. The `cover` function takes a net as input
  * and adds all the vertices connected to that net

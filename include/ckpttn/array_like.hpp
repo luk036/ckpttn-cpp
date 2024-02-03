@@ -63,21 +63,21 @@ template <typename Container> class ShiftArray : public Container {
     /**
      * @brief Construct a new Shift Array object
      *
-     * @param base
+     * @param[in] base
      */
     explicit ShiftArray(Container &&base) : Container{std::forward<Container>(base)} {}
 
     /**
      * @brief Set the start object
      *
-     * @param start
+     * @param[in] start
      */
     void set_start(const size_t &start) { this->_start = start; }
 
     /**
      * @brief
      *
-     * @param index
+     * @param[in] index
      * @return const value_type&
      */
     auto operator[](const size_t &index) const -> const value_type & {
@@ -88,7 +88,7 @@ template <typename Container> class ShiftArray : public Container {
     /**
      * @brief
      *
-     * @param index
+     * @param[in] index
      * @return value_type&
      */
     auto operator[](const size_t &index) -> value_type & {
