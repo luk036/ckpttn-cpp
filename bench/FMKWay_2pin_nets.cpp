@@ -18,13 +18,13 @@ extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
  * The function `run_FMKWayPartMgr` runs the Fiduccia-Mattheyses num_parts-way partitioning
  * algorithm on a given netlist.
  *
- * @param[in] hyprgraph The parameter `hyprgraph` is a reference to an object of type `SimpleNetlist`,
- * which represents a netlist (a hypergraph representation of a circuit).
- * @param[in] num_parts The `num_parts` parameter represents the number of partitions or groups that the
- * Fiduccia-Mattheyses algorithm will create. It determines how many parts the netlist will be
+ * @param[in] hyprgraph The parameter `hyprgraph` is a reference to an object of type
+ * `SimpleNetlist`, which represents a netlist (a hypergraph representation of a circuit).
+ * @param[in] num_parts The `num_parts` parameter represents the number of partitions or groups that
+ * the Fiduccia-Mattheyses algorithm will create. It determines how many parts the netlist will be
  * divided into.
- * @param[in] option The "option" parameter is a boolean flag that determines whether a special handling
- * for 2-pin nets should be applied during the gain calculation.
+ * @param[in] option The "option" parameter is a boolean flag that determines whether a special
+ * handling for 2-pin nets should be applied during the gain calculation.
  */
 void run_FMKWayPartMgr(SimpleNetlist &hyprgraph, std::uint8_t num_parts, bool option) {
     FMKWayGainMgr<SimpleNetlist> gain_mgr{hyprgraph, num_parts};
