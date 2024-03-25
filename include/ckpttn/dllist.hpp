@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cassert>
 #include <utility>  // import std::move()
 
 #include "dllink.hpp"  // for Dllink

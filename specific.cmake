@@ -15,7 +15,7 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-CPMAddPackage("gh:microsoft/GSL@4.0.0")
+CPMAddPackage("gh:microsoft/GSL@3.1.0")
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -48,6 +48,6 @@ set(SPECIFIC_LIBS
     Boost::container
     Boost::boost
     Threads::Threads
-    Microsoft.GSL::GSL
+    GSL
     fmt::fmt
 )
