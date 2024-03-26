@@ -202,7 +202,7 @@
 [80.607393, "o", "-- Found Git: /usr/bin/git (found version \"2.25.1\") \r\n"]
 [80.700305, "o", "-- CPM: adding package Py2Cpp@1.4.3 (1.4.3)\r\n"]
 [92.706798, "o", "-- CPM: adding package XNetwork@1.6.4 (1.6.4)\r\n"]
-[97.333009, "o", "-- CPM: adding package doctest@2.4.9 (v2.4.9)\r\n"]
+[97.333009, "o", "-- CPM: adding package doctest@2.4.11 (v2.4.11)\r\n"]
 [103.668073, "o", "-- CPM: adding package Format.cmake@1.7.0 (v1.7.0)\r\n"]
 [119.366848, "o", "-- Found Python: /usr/bin/python3.8 (found version \"3.8.10\") found components: Interpreter \r\n"]
 [119.367083, "o", "-- Format.cmake: clang-format and/or python not found, adding dummy targets\r\n"]

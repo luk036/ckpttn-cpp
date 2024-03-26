@@ -88,7 +88,7 @@
 [27.015641, "o", "-- CPM: adding package GSL@3.1.0 (v3.1.0)\r\n"]
 [27.595967, "o", "-- CPM: adding package Py2Cpp@1.4.3 (1.4.3)\r\n"]
 [28.15703, "o", "-- CPM: adding package XNetwork@1.6.4 (1.6.4)\r\n"]
-[28.70507, "o", "-- CPM: adding package doctest@2.4.9 (v2.4.9)\r\n"]
+[28.70507, "o", "-- CPM: adding package doctest@2.4.11 (v2.4.11)\r\n"]
 [29.252606, "o", "-- CPM: adding package Format.cmake@1.7.0 (v1.7.0)\r\n"]
 [29.974628, "o", "-- Format.cmake: clang-format and/or python not found, adding dummy targets\r\n"]
 [29.974896, "o", "-- Format.cmake: cmake-format and/or git not found, adding dummy targets\r\n"]
