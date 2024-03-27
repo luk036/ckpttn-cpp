@@ -6,7 +6,7 @@ option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
 # ---- Dependencies ----
 
 CPMAddPackage("gh:doctest/doctest#v2.4.11")
-CPMAddPackage("gh:TheLartians/Format.cmake@1.7.0")
+CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
 
 # if(TEST_INSTALLED_VERSION) find_package(${PROJECT_NAME} REQUIRED) else() CPMAddPackage(NAME
 # ${PROJECT_NAME} SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..) endif()
