@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -25,10 +25,12 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
+      - name: install dependency
+        run: sudo apt-get install libboost-dev libboost-container-dev
+
       - name: Install format dependencies
         run: |
-          brew install clang-format boost
-          pip3 install cmake_format==0.6.11 pyyaml
+          pip3 install clang-format==18.1.2 cmake_format==0.6.13 pyyaml
 
       - name: configure
         run: cmake -S. -Bbuild
