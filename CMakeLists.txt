@@ -35,7 +35,7 @@ include(cmake/tools.cmake)
 include(cmake/CPM.cmake)
 
 # PackageProject.cmake will be used to make our target installable
-CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.6.0")
+CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
 include(specific.cmake)
 
