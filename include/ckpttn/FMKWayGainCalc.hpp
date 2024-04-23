@@ -119,8 +119,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info
      * @return node_t
      */
-    auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> node_t;
+    auto update_move_2pin_net(gsl::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> node_t;
 
     /**
      * @brief
@@ -139,8 +139,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info
      * @return ret_info
      */
-    auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> ret_info;
+    auto update_move_3pin_net(gsl::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> ret_info;
 
     /**
      * @brief

@@ -99,8 +99,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part
      * @param[in] move_info_v
      */
-    auto update_move(gsl::span<const std::uint8_t> part, const MoveInfoV<node_t> &move_info_v)
-        -> void;
+    auto update_move(gsl::span<const std::uint8_t> part,
+                     const MoveInfoV<node_t> &move_info_v) -> void;
 
   private:
     /**
