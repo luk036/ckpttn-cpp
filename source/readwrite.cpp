@@ -39,13 +39,15 @@ void writeJSON(boost::string_view jsonFileName, const SimpleNetlist &hyprgraph) 
     json << R"( "num_pads": )" << hyprgraph.num_pads << "\n";
     json << " },\n";
 
-    json << R"( "nodes": [)" << "\n";
+    json << R"( "nodes": [)"
+         << "\n";
     for (const auto &node : hyprgraph.gr) {
         json << "  { \"id\": " << node << " },\n";
     }
     json << " ],\n";
 
-    json << R"( "links": [)" << "\n";
+    json << R"( "links": [)"
+         << "\n";
     for (const auto &v : hyprgraph) {
         for (const auto &net : hyprgraph.gr[v]) {
             json << "  {\n";
@@ -193,8 +195,8 @@ void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName) {
             are >> w;
             w += node_t(padOffset);
         } else {
-            cerr << "Syntax error in line " << lineno << ":" << R"(expect keyword "a" or "p")"
-                 << endl;
+            cerr << "Syntax error in line " << lineno << ":"
+                 << R"(expect keyword "a" or "p")" << endl;
             exit(0);
         }
 
