@@ -18,8 +18,8 @@ extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
-extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node_t> &)
-    -> unique_ptr<SimpleHierNetlist>;
+extern auto create_contracted_subgraph(const SimpleNetlist &,
+                                       const py::set<node_t> &) -> unique_ptr<SimpleHierNetlist>;
 
 //
 // Primal-dual algorithm for minimum vertex cover problem

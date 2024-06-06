@@ -98,8 +98,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info
      * @return node_t
      */
-    auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> node_t;
+    auto update_move_2pin_net(gsl::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> node_t;
 
     /**
      * @brief update move 3-pin net
@@ -108,8 +108,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info
      * @return std::vector<int>
      */
-    auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> std::vector<int>;
+    auto update_move_3pin_net(gsl::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> std::vector<int>;
 
     /**
      * @brief update move general net
