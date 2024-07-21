@@ -133,8 +133,8 @@ class PartMgrBase {
      * @param[in] snapshot
      * @param[in,out] part
      */
-    auto restore_part(const std::vector<std::uint8_t> &snapshot,
-                      gsl::span<std::uint8_t> part) -> void {
+    auto restore_part(const std::vector<std::uint8_t> &snapshot, gsl::span<std::uint8_t> part)
+        -> void {
         // std::copy(snapshot.begin(), snapshot.end(), part.begin());
         const auto N = part.size();
         for (auto i = 0U; i != N; ++i) {
