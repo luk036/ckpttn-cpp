@@ -72,27 +72,27 @@
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#a127f585031cc9a36e0e8b54ee300b942" class="m-doc">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
-            <dd>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object with the given balance tolerance and a default number of partitions (2).</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#ab9280baff113f8ebbdcf38492f265e88" class="m-doc">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
               std::uint8_t num_parts)</span>
             </dt>
-            <dd>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object with the given balance tolerance and number of partitions.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="ac3ce2c4d7d158795d9fd565260ab6571">
-              <span class="m-doc-wrap-bumper">void <a href="#ac3ce2c4d7d158795d9fd565260ab6571" class="m-doc-self">set_limitsize</a>(</span><span class="m-doc-wrap">size_t limit)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac3ce2c4d7d158795d9fd565260ab6571" class="m-doc">set_limitsize</a>(</span><span class="m-doc-wrap">size_t limit)</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Sets the limit size for the partitioning.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Gnl, typename PartMgr&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ad2b109bae9067146917d5db81801d0a9" class="m-doc">run_FMPartition</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck -&gt; auto</span>
             </dt>
-            <dd>run_Partition</dd>
+            <dd>Runs the Fiduccia-Mattheyses (FM) partitioning algorithm on the given hypergraph.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -110,7 +110,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"> MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a127f585031cc9a36e0e8b54ee300b942" class="m-doc-self">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol) <span class="m-label m-info">explicit</span> </span></span>
             </h3>
-            <p>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</p>
+            <p>Constructs a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object with the given balance tolerance and a default number of partitions (2).</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -118,7 +118,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance for the partitioning.</td>
                 </tr>
               </tbody>
             </table>
@@ -128,7 +128,7 @@
               <span class="m-doc-wrap-bumper"> MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab9280baff113f8ebbdcf38492f265e88" class="m-doc-self">MLPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
               std::uint8_t num_parts)</span></span>
             </h3>
-            <p>Construct a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object.</p>
+            <p>Constructs a new <a href="classMLPartMgr.html" class="m-doc">MLPartMgr</a> object with the given balance tolerance and number of partitions.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -136,11 +136,28 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance for the partitioning.</td>
                 </tr>
                 <tr>
                   <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The number of partitions to create.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac3ce2c4d7d158795d9fd565260ab6571"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac3ce2c4d7d158795d9fd565260ab6571" class="m-doc-self">set_limitsize</a>(</span><span class="m-doc-wrap">size_t limit)</span></span>
+            </h3>
+            <p>Sets the limit size for the partitioning.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">limit&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The new limit size for the partitioning.</td>
                 </tr>
               </tbody>
             </table>
@@ -153,7 +170,7 @@
               <span class="m-doc-wrap-bumper">auto MLPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad2b109bae9067146917d5db81801d0a9" class="m-doc-self">run_FMPartition</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               gsl::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck</span></span>
             </h3>
-            <p>run_Partition</p>
+            <p>Runs the Fiduccia-Mattheyses (FM) partitioning algorithm on the given hypergraph.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -161,11 +178,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">Gnl</td>
-                  <td></td>
+                  <td>The type of the hypergraph.</td>
                 </tr>
                 <tr>
                   <td>PartMgr</td>
-                  <td></td>
+                  <td>The type of the partition manager.</td>
                 </tr>
               </tbody>
               <thead>
@@ -174,17 +191,17 @@
               <tbody>
                 <tr>
                   <td>hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The input hypergraph to partition.</td>
                 </tr>
                 <tr>
                   <td>part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
-                  <td></td>
+                  <td>The partition vector to store the partitioning results.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>LegalCheck</td>
+                  <td>LegalCheck The legality check result of the partitioning.</td>
                 </tr>
               </tfoot>
             </table>

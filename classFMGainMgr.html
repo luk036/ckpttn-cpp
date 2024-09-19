@@ -93,7 +93,7 @@
               <span class="m-doc-wrap-bumper"><a href="#af6d19b6c13e9a4f817ae31aeca0d2736" class="m-doc">FMGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               std::uint8_t num_parts)</span>
             </dt>
-            <dd>Construct a new <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -102,28 +102,28 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a3125106df643e8aa51cabdbd447d6e14" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Initializes the <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> with the given partition information.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a206c0844b306d57d5ee09348b6b9436b" class="m-doc">is_empty_togo</a>(</span><span class="m-doc-wrap">uint8_t to_part) const -&gt; bool -&gt; auto</span>
             </dt>
-            <dd></dd>
-            <dt id="aca101836363ac7987129cfe59bf53fb5">
-              <span class="m-doc-wrap-bumper">auto <a href="#aca101836363ac7987129cfe59bf53fb5" class="m-doc-self">is_empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool -&gt; auto</span>
+            <dd>Checks if the gain bucket for the given partition is empty.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aca101836363ac7987129cfe59bf53fb5" class="m-doc">is_empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool -&gt; auto</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Checks if all the gain buckets are empty.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a909457628df141b9fa6c0170e12a14e8" class="m-doc">select</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt; -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Selects a set of moves to perform on the given partition.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#abc9aff0504d5fdcd18ae45cdf6d241a2" class="m-doc">select_togo</a>(</span><span class="m-doc-wrap">uint8_t to_part) -&gt; std::pair&lt; node_t, int &gt; -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Selects a node to move to the given partition.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ae046ad9d3ff43dc78d85f1f085f1aa68" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;node_t&gt;&amp; move_info_v) -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Updates the gain information for the given set of moves.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -166,7 +166,7 @@
               <span class="m-doc-wrap-bumper"> FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af6d19b6c13e9a4f817ae31aeca0d2736" class="m-doc-self">FMGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               std::uint8_t num_parts)</span></span>
             </h3>
-            <p>Construct a new <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> object.</p>
+            <p>Constructs a new <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -174,11 +174,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to manage the gains for.</td>
                 </tr>
                 <tr>
                   <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The number of partitions in the hypergraph.</td>
                 </tr>
               </tbody>
             </table>
@@ -190,6 +190,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3125106df643e8aa51cabdbd447d6e14" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
+            <p>Initializes the <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> with the given partition information.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -197,9 +198,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition information to initialize the <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> with.</td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>int The result of the initialization.</td>
+                </tr>
+              </tfoot>
             </table>
           </div></section>
           <section class="m-doc-details" id="a206c0844b306d57d5ee09348b6b9436b"><div>
@@ -209,6 +216,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a206c0844b306d57d5ee09348b6b9436b" class="m-doc-self">is_empty_togo</a>(</span><span class="m-doc-wrap">uint8_t to_part) const -&gt; bool</span></span>
             </h3>
+            <p>Checks if the gain bucket for the given partition is empty.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -216,13 +224,30 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">to_part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition to check.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>true</td>
+                  <td>true If the gain bucket for the given partition is empty.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aca101836363ac7987129cfe59bf53fb5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl, typename GainCalc, class Derived&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aca101836363ac7987129cfe59bf53fb5" class="m-doc-self">is_empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span></span>
+            </h3>
+            <p>Checks if all the gain buckets are empty.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>true If all the gain buckets are empty.</td>
                 </tr>
               </tfoot>
             </table>
@@ -234,6 +259,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a909457628df141b9fa6c0170e12a14e8" class="m-doc-self">select</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt;</span></span>
             </h3>
+            <p>Selects a set of moves to perform on the given partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -241,13 +267,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The current partition information.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>std::pair&lt;MoveInfoV&lt;node_t&gt;, int&gt;</td>
+                  <td>std::pair&lt;MoveInfoV&lt;node_t&gt;, int&gt; A pair containing the selected moves and the total gain of the moves.</td>
                 </tr>
               </tfoot>
             </table>
@@ -259,6 +285,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abc9aff0504d5fdcd18ae45cdf6d241a2" class="m-doc-self">select_togo</a>(</span><span class="m-doc-wrap">uint8_t to_part) -&gt; std::pair&lt; node_t, int &gt;</span></span>
             </h3>
+            <p>Selects a node to move to the given partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -266,13 +293,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">to_part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition to select a node to move to.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>std::pair&lt;node_t, int&gt;</td>
+                  <td>std::pair&lt;node_t, int&gt; A pair containing the selected node and the gain of moving that node.</td>
                 </tr>
               </tfoot>
             </table>
@@ -285,6 +312,7 @@
               <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae046ad9d3ff43dc78d85f1f085f1aa68" class="m-doc-self">update_move</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;node_t&gt;&amp; move_info_v) -&gt; void</span></span>
             </h3>
+            <p>Updates the gain information for the given set of moves.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -292,11 +320,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The current partition information.</td>
                 </tr>
                 <tr>
                   <td>move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The set of moves to update the gain information for.</td>
                 </tr>
               </tbody>
             </table>

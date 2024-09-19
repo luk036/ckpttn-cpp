@@ -96,13 +96,13 @@
               <span class="m-doc-wrap-bumper"><a href="#a5916fde2a68ae4fec8e05f760dc2fed0" class="m-doc">FMBiConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol)</span>
             </dt>
-            <dd>Construct a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object.</dd>
+            <dd>Construct a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object (for general framework)</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#a2e3b80d142584360568e986ae958b045" class="m-doc">FMBiConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol,
               std::uint8_t)</span>
             </dt>
-            <dd>Construct a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object (for general framework)</dd>
+            <dd>Constructs a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object for the general framework.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -111,7 +111,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ad16c54ec76a18d400f115b7d8a80359d" class="m-doc">select_togo</a>(</span><span class="m-doc-wrap">) const -&gt; std::uint8_t -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Selects the partition to move a vertex to based on the difference in partition sizes.</dd>
           </dl>
         </section>
         <section>
@@ -124,7 +124,7 @@
               <span class="m-doc-wrap-bumper"> FMBiConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5916fde2a68ae4fec8e05f760dc2fed0" class="m-doc-self">FMBiConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol)</span></span>
             </h3>
-            <p>Construct a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object.</p>
+            <p>Construct a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object (for general framework)</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -132,11 +132,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to use</td>
                 </tr>
                 <tr>
                   <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance to use</td>
                 </tr>
               </tbody>
             </table>
@@ -150,7 +150,7 @@
               double bal_tol,
               std::uint8_t)</span></span>
             </h3>
-            <p>Construct a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object (for general framework)</p>
+            <p>Constructs a new <a href="classFMBiConstrMgr.html" class="m-doc">FMBiConstrMgr</a> object for the general framework.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -158,11 +158,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to use.</td>
                 </tr>
                 <tr>
                   <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance to use.</td>
                 </tr>
               </tbody>
             </table>
@@ -174,11 +174,12 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMBiConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad16c54ec76a18d400f115b7d8a80359d" class="m-doc-self">select_togo</a>(</span><span class="m-doc-wrap">) const -&gt; std::uint8_t</span></span>
             </h3>
+            <p>Selects the partition to move a vertex to based on the difference in partition sizes.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>std::uint8_t</td>
+                  <td>std::uint8_t The index of the partition to move the vertex to (0 or 1).</td>
                 </tr>
               </tfoot>
             </table>

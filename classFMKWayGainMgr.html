@@ -61,7 +61,7 @@
           <tbody>
             <tr>
               <td style="width: 1%">Gnl</td>
-              <td></td>
+              <td>Generalized <a href="structNetlist.html" class="m-doc">Netlist</a></td>
             </tr>
           </tbody>
         </table>
@@ -113,7 +113,7 @@
               <span class="m-doc-wrap-bumper"><a href="#ac4cfaf84e19a46f59eeb414aa9e54873" class="m-doc">FMKWayGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               std::uint8_t num_parts)</span>
             </dt>
-            <dd>Construct a new <a href="classFMKWayGainMgr.html" class="m-doc">FMKWayGainMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classFMKWayGainMgr.html" class="m-doc">FMKWayGainMgr</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -122,28 +122,28 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a1899f5c70d03dd0bbb81b79e5a77cea6" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Initializes the gain manager with the given partition information.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#add214870ac17009a5eda875f05688c5e" class="m-doc">modify_key</a>(</span><span class="m-doc-wrap">const <a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&amp; w,
               std::uint8_t part_w,
               gsl::span&lt;const int&gt; keys) -&gt; void -&gt; auto</span>
             </dt>
-            <dd>(needed by base class)</dd>
+            <dd>Modifies the key for the given vertex in the gain buckets for all partitions except the given one.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a333410a0091e4d6970ced1ef7d97ebc7" class="m-doc">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
               int gain) -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Updates the move information for a vertex.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a61edcb36bf11bef4332d9dc41e8280d0" class="m-doc">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
               const <a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
             </dt>
-            <dd>lock</dd>
+            <dd>Locks the vertex link for the given partition and vertex.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a7c66590ff1739e66d4471285b3a66e7c" class="m-doc">lock_all</a>(</span><span class="m-doc-wrap">uint8_t,
               const <a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
             </dt>
-            <dd>lock_all</dd>
+            <dd>Locks the vertex link for the given vertex in all partitions.</dd>
           </dl>
         </section>
         <section>
@@ -156,7 +156,7 @@
               <span class="m-doc-wrap-bumper"> FMKWayGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac4cfaf84e19a46f59eeb414aa9e54873" class="m-doc-self">FMKWayGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               std::uint8_t num_parts)</span></span>
             </h3>
-            <p>Construct a new <a href="classFMKWayGainMgr.html" class="m-doc">FMKWayGainMgr</a> object.</p>
+            <p>Constructs a new <a href="classFMKWayGainMgr.html" class="m-doc">FMKWayGainMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -164,11 +164,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to use.</td>
                 </tr>
                 <tr>
                   <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The number of partitions.</td>
                 </tr>
               </tbody>
             </table>
@@ -180,6 +180,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMKWayGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1899f5c70d03dd0bbb81b79e5a77cea6" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
+            <p>Initializes the gain manager with the given partition information.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -187,9 +188,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition information to initialize the gain manager with.</td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>int The result of the initialization.</td>
+                </tr>
+              </tfoot>
             </table>
           </div></section>
           <section class="m-doc-details" id="add214870ac17009a5eda875f05688c5e"><div>
@@ -201,7 +208,7 @@
               std::uint8_t part_w,
               gsl::span&lt;const int&gt; keys) -&gt; void</span></span>
             </h3>
-            <p>(needed by base class)</p>
+            <p>Modifies the key for the given vertex in the gain buckets for all partitions except the given one.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -209,15 +216,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">w&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The vertex to modify the key for.</td>
                 </tr>
                 <tr>
                   <td>part_w&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition that the vertex belongs to.</td>
                 </tr>
                 <tr>
                   <td>keys&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The new keys to set for the vertex in each partition.</td>
                 </tr>
               </tbody>
             </table>
@@ -230,6 +237,7 @@
               <span class="m-doc-wrap-bumper">auto FMKWayGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a333410a0091e4d6970ced1ef7d97ebc7" class="m-doc-self">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
               int gain) -&gt; void</span></span>
             </h3>
+            <p>Updates the move information for a vertex.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -237,11 +245,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The move information for the vertex.</td>
                 </tr>
                 <tr>
                   <td>gain&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The gain associated with the move.</td>
                 </tr>
               </tbody>
             </table>
@@ -254,7 +262,7 @@
               <span class="m-doc-wrap-bumper">auto FMKWayGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a61edcb36bf11bef4332d9dc41e8280d0" class="m-doc-self">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
               const <a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
             </h3>
-            <p>lock</p>
+            <p>Locks the vertex link for the given partition and vertex.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -262,11 +270,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">whichPart&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition to lock the vertex link for.</td>
                 </tr>
                 <tr>
                   <td>v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The vertex to lock the link for.</td>
                 </tr>
               </tbody>
             </table>
@@ -279,7 +287,7 @@
               <span class="m-doc-wrap-bumper">auto FMKWayGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c66590ff1739e66d4471285b3a66e7c" class="m-doc-self">lock_all</a>(</span><span class="m-doc-wrap">uint8_t,
               const <a href="classFMKWayGainMgr.html#ab13f64f0ce871ff4bcb6c4b75e687a1b" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
             </h3>
-            <p>lock_all</p>
+            <p>Locks the vertex link for the given vertex in all partitions.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -287,7 +295,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The vertex to lock the link for.</td>
                 </tr>
               </tbody>
             </table>

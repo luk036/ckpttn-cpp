@@ -96,7 +96,7 @@
               double bal_tol,
               std::uint8_t num_parts)</span>
             </dt>
-            <dd>Construct a new <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -105,15 +105,15 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a0fc88d05831473b6bac19adc34b78344" class="m-doc">select_togo</a>(</span><span class="m-doc-wrap">) const -&gt; std::uint8_t -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Selects the next partition to move a node to.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ab896e9788616f7fdbfc1e34960752979" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Initializes the <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object with the given partition information.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a89e04fbb723cf7f6a046a934c599d564" class="m-doc">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;typename Gnl::node_t&gt;&amp; move_info_v) -&gt; LegalCheck -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Checks if the given move information is legal according to the constraints.</dd>
           </dl>
         </section>
         <section>
@@ -127,7 +127,7 @@
               double bal_tol,
               std::uint8_t num_parts)</span></span>
             </h3>
-            <p>Construct a new <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object.</p>
+            <p>Constructs a new <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -135,15 +135,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to use.</td>
                 </tr>
                 <tr>
                   <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance to use.</td>
                 </tr>
                 <tr>
                   <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The number of partitions.</td>
                 </tr>
               </tbody>
             </table>
@@ -155,11 +155,12 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0fc88d05831473b6bac19adc34b78344" class="m-doc-self">select_togo</a>(</span><span class="m-doc-wrap">) const -&gt; std::uint8_t</span></span>
             </h3>
+            <p>Selects the next partition to move a node to.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>std::uint8_t</td>
+                  <td>The index of the partition to move the node to.</td>
                 </tr>
               </tfoot>
             </table>
@@ -171,6 +172,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab896e9788616f7fdbfc1e34960752979" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void</span></span>
             </h3>
+            <p>Initializes the <a href="classFMKWayConstrMgr.html" class="m-doc">FMKWayConstrMgr</a> object with the given partition information.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -178,7 +180,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>A span of the partition indices for each node.</td>
                 </tr>
               </tbody>
             </table>
@@ -190,6 +192,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMKWayConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a89e04fbb723cf7f6a046a934c599d564" class="m-doc-self">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;typename Gnl::node_t&gt;&amp; move_info_v) -&gt; LegalCheck</span></span>
             </h3>
+            <p>Checks if the given move information is legal according to the constraints.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -197,13 +200,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The move information to check.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>LegalCheck</td>
+                  <td>LegalCheck The result of the legality check.</td>
                 </tr>
               </tfoot>
             </table>

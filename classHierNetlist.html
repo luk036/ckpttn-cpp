@@ -105,7 +105,7 @@
               const <a href="classHierNetlist.html#af96ce767f43441071fed1a92cbe6844e" class="m-doc">nodeview_<wbr />t</a>&amp; modules,
               const <a href="classHierNetlist.html#af96ce767f43441071fed1a92cbe6844e" class="m-doc">nodeview_<wbr />t</a>&amp; nets)</span>
             </dt>
-            <dd>Construct a new Hier <a href="structNetlist.html" class="m-doc">Netlist</a> object.</dd>
+            <dd>Constructs a new <a href="classHierNetlist.html" class="m-doc">HierNetlist</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -115,16 +115,16 @@
               <span class="m-doc-wrap-bumper">void <a href="#a6d1b9554554b18f226b7fea76f43e0c3" class="m-doc">projection_down</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               gsl::span&lt;std::uint8_t&gt; part_down) const</span>
             </dt>
-            <dd>projection down</dd>
+            <dd>Projection down.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a5fb5e77202bee7a692c45fc3fce61374" class="m-doc">projection_up</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               gsl::span&lt;std::uint8_t&gt; part_up) const</span>
             </dt>
-            <dd>projection up</dd>
+            <dd>Projects a part up to a higher level of the hierarchy.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a6550998f5a741cd8211582ed288b8daa" class="m-doc">get_net_weight</a>(</span><span class="m-doc-wrap">const <a href="classHierNetlist.html#a17234f434b063f9d1f19af64b5d17cea" class="m-doc">node_<wbr />t</a>&amp; net) const -&gt; uint32_t -&gt; auto</span>
             </dt>
-            <dd>Get the net weight.</dd>
+            <dd>Returns the weight of the specified net.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -163,7 +163,7 @@
               const <a href="classHierNetlist.html#af96ce767f43441071fed1a92cbe6844e" class="m-doc">nodeview_<wbr />t</a>&amp; modules,
               const <a href="classHierNetlist.html#af96ce767f43441071fed1a92cbe6844e" class="m-doc">nodeview_<wbr />t</a>&amp; nets)</span></span>
             </h3>
-            <p>Construct a new Hier <a href="structNetlist.html" class="m-doc">Netlist</a> object.</p>
+            <p>Constructs a new <a href="classHierNetlist.html" class="m-doc">HierNetlist</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -171,15 +171,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">gr&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The graph object to be used for the <a href="classHierNetlist.html" class="m-doc">HierNetlist</a>.</td>
                 </tr>
                 <tr>
                   <td>modules&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The nodeview of modules for the <a href="classHierNetlist.html" class="m-doc">HierNetlist</a>.</td>
                 </tr>
                 <tr>
                   <td>nets&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The nodeview of nets for the <a href="classHierNetlist.html" class="m-doc">HierNetlist</a>.</td>
                 </tr>
               </tbody>
             </table>
@@ -192,7 +192,7 @@
               <span class="m-doc-wrap-bumper">void HierNetlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6d1b9554554b18f226b7fea76f43e0c3" class="m-doc-self">projection_down</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               gsl::span&lt;std::uint8_t&gt; part_down) const</span></span>
             </h3>
-            <p>projection down</p>
+            <p>Projection down.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -200,14 +200,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The part to be projected down.</td>
                 </tr>
                 <tr>
                   <td>part_down&nbsp;<span class="m-label m-flat m-warning">out</span></td>
-                  <td></td>
+                  <td>The projected part at the lower level.</td>
                 </tr>
               </tbody>
             </table>
+<p>Projects a part down to a lower level of the hierarchy.</p>
           </div></section>
           <section class="m-doc-details" id="a5fb5e77202bee7a692c45fc3fce61374"><div>
             <h3>
@@ -217,7 +218,7 @@
               <span class="m-doc-wrap-bumper">void HierNetlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5fb5e77202bee7a692c45fc3fce61374" class="m-doc-self">projection_up</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
               gsl::span&lt;std::uint8_t&gt; part_up) const</span></span>
             </h3>
-            <p>projection up</p>
+            <p>Projects a part up to a higher level of the hierarchy.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -225,11 +226,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The part to be projected up.</td>
                 </tr>
                 <tr>
                   <td>part_up&nbsp;<span class="m-label m-flat m-warning">out</span></td>
-                  <td></td>
+                  <td>The projected part at the higher level.</td>
                 </tr>
               </tbody>
             </table>
@@ -241,15 +242,25 @@
               </div>
               <span class="m-doc-wrap-bumper">auto HierNetlist&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6550998f5a741cd8211582ed288b8daa" class="m-doc-self">get_net_weight</a>(</span><span class="m-doc-wrap">const <a href="classHierNetlist.html#a17234f434b063f9d1f19af64b5d17cea" class="m-doc">node_<wbr />t</a>&amp; net) const -&gt; uint32_t</span></span>
             </h3>
-            <p>Get the net weight.</p>
+            <p>Returns the weight of the specified net.</p>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">net</td>
+                  <td>The net for which to retrieve the weight.</td>
+                </tr>
+              </tbody>
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>int</td>
+                  <th>Returns</th>
+                  <td>The weight of the specified net.</td>
                 </tr>
               </tfoot>
             </table>
+<p>If the net_weight array is empty, the default net weight of 1 is returned. Otherwise, the weight of the specified net is returned from the net_weight array.</p>
           </div></section>
         </section>
       </div>

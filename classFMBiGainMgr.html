@@ -109,15 +109,15 @@
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a34e4b8850dfd4cb0f063b040f4f73537">
-              <span class="m-doc-wrap-bumper"><a href="#a34e4b8850dfd4cb0f063b040f4f73537" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph) <span class="m-label m-flat m-info">explicit</span> </span>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a34e4b8850dfd4cb0f063b040f4f73537" class="m-doc">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Construct a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#af0fde65574c0f8e6a3e9bf5929bc8e2a" class="m-doc">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               std::uint8_t)</span>
             </dt>
-            <dd>Construct a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object with the given hypergraph.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -126,39 +126,38 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a7c05204b20333c6ba362034632577eb4" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Initializes the <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object with the given partition.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ada43b1bf758cf5a1462b172d73440d1d" class="m-doc">modify_key</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; w,
               std::uint8_t part_w,
               int key) -&gt; void -&gt; auto</span>
             </dt>
-            <dd>(needed by base class)</dd>
+            <dd>Modifies the key for the given vertex in the gain bucket of the opposite partition.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ad4f00813d8ced871bcd9fe3bc11329e1" class="m-doc">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
               int gain) -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Updates the move information for the given vertex and gain.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a36e1eb22cac3c00270f9eb2b9d457f3f" class="m-doc">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
               const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
             </dt>
-            <dd>lock</dd>
+            <dd>Locks the vertex in the specified partition.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a7b3caaabf43949bbc7d85cb64a409265" class="m-doc">lock_all</a>(</span><span class="m-doc-wrap">uint8_t from_part,
               const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void -&gt; auto</span>
             </dt>
-            <dd>lock_all</dd>
+            <dd>Locks the vertex in the opposite partition from the specified partition.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="af0fde65574c0f8e6a3e9bf5929bc8e2a"><div>
+          <section class="m-doc-details" id="a34e4b8850dfd4cb0f063b040f4f73537"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af0fde65574c0f8e6a3e9bf5929bc8e2a" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
-              std::uint8_t)</span></span>
+              <span class="m-doc-wrap-bumper"> FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a34e4b8850dfd4cb0f063b040f4f73537" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph) <span class="m-label m-info">explicit</span> </span></span>
             </h3>
             <p>Construct a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -168,7 +167,28 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to be used for the <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af0fde65574c0f8e6a3e9bf5929bc8e2a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af0fde65574c0f8e6a3e9bf5929bc8e2a" class="m-doc-self">FMBiGainMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
+              std::uint8_t)</span></span>
+            </h3>
+            <p>Constructs a new <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object with the given hypergraph.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The hypergraph to be used for the <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object.</td>
                 </tr>
               </tbody>
             </table>
@@ -180,6 +200,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c05204b20333c6ba362034632577eb4" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
+            <p>Initializes the <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object with the given partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -187,13 +208,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition to initialize the <a href="classFMBiGainMgr.html" class="m-doc">FMBiGainMgr</a> object with.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>int</td>
+                  <td>int The result of the initialization.</td>
                 </tr>
               </tfoot>
             </table>
@@ -207,7 +228,7 @@
               std::uint8_t part_w,
               int key) -&gt; void</span></span>
             </h3>
-            <p>(needed by base class)</p>
+            <p>Modifies the key for the given vertex in the gain bucket of the opposite partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -215,15 +236,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">w&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The vertex whose key is to be modified.</td>
                 </tr>
                 <tr>
                   <td>part_w&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition that the vertex belongs to.</td>
                 </tr>
                 <tr>
                   <td>key&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The new key value to be set for the vertex.</td>
                 </tr>
               </tbody>
             </table>
@@ -236,6 +257,7 @@
               <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad4f00813d8ced871bcd9fe3bc11329e1" class="m-doc-self">update_move_v</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v,
               int gain) -&gt; void</span></span>
             </h3>
+            <p>Updates the move information for the given vertex and gain.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -243,11 +265,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The move information for the vertex.</td>
                 </tr>
                 <tr>
                   <td>gain&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The gain associated with the move.</td>
                 </tr>
               </tbody>
             </table>
@@ -260,7 +282,7 @@
               <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a36e1eb22cac3c00270f9eb2b9d457f3f" class="m-doc-self">lock</a>(</span><span class="m-doc-wrap">uint8_t whichPart,
               const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
             </h3>
-            <p>lock</p>
+            <p>Locks the vertex in the specified partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -268,11 +290,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">whichPart&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition to lock the vertex in.</td>
                 </tr>
                 <tr>
                   <td>v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The vertex to lock.</td>
                 </tr>
               </tbody>
             </table>
@@ -285,7 +307,7 @@
               <span class="m-doc-wrap-bumper">auto FMBiGainMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b3caaabf43949bbc7d85cb64a409265" class="m-doc-self">lock_all</a>(</span><span class="m-doc-wrap">uint8_t from_part,
               const <a href="classFMBiGainMgr.html#ac6efe4f1b44405d9006e8c9fabca19ba" class="m-doc">node_<wbr />t</a>&amp; v) -&gt; void</span></span>
             </h3>
-            <p>lock_all</p>
+            <p>Locks the vertex in the opposite partition from the specified partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -293,11 +315,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">from_part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition that the vertex is currently in.</td>
                 </tr>
                 <tr>
                   <td>v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The vertex to lock.</td>
                 </tr>
               </tbody>
             </table>

@@ -102,13 +102,13 @@
               <span class="m-doc-wrap-bumper"><a href="#ab5bfaa4eaa567d26a3f4573823db69cc" class="m-doc">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol) <span class="m-label m-flat m-warning">protected</span></span>
             </dt>
-            <dd>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object with the given hypergraph and balance tolerance, using a default of 2 partitions.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#ad9b1f1673329c0f7f506289928300c20" class="m-doc">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol,
               std::uint8_t num_parts) <span class="m-label m-flat m-warning">protected</span></span>
             </dt>
-            <dd>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</dd>
+            <dd>Constructs a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object with the given hypergraph, balance tolerance, and number of partitions.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -117,19 +117,19 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a1112e0cf7bd285981aabc554b23f9e04" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Initializes the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> with the given partition information.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a1f4c012283e08caa5f8a95702cc317eb" class="m-doc">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; LegalCheck -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Check if the proposed move of the given nodes can be legally performed, and if so, whether it would improve the current partitioning.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ae1e576fc6b7e65fcec46f43b1a5adde5" class="m-doc">check_constraints</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; bool -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Check if the proposed moves in the given vector of move information can be legally performed while satisfying the constraints.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a2cbe15e25375df537ba01c916f55aa38" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Update the partitioning based on the proposed node moves.</dd>
           </dl>
         </section>
         <section id="pro-types">
@@ -168,7 +168,7 @@
               <span class="m-doc-wrap-bumper"> FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab5bfaa4eaa567d26a3f4573823db69cc" class="m-doc-self">FMConstrMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol) <span class="m-label m-warning">protected</span></span></span>
             </h3>
-            <p>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</p>
+            <p>Constructs a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object with the given hypergraph and balance tolerance, using a default of 2 partitions.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -176,11 +176,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to use for the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a>.</td>
                 </tr>
                 <tr>
                   <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance to use for the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a>.</td>
                 </tr>
               </tbody>
             </table>
@@ -194,7 +194,7 @@
               double bal_tol,
               std::uint8_t num_parts) <span class="m-label m-warning">protected</span></span></span>
             </h3>
-            <p>Construct a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object.</p>
+            <p>Constructs a new <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> object with the given hypergraph, balance tolerance, and number of partitions.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -202,15 +202,15 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The hypergraph to use for the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a>.</td>
                 </tr>
                 <tr>
                   <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The balance tolerance to use for the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a>.</td>
                 </tr>
                 <tr>
                   <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The number of partitions to use for the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a>.</td>
                 </tr>
               </tbody>
             </table>
@@ -222,6 +222,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1112e0cf7bd285981aabc554b23f9e04" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; void</span></span>
             </h3>
+            <p>Initializes the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> with the given partition information.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -229,7 +230,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The partition information to initialize the <a href="classFMConstrMgr.html" class="m-doc">FMConstrMgr</a> with.</td>
                 </tr>
               </tbody>
             </table>
@@ -241,6 +242,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1f4c012283e08caa5f8a95702cc317eb" class="m-doc-self">check_legal</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; LegalCheck</span></span>
             </h3>
+            <p>Check if the proposed move of the given nodes can be legally performed, and if so, whether it would improve the current partitioning.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -248,13 +250,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>A vector of information about the proposed node moves.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>LegalCheck</td>
+                  <td>LegalCheck Indicates whether the move is not satisfied, would get better, or is fully satisfied.</td>
                 </tr>
               </tfoot>
             </table>
@@ -266,6 +268,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1e576fc6b7e65fcec46f43b1a5adde5" class="m-doc-self">check_constraints</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; bool</span></span>
             </h3>
+            <p>Check if the proposed moves in the given vector of move information can be legally performed while satisfying the constraints.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -273,13 +276,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>A vector of information about the proposed node moves.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>true</td>
+                  <td>true If the proposed moves can be legally performed while satisfying the constraints.</td>
                 </tr>
               </tfoot>
             </table>
@@ -291,6 +294,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2cbe15e25375df537ba01c916f55aa38" class="m-doc-self">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void</span></span>
             </h3>
+            <p>Update the partitioning based on the proposed node moves.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -298,7 +302,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>A vector of information about the proposed node moves.</td>
                 </tr>
               </tbody>
             </table>
