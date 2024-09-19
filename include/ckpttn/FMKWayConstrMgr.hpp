@@ -22,26 +22,26 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
 
   public:
     /**
-     * @brief Construct a new FMKWayConstrMgr object
+     * @brief Constructs a new FMKWayConstrMgr object.
      *
-     * @param[in] hyprgraph
-     * @param[in] bal_tol
-     * @param[in] num_parts
+     * @param[in] hyprgraph The hypergraph to use.
+     * @param[in] bal_tol The balance tolerance to use.
+     * @param[in] num_parts The number of partitions.
      */
     FMKWayConstrMgr(const Gnl &hyprgraph, double bal_tol, std::uint8_t num_parts)
         : FMConstrMgr<Gnl>{hyprgraph, bal_tol, num_parts}, illegal(num_parts, 1) {}
 
     /**
-     * @brief
+     * @brief Selects the next partition to move a node to.
      *
-     * @return std::uint8_t
+     * @return The index of the partition to move the node to.
      */
     auto select_togo() const -> std::uint8_t;
 
     /**
-     * @brief
+     * @brief Initializes the FMKWayConstrMgr object with the given partition information.
      *
-     * @param[in] part
+     * @param[in] part A span of the partition indices for each node.
      */
     auto init(gsl::span<const std::uint8_t> part) -> void {
         FMConstrMgr<Gnl>::init(part);
@@ -53,10 +53,10 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
     }
 
     /**
-     * @brief
+     * @brief Checks if the given move information is legal according to the constraints.
      *
-     * @param[in] move_info_v
-     * @return LegalCheck
+     * @param[in] move_info_v The move information to check.
+     * @return LegalCheck The result of the legality check.
      */
     auto check_legal(const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck;
 };

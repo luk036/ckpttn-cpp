@@ -20,39 +20,44 @@ template <typename Gnl> class FMBiGainMgr
     using GainCalc_ = FMBiGainCalc<Gnl>;
     using node_t = typename Gnl::node_t;
 
-    explicit FMBiGainMgr(const Gnl &hyprgraph) : Base{hyprgraph, 2} {}
-
     /**
      * @brief Construct a new FMBiGainMgr object
      *
-     * @param[in] hyprgraph
+     * @param[in] hyprgraph The hypergraph to be used for the FMBiGainMgr object
+     */
+    explicit FMBiGainMgr(const Gnl &hyprgraph) : Base{hyprgraph, 2} {}
+
+    /**
+     * @brief Constructs a new FMBiGainMgr object with the given hypergraph.
+     *
+     * @param[in] hyprgraph The hypergraph to be used for the FMBiGainMgr object.
      */
     FMBiGainMgr(const Gnl &hyprgraph, std::uint8_t /* num_parts */) : Base{hyprgraph, 2} {}
 
     /**
-     * @brief
+     * @brief Initializes the FMBiGainMgr object with the given partition.
      *
-     * @param[in] part
-     * @return int
+     * @param[in] part The partition to initialize the FMBiGainMgr object with.
+     * @return int The result of the initialization.
      */
     auto init(gsl::span<const std::uint8_t> part) -> int;
 
     /**
-     * @brief (needed by base class)
+     * @brief Modifies the key for the given vertex in the gain bucket of the opposite partition.
      *
-     * @param[in] w
-     * @param[in] part_w
-     * @param[in] key
+     * @param[in] w The vertex whose key is to be modified.
+     * @param[in] part_w The partition that the vertex belongs to.
+     * @param[in] key The new key value to be set for the vertex.
      */
     auto modify_key(const node_t &w, std::uint8_t part_w, int key) -> void {
         this->gain_bucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w], key);
     }
 
     /**
-     * @brief
+     * @brief Updates the move information for the given vertex and gain.
      *
-     * @param[in] move_info_v
-     * @param[in] gain
+     * @param[in] move_info_v The move information for the vertex.
+     * @param[in] gain The gain associated with the move.
      */
     auto update_move_v(const MoveInfoV<node_t> &move_info_v, int gain) -> void {
         // this->vertex_list[v].data.second -= 2 * gain;
@@ -61,10 +66,10 @@ template <typename Gnl> class FMBiGainMgr
     }
 
     /**
-     * @brief lock
+     * @brief Locks the vertex in the specified partition.
      *
-     * @param[in] whichPart
-     * @param[in] v
+     * @param[in] whichPart The partition to lock the vertex in.
+     * @param[in] v The vertex to lock.
      */
     auto lock(uint8_t whichPart, const node_t &v) -> void {
         auto &vlink = this->gain_calc.vertex_list[v];
@@ -73,20 +78,20 @@ template <typename Gnl> class FMBiGainMgr
     }
 
     /**
-     * @brief lock_all
+     * @brief Locks the vertex in the opposite partition from the specified partition.
      *
-     * @param[in] from_part
-     * @param[in] v
+     * @param[in] from_part The partition that the vertex is currently in.
+     * @param[in] v The vertex to lock.
      */
     auto lock_all(uint8_t from_part, const node_t &v) -> void { this->lock(1 - from_part, v); }
 
   private:
     /**
-     * @brief Set the key object
+     * @brief Sets the key for the given vertex in the specified partition's gain bucket.
      *
-     * @param[in] whichPart
-     * @param[in] v
-     * @param[in] key
+     * @param[in] whichPart The partition to set the key in.
+     * @param[in] v The vertex whose key is to be set.
+     * @param[in] key The new key value to be set for the vertex.
      */
     auto _set_key(uint8_t whichPart, const node_t &v, int key) -> void {
         this->gain_bucket[whichPart].set_key(this->gain_calc.vertex_list[v], key);

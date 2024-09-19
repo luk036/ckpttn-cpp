@@ -37,30 +37,35 @@ class MLPartMgr {
     int total_cost{};
 
     /**
-     * @brief Construct a new MLPartMgr object
+     * @brief Constructs a new MLPartMgr object with the given balance tolerance and a default number of partitions (2).
      *
-     * @param[in] bal_tol
+     * @param[in] bal_tol The balance tolerance for the partitioning.
      */
     explicit MLPartMgr(double bal_tol) : MLPartMgr(bal_tol, 2) {}
 
     /**
-     * @brief Construct a new MLPartMgr object
+     * @brief Constructs a new MLPartMgr object with the given balance tolerance and number of partitions.
      *
-     * @param[in] bal_tol
-     * @param[in] num_parts
+     * @param[in] bal_tol The balance tolerance for the partitioning.
+     * @param[in] num_parts The number of partitions to create.
      */
     MLPartMgr(double bal_tol, std::uint8_t num_parts) : bal_tol{bal_tol}, num_parts{num_parts} {}
 
+    /**
+     * @brief Sets the limit size for the partitioning.
+     *
+     * @param[in] limit The new limit size for the partitioning.
+     */
     void set_limitsize(size_t limit) { this->limitsize = limit; }
 
     /**
-     * @brief run_Partition
+     * @brief Runs the Fiduccia-Mattheyses (FM) partitioning algorithm on the given hypergraph.
      *
-     * @tparam Gnl
-     * @tparam PartMgr
-     * @param[in] hyprgraph
-     * @param[in,out] part
-     * @return LegalCheck
+     * @tparam Gnl The type of the hypergraph.
+     * @tparam PartMgr The type of the partition manager.
+     * @param[in] hyprgraph The input hypergraph to partition.
+     * @param[in,out] part The partition vector to store the partitioning results.
+     * @return LegalCheck The legality check result of the partitioning.
      */
     template <typename Gnl, typename PartMgr>
     auto run_FMPartition(const Gnl &hyprgraph, gsl::span<std::uint8_t> part) -> LegalCheck;

@@ -41,41 +41,54 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     ShiftArray<std::vector<uint32_t>> net_weight{};
 
     /**
-     * @brief Construct a new Hier Netlist object
+     * @brief Constructs a new HierNetlist object.
      *
-     * @param[in] gr
-     * @param[in] modules
-     * @param[in] nets
+     * @param[in] gr The graph object to be used for the HierNetlist.
+     * @param[in] modules The nodeview of modules for the HierNetlist.
+     * @param[in] nets The nodeview of nets for the HierNetlist.
      */
     HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets);
 
     /**
-     * @brief projection down
+     * @brief Projection down
      *
-     * @param[in] part
-     * @param[out] part_down
+     * Projects a part down to a lower level of the hierarchy.
+     *
+     * @param[in] part The part to be projected down.
+     * @param[out] part_down The projected part at the lower level.
      */
     void projection_down(gsl::span<const std::uint8_t> part,
                          gsl::span<std::uint8_t> part_down) const;
 
     /**
-     * @brief projection up
+     * @brief Projects a part up to a higher level of the hierarchy.
      *
-     * @param[in] part
-     * @param[out] part_up
+     * @param[in] part The part to be projected up.
+     * @param[out] part_up The projected part at the higher level.
      */
     void projection_up(gsl::span<const std::uint8_t> part, gsl::span<std::uint8_t> part_up) const;
 
     /**
-     * @brief Get the net weight
+     * @brief Returns the weight of the specified net.
      *
-     * @return int
+     * If the net_weight array is empty, the default net weight of 1 is returned.
+     * Otherwise, the weight of the specified net is returned from the net_weight array.
+     *
+     * @param net The net for which to retrieve the weight.
+     * @return The weight of the specified net.
      */
     auto get_net_weight(const node_t &net) const -> uint32_t {
         return this->net_weight.empty() ? 1U : this->net_weight[net];
     }
 };
 
+/**
+ * @brief Constructs a new HierNetlist object.
+ *
+ * @param[in] gr The graph object to be used for the HierNetlist.
+ * @param[in] modules The nodeview of modules for the HierNetlist.
+ * @param[in] nets The nodeview of nets for the HierNetlist.
+ */
 template <typename graph_t>
 HierNetlist<graph_t>::HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets)
     : Netlist<graph_t>{std::move(gr), modules, nets} {}

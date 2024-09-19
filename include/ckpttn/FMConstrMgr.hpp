@@ -36,51 +36,51 @@ template <typename Gnl> class FMConstrMgr {
     using node_t = typename Gnl::node_t;
 
     /**
-     * @brief Construct a new FMConstrMgr object
+     * @brief Constructs a new FMConstrMgr object with the given hypergraph and balance tolerance, using a default of 2 partitions.
      *
-     * @param[in] hyprgraph
-     * @param[in] bal_tol
+     * @param[in] hyprgraph The hypergraph to use for the FMConstrMgr.
+     * @param[in] bal_tol The balance tolerance to use for the FMConstrMgr.
      */
     FMConstrMgr(const Gnl &hyprgraph, double bal_tol) : FMConstrMgr(hyprgraph, bal_tol, 2) {}
 
     /**
-     * @brief Construct a new FMConstrMgr object
+     * @brief Constructs a new FMConstrMgr object with the given hypergraph, balance tolerance, and number of partitions.
      *
-     * @param[in] hyprgraph
-     * @param[in] bal_tol
-     * @param[in] num_parts
+     * @param[in] hyprgraph The hypergraph to use for the FMConstrMgr.
+     * @param[in] bal_tol The balance tolerance to use for the FMConstrMgr.
+     * @param[in] num_parts The number of partitions to use for the FMConstrMgr.
      */
     FMConstrMgr(const Gnl &hyprgraph, double bal_tol, std::uint8_t num_parts);
 
   public:
     /**
-     * @brief
+     * @brief Initializes the FMConstrMgr with the given partition information.
      *
-     * @param[in] part
+     * @param[in] part The partition information to initialize the FMConstrMgr with.
      */
     auto init(gsl::span<const std::uint8_t> part) -> void;
 
     /**
-     * @brief
+     * @brief Check if the proposed move of the given nodes can be legally performed, and if so, whether it would improve the current partitioning.
      *
-     * @param[in] move_info_v
-     * @return LegalCheck
+     * @param[in] move_info_v A vector of information about the proposed node moves.
+     * @return LegalCheck Indicates whether the move is not satisfied, would get better, or is fully satisfied.
      */
     auto check_legal(const MoveInfoV<node_t> &move_info_v) -> LegalCheck;
 
     /**
-     * @brief
+     * @brief Check if the proposed moves in the given vector of move information can be legally performed while satisfying the constraints.
      *
-     * @param[in] move_info_v
-     * @return true
-     * @return false
+     * @param[in] move_info_v A vector of information about the proposed node moves.
+     * @return true If the proposed moves can be legally performed while satisfying the constraints.
+     * @return false If the proposed moves cannot be legally performed or would violate the constraints.
      */
     auto check_constraints(const MoveInfoV<node_t> &move_info_v) -> bool;
 
     /**
-     * @brief
+     * @brief Update the partitioning based on the proposed node moves.
      *
-     * @param[in] move_info_v
+     * @param[in] move_info_v A vector of information about the proposed node moves.
      */
     auto update_move(const MoveInfoV<node_t> &move_info_v) -> void;
 };

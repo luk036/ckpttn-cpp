@@ -31,22 +31,22 @@ class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
 
   public:
     /**
-     * @brief Construct a new FMPartMgr object
+     * @brief Constructs a new FMPartMgr object
      *
-     * @param[in] hyprgraph
-     * @param[in,out] gain_mgr
-     * @param[in,out] constr_mgr
-     * @param[in] num_parts
+     * @param[in] hyprgraph The hypergraph to be partitioned
+     * @param[in,out] gain_mgr The gain manager used for the partitioning
+     * @param[in,out] constr_mgr The constraint manager used for the partitioning
+     * @param[in] num_parts The number of partitions to create
      */
     FMPartMgr(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
         : Base{hyprgraph, gain_mgr, constr_mgr, num_parts} {}
 
     /**
-     * @brief Construct a new FMPartMgr object
+     * @brief Constructs a new FMPartMgr object
      *
-     * @param[in] hyprgraph
-     * @param[in,out] gain_mgr
-     * @param[in,out] constr_mgr
+     * @param[in] hyprgraph The hypergraph to be partitioned
+     * @param[in,out] gain_mgr The gain manager used for the partitioning
+     * @param[in,out] constr_mgr The constraint manager used for the partitioning
      */
     FMPartMgr(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr)
         : Base{hyprgraph, gain_mgr, constr_mgr, 2} {}
