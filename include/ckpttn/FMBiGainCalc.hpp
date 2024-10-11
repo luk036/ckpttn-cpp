@@ -59,8 +59,9 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Initializes the FMBiGainCalc object.
      *
-     * This function initializes the FMBiGainCalc object by resetting the total cost, vertex list, and initial gain list. 
-     * It then calls the _init_gain function for each net in the hypergraph to initialize the gain values.
+     * This function initializes the FMBiGainCalc object by resetting the total cost, vertex list,
+     * and initial gain list. It then calls the _init_gain function for each net in the hypergraph
+     * to initialize the gain values.
      *
      * @param[in] part The partition information.
      * @return The total cost of the initial partition.
@@ -89,7 +90,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Initializes the index vector for a given vertex and net.
      *
-     * This function is used to initialize the index vector for a given vertex and net in the FMBiGainCalc object.
+     * This function is used to initialize the index vector for a given vertex and net in the
+     * FMBiGainCalc object.
      *
      * @param[in] v The vertex to initialize the index vector for.
      * @param[in] net The net to initialize the index vector for.
@@ -99,7 +101,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Update a 2-pin net during a move operation.
      *
-     * This function updates the gain values for a 2-pin net when a vertex is moved during a partitioning operation.
+     * This function updates the gain values for a 2-pin net when a vertex is moved during a
+     * partitioning operation.
      *
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move being performed.
@@ -111,7 +114,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Update the gain values for a 3-pin net during a move operation.
      *
-     * This function updates the gain values for a 3-pin net when a vertex is moved during a partitioning operation.
+     * This function updates the gain values for a 3-pin net when a vertex is moved during a
+     * partitioning operation.
      *
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move being performed.
@@ -123,7 +127,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Update the gain values for a general net during a move operation.
      *
-     * This function updates the gain values for a general net (with more than 3 pins) when a vertex is moved during a partitioning operation.
+     * This function updates the gain values for a general net (with more than 3 pins) when a vertex
+     * is moved during a partitioning operation.
      *
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move being performed.
@@ -136,10 +141,12 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Modifies the gain value for the given vertex.
      *
-     * This function is used to update the gain value for the given vertex in the FMBiGainCalc object. The gain value is increased or decreased by the specified weight.
+     * This function is used to update the gain value for the given vertex in the FMBiGainCalc
+     * object. The gain value is increased or decreased by the specified weight.
      *
      * @param[in] w The vertex to modify the gain for.
-     * @param[in] weight The amount to modify the gain by (positive to increase, negative to decrease).
+     * @param[in] weight The amount to modify the gain by (positive to increase, negative to
+     * decrease).
      */
     auto _modify_gain(const node_t &w, int weight) -> void {
         // this->vertex_list[w].data.second += weight;
@@ -149,7 +156,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Increases the gain value for the given vertex.
      *
-     * This function is used to update the gain value for the given vertex in the FMBiGainCalc object. The gain value is increased by the specified weight.
+     * This function is used to update the gain value for the given vertex in the FMBiGainCalc
+     * object. The gain value is increased by the specified weight.
      *
      * @param[in] w The vertex to increase the gain for.
      * @param[in] weight The amount to increase the gain by.
@@ -162,7 +170,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Decreases the gain value for the given vertex.
      *
-     * This function is used to update the gain value for the given vertex in the FMBiGainCalc object. The gain value is decreased by the specified weight.
+     * This function is used to update the gain value for the given vertex in the FMBiGainCalc
+     * object. The gain value is decreased by the specified weight.
      *
      * @param[in] w The vertex to decrease the gain for.
      * @param[in] weight The amount to decrease the gain by.
@@ -175,7 +184,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Initializes the gain values for a net.
      *
-     * This function initializes the gain values for a net based on the given net and partition information.
+     * This function initializes the gain values for a net based on the given net and partition
+     * information.
      *
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
@@ -185,7 +195,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Initializes the gain values for a 2-pin net.
      *
-     * This function initializes the gain values for a 2-pin net based on the given net and partition information.
+     * This function initializes the gain values for a 2-pin net based on the given net and
+     * partition information.
      *
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
@@ -195,7 +206,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Initializes the gain values for a 3-pin net.
      *
-     * This function initializes the gain values for a 3-pin net based on the given net and partition information.
+     * This function initializes the gain values for a 3-pin net based on the given net and
+     * partition information.
      *
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
@@ -205,7 +217,8 @@ template <typename Gnl> class FMBiGainCalc {
     /**
      * @brief Initializes the gain values for a general net.
      *
-     * This function initializes the gain values for a general net based on the given net and partition information.
+     * This function initializes the gain values for a general net based on the given net and
+     * partition information.
      *
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.

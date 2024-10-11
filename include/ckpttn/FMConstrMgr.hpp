@@ -36,7 +36,8 @@ template <typename Gnl> class FMConstrMgr {
     using node_t = typename Gnl::node_t;
 
     /**
-     * @brief Constructs a new FMConstrMgr object with the given hypergraph and balance tolerance, using a default of 2 partitions.
+     * @brief Constructs a new FMConstrMgr object with the given hypergraph and balance tolerance,
+     * using a default of 2 partitions.
      *
      * @param[in] hyprgraph The hypergraph to use for the FMConstrMgr.
      * @param[in] bal_tol The balance tolerance to use for the FMConstrMgr.
@@ -44,7 +45,8 @@ template <typename Gnl> class FMConstrMgr {
     FMConstrMgr(const Gnl &hyprgraph, double bal_tol) : FMConstrMgr(hyprgraph, bal_tol, 2) {}
 
     /**
-     * @brief Constructs a new FMConstrMgr object with the given hypergraph, balance tolerance, and number of partitions.
+     * @brief Constructs a new FMConstrMgr object with the given hypergraph, balance tolerance, and
+     * number of partitions.
      *
      * @param[in] hyprgraph The hypergraph to use for the FMConstrMgr.
      * @param[in] bal_tol The balance tolerance to use for the FMConstrMgr.
@@ -61,19 +63,23 @@ template <typename Gnl> class FMConstrMgr {
     auto init(gsl::span<const std::uint8_t> part) -> void;
 
     /**
-     * @brief Check if the proposed move of the given nodes can be legally performed, and if so, whether it would improve the current partitioning.
+     * @brief Check if the proposed move of the given nodes can be legally performed, and if so,
+     * whether it would improve the current partitioning.
      *
      * @param[in] move_info_v A vector of information about the proposed node moves.
-     * @return LegalCheck Indicates whether the move is not satisfied, would get better, or is fully satisfied.
+     * @return LegalCheck Indicates whether the move is not satisfied, would get better, or is fully
+     * satisfied.
      */
     auto check_legal(const MoveInfoV<node_t> &move_info_v) -> LegalCheck;
 
     /**
-     * @brief Check if the proposed moves in the given vector of move information can be legally performed while satisfying the constraints.
+     * @brief Check if the proposed moves in the given vector of move information can be legally
+     * performed while satisfying the constraints.
      *
      * @param[in] move_info_v A vector of information about the proposed node moves.
      * @return true If the proposed moves can be legally performed while satisfying the constraints.
-     * @return false If the proposed moves cannot be legally performed or would violate the constraints.
+     * @return false If the proposed moves cannot be legally performed or would violate the
+     * constraints.
      */
     auto check_constraints(const MoveInfoV<node_t> &move_info_v) -> bool;
 
