@@ -126,8 +126,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info The information about the move that was performed.
      * @return The updated gain for the 2-pin net.
      */
-    auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> node_t;
+    auto update_move_2pin_net(gsl::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> node_t;
 
     /**
      * @brief Initializes the index vector for a given vertex and net.
@@ -153,8 +153,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info The information about the move that was performed.
      * @return The updated gain for the 3-pin net.
      */
-    auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> ret_info;
+    auto update_move_3pin_net(gsl::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> ret_info;
 
     /**
      * @brief Updates the gain for a general net after a move.
