@@ -97,8 +97,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info_v The set of moves to update the gain information for.
      */
-    auto update_move(gsl::span<const std::uint8_t> part,
-                     const MoveInfoV<node_t> &move_info_v) -> void;
+    auto update_move(gsl::span<const std::uint8_t> part, const MoveInfoV<node_t> &move_info_v)
+        -> void;
 
   private:
     /**

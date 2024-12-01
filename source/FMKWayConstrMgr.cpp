@@ -25,8 +25,9 @@ template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::u
  * @param[in] move_info_v
  * @return LegalCheck
  */
-template <typename Gnl> auto FMKWayConstrMgr<Gnl>::check_legal(
-    const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck {
+template <typename Gnl>
+auto FMKWayConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t> &move_info_v)
+    -> LegalCheck {
     const auto status = FMConstrMgr<Gnl>::check_legal(move_info_v);
     if (status != LegalCheck::AllSatisfied) {
         return status;

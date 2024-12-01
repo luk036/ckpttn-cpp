@@ -132,7 +132,8 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
             });
         } else if (num[k] == 1) {
             auto it = this->hyprgraph.gr[net].begin();
-            for (; part[*it] != k; ++it);
+            for (; part[*it] != k; ++it)
+                ;
             this->_increase_gain(*it, weight);
         }
     }
@@ -187,8 +188,10 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_3pin_net(
-    gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
+template <typename Gnl>
+auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
+                                             const MoveInfo<typename Gnl::node_t> &move_info)
+    -> vector<int> {
     // const auto& [net, v, from_part, _] = move_info;
 
     auto delta_gain = vector<int>{0, 0};
@@ -215,8 +218,10 @@ template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_3pin_net(
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
-    gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
+template <typename Gnl>
+auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
+                                                const MoveInfo<typename Gnl::node_t> &move_info)
+    -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};
     auto rng1 = all(this->idx_vec);
@@ -241,7 +246,8 @@ template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
         } else if (num[l_part] == 1) {
             auto it1 = this->idx_vec.begin();
             auto it2 = delta_gain.begin();
-            for (; part[*it1] != l_part; ++it1, ++it2);
+            for (; part[*it1] != l_part; ++it1, ++it2)
+                ;
             *it2 += gain;
 
             // rng3([&](const auto &zc) {
