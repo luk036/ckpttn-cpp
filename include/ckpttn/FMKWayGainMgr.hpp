@@ -42,7 +42,8 @@ template <typename Gnl> class FMKWayGainMgr
     auto init(gsl::span<const std::uint8_t> part) -> int;
 
     /**
-     * @brief Modifies the key for the given vertex in the gain buckets for all partitions except the given one.
+     * @brief Modifies the key for the given vertex in the gain buckets for all partitions except
+     * the given one.
      *
      * @param[in] w The vertex to modify the key for.
      * @param[in] part_w The partition that the vertex belongs to.

@@ -77,7 +77,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @brief Selects a set of moves to perform on the given partition.
      *
      * @param[in] part The current partition information.
-     * @return std::pair<MoveInfoV<node_t>, int> A pair containing the selected moves and the total gain of the moves.
+     * @return std::pair<MoveInfoV<node_t>, int> A pair containing the selected moves and the total
+     * gain of the moves.
      */
     auto select(gsl::span<const std::uint8_t> part) -> std::pair<MoveInfoV<node_t>, int>;
 
@@ -85,7 +86,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @brief Selects a node to move to the given partition.
      *
      * @param[in] to_part The partition to select a node to move to.
-     * @return std::pair<node_t, int> A pair containing the selected node and the gain of moving that node.
+     * @return std::pair<node_t, int> A pair containing the selected node and the gain of moving
+     * that node.
      */
     auto select_togo(uint8_t to_part) -> std::pair<node_t, int>;
 

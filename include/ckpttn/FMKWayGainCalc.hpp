@@ -110,14 +110,17 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Resets the delta gain vector to 0.
      *
-     * This function is used to initialize the delta gain vector before updating the gains for a move.
+     * This function is used to initialize the delta gain vector before updating the gains for a
+     * move.
      */
     auto update_move_init() -> void;
 
     /**
      * @brief Updates the gain for a 2-pin net after a move.
      *
-     * This function updates the gain for a 2-pin net after a move has been performed. It takes the current partition and the move information as input, and returns the updated gain for the net.
+     * This function updates the gain for a 2-pin net after a move has been performed. It takes the
+     * current partition and the move information as input, and returns the updated gain for the
+     * net.
      *
      * @param[in] part The current partition.
      * @param[in] move_info The information about the move that was performed.
@@ -143,7 +146,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @brief Updates the gain for a 3-pin net after a move.
      *
      * This function updates the gain for a 3-pin net after a move has been performed. It takes
-     * the current partition and the move information as input, and returns the updated gain for the net.
+     * the current partition and the move information as input, and returns the updated gain for the
+     * net.
      *
      * @param[in] part The current partition.
      * @param[in] move_info The information about the move that was performed.
@@ -155,8 +159,9 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Updates the gain for a general net after a move.
      *
-     * This function updates the gain for a general net (with any number of pins) after a move has been performed.
-     * It takes the current partition and the move information as input, and returns the updated gain for the net.
+     * This function updates the gain for a general net (with any number of pins) after a move has
+     * been performed. It takes the current partition and the move information as input, and returns
+     * the updated gain for the net.
      *
      * @param[in] part The current partition.
      * @param[in] move_info The information about the move that was performed.
@@ -176,7 +181,9 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Modifies the gain value for a vertex in the gain list.
      *
-     * This function updates the gain value for a vertex in the `init_gain_list` based on the provided `part_v` and `weight` parameters. It iterates over the partitions that exclude the given `part_v` and updates the gain value for the vertex in the corresponding partition.
+     * This function updates the gain value for a vertex in the `init_gain_list` based on the
+     * provided `part_v` and `weight` parameters. It iterates over the partitions that exclude the
+     * given `part_v` and updates the gain value for the vertex in the corresponding partition.
      *
      * @param[in] v The vertex for which the gain is to be modified.
      * @param[in] part_v The partition from which the vertex is being moved.
@@ -192,7 +199,9 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Increases the gain value for a vertex in the gain list.
      *
-     * This function updates the gain value for a vertex in the `init_gain_list` based on the provided `part_v` and `weight` parameters. It iterates over the partitions that exclude the given `part_v` and increases the gain value for the vertex in the corresponding partition.
+     * This function updates the gain value for a vertex in the `init_gain_list` based on the
+     * provided `part_v` and `weight` parameters. It iterates over the partitions that exclude the
+     * given `part_v` and increases the gain value for the vertex in the corresponding partition.
      *
      * @param[in] v The vertex for which the gain is to be increased.
      * @param[in] part_v The partition from which the vertex is being moved.
@@ -208,7 +217,9 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Decreases the gain value for a vertex in the gain list.
      *
-     * This function updates the gain value for a vertex in the `init_gain_list` based on the provided `part_v` and `weight` parameters. It iterates over the partitions that exclude the given `part_v` and decreases the gain value for the vertex in the corresponding partition.
+     * This function updates the gain value for a vertex in the `init_gain_list` based on the
+     * provided `part_v` and `weight` parameters. It iterates over the partitions that exclude the
+     * given `part_v` and decreases the gain value for the vertex in the corresponding partition.
      *
      * @param[in] v The vertex for which the gain is to be decreased.
      * @param[in] part_v The partition from which the vertex is being moved.
@@ -224,8 +235,8 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Initializes the gain values for a net in the partitioning.
      *
-     * This function initializes the gain values for the vertices in the given net based on the current partitioning.
-     * The gain values are stored in the `init_gain_list` data structure.
+     * This function initializes the gain values for the vertices in the given net based on the
+     * current partitioning. The gain values are stored in the `init_gain_list` data structure.
      *
      * @param[in] net The net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
@@ -235,8 +246,8 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Initializes the gain values for a 2-pin net in the partitioning.
      *
-     * This function initializes the gain values for the vertices in the given 2-pin net based on the current partitioning.
-     * The gain values are stored in the `init_gain_list` data structure.
+     * This function initializes the gain values for the vertices in the given 2-pin net based on
+     * the current partitioning. The gain values are stored in the `init_gain_list` data structure.
      *
      * @param[in] net The 2-pin net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
@@ -246,8 +257,8 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Initializes the gain values for a 3-pin net in the partitioning.
      *
-     * This function initializes the gain values for the vertices in the given 3-pin net based on the current partitioning.
-     * The gain values are stored in the `init_gain_list` data structure.
+     * This function initializes the gain values for the vertices in the given 3-pin net based on
+     * the current partitioning. The gain values are stored in the `init_gain_list` data structure.
      *
      * @param[in] net The 3-pin net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
@@ -257,8 +268,8 @@ template <typename Gnl> class FMKWayGainCalc {
     /**
      * @brief Initializes the gain values for a general net in the partitioning.
      *
-     * This function initializes the gain values for the vertices in the given net based on the current partitioning.
-     * The gain values are stored in the `init_gain_list` data structure.
+     * This function initializes the gain values for the vertices in the given net based on the
+     * current partitioning. The gain values are stored in the `init_gain_list` data structure.
      *
      * @param[in] net The net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.

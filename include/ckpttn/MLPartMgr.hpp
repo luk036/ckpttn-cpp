@@ -37,14 +37,16 @@ class MLPartMgr {
     int total_cost{};
 
     /**
-     * @brief Constructs a new MLPartMgr object with the given balance tolerance and a default number of partitions (2).
+     * @brief Constructs a new MLPartMgr object with the given balance tolerance and a default
+     * number of partitions (2).
      *
      * @param[in] bal_tol The balance tolerance for the partitioning.
      */
     explicit MLPartMgr(double bal_tol) : MLPartMgr(bal_tol, 2) {}
 
     /**
-     * @brief Constructs a new MLPartMgr object with the given balance tolerance and number of partitions.
+     * @brief Constructs a new MLPartMgr object with the given balance tolerance and number of
+     * partitions.
      *
      * @param[in] bal_tol The balance tolerance for the partitioning.
      * @param[in] num_parts The number of partitions to create.

@@ -1,7 +1,6 @@
 [![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
 [![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
 [![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
-[![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Style/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
 [![Actions Status](https://github.com/luk036/ckpttn-cpp/workflows/Install/badge.svg)](https://github.com/luk036/ckpttn-cpp/actions)
 [![codecov](https://codecov.io/gh/luk036/ckpttn-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/ckpttn-cpp)
 
