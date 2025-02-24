@@ -1,7 +1,7 @@
 #include <algorithm>  // for all_of, max_element
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE
-#include <gsl/gsl_util>            // for narrow_cast
+#include <gsl/util>            // for narrow_cast
 #include <iterator>                // for distance
 #include <transrangers.hpp>
 #include <type_traits>  // for is_base_of, integral_const...
