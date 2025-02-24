@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 
-#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <string_view>  // for std::string_view
 #include <chrono>                         // for duration, operator-, steady_clock
 #include <ckpttn/MLPartMgr.hpp>           // for MLPartMgr
 #include <cstdint>                        // for uint8_t
@@ -23,8 +23,8 @@ using namespace std;
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
+extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
 
 TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto hyprgraph = create_dwarf();

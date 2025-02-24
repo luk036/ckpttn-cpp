@@ -1,14 +1,14 @@
 // -*- coding: utf-8 -*-
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST_CASE
 // #include <__config>            // for std
-#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <string_view>  // for std::string_view
 #include <ckpttn/netlist.hpp>             // for Netlist, SimpleNetlist
 
 using namespace std;
 
-extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
-extern void writeJSON(boost::string_view jsonFileName, const SimpleNetlist &hyprgraph);
+extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
+extern void writeJSON(std::string_view jsonFileName, const SimpleNetlist &hyprgraph);
 
 TEST_CASE("Test Read Dwarf") {
     auto hyprgraph = readNetD("../../testcases/dwarf1.netD");

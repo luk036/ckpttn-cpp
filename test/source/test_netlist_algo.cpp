@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for TestCase, TEST_CASE
 // #include <__config>                 // for std
 // #include <__hash_table>             // for operator!=
-#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <string_view>  // for std::string_view
 #include <ckpttn/netlist.hpp>             // for Netlist, Netlist<>::nodeview_t
 #include <ckpttn/netlist_algo.hpp>        // for min_maximal_matching, min_vertex_...
 #include <py2cpp/dict.hpp>                // for dict
@@ -12,8 +12,8 @@ using namespace std;
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
+extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
 // extern pair<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 

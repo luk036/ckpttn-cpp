@@ -1,4 +1,4 @@
-#include <boost/utility/string_view.hpp>  // for boost::string_view
+#include <string_view>  // for std::string_view
 #include <ckpttn/FMBiConstrMgr.hpp>       // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>         // for FMBiGainMgr
 #include <ckpttn/FMPartMgr.hpp>           // for FMPartMgr
@@ -11,8 +11,8 @@
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
-extern auto readNetD(boost::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, boost::string_view areFileName);
+extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
+extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
 
 /**
  * The function "run_FMBiPartMgr" runs the Fiduccia-Mattheyses Bi-partitioning algorithm on a given

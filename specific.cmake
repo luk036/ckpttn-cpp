@@ -1,12 +1,12 @@
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS container)
-if(Boost_FOUND)
-  message(STATUS "Found boost: ${Boost_LIBRARIES}")
-  # add_library(Boost::boost INTERFACE IMPORTED GLOBAL) target_include_directories(Boost::boost
-  # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
-endif()
+# find_package(Boost REQUIRED COMPONENTS container)
+# if(Boost_FOUND)
+#   message(STATUS "Found boost: ${Boost_LIBRARIES}")
+#   # add_library(Boost::boost INTERFACE IMPORTED GLOBAL) target_include_directories(Boost::boost
+#   # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
+# endif()
 
 CPMAddPackage(
   NAME fmt
@@ -45,8 +45,8 @@ CPMAddPackage(
 set(SPECIFIC_LIBS
     XNetwork::XNetwork
     Py2Cpp::Py2Cpp
-    Boost::container
-    Boost::boost
+    # Boost::container
+    # Boost::boost
     Threads::Threads
     GSL
     fmt::fmt
