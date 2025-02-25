@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gsl/span>
+#include <span>
 
 #include "FMGainMgr.hpp"
 #include "FMKWayGainCalc.hpp"
@@ -39,7 +39,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] part The partition information to initialize the gain manager with.
      * @return int The result of the initialization.
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int;
+    auto init(std::span<const std::uint8_t> part) -> int;
 
     /**
      * @brief Modifies the key for the given vertex in the gain buckets for all partitions except
@@ -49,7 +49,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] part_w The partition that the vertex belongs to.
      * @param[in] keys The new keys to set for the vertex in each partition.
      */
-    auto modify_key(const node_t &w, std::uint8_t part_w, gsl::span<const int> keys) -> void {
+    auto modify_key(const node_t &w, std::uint8_t part_w, std::span<const int> keys) -> void {
         for (auto k : this->rr.exclude(part_w)) {
             this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][w], keys[k]);
         }

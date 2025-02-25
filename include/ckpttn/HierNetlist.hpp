@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>                     // for uint8_t
-#include <gsl/span>                    // for span
+#include <span>                    // for span
 #include <py2cpp/dict.hpp>             // for dict
 #include <py2cpp/set.hpp>              // for set
 #include <type_traits>                 // for move
@@ -57,8 +57,8 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param[in] part The part to be projected down.
      * @param[out] part_down The projected part at the lower level.
      */
-    void projection_down(gsl::span<const std::uint8_t> part,
-                         gsl::span<std::uint8_t> part_down) const;
+    void projection_down(std::span<const std::uint8_t> part,
+                         std::span<std::uint8_t> part_down) const;
 
     /**
      * @brief Projects a part up to a higher level of the hierarchy.
@@ -66,7 +66,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param[in] part The part to be projected up.
      * @param[out] part_up The projected part at the higher level.
      */
-    void projection_up(gsl::span<const std::uint8_t> part, gsl::span<std::uint8_t> part_up) const;
+    void projection_up(std::span<const std::uint8_t> part, std::span<std::uint8_t> part_up) const;
 
     /**
      * @brief Returns the weight of the specified net.

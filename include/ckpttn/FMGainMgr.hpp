@@ -2,7 +2,7 @@
 
 // #include <algorithm> // for all_of
 #include <cinttypes>  // for uint8_t, uint32_t
-#include <gsl/span>   // for span
+#include <span>   // for span
 #include <tuple>      // for tuple
 #include <utility>    // for pair
 #include <vector>     // for vector<>::const_iterator, vector
@@ -52,7 +52,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The partition information to initialize the FMGainMgr with.
      * @return int The result of the initialization.
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int;
+    auto init(std::span<const std::uint8_t> part) -> int;
 
     /**
      * @brief Checks if the gain bucket for the given partition is empty.
@@ -80,7 +80,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @return std::pair<MoveInfoV<node_t>, int> A pair containing the selected moves and the total
      * gain of the moves.
      */
-    auto select(gsl::span<const std::uint8_t> part) -> std::pair<MoveInfoV<node_t>, int>;
+    auto select(std::span<const std::uint8_t> part) -> std::pair<MoveInfoV<node_t>, int>;
 
     /**
      * @brief Selects a node to move to the given partition.
@@ -97,7 +97,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info_v The set of moves to update the gain information for.
      */
-    auto update_move(gsl::span<const std::uint8_t> part, const MoveInfoV<node_t> &move_info_v)
+    auto update_move(std::span<const std::uint8_t> part, const MoveInfoV<node_t> &move_info_v)
         -> void;
 
   private:
@@ -107,7 +107,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move to update the gain for.
      */
-    auto _update_move_2pin_net(gsl::span<const std::uint8_t> part,
+    auto _update_move_2pin_net(std::span<const std::uint8_t> part,
                                const MoveInfo<node_t> &move_info) -> void;
 
     /**
@@ -116,7 +116,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move to update the gain for.
      */
-    auto _update_move_3pin_net(gsl::span<const std::uint8_t> part,
+    auto _update_move_3pin_net(std::span<const std::uint8_t> part,
                                const MoveInfo<node_t> &move_info) -> void;
 
     /**
@@ -125,6 +125,6 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move to update the gain for.
      */
-    auto _update_move_general_net(gsl::span<const std::uint8_t> part,
+    auto _update_move_general_net(std::span<const std::uint8_t> part,
                                   const MoveInfo<node_t> &move_info) -> void;
 };

@@ -52,5 +52,5 @@ TEST_CASE("Test BPQueue") {
     // CHECK(count == 10);
 
     // const vector<uint8_t> a {3, 4, 5, 6};
-    // gsl::span<const uint8_t> s {a};
+    // std::span<const uint8_t> s {a};
 }

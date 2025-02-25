@@ -6,7 +6,7 @@
 // #include "FMPartMgr.hpp" // import FMPartMgr
 // #include "netlist.hpp"
 #include <cassert>
-#include <gsl/span>  // for span
+#include <span>  // for span
 #include <memory>    // std::unique_ptr
 // #include <py2cpp/range.hpp>  // for range
 // #include <ckpttn/FMConstrMgr.hpp>   // import LegalCheck
@@ -70,5 +70,5 @@ class MLPartMgr {
      * @return LegalCheck The legality check result of the partitioning.
      */
     template <typename Gnl, typename PartMgr>
-    auto run_FMPartition(const Gnl &hyprgraph, gsl::span<std::uint8_t> part) -> LegalCheck;
+    auto run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
 };

@@ -3,7 +3,7 @@
 #include <ckpttn/PartMgrBase.hpp>  // for PartMgrBase, part, SimpleNetlist
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV
 #include <cstdint>                 // for uint8_t
-#include <gsl/span>                // for span
+#include <span>                // for span
 #include <py2cpp/range.hpp>        // for _iterator
 #include <py2cpp/set.hpp>          // for set
 #include <tuple>                   // for tuple_element<>::type
@@ -22,7 +22,7 @@
  * @param[in] part
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
-void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(gsl::span<std::uint8_t> part) {
+void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(std::span<std::uint8_t> part) {
     this->total_cost = this->gain_mgr.init(part);
     this->validator.init(part);
 }
@@ -37,7 +37,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(gsl::span<std::uint8_t> part) {
  * @return LegalCheck
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
-auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part) -> LegalCheck {
+auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part) -> LegalCheck {
     this->init(part);
 
     // Zero-weighted modules does not contribute legalization
@@ -91,7 +91,7 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(gsl::span<std::uint8_t> part
  * @param[in] part
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
-void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_t> part) {
+void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_t> part) {
     // using SS_t = decltype(this->take_snapshot(part));
     using SS_t = std::vector<std::uint8_t>;
 
@@ -154,7 +154,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(gsl::span<std::uint8_
  * @param[in] part
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
-void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(gsl::span<std::uint8_t> part) {
+void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(std::span<std::uint8_t> part) {
     // this->init(part);
     // auto totalcostafter = this->total_cost;
     while (true) {

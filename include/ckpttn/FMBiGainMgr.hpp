@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gsl/span>
+#include <span>
 
 #include "FMBiGainCalc.hpp"
 #include "FMGainMgr.hpp"
@@ -40,7 +40,7 @@ template <typename Gnl> class FMBiGainMgr
      * @param[in] part The partition to initialize the FMBiGainMgr object with.
      * @return int The result of the initialization.
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int;
+    auto init(std::span<const std::uint8_t> part) -> int;
 
     /**
      * @brief Modifies the key for the given vertex in the gain bucket of the opposite partition.

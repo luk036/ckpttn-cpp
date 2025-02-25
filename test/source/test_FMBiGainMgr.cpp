@@ -3,7 +3,7 @@
 #include <ckpttn/FMBiGainMgr.hpp>  // for FMBiGainMgr
 #include <ckpttn/netlist.hpp>      // for SimpleNetlist
 #include <cstdint>                 // for uint8_t
-#include <gsl/span>                // for span
+#include <span>                // for span
 #include <tuple>                   // for tuple_element<>::type
 #include <vector>                  // for vector
 
@@ -18,7 +18,7 @@ using namespace std;
  * @param[in] hyprgraph
  * @param[in] part_test
  */
-void run_FMBiGainMgr(const SimpleNetlist &hyprgraph, gsl::span<uint8_t> part) {
+void run_FMBiGainMgr(const SimpleNetlist &hyprgraph, std::span<uint8_t> part) {
     FMBiGainMgr<SimpleNetlist> mgr{hyprgraph};
     mgr.init(part);
     while (!mgr.is_empty()) {

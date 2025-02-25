@@ -1,8 +1,6 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
-add_requires("boost", {configs = {context = true, container = true}})
 add_requires("doctest", {alias = "doctest"})
-add_requires("microsoft-gsl", {alias = "msgsl"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 
 set_languages("c++23")
@@ -24,7 +22,7 @@ target("CkPttn")
     add_includedirs("../py2cpp/include", {public = true})
     add_includedirs("../xnetwork-cpp/include", {public = true})
     add_files("source/*.cpp")
-    add_packages("boost", "range-v3", "msgsl")
+    add_packages("range-v3")
 
 target("test_ckpttn")
     set_kind("binary")
@@ -33,7 +31,7 @@ target("test_ckpttn")
     add_includedirs("../py2cpp/include", {public = true})
     add_includedirs("../xnetwork-cpp/include", {public = true})
     add_files("test/source/*.cpp")
-    add_packages("fmt", "boost", "doctest", "range-v3", "msgsl")
+    add_packages("fmt", "doctest", "range-v3")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

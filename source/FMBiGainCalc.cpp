@@ -7,7 +7,7 @@
 #include <ckpttn/moveinfo.hpp>             // for MoveInfo
 #include <cstddef>                         // for size_t
 #include <cstdint>                         // for uint8_t
-#include <gsl/span>                        // for span
+#include <span>                        // for span
 #include <initializer_list>                // for initializer_list
 #include <transrangers.hpp>                // for all, filter, zip2
 #include <vector>                          // for vector
@@ -23,7 +23,7 @@ using namespace transrangers;
  * @param[in] part
  */
 template <typename Gnl>
-void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, gsl::span<const uint8_t> part) {
+void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -53,7 +53,7 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, gsl::span<co
  * @param[in] part
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
-                                                                    gsl::span<const uint8_t> part) {
+                                                                    std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
@@ -77,7 +77,7 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
  * @param[in] part
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
-                                                                    gsl::span<const uint8_t> part) {
+                                                                    std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
@@ -112,7 +112,7 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typena
  */
 template <typename Gnl>
 void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
-                                               gsl::span<const uint8_t> part) {
+                                               std::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
 
     auto rng = all(this->hyprgraph.gr[net]);
@@ -152,7 +152,7 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
  * @return int
  */
 template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
+auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t> &move_info) ->
     typename Gnl::node_t {
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
@@ -189,7 +189,7 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
  * @return ret_info
  */
 template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
+auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t> &move_info)
     -> vector<int> {
     // const auto& [net, v, from_part, _] = move_info;
@@ -219,7 +219,7 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
  * @return ret_info
  */
 template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
+auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
                                                 const MoveInfo<typename Gnl::node_t> &move_info)
     -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;

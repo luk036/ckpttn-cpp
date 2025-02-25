@@ -3,7 +3,7 @@
 // #include <__hash_table>             // for __hash_const_iterator, operator!=
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item
 #include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, part, FMBiGainMgr::Base
-#include <gsl/span>                 // for span
+#include <span>                 // for span
 #include <py2cpp/range.hpp>         // for _iterator
 #include <py2cpp/set.hpp>           // for set
 #include <vector>                   // for vector
@@ -17,7 +17,7 @@ using namespace std;
  *
  * @param[in] part
  */
-template <typename Gnl> auto FMBiGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
+template <typename Gnl> auto FMBiGainMgr<Gnl>::init(std::span<const uint8_t> part) -> int {
     auto total_cost = Base::init(part);
     for (auto &bckt : this->gain_bucket) {
         bckt.clear();

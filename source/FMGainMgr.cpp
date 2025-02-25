@@ -1,7 +1,6 @@
 #include <algorithm>  // for all_of, max_element
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE
-#include <gsl/util>            // for narrow_cast
 #include <iterator>                // for distance
 #include <transrangers.hpp>
 #include <type_traits>  // for is_base_of, integral_const...
@@ -43,7 +42,7 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl &hyprgraph, uint8_t num_p
  * @return int
  */
 template <typename Gnl, typename GainCalc, class Derived>
-auto FMGainMgr<Gnl, GainCalc, Derived>::init(gsl::span<const uint8_t> part) -> int {
+auto FMGainMgr<Gnl, GainCalc, Derived>::init(std::span<const uint8_t> part) -> int {
     auto total_cost = this->gain_calc.init(part);
     this->waiting_list.clear();
     return total_cost;
@@ -73,13 +72,13 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::is_empty() const -> bool {
  * @return pair<MoveInfoV<typename Gnl::node_t>, int>
  */
 template <typename Gnl, typename GainCalc, class Derived>
-auto FMGainMgr<Gnl, GainCalc, Derived>::select(gsl::span<const uint8_t> part)
+auto FMGainMgr<Gnl, GainCalc, Derived>::select(std::span<const uint8_t> part)
     -> pair<MoveInfoV<typename Gnl::node_t>, int> {
     const auto it = max_element(
         this->gain_bucket.begin(), this->gain_bucket.end(),
         [](const auto &bckt1, const auto &bckt2) { return bckt1.get_max() < bckt2.get_max(); });
 
-    const auto to_part = gsl::narrow_cast<uint8_t>(distance(this->gain_bucket.begin(), it));
+    const auto to_part = static_cast<uint8_t>(distance(this->gain_bucket.begin(), it));
     const auto gainmax = it->get_max();
     auto &vlink = it->popleft();
     this->waiting_list.append(vlink);
@@ -123,7 +122,7 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t to_part)
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
-    gsl::span<const uint8_t> part, const MoveInfoV<typename Gnl::node_t> &move_info_v) {
+    std::span<const uint8_t> part, const MoveInfoV<typename Gnl::node_t> &move_info_v) {
     this->gain_calc.update_move_init();
     const auto &v = move_info_v.v;
     for (const auto &net : this->hyprgraph.gr[move_info_v.v]) {
@@ -163,7 +162,7 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_2pin_net(
-    gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) {
+    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) {
     // const auto [w, delta_gain_w] =
     //     this->gain_calc.update_move_2pin_net(part, move_info);
     const auto w = this->gain_calc.update_move_2pin_net(part, move_info);
@@ -180,7 +179,7 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_2pin_net(
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
-    gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) {
+    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) {
     // uint8_t stack_buf[8192];
     // FMPmr::monotonic_buffer_resource rsrc(stack_buf, sizeof stack_buf);
     // auto idx_vec = FMPmr::vector<typename Gnl::node_t>(&rsrc);
@@ -213,7 +212,7 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
-    gsl::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) {
+    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) {
     const auto delta_gain = this->gain_calc.update_move_general_net(part, move_info);
 
     auto dGw_it = delta_gain.begin();

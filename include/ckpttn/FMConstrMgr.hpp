@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cinttypes>  // for uint8_t
-#include <gsl/span>   // for span
+#include <span>   // for span
 #include <vector>     // for vector
 
 // #include "moveinfo.hpp"  // for MoveInfo
@@ -60,7 +60,7 @@ template <typename Gnl> class FMConstrMgr {
      *
      * @param[in] part The partition information to initialize the FMConstrMgr with.
      */
-    auto init(gsl::span<const std::uint8_t> part) -> void;
+    auto init(std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Check if the proposed move of the given nodes can be legally performed, and if so,

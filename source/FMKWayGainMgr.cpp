@@ -5,7 +5,7 @@
 #include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc
 #include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr, move_info_v
 #include <ckpttn/FMPmrConfig.hpp>     // for pmr...
-#include <gsl/span>                   // for span
+#include <span>                   // for span
 #include <vector>                     // for vector, __vector_base<>::v...
 
 #include "ckpttn/bpqueue.hpp"   // for BPQueue
@@ -21,7 +21,7 @@ using namespace std;
  * @param[in] part
  * @return int
  */
-template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(gsl::span<const uint8_t> part) -> int {
+template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(std::span<const uint8_t> part) -> int {
     auto total_cost = Base::init(part);
 
     for (auto &bckt : this->gain_bucket) {

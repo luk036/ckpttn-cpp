@@ -63,7 +63,7 @@ In conclusion, this library offers a versatile framework for addressing intricat
 Requirements:
 - This library requires C++20 or above.
 - This library requires standard library `<meomory_resource>`.
-- This library depends on GSL, XNetwork, Boost.
+- This library depends on XNetwork, Boost.
 
 ## ✨ Features
 

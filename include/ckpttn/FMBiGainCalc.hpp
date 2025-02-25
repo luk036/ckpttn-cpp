@@ -2,7 +2,7 @@
 
 // #include <cstddef>   // for byte
 #include <cstdint>   // for uint8_t
-#include <gsl/span>  // for span
+#include <span>  // for span
 #include <utility>   // for pair
 #include <vector>    // for vector
 
@@ -66,7 +66,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] part The partition information.
      * @return The total cost of the initial partition.
      */
-    auto init(gsl::span<const std::uint8_t> part) -> int {
+    auto init(std::span<const std::uint8_t> part) -> int {
         this->total_cost = 0;
         for (auto &vlink : this->vertex_list) {
             vlink.data.second = 0U;
@@ -108,7 +108,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return The vertex that was moved.
      */
-    auto update_move_2pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
+    auto update_move_2pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
         -> node_t;
 
     /**
@@ -121,7 +121,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return A vector of integers representing the updated gain values for the net.
      */
-    auto update_move_3pin_net(gsl::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
+    auto update_move_3pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
         -> std::vector<int>;
 
     /**
@@ -134,7 +134,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return A vector of integers representing the updated gain values for the net.
      */
-    auto update_move_general_net(gsl::span<const std::uint8_t> part,
+    auto update_move_general_net(std::span<const std::uint8_t> part,
                                  const MoveInfo<node_t> &move_info) -> std::vector<int>;
 
   private:
@@ -190,7 +190,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain(const node_t &net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain(const node_t &net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a 2-pin net.
@@ -201,7 +201,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain_2pin_net(const node_t &net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_2pin_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a 3-pin net.
@@ -212,7 +212,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain_3pin_net(const node_t &net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_3pin_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a general net.
@@ -223,5 +223,5 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain_general_net(const node_t &net, gsl::span<const std::uint8_t> part) -> void;
+    auto _init_gain_general_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
 };

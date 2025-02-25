@@ -1,7 +1,7 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::AllSatisfied
 #include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
 #include <cstdint>                 // for uint8_t
-#include <gsl/span>                // for span
+#include <span>                // for span
 #include <memory>                  // for unique_ptr
 #include <py2cpp/set.hpp>          // for set
 #include <utility>                 // for pair
@@ -26,7 +26,7 @@ extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node
  * @return LegalCheck
  */
 template <typename Gnl, typename PartMgr>
-auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, gsl::span<std::uint8_t> part) -> LegalCheck {
+auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {
     using GainMgr = typename PartMgr::GainMgr_;
     using ConstrMgr = typename PartMgr::ConstrMgr_;
 
@@ -79,9 +79,9 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, gsl::span<std::uint8_t> pa
 template auto MLPartMgr::run_FMPartition<
     SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-    const SimpleNetlist &hyprgraph, gsl::span<std::uint8_t> part) -> LegalCheck;
+    const SimpleNetlist &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
 
 template auto MLPartMgr::run_FMPartition<
     SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
-    const SimpleNetlist &hyprgraph, gsl::span<std::uint8_t> part) -> LegalCheck;
+    const SimpleNetlist &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;

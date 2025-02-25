@@ -2,7 +2,6 @@
 #include <algorithm>                   // for min_element
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr, move_info_v
 #include <cstdint>                     // for uint8_t
-#include <gsl/util>                // for narrow_cast
 #include <iterator>                    // for distance
 #include <vector>                      // for vector
 
@@ -16,7 +15,7 @@
  */
 template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::uint8_t {
     auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
-    return gsl::narrow_cast<std::uint8_t>(std::distance(this->diff.cbegin(), it));
+    return static_cast<std::uint8_t>(std::distance(this->diff.cbegin(), it));
 }
 
 /**

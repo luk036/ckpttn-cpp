@@ -6,7 +6,7 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for FMConstrMgr, LegalCheck, move_info_v
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV
 #include <cmath>                   // for round
-#include <gsl/span>                // for span
+#include <span>                // for span
 #include <transrangers.hpp>
 #include <vector>  // for vector<>::iterator, vector
 
@@ -35,7 +35,7 @@ FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_
  *
  * @param[in] part
  */
-template <typename Gnl> void FMConstrMgr<Gnl>::init(gsl::span<const uint8_t> part) {
+template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> part) {
     fill(this->diff.begin(), this->diff.end(), 0);
     for (const auto &v : this->hyprgraph) {
         // auto weight_v = this->hyprgraph.get_module_weight(v);

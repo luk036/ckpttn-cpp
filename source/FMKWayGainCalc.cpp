@@ -11,7 +11,7 @@
 #include <ckpttn/moveinfo.hpp>        // for MoveInfo
 #include <ckpttn/robin.hpp>           // for fun::Robin<>...
 #include <cstddef>                    // for byte
-#include <gsl/span>                   // for span
+#include <span>                   // for span
 #include <initializer_list>           // for initial...
 #include <transrangers.hpp>           // for all, filter, zip2
 #include <transrangers_ext.hpp>       // for enumerate
@@ -29,7 +29,7 @@ using namespace transrangers;
  * @param[in] part
  */
 template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
-                                                             gsl::span<const uint8_t> part) {
+                                                             std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -59,7 +59,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
-                                              gsl::span<const uint8_t> part) {
+                                              std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
@@ -87,7 +87,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
-                                              gsl::span<const uint8_t> part) {
+                                              std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto w = *net_cur;
     const auto v = *++net_cur;
@@ -149,7 +149,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
-                                                 gsl::span<const uint8_t> part) {
+                                                 std::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
     //                                            sizeof StackBufLocal);
@@ -247,7 +247,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
  * @return ret_2pin_info
  */
 template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_2pin_net(gsl::span<const uint8_t> part,
+auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
                                                const MoveInfo<typename Gnl::node_t> &move_info) ->
     typename Gnl::node_t {
     // const auto& [net, v, from_part, to_part] = move_info;
@@ -313,7 +313,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gn
  * @return ret_info
  */
 template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
+auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
                                                const MoveInfo<typename Gnl::node_t> &move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
@@ -387,7 +387,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(gsl::span<const uint8_t> part,
  * @return ret_info
  */
 template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_general_net(gsl::span<const uint8_t> part,
+auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
                                                   const MoveInfo<typename Gnl::node_t> &move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, from_part, to_part] = move_info;

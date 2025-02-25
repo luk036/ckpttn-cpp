@@ -5,8 +5,8 @@
 // Snapshot in the form of "interface"???
 
 #include <cstdint>  // for uint8_t
-#include <gsl/span>
-#include <gsl/span>  // for span
+#include <span>
+#include <span>  // for span
 #include <vector>    // for vector
 // #include <xnetwork/classes/graph.hpp>
 
@@ -84,7 +84,7 @@ class PartMgrBase {
      *
      * @param[in,out] part
      */
-    void init(gsl::span<std::uint8_t> part);
+    void init(std::span<std::uint8_t> part);
 
     /**
      * @brief
@@ -92,14 +92,14 @@ class PartMgrBase {
      * @param[in,out] part
      * @return LegalCheck
      */
-    auto legalize(gsl::span<std::uint8_t> part) -> LegalCheck;
+    auto legalize(std::span<std::uint8_t> part) -> LegalCheck;
 
     /**
      * @brief
      *
      * @param[in,out] part
      */
-    void optimize(gsl::span<std::uint8_t> part);
+    void optimize(std::span<std::uint8_t> part);
 
   private:
     /**
@@ -107,7 +107,7 @@ class PartMgrBase {
      *
      * @param[in,out] part
      */
-    void _optimize_1pass(gsl::span<std::uint8_t> part);
+    void _optimize_1pass(std::span<std::uint8_t> part);
 
     /**
      * @brief
@@ -115,7 +115,7 @@ class PartMgrBase {
      * @param[in] part
      * @return std::vector<std::uint8_t>
      */
-    auto take_snapshot(gsl::span<const std::uint8_t> part) -> std::vector<std::uint8_t> {
+    auto take_snapshot(std::span<const std::uint8_t> part) -> std::vector<std::uint8_t> {
         // const auto N = part.size();
         // auto snapshot = std::vector<std::uint8_t>(N, 0U);
         // // snapshot.reserve(N);
@@ -133,7 +133,7 @@ class PartMgrBase {
      * @param[in] snapshot
      * @param[in,out] part
      */
-    auto restore_part(const std::vector<std::uint8_t> &snapshot, gsl::span<std::uint8_t> part)
+    auto restore_part(const std::vector<std::uint8_t> &snapshot, std::span<std::uint8_t> part)
         -> void {
         // std::copy(snapshot.begin(), snapshot.end(), part.begin());
         const auto N = part.size();

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>   // for uint8_t
-#include <gsl/span>  // for span
+#include <span>  // for span
 #include <vector>    // for vector
 
 #include "FMConstrMgr.hpp"  // for FMConstrMgr, FMConstrMgr::node_t, Lega...
@@ -43,7 +43,7 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
      *
      * @param[in] part A span of the partition indices for each node.
      */
-    auto init(gsl::span<const std::uint8_t> part) -> void {
+    auto init(std::span<const std::uint8_t> part) -> void {
         FMConstrMgr<Gnl>::init(part);
         auto it = this->diff.begin();
         for (auto &il : this->illegal) {
