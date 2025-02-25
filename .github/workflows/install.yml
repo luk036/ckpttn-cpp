@@ -26,13 +26,13 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
-      - name: Before Install
-        run: |
-          sudo apt-get install g++-10
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90
+      # - name: Before Install
+      #   run: |
+      #     sudo apt-get install g++-10
+      #     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90
 
-      - name: install dependency
-        run: sudo apt-get install libboost-dev libboost-container-dev
+      # - name: install dependency
+      #   run: sudo apt-get install libboost-dev libboost-container-dev
 
       - name: build and install library
         run: |
