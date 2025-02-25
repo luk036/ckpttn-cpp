@@ -100,7 +100,7 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a3125106df643e8aa51cabdbd447d6e14" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab3f96bed37058e80e3d602022821e03a" class="m-doc">init</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
             <dd>Initializes the <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> with the given partition information.</dd>
             <dt>
@@ -112,7 +112,7 @@
             </dt>
             <dd>Checks if all the gain buckets are empty.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a909457628df141b9fa6c0170e12a14e8" class="m-doc">select</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt; -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab6f86fbe74a542914da92b4d23e7b001" class="m-doc">select</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt; -&gt; auto</span>
             </dt>
             <dd>Selects a set of moves to perform on the given partition.</dd>
             <dt>
@@ -120,7 +120,7 @@
             </dt>
             <dd>Selects a node to move to the given partition.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae046ad9d3ff43dc78d85f1f085f1aa68" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#a2bd174dba2ae75dc5a57e46cacc2e265" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;node_t&gt;&amp; move_info_v) -&gt; void -&gt; auto</span>
             </dt>
             <dd>Updates the gain information for the given set of moves.</dd>
@@ -183,12 +183,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a3125106df643e8aa51cabdbd447d6e14"><div>
+          <section class="m-doc-details" id="ab3f96bed37058e80e3d602022821e03a"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl, typename GainCalc, class Derived&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3125106df643e8aa51cabdbd447d6e14" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
+              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab3f96bed37058e80e3d602022821e03a" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
             <p>Initializes the <a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a> with the given partition information.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -252,12 +252,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a909457628df141b9fa6c0170e12a14e8"><div>
+          <section class="m-doc-details" id="ab6f86fbe74a542914da92b4d23e7b001"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl, typename GainCalc, class Derived&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a909457628df141b9fa6c0170e12a14e8" class="m-doc-self">select</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt;</span></span>
+              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab6f86fbe74a542914da92b4d23e7b001" class="m-doc-self">select</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt;</span></span>
             </h3>
             <p>Selects a set of moves to perform on the given partition.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -304,12 +304,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ae046ad9d3ff43dc78d85f1f085f1aa68"><div>
+          <section class="m-doc-details" id="a2bd174dba2ae75dc5a57e46cacc2e265"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl, typename GainCalc, class Derived&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae046ad9d3ff43dc78d85f1f085f1aa68" class="m-doc-self">update_move</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2bd174dba2ae75dc5a57e46cacc2e265" class="m-doc-self">update_move</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;node_t&gt;&amp; move_info_v) -&gt; void</span></span>
             </h3>
             <p>Updates the gain information for the given set of moves.</p>

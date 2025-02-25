@@ -102,7 +102,7 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a974a185ef0db3151095a784f61a05a88" class="m-doc">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a578a07f1ae590558ee2b18f0eaae11a4" class="m-doc">init</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; int -&gt; auto</span>
             </dt>
             <dd>Initializes the <a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a> object.</dd>
             <dt>
@@ -110,7 +110,7 @@
             </dt>
             <dd>Resets the delta gain vector to 0.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a79227e80ca937abb2e8cbc7e36fb9ee4" class="m-doc">update_move_2pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#aeb888f79385298896892fe102b0acf3c" class="m-doc">update_move_2pin_net</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; node_t -&gt; auto</span>
             </dt>
             <dd>Updates the gain for a 2-pin net after a move.</dd>
@@ -120,12 +120,12 @@
             </dt>
             <dd>Initializes the index vector for a given vertex and net.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a4364a7c009b9bc14336f392e98b56bcf" class="m-doc">update_move_3pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#a4c42994203bfea5a5f5d0ca85a3e9e64" class="m-doc">update_move_3pin_net</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info -&gt; auto</span>
             </dt>
             <dd>Updates the gain for a 3-pin net after a move.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad2030ecbbd06752c12d7f961ba700e5d" class="m-doc">update_move_general_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto <a href="#a89ac876d792f16a47000606e3d4b9283" class="m-doc">update_move_general_net</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info -&gt; auto</span>
             </dt>
             <dd>Updates the gain for a general net after a move.</dd>
@@ -175,12 +175,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a974a185ef0db3151095a784f61a05a88"><div>
+          <section class="m-doc-details" id="a578a07f1ae590558ee2b18f0eaae11a4"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a974a185ef0db3151095a784f61a05a88" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a578a07f1ae590558ee2b18f0eaae11a4" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; int</span></span>
             </h3>
             <p>Initializes the <a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -212,12 +212,12 @@
             <p>Resets the delta gain vector to 0.</p>
 <p>This function is used to initialize the delta gain vector before updating the gains for a move.</p>
           </div></section>
-          <section class="m-doc-details" id="a79227e80ca937abb2e8cbc7e36fb9ee4"><div>
+          <section class="m-doc-details" id="aeb888f79385298896892fe102b0acf3c"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79227e80ca937abb2e8cbc7e36fb9ee4" class="m-doc-self">update_move_2pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb888f79385298896892fe102b0acf3c" class="m-doc-self">update_move_2pin_net</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; node_t</span></span>
             </h3>
             <p>Updates the gain for a 2-pin net after a move.</p>
@@ -270,12 +270,12 @@
             </table>
 <p>This function is used to initialize the index vector for a vertex within a net. It is likely an implementation detail of the <a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a> class.</p>
           </div></section>
-          <section class="m-doc-details" id="a4364a7c009b9bc14336f392e98b56bcf"><div>
+          <section class="m-doc-details" id="a4c42994203bfea5a5f5d0ca85a3e9e64"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4364a7c009b9bc14336f392e98b56bcf" class="m-doc-self">update_move_3pin_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4c42994203bfea5a5f5d0ca85a3e9e64" class="m-doc-self">update_move_3pin_net</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info</span></span>
             </h3>
             <p>Updates the gain for a 3-pin net after a move.</p>
@@ -302,12 +302,12 @@
             </table>
 <p>This function updates the gain for a 3-pin net after a move has been performed. It takes the current partition and the move information as input, and returns the updated gain for the net.</p>
           </div></section>
-          <section class="m-doc-details" id="ad2030ecbbd06752c12d7f961ba700e5d"><div>
+          <section class="m-doc-details" id="a89ac876d792f16a47000606e3d4b9283"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad2030ecbbd06752c12d7f961ba700e5d" class="m-doc-self">update_move_general_net</a>(</span><span class="m-doc-wrap">gsl::span&lt;const std::uint8_t&gt; part,
+              <span class="m-doc-wrap-bumper">auto FMKWayGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a89ac876d792f16a47000606e3d4b9283" class="m-doc-self">update_move_general_net</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part,
               const <a href="structMoveInfo.html" class="m-doc">MoveInfo</a>&lt;node_t&gt;&amp; move_info) -&gt; ret_info</span></span>
             </h3>
             <p>Updates the gain for a general net after a move.</p>
