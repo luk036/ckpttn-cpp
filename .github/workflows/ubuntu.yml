@@ -27,13 +27,13 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
-      - name: Before Install
-        run: |
-          sudo apt-get install g++-10
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90
+      # - name: Before Install
+      #   run: |
+      #     sudo apt-get install g++-10
+      #     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90
 
       - name: install dependency
-        run: sudo apt-get install lcov libboost-dev libboost-container-dev
+        run: sudo apt-get install lcov
 
       - name: configure
         run: cmake -S. -Bbuild -DENABLE_TEST_COVERAGE=1 -DCMAKE_BUILD_TYPE=Debug
