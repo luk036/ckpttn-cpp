@@ -1,12 +1,12 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 // #include <__config>                // for std
-#include <string_view>  // for std::string_view
-#include <ckpttn/HierNetlist.hpp>         // for HierNetlist, SimpleHierNetlist
-#include <ckpttn/netlist.hpp>             // for Netlist, SimpleNetlist
-#include <cstdint>                        // for uint8_t
-#include <memory>                         // for unique_ptr
-#include <py2cpp/set.hpp>                 // for set
-#include <vector>                         // for vector, operator==
+#include <ckpttn/HierNetlist.hpp>  // for HierNetlist, SimpleHierNetlist
+#include <ckpttn/netlist.hpp>      // for Netlist, SimpleNetlist
+#include <cstdint>                 // for uint8_t
+#include <memory>                  // for unique_ptr
+#include <py2cpp/set.hpp>          // for set
+#include <string_view>             // for std::string_view
+#include <vector>                  // for vector, operator==
 
 using namespace std;
 
@@ -18,8 +18,8 @@ extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
-extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node_t> &)
-    -> unique_ptr<SimpleHierNetlist>;
+extern auto create_contracted_subgraph(const SimpleNetlist &,
+                                       const py::set<node_t> &) -> unique_ptr<SimpleHierNetlist>;
 
 //
 // Primal-dual algorithm for minimum vertex cover problem

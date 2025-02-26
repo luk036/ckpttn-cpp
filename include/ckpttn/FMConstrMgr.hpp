@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cinttypes>  // for uint8_t
-#include <span>   // for span
+#include <span>       // for span
 #include <vector>     // for vector
 
 // #include "moveinfo.hpp"  // for MoveInfo

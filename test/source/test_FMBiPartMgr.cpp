@@ -1,11 +1,11 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 // #include <__config>                  // for std
-#include <string_view>  // for std::string_view
-#include <ckpttn/FMBiConstrMgr.hpp>       // for FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>         // for FMBiGainMgr
-#include <ckpttn/FMPartMgr.hpp>           // for FMPartMgr
-#include <cstdint>                        // for uint8_t
-#include <vector>                         // for vector
+#include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
+#include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
+#include <cstdint>                   // for uint8_t
+#include <string_view>               // for std::string_view
+#include <vector>                    // for vector
 
 #include "ckpttn/netlist.hpp"  // for SimpleNetlist
 

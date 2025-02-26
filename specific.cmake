@@ -1,12 +1,9 @@
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-# find_package(Boost REQUIRED COMPONENTS container)
-# if(Boost_FOUND)
-#   message(STATUS "Found boost: ${Boost_LIBRARIES}")
-#   # add_library(Boost::boost INTERFACE IMPORTED GLOBAL) target_include_directories(Boost::boost
-#   # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
-# endif()
+# find_package(Boost REQUIRED COMPONENTS container) if(Boost_FOUND) message(STATUS "Found boost:
+# ${Boost_LIBRARIES}") # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
+# target_include_directories(Boost::boost # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS}) endif()
 
 CPMAddPackage(
   NAME fmt
@@ -16,6 +13,7 @@ CPMAddPackage(
 )
 
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
+CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC add_compile_options(-fcoroutines)
@@ -42,10 +40,6 @@ CPMAddPackage(
 )
 
 set(SPECIFIC_LIBS
-    XNetwork::XNetwork
-    Py2Cpp::Py2Cpp
-    # Boost::container
-    # Boost::boost
-    Threads::Threads
-    fmt::fmt
+    XNetwork::XNetwork Py2Cpp::Py2Cpp
+    Threads::Threads fmt::fmt Microsoft.GSL::GSL
 )

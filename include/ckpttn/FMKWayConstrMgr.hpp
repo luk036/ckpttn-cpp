@@ -1,8 +1,8 @@
 #pragma once
 
-#include <cstdint>   // for uint8_t
-#include <span>  // for span
-#include <vector>    // for vector
+#include <cstdint>  // for uint8_t
+#include <span>     // for span
+#include <vector>   // for vector
 
 #include "FMConstrMgr.hpp"  // for FMConstrMgr, FMConstrMgr::node_t, Lega...
 // #include "moveinfo.hpp"     // for MoveInfo

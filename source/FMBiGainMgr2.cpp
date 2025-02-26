@@ -3,9 +3,9 @@
 // #include <__hash_table>             // for __hash_const_iterator, operator!=
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item
 #include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, part, FMBiGainMgr::Base
-#include <span>                 // for span
 #include <py2cpp/range.hpp>         // for _iterator
 #include <py2cpp/set.hpp>           // for set
+#include <span>                     // for span
 #include <vector>                   // for vector
 
 #include "ckpttn/bpqueue.hpp"  // for BPQueue

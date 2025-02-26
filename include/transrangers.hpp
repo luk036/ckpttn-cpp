@@ -34,7 +34,9 @@
 
 namespace transrangers {
 
-    template <typename Cursor, typename F> struct ranger_class : F { using cursor = Cursor; };
+    template <typename Cursor, typename F> struct ranger_class : F {
+        using cursor = Cursor;
+    };
 
     template <typename Cursor, typename F> auto ranger(F f) { return ranger_class<Cursor, F>{f}; }
 

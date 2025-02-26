@@ -1,12 +1,12 @@
 #include <doctest/doctest.h>  // for TestCase, TEST_CASE
 // #include <__config>                 // for std
 // #include <__hash_table>             // for operator!=
-#include <string_view>  // for std::string_view
-#include <ckpttn/netlist.hpp>             // for Netlist, Netlist<>::nodeview_t
-#include <ckpttn/netlist_algo.hpp>        // for min_maximal_matching, min_vertex_...
-#include <py2cpp/dict.hpp>                // for dict
-#include <py2cpp/range.hpp>               // for _iterator, iterable_wrapper
-#include <py2cpp/set.hpp>                 // for set
+#include <ckpttn/netlist.hpp>       // for Netlist, Netlist<>::nodeview_t
+#include <ckpttn/netlist_algo.hpp>  // for min_maximal_matching, min_vertex_...
+#include <py2cpp/dict.hpp>          // for dict
+#include <py2cpp/range.hpp>         // for _iterator, iterable_wrapper
+#include <py2cpp/set.hpp>           // for set
+#include <string_view>              // for std::string_view
 
 using namespace std;
 

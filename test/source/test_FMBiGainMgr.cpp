@@ -3,7 +3,7 @@
 #include <ckpttn/FMBiGainMgr.hpp>  // for FMBiGainMgr
 #include <ckpttn/netlist.hpp>      // for SimpleNetlist
 #include <cstdint>                 // for uint8_t
-#include <span>                // for span
+#include <span>                    // for span
 #include <tuple>                   // for tuple_element<>::type
 #include <vector>                  // for vector
 

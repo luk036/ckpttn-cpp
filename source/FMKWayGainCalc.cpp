@@ -11,8 +11,8 @@
 #include <ckpttn/moveinfo.hpp>        // for MoveInfo
 #include <ckpttn/robin.hpp>           // for fun::Robin<>...
 #include <cstddef>                    // for byte
-#include <span>                   // for span
 #include <initializer_list>           // for initial...
+#include <span>                       // for span
 #include <transrangers.hpp>           // for all, filter, zip2
 #include <transrangers_ext.hpp>       // for enumerate
 #include <type_traits>                // for swap
@@ -192,8 +192,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
             });
         } else if (c == 1) {
             auto it = this->hyprgraph.gr[net].begin();
-            for (; part[*it] != k; ++it)
-                ;
+            for (; part[*it] != k; ++it);
             this->_increase_gain(*it, part[*it], weight);
             // auto rng_new = all(this->hyprgraph.gr[net]);  // reinitialize after breaking (fix
             //                                               // for Termux's clang 16)
@@ -312,10 +311,9 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gn
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
-                                               const MoveInfo<typename Gnl::node_t> &move_info)
-    -> FMKWayGainCalc<Gnl>::ret_info {
+template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
+    std::span<const uint8_t> part,
+    const MoveInfo<typename Gnl::node_t> &move_info) -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
     auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
@@ -386,10 +384,9 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
-                                                  const MoveInfo<typename Gnl::node_t> &move_info)
-    -> FMKWayGainCalc<Gnl>::ret_info {
+template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_general_net(
+    std::span<const uint8_t> part,
+    const MoveInfo<typename Gnl::node_t> &move_info) -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, from_part, to_part] = move_info;
     // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
@@ -430,8 +427,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
         } else if (num[l] == 1) {
             auto it1 = this->idx_vec.begin();
             auto it2 = delta_gain.begin();
-            for (; part[*it1] != l; ++it1, ++it2)
-                ;
+            for (; part[*it1] != l; ++it1, ++it2);
             auto rng = all(*it2);
             rng([&gain](const auto &dgc) {
                 *dgc += gain;

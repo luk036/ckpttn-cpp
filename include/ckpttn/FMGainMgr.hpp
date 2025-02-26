@@ -2,7 +2,7 @@
 
 // #include <algorithm> // for all_of
 #include <cinttypes>  // for uint8_t, uint32_t
-#include <span>   // for span
+#include <span>       // for span
 #include <tuple>      // for tuple
 #include <utility>    // for pair
 #include <vector>     // for vector<>::const_iterator, vector
@@ -97,8 +97,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info_v The set of moves to update the gain information for.
      */
-    auto update_move(std::span<const std::uint8_t> part, const MoveInfoV<node_t> &move_info_v)
-        -> void;
+    auto update_move(std::span<const std::uint8_t> part,
+                     const MoveInfoV<node_t> &move_info_v) -> void;
 
   private:
     /**

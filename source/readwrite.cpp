@@ -11,8 +11,8 @@
 // #include <__config>      // for std
 // #include <__hash_table>  // for __hash_const_iterator, operator!=
 #include <string_view>  // for std::string_view
-#include <type_traits>                    // for move
-#include <vector>                         // for vector
+#include <type_traits>  // for move
+#include <vector>       // for vector
 
 // using graph_t =
 //     boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;

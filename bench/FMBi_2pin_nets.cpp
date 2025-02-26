@@ -1,9 +1,9 @@
-#include <string_view>  // for std::string_view
-#include <ckpttn/FMBiConstrMgr.hpp>       // for FMBiConstrMgr
-#include <ckpttn/FMBiGainMgr.hpp>         // for FMBiGainMgr
-#include <ckpttn/FMPartMgr.hpp>           // for FMPartMgr
-#include <cstdint>                        // for uint8_t
-#include <vector>                         // for vector
+#include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
+#include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
+#include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
+#include <cstdint>                   // for uint8_t
+#include <string_view>               // for std::string_view
+#include <vector>                    // for vector
 
 #include "benchmark/benchmark.h"    // for BENCHMARK, State, BENCHMARK_MAIN
 #include "ckpttn/FMBiGainCalc.hpp"  // for FMBiGainCalc

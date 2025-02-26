@@ -6,7 +6,7 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for FMConstrMgr, LegalCheck, move_info_v
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV
 #include <cmath>                   // for round
-#include <span>                // for span
+#include <span>                    // for span
 #include <transrangers.hpp>
 #include <vector>  // for vector<>::iterator, vector
 
@@ -50,9 +50,8 @@ template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> par
  * @param[in] move_info_v
  * @return LegalCheck
  */
-template <typename Gnl>
-auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t> &move_info_v)
-    -> LegalCheck {
+template <typename Gnl> auto FMConstrMgr<Gnl>::check_legal(
+    const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck {
     this->weight = this->hyprgraph.get_module_weight(move_info_v.v);
     const auto diffFrom = this->diff[move_info_v.from_part];
     if (diffFrom < this->lowerbound + this->weight) {
@@ -73,9 +72,8 @@ auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t> &move_i
  * @return true
  * @return false
  */
-template <typename Gnl>
-auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t> &move_info_v)
-    -> bool {
+template <typename Gnl> auto FMConstrMgr<Gnl>::check_constraints(
+    const MoveInfoV<typename Gnl::node_t> &move_info_v) -> bool {
     // const auto& [v, from_part, to_part] = move_info_v;
 
     this->weight = this->hyprgraph.get_module_weight(move_info_v.v);

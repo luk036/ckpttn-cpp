@@ -5,7 +5,7 @@
 #include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc
 #include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr, move_info_v
 #include <ckpttn/FMPmrConfig.hpp>     // for pmr...
-#include <span>                   // for span
+#include <span>                       // for span
 #include <vector>                     // for vector, __vector_base<>::v...
 
 #include "ckpttn/bpqueue.hpp"   // for BPQueue

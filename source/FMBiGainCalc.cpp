@@ -1,16 +1,16 @@
 // #include <__config>                    // for std
-#include <array>                           // for array
+#include <array>  // for array
 // #include <boost/container/pmr/vector.hpp>  // for vector
 // #include <boost/container/vector.hpp>      // for operator!=, vec_iterator
-#include <ckpttn/FMBiGainCalc.hpp>         // for FMBiGainCalc, part, net
-#include <ckpttn/FMPmrConfig.hpp>          // for FM_MAX_DEGREE
-#include <ckpttn/moveinfo.hpp>             // for MoveInfo
-#include <cstddef>                         // for size_t
-#include <cstdint>                         // for uint8_t
-#include <span>                        // for span
-#include <initializer_list>                // for initializer_list
-#include <transrangers.hpp>                // for all, filter, zip2
-#include <vector>                          // for vector
+#include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, part, net
+#include <ckpttn/FMPmrConfig.hpp>   // for FM_MAX_DEGREE
+#include <ckpttn/moveinfo.hpp>      // for MoveInfo
+#include <cstddef>                  // for size_t
+#include <cstdint>                  // for uint8_t
+#include <initializer_list>         // for initializer_list
+#include <span>                     // for span
+#include <transrangers.hpp>         // for all, filter, zip2
+#include <vector>                   // for vector
 
 using namespace std;
 using namespace transrangers;
@@ -132,8 +132,7 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
             });
         } else if (num[k] == 1) {
             auto it = this->hyprgraph.gr[net].begin();
-            for (; part[*it] != k; ++it)
-                ;
+            for (; part[*it] != k; ++it);
             this->_increase_gain(*it, weight);
         }
     }
@@ -188,10 +187,8 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
-                                             const MoveInfo<typename Gnl::node_t> &move_info)
-    -> vector<int> {
+template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_3pin_net(
+    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
     // const auto& [net, v, from_part, _] = move_info;
 
     auto delta_gain = vector<int>{0, 0};
@@ -218,10 +215,8 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl>
-auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
-                                                const MoveInfo<typename Gnl::node_t> &move_info)
-    -> vector<int> {
+template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
+    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};
     auto rng1 = all(this->idx_vec);
@@ -246,8 +241,7 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
         } else if (num[l_part] == 1) {
             auto it1 = this->idx_vec.begin();
             auto it2 = delta_gain.begin();
-            for (; part[*it1] != l_part; ++it1, ++it2)
-                ;
+            for (; part[*it1] != l_part; ++it1, ++it2);
             *it2 += gain;
 
             // rng3([&](const auto &zc) {

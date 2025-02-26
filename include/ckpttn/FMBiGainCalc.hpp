@@ -1,10 +1,10 @@
 #pragma once
 
 // #include <cstddef>   // for byte
-#include <cstdint>   // for uint8_t
-#include <span>  // for span
-#include <utility>   // for pair
-#include <vector>    // for vector
+#include <cstdint>  // for uint8_t
+#include <span>     // for span
+#include <utility>  // for pair
+#include <vector>   // for vector
 
 #include "FMPmrConfig.hpp"
 #include "dllist.hpp"  // for Dllink
@@ -108,8 +108,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return The vertex that was moved.
      */
-    auto update_move_2pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> node_t;
+    auto update_move_2pin_net(std::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> node_t;
 
     /**
      * @brief Update the gain values for a 3-pin net during a move operation.
@@ -121,8 +121,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return A vector of integers representing the updated gain values for the net.
      */
-    auto update_move_3pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t> &move_info)
-        -> std::vector<int>;
+    auto update_move_3pin_net(std::span<const std::uint8_t> part,
+                              const MoveInfo<node_t> &move_info) -> std::vector<int>;
 
     /**
      * @brief Update the gain values for a general net during a move operation.

@@ -1,9 +1,9 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::AllSatisfied
 #include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
 #include <cstdint>                 // for uint8_t
-#include <span>                // for span
 #include <memory>                  // for unique_ptr
 #include <py2cpp/set.hpp>          // for set
+#include <span>                    // for span
 #include <utility>                 // for pair
 #include <vector>                  // for vector
 
