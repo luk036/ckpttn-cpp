@@ -1,14 +1,13 @@
 #pragma once
 
 // #include <algorithm> // for all_of
-#include <cinttypes>  // for uint8_t, uint32_t
-#include <span>       // for span
-#include <tuple>      // for tuple
-#include <utility>    // for pair
-#include <vector>     // for vector<>::const_iterator, vector
-
+#include <cinttypes>            // for uint8_t, uint32_t
 #include <mywheel/bpqueue.hpp>  // for BPQueue
 #include <mywheel/dllist.hpp>   // for Dllink
+#include <span>                 // for span
+#include <tuple>                // for tuple
+#include <utility>              // for pair
+#include <vector>               // for vector<>::const_iterator, vector
 
 template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;

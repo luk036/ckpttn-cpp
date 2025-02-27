@@ -41,6 +41,6 @@ template <typename Gnl> auto FMKWayConstrMgr<Gnl>::check_legal(
 }
 
 // Instantiation
-#include <ckpttn/netlist.hpp>  // for Netlist, SimpleNetlist
+#include <netlistx/netlist.hpp>  // for Netlist, SimpleNetlist
 
 template class FMKWayConstrMgr<SimpleNetlist>;

@@ -1,8 +1,8 @@
 #include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
-#include <ckpttn/netlist.hpp>          // for SimpleNetlist, index_t, Netlist
-#include <ckpttn/netlist_algo.hpp>     // for min_maximal_matching
 #include <cstdint>                     // for uint32_t
 #include <memory>                      // for unique_ptr, make_unique
+#include <netlistx/netlist.hpp>        // for SimpleNetlist, index_t, Netlist
+#include <netlistx/netlist_algo.hpp>   // for min_maximal_matching
 #include <py2cpp/dict.hpp>             // for dict, dict<>::Base
 #include <py2cpp/range.hpp>            // for _iterator, iterable_wrapper
 #include <py2cpp/set.hpp>              // for set

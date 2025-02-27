@@ -12,8 +12,7 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-# cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
-# CPMAddPackage("gh:microsoft/GSL@4.0.0")
+# cpmaddpackage("gh:ericniebler/range-v3#0.10.0") CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC add_compile_options(-fcoroutines)
@@ -40,13 +39,19 @@ CPMAddPackage(
 )
 
 CPMAddPackage(
+  NAME NetlistX
+  GIT_TAG 1.0
+  GITHUB_REPOSITORY luk036/netlistx-cpp
+  OPTIONS "INSTALL_ONLY ON" # create an installable target
+)
+
+CPMAddPackage(
   NAME MyWheel
   GIT_TAG 1.0.3
   GITHUB_REPOSITORY luk036/mywheel-cpp
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )
 
-set(SPECIFIC_LIBS
-    MyWheel::MyWheel XNetwork::XNetwork Py2Cpp::Py2Cpp
-    Threads::Threads fmt::fmt
+set(SPECIFIC_LIBS MyWheel::MyWheel NetlistX::NetlistX XNetwork::XNetwork Py2Cpp::Py2Cpp
+                  Threads::Threads fmt::fmt
 )

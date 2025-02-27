@@ -2,12 +2,12 @@
 #include <ckpttn/FMGainMgr.hpp>
 #include <ckpttn/FMPmrConfig.hpp>  // for FM_MAX_DEGREE
 #include <iterator>                // for distance
+#include <mywheel/bpqueue.hpp>     // for BPQueue
+#include <mywheel/dllist.hpp>      // for Dllink
 #include <transrangers.hpp>
 #include <type_traits>  // for is_base_of, integral_const...
 #include <vector>       // for vector<>::iterator, vector
 
-#include <mywheel/bpqueue.hpp>   // for BPQueue
-#include <mywheel/dllist.hpp>    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV, MoveInfo
 
 // using node_t = typename SimpleNetlist::node_t;
@@ -224,9 +224,8 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
 
 #include <ckpttn/FMBiGainCalc.hpp>     // for FMBiGainCalc
 #include <ckpttn/FMBiGainMgr.hpp>      // for FMBiGainMgr
+#include <netlistx/netlist.hpp>        // for Netlist, Netlist<>::node_t
 #include <xnetwork/classes/graph.hpp>  // for Graph
-
-#include "ckpttn/netlist.hpp"  // for Netlist, Netlist<>::node_t
 
 template class FMGainMgr<SimpleNetlist, FMBiGainCalc<SimpleNetlist>, FMBiGainMgr<SimpleNetlist>>;
 

@@ -1,8 +1,7 @@
 // #include <__config>  // for std
 #include <ckpttn/HierNetlist.hpp>
-#include <py2cpp/range.hpp>  // for _iterator, iterable_wrapper
-
-#include "ckpttn/netlist.hpp"  // for Netlist, Netlist<>::nodeview_t
+#include <netlistx/netlist.hpp>  // for Netlist, Netlist<>::nodeview_t
+#include <py2cpp/range.hpp>      // for _iterator, iterable_wrapper
 
 using namespace std;
 

@@ -1,15 +1,15 @@
 #pragma once
 
 // #include <algorithm>   // for fill
-#include <cstdint>      // for uint8_t
-#include <span>         // for span
-#include <type_traits>  // for move
-#include <utility>      // for pair
-#include <vector>       // for vector
-
-#include "FMPmrConfig.hpp"
+#include <cstdint>             // for uint8_t
 #include <mywheel/dllist.hpp>  // for Dllink
 #include <mywheel/robin.hpp>   // for fun::Robin<>...
+#include <span>                // for span
+#include <type_traits>         // for move
+#include <utility>             // for pair
+#include <vector>              // for vector
+
+#include "FMPmrConfig.hpp"
 
 // forward declare
 template <typename Gnl> class FMKWayGainMgr;

@@ -3,12 +3,11 @@
 // #include <__hash_table>             // for __hash_const_iterator, operator!=
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item
 #include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, part, FMBiGainMgr::Base
+#include <mywheel/bpqueue.hpp>      // for BPQueue
 #include <py2cpp/range.hpp>         // for _iterator
 #include <py2cpp/set.hpp>           // for set
 #include <span>                     // for span
 #include <vector>                   // for vector
-
-#include <mywheel/bpqueue.hpp>  // for BPQueue
 
 using namespace std;
 
@@ -37,6 +36,6 @@ template <typename Gnl> auto FMBiGainMgr<Gnl>::init(std::span<const uint8_t> par
 
 // instantiation
 
-#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
+#include <netlistx/netlist.hpp>  // for Netlist, SimpleNetlist
 
 template class FMBiGainMgr<SimpleNetlist>;

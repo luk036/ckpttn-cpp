@@ -173,7 +173,7 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(std::span<std::uint8_t> part
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
-#include <ckpttn/netlist.hpp>          // for SimpleNetlist, Netlist
+#include <netlistx/netlist.hpp>        // for SimpleNetlist, Netlist
 #include <xnetwork/classes/graph.hpp>
 
 template class PartMgrBase<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,

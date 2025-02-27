@@ -8,10 +8,10 @@
 #include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayG...
 #include <ckpttn/FMPmrConfig.hpp>     // for FM_MAX_...
 #include <ckpttn/moveinfo.hpp>        // for MoveInfo
-#include <mywheel/dllist.hpp>          // for Dllink
-#include <mywheel/robin.hpp>           // for fun::Robin<>...
 #include <cstddef>                    // for byte
 #include <initializer_list>           // for initial...
+#include <mywheel/dllist.hpp>         // for Dllink
+#include <mywheel/robin.hpp>          // for fun::Robin<>...
 #include <span>                       // for span
 #include <transrangers.hpp>           // for all, filter, zip2
 #include <transrangers_ext.hpp>       // for enumerate
@@ -455,9 +455,8 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_general_net(
 
 // instantiation
 
+#include <netlistx/netlist.hpp>        // for Netlist
 #include <py2cpp/set.hpp>              // for set
 #include <xnetwork/classes/graph.hpp>  // for Graph
-
-#include "ckpttn/netlist.hpp"  // for Netlist
 
 template class FMKWayGainCalc<SimpleNetlist>;

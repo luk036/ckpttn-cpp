@@ -4,7 +4,7 @@
 // Take a snapshot when a move make **negative** gain.
 // Snapshot in the form of "interface"???
 // #include "FMPartMgr.hpp" // import FMPartMgr
-// #include "netlist.hpp"
+// #include <netlistx/netlist.hpp>
 #include <cassert>
 #include <memory>  // std::unique_ptr
 #include <span>    // for span

@@ -2,13 +2,13 @@
 #include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
 #include <cstdint>                 // for uint8_t
 #include <memory>                  // for unique_ptr
+#include <netlistx/netlist.hpp>    // for SimpleNetlist
 #include <py2cpp/set.hpp>          // for set
 #include <span>                    // for span
 #include <utility>                 // for pair
 #include <vector>                  // for vector
 
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
-#include "ckpttn/netlist.hpp"      // for SimpleNetlist
 // #include <iostream>
 
 using node_t = typename SimpleNetlist::node_t;

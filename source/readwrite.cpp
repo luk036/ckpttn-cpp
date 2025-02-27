@@ -1,9 +1,9 @@
 #include <cctype>                      // for isspace, isdigit
-#include <ckpttn/netlist.hpp>          // for SimpleNetlist, index_t, Netlist
 #include <cstdint>                     // for uint32_t
 #include <cstdlib>                     // for exit, size_t
 #include <fstream>                     // for operator<<, basic_ostream, cha...
 #include <iostream>                    // for cerr
+#include <netlistx/netlist.hpp>        // for SimpleNetlist, index_t, Netlist
 #include <py2cpp/range.hpp>            // for _iterator
 #include <py2cpp/set.hpp>              // for set
 #include <xnetwork/classes/graph.hpp>  // for Graph

@@ -2,12 +2,12 @@
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 #include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
 #include <cstdint>                   // for uint8_t
+#include <netlistx/netlist.hpp>      // for SimpleNetlist
 #include <string_view>               // for std::string_view
 #include <vector>                    // for vector
 
 #include "benchmark/benchmark.h"    // for BENCHMARK, State, BENCHMARK_MAIN
 #include "ckpttn/FMBiGainCalc.hpp"  // for FMBiGainCalc
-#include "ckpttn/netlist.hpp"       // for SimpleNetlist
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf

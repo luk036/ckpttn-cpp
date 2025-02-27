@@ -1,17 +1,16 @@
 #include <algorithm>
-#include <ckpttn/HierNetlist.hpp>   // for SimpleHierNetlist, HierNetlist
-#include <ckpttn/netlist.hpp>       // for SimpleNetlist, index_t, Netlist
-#include <ckpttn/netlist_algo.hpp>  // for min_maximal_matching
-#include <cstdint>                  // for uint32_t
+#include <ckpttn/HierNetlist.hpp>  // for SimpleHierNetlist, HierNetlist
+#include <cstdint>                 // for uint32_t
 #include <iostream>
-#include <memory>            // for unique_ptr, make_unique
-#include <py2cpp/dict.hpp>   // for dict, dict<>::Base
-#include <py2cpp/range.hpp>  // for _iterator, iterable_wrapper
-#include <py2cpp/set.hpp>    // for set
-#include <transrangers.hpp>  // for accumlate, transform, all
-#include <type_traits>       // for move
-#include <unordered_map>     // for __hash_map_iterator, operator!=
-#include <unordered_map>
+#include <memory>                     // for unique_ptr, make_unique
+#include <netlistx/netlist.hpp>       // for SimpleNetlist, index_t, Netlist
+#include <netlistx/netlist_algo.hpp>  // for min_maximal_matching
+#include <py2cpp/dict.hpp>            // for dict, dict<>::Base
+#include <py2cpp/range.hpp>           // for _iterator, iterable_wrapper
+#include <py2cpp/set.hpp>             // for set
+#include <transrangers.hpp>           // for accumlate, transform, all
+#include <type_traits>                // for move
+#include <unordered_map>              // for __hash_map_iterator, operator!=
 #include <unordered_set>
 #include <utility>  // for get
 #include <vector>   // for vector<>::iterator, vector

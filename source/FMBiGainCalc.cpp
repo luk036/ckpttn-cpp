@@ -260,9 +260,8 @@ template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
 
 // instantiation
 
+#include <netlistx/netlist.hpp>        // for Netlist, SimpleNetlist
 #include <py2cpp/set.hpp>              // for set
 #include <xnetwork/classes/graph.hpp>  // for Graph
-
-#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
 
 template class FMBiGainCalc<SimpleNetlist>;

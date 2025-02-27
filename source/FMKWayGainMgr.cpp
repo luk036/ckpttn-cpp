@@ -5,13 +5,13 @@
 #include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayGainCalc
 #include <ckpttn/FMKWayGainMgr.hpp>   // for FMKWayGainMgr, move_info_v
 #include <ckpttn/FMPmrConfig.hpp>     // for pmr...
+#include <mywheel/bpqueue.hpp>        // for BPQueue
+#include <mywheel/dllist.hpp>         // for Dllink
+#include <mywheel/robin.hpp>          // for fun::Robin<>::iterable_wrapper
 #include <span>                       // for span
 #include <vector>                     // for vector, __vector_base<>::v...
 
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV
-#include <mywheel/bpqueue.hpp>   // for BPQueue
-#include <mywheel/dllist.hpp>    // for Dllink
-#include <mywheel/robin.hpp>     // for fun::Robin<>::iterable_wrapper
 
 using namespace std;
 
@@ -68,9 +68,8 @@ void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t> &mo
 
 // instantiation
 
-#include <py2cpp/range.hpp>  // for _iterator
-#include <py2cpp/set.hpp>    // for set
-
-#include "ckpttn/netlist.hpp"  // for Netlist, SimpleNetlist
+#include <netlistx/netlist.hpp>  // for Netlist, SimpleNetlist
+#include <py2cpp/range.hpp>      // for _iterator
+#include <py2cpp/set.hpp>        // for set
 
 template class FMKWayGainMgr<SimpleNetlist>;

@@ -4,10 +4,9 @@
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 #include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
 #include <cstdint>                   // for uint8_t
+#include <netlistx/netlist.hpp>      // for SimpleNetlist
 #include <string_view>               // for std::string_view
 #include <vector>                    // for vector
-
-#include "ckpttn/netlist.hpp"  // for SimpleNetlist
 
 using namespace std;
 

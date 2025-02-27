@@ -4,12 +4,12 @@
 #include <ckpttn/MLPartMgr.hpp>  // for MLPartMgr
 #include <cstdint>               // for uint8_t
 #include <iostream>              // for operator<<, basic_ostream, endl, cout
+#include <netlistx/netlist.hpp>  // for Netlist
 #include <ratio>                 // for ratio
 #include <string_view>           // for std::string_view
 #include <vector>                // for vector
 
 #include "ckpttn/PartMgrBase.hpp"  // for SimpleNetlist
-#include "ckpttn/netlist.hpp"      // for Netlist
 
 template <typename Gnl> class FMBiConstrMgr;
 template <typename Gnl> class FMBiGainMgr;
