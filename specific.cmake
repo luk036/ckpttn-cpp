@@ -13,7 +13,7 @@ CPMAddPackage(
 )
 
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0")
-CPMAddPackage("gh:microsoft/GSL@4.0.0")
+# CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC add_compile_options(-fcoroutines)
@@ -34,12 +34,12 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME XNetwork
-  GIT_TAG 1.6.9
+  GIT_TAG 1.6.10
   GITHUB_REPOSITORY luk036/xnetwork-cpp
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )
 
 set(SPECIFIC_LIBS
     XNetwork::XNetwork Py2Cpp::Py2Cpp
-    Threads::Threads fmt::fmt Microsoft.GSL::GSL
+    Threads::Threads fmt::fmt
 )
