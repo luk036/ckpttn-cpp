@@ -8,7 +8,7 @@
 #include <span>                     // for span
 #include <vector>                   // for vector
 
-#include "ckpttn/bpqueue.hpp"  // for BPQueue
+#include <mywheel/bpqueue.hpp>  // for BPQueue
 
 using namespace std;
 

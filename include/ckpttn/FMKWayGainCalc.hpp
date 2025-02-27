@@ -8,8 +8,8 @@
 #include <vector>       // for vector
 
 #include "FMPmrConfig.hpp"
-#include "dllist.hpp"  // for Dllink
-#include "robin.hpp"   // for fun::Robin<>...
+#include <mywheel/dllist.hpp>  // for Dllink
+#include <mywheel/robin.hpp>   // for fun::Robin<>...
 
 // forward declare
 template <typename Gnl> class FMKWayGainMgr;

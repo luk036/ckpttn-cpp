@@ -6,8 +6,8 @@
 #include <type_traits>  // for is_base_of, integral_const...
 #include <vector>       // for vector<>::iterator, vector
 
-#include "ckpttn/bpqueue.hpp"   // for BPQueue
-#include "ckpttn/dllist.hpp"    // for Dllink
+#include <mywheel/bpqueue.hpp>   // for BPQueue
+#include <mywheel/dllist.hpp>    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV, MoveInfo
 
 // using node_t = typename SimpleNetlist::node_t;

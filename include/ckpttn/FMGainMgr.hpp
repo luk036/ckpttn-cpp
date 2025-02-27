@@ -7,8 +7,8 @@
 #include <utility>    // for pair
 #include <vector>     // for vector<>::const_iterator, vector
 
-#include "bpqueue.hpp"  // for BPQueue
-#include "dllist.hpp"   // for Dllink
+#include <mywheel/bpqueue.hpp>  // for BPQueue
+#include <mywheel/dllist.hpp>   // for Dllink
 
 template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;

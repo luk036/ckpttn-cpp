@@ -39,7 +39,14 @@ CPMAddPackage(
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )
 
+CPMAddPackage(
+  NAME MyWheel
+  GIT_TAG 1.0.3
+  GITHUB_REPOSITORY luk036/mywheel-cpp
+  OPTIONS "INSTALL_ONLY ON" # create an installable target
+)
+
 set(SPECIFIC_LIBS
-    XNetwork::XNetwork Py2Cpp::Py2Cpp
+    MyWheel::MyWheel XNetwork::XNetwork Py2Cpp::Py2Cpp
     Threads::Threads fmt::fmt
 )

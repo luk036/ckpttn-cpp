@@ -8,10 +8,10 @@
 #include <span>                       // for span
 #include <vector>                     // for vector, __vector_base<>::v...
 
-#include "ckpttn/bpqueue.hpp"   // for BPQueue
-#include "ckpttn/dllist.hpp"    // for Dllink
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV
-#include "ckpttn/robin.hpp"     // for fun::Robin<>::iterable_wrapper
+#include <mywheel/bpqueue.hpp>   // for BPQueue
+#include <mywheel/dllist.hpp>    // for Dllink
+#include <mywheel/robin.hpp>     // for fun::Robin<>::iterable_wrapper
 
 using namespace std;
 

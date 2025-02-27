@@ -8,7 +8,7 @@
 #include <vector>                      // for vector
 #include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph, Graph<>::n...
 
-#include "array_like.hpp"  // for ShiftArray
+#include <ckpttn/array_like.hpp>  // for ShiftArray
 #include "netlist.hpp"     // for Netlist, Netlist<>::nodeview_t
 
 // using node_t = int;
