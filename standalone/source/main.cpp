@@ -1,4 +1,3 @@
-#include <ckpttn/greeter.h>  // for LanguageCode, LanguageCode::DE, Language...
 #include <ckpttn/version.h>  // for CKPTTN_VERSION
 
 #include <cxxopts.hpp>    // for value, OptionAdder, Options, OptionValue
@@ -8,13 +7,6 @@
 #include <unordered_map>  // for operator==, unordered_map, __hash_map_co...
 
 auto main(int argc, char **argv) -> int {
-    const std::unordered_map<std::string, ckpttn::LanguageCode> languages{
-        {"en", ckpttn::LanguageCode::EN},
-        {"de", ckpttn::LanguageCode::DE},
-        {"es", ckpttn::LanguageCode::ES},
-        {"fr", ckpttn::LanguageCode::FR},
-    };
-
     cxxopts::Options options(*argv, "A program to welcome the world!");
 
     std::string language;
@@ -39,12 +31,6 @@ auto main(int argc, char **argv) -> int {
     if (result["version"].as<bool>()) {
         std::cout << "CkPttn, version " << CKPTTN_VERSION << std::endl;
         return 0;
-    }
-
-    auto langIt = languages.find(language);
-    if (langIt == languages.end()) {
-        std::cerr << "unknown language code: " << language << std::endl;
-        return 1;
     }
 
     // ckpttn::CkPttn ckpttn(name);
