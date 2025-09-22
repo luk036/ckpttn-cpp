@@ -31,7 +31,7 @@ jobs:
           brew install boost
 
       - name: configure
-        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Wno-dev
 
       - name: build
         run: cmake --build build -j4

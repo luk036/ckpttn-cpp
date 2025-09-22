@@ -31,7 +31,7 @@ jobs:
         # uses: conda-incubator/setup-miniconda@35d1405e78aa3f784fe3ce9a2eb378d5eeb62169
         uses: conda-incubator/setup-miniconda@v3
         with:
-          auto-update-conda: ture
+          auto-update-conda: true
 
       - name: Install dependent software
         run: |
