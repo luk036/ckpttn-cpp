@@ -40,7 +40,7 @@ jobs:
           conda install -c conda-forge cmake boost=1.74 fmt
 
       - name: configure
-        run: cmake -S. -Bbuild -Wno-dev -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+        run: cmake -S. -Bbuild -Wno-dev -DCMAKE_POLICY_VERSION_MINIMUM="3.5"
 
       - name: build
         run: cmake --build build --config Debug -j4
