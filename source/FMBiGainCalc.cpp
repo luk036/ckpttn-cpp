@@ -7,7 +7,6 @@
 #include <ckpttn/moveinfo.hpp>      // for MoveInfo
 #include <cstddef>                  // for size_t
 #include <cstdint>                  // for uint8_t
-#include <initializer_list>         // for initializer_list
 #include <span>                     // for span
 #include <transrangers.hpp>         // for all, filter, zip2
 #include <vector>                   // for vector

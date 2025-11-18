@@ -9,7 +9,6 @@
 #include <mywheel/dllist.hpp>         // for Dllink
 #include <mywheel/robin.hpp>          // for fun::Robin<>::iterable_wrapper
 #include <span>                       // for span
-#include <vector>                     // for vector, __vector_base<>::v...
 
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV
 

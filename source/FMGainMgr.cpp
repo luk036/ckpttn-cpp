@@ -6,7 +6,6 @@
 #include <mywheel/dllist.hpp>      // for Dllink
 #include <transrangers.hpp>
 #include <type_traits>  // for is_base_of, integral_const...
-#include <vector>       // for vector<>::iterator, vector
 
 #include "ckpttn/moveinfo.hpp"  // for MoveInfoV, MoveInfo
 

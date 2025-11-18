@@ -7,7 +7,6 @@
 #include <py2cpp/range.hpp>         // for _iterator
 #include <py2cpp/set.hpp>           // for set
 #include <span>                     // for span
-#include <vector>                   // for vector
 
 using namespace std;
 
