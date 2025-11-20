@@ -3,7 +3,6 @@
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr, move_info_v
 #include <cstdint>                     // for uint8_t
 #include <iterator>                    // for distance
-#include <vector>                      // for vector
 
 #include "ckpttn/FMConstrMgr.hpp"  // for LegalCheck, LegalCheck::allsat...
 #include "ckpttn/moveinfo.hpp"     // for MoveInfoV

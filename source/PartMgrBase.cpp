@@ -6,8 +6,6 @@
 #include <py2cpp/range.hpp>        // for _iterator
 #include <py2cpp/set.hpp>          // for set
 #include <span>                    // for span
-#include <tuple>                   // for tuple_element<>::type
-#include <tuple>                   // for get
 #include <vector>                  // for vector
 
 // using node_t = typename SimpleNetlist::node_t;

@@ -8,14 +8,11 @@
 #include <ckpttn/FMKWayGainCalc.hpp>  // for FMKWayG...
 #include <ckpttn/FMPmrConfig.hpp>     // for FM_MAX_...
 #include <ckpttn/moveinfo.hpp>        // for MoveInfo
-#include <cstddef>                    // for byte
-#include <initializer_list>           // for initial...
 #include <mywheel/dllist.hpp>         // for Dllink
 #include <mywheel/robin.hpp>          // for fun::Robin<>...
 #include <span>                       // for span
 #include <transrangers.hpp>           // for all, filter, zip2
 #include <transrangers_ext.hpp>       // for enumerate
-#include <type_traits>                // for swap
 #include <utility>                    // for pair
 #include <vector>                     // for vector
 

@@ -7,9 +7,10 @@
 #include <span>                    // for span
 #include <utility>                 // for pair
 #include <vector>                  // for vector
+#include <new>                     // for std::bad_alloc
+#include <iostream>                // for std::cerr
 
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
-// #include <iostream>
 
 using node_t = typename SimpleNetlist::node_t;
 extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node_t> &)
@@ -55,14 +56,18 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> pa
     }
 
     if (hyprgraph.number_of_modules() >= this->limitsize) {  // OK
-        const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
-        if (hgr2->number_of_modules() <= hyprgraph.number_of_modules()) {
-            auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
-            hgr2->projection_up(part, part2);
-            auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
-            if (legalcheck_recur == LegalCheck::AllSatisfied) {
-                hgr2->projection_down(part2, part);
+        try {
+            const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
+            if (hgr2->number_of_modules() <= hyprgraph.number_of_modules()) {
+                auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
+                hgr2->projection_up(part, part2);
+                auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
+                if (legalcheck_recur == LegalCheck::AllSatisfied) {
+                    hgr2->projection_down(part2, part);
+                }
             }
+        } catch(const std::bad_alloc& e) {
+            std::cerr << "Out of Memory: " << e.what() << std::endl;
         }
     }
 

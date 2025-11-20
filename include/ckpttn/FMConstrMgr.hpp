@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cinttypes>  // for uint8_t
+#include <cstdint>    // for uint8_t
 #include <span>       // for span
 #include <vector>     // for vector
 

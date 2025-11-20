@@ -7,8 +7,6 @@
 #include <py2cpp/range.hpp>            // for _iterator, iterable_wrapper
 #include <py2cpp/set.hpp>              // for set
 #include <transrangers.hpp>            // for accumlate, transform, all
-#include <type_traits>                 // for move
-#include <unordered_map>               // for __hash_map_iterator, operator!=
 #include <utility>                     // for get
 #include <vector>                      // for vector<>::iterator, vector
 #include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
