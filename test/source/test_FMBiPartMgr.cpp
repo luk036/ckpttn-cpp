@@ -2,17 +2,17 @@
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 #include <netlistx/netlist.hpp>      // for SimpleNetlist
- 
+
 TEST_CASE("Test FMBiPartMgr") {
     const auto hyprgraph = create_test_netlist();
     run_PartMgr<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>(hyprgraph);
 }
- 
+
 TEST_CASE("Test FMBiPartMgr dwarf") {
     const auto hyprgraph = create_dwarf();
     run_PartMgr<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>(hyprgraph);
 }
- 
+
 TEST_CASE("Test FMBiPartMgr p1") {
     const auto hyprgraph = readNetD("../../testcases/p1.net");
     run_PartMgr<FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>(hyprgraph);
