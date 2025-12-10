@@ -1,6 +1,7 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", {alias = "fmt"})
 add_requires("doctest", {alias = "doctest"})
+add_requires("spdlog", {alias = "spdlog"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
 
@@ -29,6 +30,7 @@ target("CkPttn")
     add_includedirs("../netlistx-cpp/include", {public = true})
     add_files("source/*.cpp")
     add_packages("ms-gsl")
+    add_packages("spdlog")
     -- add_packages("range-v3")
 
 target("test_ckpttn")
@@ -41,6 +43,7 @@ target("test_ckpttn")
     add_includedirs("../netlistx-cpp/include", {public = true})
     add_files("test/source/*.cpp")
     add_packages("fmt", "doctest")
+    add_packages("spdlog")
     add_packages("ms-gsl")
     add_tests("default")
     if is_plat("linux") then

@@ -5,12 +5,25 @@ find_package(Threads REQUIRED)
 # ${Boost_LIBRARIES}") # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
 # target_include_directories(Boost::boost # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS}) endif()
 
-CPMAddPackage(
-  NAME fmt
-  GIT_TAG 10.2.1
-  GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS "FMT_INSTALL YES" # create an installable target
-)
+# Only add fmt if it's not already added by spdlog
+if(NOT TARGET fmt::fmt AND NOT TARGET spdlog::spdlog)
+  CPMAddPackage(
+    NAME fmt
+    GIT_TAG 10.2.1
+    GITHUB_REPOSITORY fmtlib/fmt
+    OPTIONS "FMT_INSTALL OFF" # Don't create an installable target when used with spdlog
+  )
+endif()
+
+# Add fmt if spdlog is using external fmt
+if(TARGET spdlog::spdlog AND NOT TARGET fmt::fmt)
+  CPMAddPackage(
+    NAME fmt
+    GIT_TAG 10.2.1
+    GITHUB_REPOSITORY fmtlib/fmt
+    OPTIONS "FMT_INSTALL OFF"
+  )
+endif()
 
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0") CPMAddPackage("gh:microsoft/GSL@4.0.0")
 

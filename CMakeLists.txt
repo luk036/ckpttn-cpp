@@ -28,14 +28,25 @@ endif()
 
 # --- Import tools ----
 
+# Make sure CPM is available
+include(cmake/CPM.cmake)
+message(STATUS "CPM included successfully")
+
 include(cmake/tools.cmake)
 
 # ---- Dependencies ----
 
-include(cmake/CPM.cmake)
-
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
+
+CPMAddPackage(
+    NAME spdlog
+    GITHUB_REPOSITORY "gabime/spdlog"
+    VERSION "1.10.0"
+    OPTIONS
+        "SPDLOG_FMT_EXTERNAL ON"
+        "SPDLOG_BUILD_SHARED OFF"
+)
 
 include(specific.cmake)
 
@@ -60,7 +71,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SPECIFIC_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SPECIFIC_LIBS} spdlog::spdlog)
 
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
