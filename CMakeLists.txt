@@ -39,14 +39,15 @@ include(cmake/tools.cmake)
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
-CPMAddPackage(
-    NAME spdlog
-    GITHUB_REPOSITORY "gabime/spdlog"
-    VERSION "1.10.0"
-    OPTIONS
-        "SPDLOG_FMT_EXTERNAL ON"
-        "SPDLOG_BUILD_SHARED OFF"
-)
+# CPMAddPackage(
+#     NAME spdlog
+#     GITHUB_REPOSITORY "gabime/spdlog"
+#     VERSION "1.15.0"
+#     OPTIONS
+#         "SPDLOG_FMT_EXTERNAL OFF"
+#         "SPDLOG_BUILD_SHARED OFF"
+#         "SPDLOG_INSTALL ON"
+# )
 
 include(specific.cmake)
 
@@ -57,7 +58,11 @@ include(specific.cmake)
 file(GLOB_RECURSE headers CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
 )
+# Remove spdlog_example.hpp from headers to avoid compilation issues
+list(FILTER headers EXCLUDE REGEX ".*spdlog_example\\.hpp$")
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
+# Remove spdlog_example.cpp from sources to avoid compilation issues
+list(FILTER sources EXCLUDE REGEX ".*spdlog_example\\.cpp$")
 
 # ---- Create library ----
 
@@ -71,7 +76,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SPECIFIC_LIBS} spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SPECIFIC_LIBS})
 
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

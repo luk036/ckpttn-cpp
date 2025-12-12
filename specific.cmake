@@ -9,7 +9,7 @@ find_package(Threads REQUIRED)
 if(NOT TARGET fmt::fmt AND NOT TARGET spdlog::spdlog)
   CPMAddPackage(
     NAME fmt
-    GIT_TAG 10.2.1
+    GIT_TAG 11.0.0
     GITHUB_REPOSITORY fmtlib/fmt
     OPTIONS "FMT_INSTALL OFF" # Don't create an installable target when used with spdlog
   )
@@ -19,7 +19,7 @@ endif()
 if(TARGET spdlog::spdlog AND NOT TARGET fmt::fmt)
   CPMAddPackage(
     NAME fmt
-    GIT_TAG 10.2.1
+    GIT_TAG 11.0.0
     GITHUB_REPOSITORY fmtlib/fmt
     OPTIONS "FMT_INSTALL OFF"
   )
@@ -66,5 +66,10 @@ CPMAddPackage(
 )
 
 set(SPECIFIC_LIBS MyWheel::MyWheel NetlistX::NetlistX XNetwork::XNetwork Py2Cpp::Py2Cpp
-                  Threads::Threads fmt::fmt
+                  Threads::Threads
 )
+
+# Only add fmt::fmt to SPECIFIC_LIBS if we're using external fmt
+if(TARGET fmt::fmt)
+  list(APPEND SPECIFIC_LIBS fmt::fmt)
+endif()
