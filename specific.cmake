@@ -11,7 +11,7 @@ if(NOT TARGET fmt::fmt AND NOT TARGET spdlog::spdlog)
     NAME fmt
     GIT_TAG 11.0.0
     GITHUB_REPOSITORY fmtlib/fmt
-    OPTIONS "FMT_INSTALL OFF" # Don't create an installable target when used with spdlog
+    OPTIONS "FMT_INSTALL ON" # Create an installable target for export sets
   )
 endif()
 
@@ -21,7 +21,7 @@ if(TARGET spdlog::spdlog AND NOT TARGET fmt::fmt)
     NAME fmt
     GIT_TAG 11.0.0
     GITHUB_REPOSITORY fmtlib/fmt
-    OPTIONS "FMT_INSTALL OFF"
+    OPTIONS "FMT_INSTALL ON" # Create an installable target for export sets
   )
 endif()
 
