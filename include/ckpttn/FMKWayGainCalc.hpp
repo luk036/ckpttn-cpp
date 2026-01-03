@@ -58,7 +58,7 @@ template <typename Gnl> class FMKWayGainCalc {
           delta_gain_v(num_parts, 0, &rsrc),
           delta_gain_w(num_parts, 0, &rsrc),
           idx_vec(&rsrc) {
-        for (auto k = 0U; k != this->num_parts; ++k) {
+        for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {
             auto vec = std::vector<Item>{};
             vec.reserve(hyprgraph.number_of_modules());
             for (const auto &v : this->hyprgraph) {

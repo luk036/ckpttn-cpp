@@ -14,9 +14,9 @@ TEST_CASE("Stress Test MLBiPartMgr ibm18") {
     part_mgr.set_limitsize(24000);
 
     const int num_iterations = 2;
-    unsigned int total_cost_sum = 0;
+    int total_cost_sum = 0;
 
-    for (int i = 0; i < num_iterations; ++i) {
+    for (int idx = 0; idx < num_iterations; ++idx) {
         std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
         part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                                           FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,

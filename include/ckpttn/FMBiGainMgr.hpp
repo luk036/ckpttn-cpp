@@ -60,7 +60,7 @@ template <typename Gnl> class FMBiGainMgr
      * @param[in] gain The gain associated with the move.
      */
     auto update_move_v(const MoveInfoV<node_t> &move_info_v, int gain) -> void {
-        // this->vertex_list[v].data.second -= 2 * gain;
+        // this->vertex_list[node_v].data.second -= 2 * gain;
         // auto [from_part, _ = move_info_v;
         this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
     }

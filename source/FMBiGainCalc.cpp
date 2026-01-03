@@ -54,17 +54,17 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, std::span<co
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
                                                                     std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
-    const auto w = *net_cur;
-    const auto v = *++net_cur;
+    const auto node_w = *net_cur;
+    const auto node_v = *++net_cur;
 
     const auto weight = this->hyprgraph.get_net_weight(net);
-    if (part[w] != part[v]) {
+    if (part[node_w] != part[node_v]) {
         this->total_cost += weight;
-        this->_increase_gain(w, weight);
-        this->_increase_gain(v, weight);
+        this->_increase_gain(node_w, weight);
+        this->_increase_gain(node_v, weight);
     } else {
-        this->_decrease_gain(w, weight);
-        this->_decrease_gain(v, weight);
+        this->_decrease_gain(node_w, weight);
+        this->_decrease_gain(node_v, weight);
     }
 }
 
@@ -78,25 +78,25 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
                                                                     std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
-    const auto w = *net_cur;
-    const auto v = *++net_cur;
-    const auto u = *++net_cur;
+    const auto node_w = *net_cur;
+    const auto node_v = *++net_cur;
+    const auto node_u = *++net_cur;
 
     const auto weight = this->hyprgraph.get_net_weight(net);
-    if (part[u] == part[v]) {
-        if (part[w] == part[v]) {
-            // this->_modify_gain_va(-weight, u, v, w);
-            this->_decrease_gain(u, weight);
-            this->_decrease_gain(v, weight);
-            this->_decrease_gain(w, weight);
+    if (part[node_u] == part[node_v]) {
+        if (part[node_w] == part[node_v]) {
+            // this->_modify_gain_va(-weight, node_u, node_v, node_w);
+            this->_decrease_gain(node_u, weight);
+            this->_decrease_gain(node_v, weight);
+            this->_decrease_gain(node_w, weight);
             return;
         }
-        // this->_modify_gain_va(weight, w);
-        this->_increase_gain(w, weight);
-    } else if (part[w] == part[v]) {
-        this->_increase_gain(u, weight);
+        // this->_modify_gain_va(weight, node_w);
+        this->_increase_gain(node_w, weight);
+    } else if (part[node_w] == part[node_v]) {
+        this->_increase_gain(node_u, weight);
     } else {
-        this->_increase_gain(v, weight);
+        this->_increase_gain(node_v, weight);
     }
     this->total_cost += weight;
 }
@@ -154,11 +154,11 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t> &move_info) ->
     typename Gnl::node_t {
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
-    auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
+    auto node_w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
     const auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
-    const int delta = (part[w] == move_info.from_part) ? gain : -gain;
+    const int delta = (part[node_w] == move_info.from_part) ? gain : -gain;
     this->delta_gain_w = 2 * delta;
-    return w;
+    return node_w;
 }
 
 /**

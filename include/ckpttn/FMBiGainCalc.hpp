@@ -149,7 +149,7 @@ template <typename Gnl> class FMBiGainCalc {
      * decrease).
      */
     auto _modify_gain(const node_t &w, int weight) -> void {
-        // this->vertex_list[w].data.second += weight;
+        // this->vertex_list[node_w].data.second += weight;
         this->init_gain_list[w] += weight;
     }
 

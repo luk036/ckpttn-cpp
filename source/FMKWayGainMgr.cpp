@@ -54,12 +54,12 @@ void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t> &mo
                                        int gain) {
     // const auto& [v, from_part, to_part] = move_info_v;
 
-    for (auto k = 0U; k != this->num_parts; ++k) {
-        if (move_info_v.from_part == k || move_info_v.to_part == k) {
+    for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {
+        if (move_info_v.from_part == part_idx || move_info_v.to_part == part_idx) {
             continue;
         }
-        this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][move_info_v.v],
-                                        this->gain_calc.delta_gain_v[k]);
+        this->gain_bucket[part_idx].modify_key(this->gain_calc.vertex_list[part_idx][move_info_v.v],
+                                        this->gain_calc.delta_gain_v[part_idx]);
     }
     this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
     // this->_set_key(to_part, v, -2*this->pmax);

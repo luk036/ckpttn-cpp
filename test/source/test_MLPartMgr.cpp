@@ -52,7 +52,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
     part_mgr.set_limitsize(500);
 
     auto mincost = 1000;
-    for (auto i = 0; i != 10; ++i) {
+    for (auto idx = 0; idx != 10; ++idx) {
         auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
         auto whichPart = uint8_t(0);
         for (auto &elem : part) {
@@ -79,7 +79,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     part_mgr.set_limitsize(400);
 
     auto mincost = 1000;
-    for (auto i = 0; i != 10; ++i) {
+    for (auto idx = 0; idx != 10; ++idx) {
         auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
         auto whichPart = uint8_t(0);
         for (auto &elem : part) {

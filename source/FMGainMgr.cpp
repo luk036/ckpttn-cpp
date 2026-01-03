@@ -27,7 +27,7 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl &hyprgraph, uint8_t num_p
     static_assert(is_base_of<FMGainMgr<Gnl, GainCalc, Derived>, Derived>::value,
                   "base derived consistence");
     const auto pmax = int(hyprgraph.get_max_degree());
-    for (auto _k = 0U; _k != this->num_parts; ++_k) {
+    for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {
         this->gain_bucket.emplace_back(BPQueue<typename Gnl::node_t>(-pmax, pmax));
     }
 }

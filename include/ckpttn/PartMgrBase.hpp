@@ -136,8 +136,8 @@ class PartMgrBase {
                       std::span<std::uint8_t> part) -> void {
         // std::copy(snapshot.begin(), snapshot.end(), part.begin());
         const auto N = part.size();
-        for (auto i = 0U; i != N; ++i) {
-            part[i] = snapshot[i];
+        for (auto idx = 0U; idx != N; ++idx) {
+            part[idx] = snapshot[idx];
         }
     }
 };
