@@ -28,7 +28,7 @@ using node_t = typename SimpleNetlist::node_t;
  *
  * @todo simplify this function
  */
-auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, const py::set<node_t> &dont_select)
+auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> dont_select)
     -> std::unique_ptr<SimpleHierNetlist> {
     using namespace transrangers;
 
@@ -49,7 +49,7 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, const py::set<no
     // }
 
     auto S = py::set<node_t>{};
-    auto dep = dont_select.copy();
+    auto& dep = dont_select;
     min_maximal_matching(hyprgraph, weight_dict, S, dep);
 
     auto module_up_map = py::dict<node_t, node_t>{};

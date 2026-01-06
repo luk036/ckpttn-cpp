@@ -19,7 +19,7 @@ extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
 
 using node_t = SimpleNetlist::node_t;
 extern auto create_contracted_subgraph(const SimpleNetlist &,
-                                       const py::set<node_t> &) -> unique_ptr<SimpleHierNetlist>;
+                                       py::set<node_t>) -> unique_ptr<SimpleHierNetlist>;
 
 //
 // Primal-dual algorithm for minimum vertex cover problem

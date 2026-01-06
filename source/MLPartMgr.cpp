@@ -13,7 +13,7 @@
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
 
 using node_t = typename SimpleNetlist::node_t;
-extern auto create_contracted_subgraph(const SimpleNetlist &, const py::set<node_t> &)
+extern auto create_contracted_subgraph(const SimpleNetlist &, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
 /**
