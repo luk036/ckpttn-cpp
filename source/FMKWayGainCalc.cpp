@@ -231,7 +231,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
  *
  */
 template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
-    std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
+    std::ranges::fill(this->delta_gain_v, 0);
 }
 
 /**
@@ -253,7 +253,7 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
     // auto delta_gain_w = vector<int>(this->num_parts, 0);
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
-    fill(this->delta_gain_w.begin(), this->delta_gain_w.end(), 0);
+    std::ranges::fill(this->delta_gain_w, 0);
     auto rng_w = all(this->delta_gain_w);
     auto rng_v = all(this->delta_gain_v);
 

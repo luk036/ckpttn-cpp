@@ -1,0 +1,522 @@
+45186 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:118:9: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  118 |     rng([&](const auto &wc) {
+      |         ^
+      |                             -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:118:25: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  118 |     rng([&](const auto &wc) {
+      |                         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:126:22: warning: variable name 'k' is too short, expected at least 3 characters [readability-identifier-length]
+  126 |     for (const auto &k : {0U, 1U}) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:128:17: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  128 |             rng([&](const auto &wc) {
+      |                 ^
+      |                                     -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:128:33: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  128 |             rng([&](const auto &wc) {
+      |                                 ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:133:18: warning: variable name 'it' is too short, expected at least 3 characters [readability-identifier-length]
+  133 |             auto it = this->hyprgraph.gr[net].begin();
+      |                  ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:134:41: warning: statement should be inside braces [readability-braces-around-statements]
+  134 |             for (; part[*it] != k; ++it);
+      |                                         ^
+      |                                          {
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:171:62: warning: 2 adjacent parameters of 'init_idx_vec' of similar type ('const typename Gnl::node_t &') are easily swapped by mistake [bugprone-easily-swappable-parameters]
+  171 | template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+      |                                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  172 |                                                              const typename Gnl::node_t &net) {
+      |                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:171:90: note: the first parameter in the range is 'v'
+  171 | template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+      |                                                                                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:172:90: note: the last parameter in the range is 'net'
+  172 |                                                              const typename Gnl::node_t &net) {
+      |                                                                                          ^~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:171:90: warning: parameter name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  171 | template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+      |                                                                                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:175:23: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  175 |     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
+      |                       ^
+      |                                           -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:175:40: warning: parameter name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  175 |     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
+      |                                        ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:176:9: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  176 |     rng([&](const auto &wc) {
+      |         ^
+      |                             -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:176:25: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  176 |     rng([&](const auto &wc) {
+      |                         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:222:10: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  222 |     rng1([&](const auto &wc) {
+      |          ^
+      |                              -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:222:26: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  222 |     rng1([&](const auto &wc) {
+      |                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:236:18: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  236 |             rng2([&](const auto &dgc) {
+      |                  ^
+      |                                       -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainCalc.cpp:243:55: warning: statement should be inside braces [readability-braces-around-statements]
+  243 |             for (; part[*it1] != l_part; ++it1, ++it2);
+      |                                                       ^
+      |                                                        {
+44945 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainMgr2.cpp:24:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   24 |     for (const auto &v : this->hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMBiGainMgr2.cpp:30:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   30 |     for (const auto &v : this->hyprgraph.module_fixed) {
+      |                      ^
+44338 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:53: warning: 2 adjacent parameters of 'FMConstrMgr<Gnl>' of convertible types are easily swapped by mistake [bugprone-easily-swappable-parameters]
+   18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
+      |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:60: note: the first parameter in the range is 'bal_tol'
+   18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
+      |                                                            ^~~~~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:77: note: the last parameter in the range is 'num_parts'
+   18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
+      |                                                                             ^~~~~~~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:53: note: 
+   18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
+      |                                                     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:69: note: 'double' and 'uint8_t' may be implicitly converted: 'double' -> 'uint8_t' (as 'unsigned char'), 'uint8_t' (as 'unsigned char') -> 'double'
+   18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
+      |                                                                     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:22:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   22 |         transform([&](const auto &v) { return hyprgraph.get_module_weight(v); }, all(hyprgraph)),
+      |                   ^
+      |                                      -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:22:35: warning: parameter name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   22 |         transform([&](const auto &v) { return hyprgraph.get_module_weight(v); }, all(hyprgraph)),
+      |                                   ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:39:5: warning: use a ranges version of this algorithm [modernize-use-ranges]
+    2 |     fill(this->diff.begin(), this->diff.end(), 0);
+      |     ^~~~ ~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~~
+      |     std::ranges::fill this->diff
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:40:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   40 |     for (const auto &v : this->hyprgraph) {
+      |                      ^
+46360 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:27:19: warning: use c++17 style variable templates [modernize-type-traits]
+   27 |     static_assert(is_base_of<FMGainMgr<Gnl, GainCalc, Derived>, Derived>::value,
+      |                   ^                                                     ~~~~~~~
+      |                             _v
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:60:16: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   60 |     return rng([](const auto &cursor) { return cursor->is_empty(); });
+      |                ^
+      |                                       -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:76:16: warning: variable name 'it' is too short, expected at least 3 characters [readability-identifier-length]
+   76 |     const auto it = max_element(
+      |                ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:78:9: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   78 |         [](const auto &bckt1, const auto &bckt2) { return bckt1.get_max() < bckt2.get_max(); });
+      |         ^
+      |                                                  -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:85:16: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   85 |     const auto v = vlink.data.first;
+      |                ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:107:16: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  107 |     const auto v = vlink.data.first;
+      |                ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:126:17: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  126 |     const auto &v = move_info_v.v;
+      |                 ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:167:16: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  167 |     const auto w = this->gain_calc.update_move_2pin_net(part, move_info);
+      |                ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:191:22: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  191 |     for (const auto &w : this->gain_calc.idx_vec) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMGainMgr.cpp:218:22: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  218 |     for (const auto &w : this->gain_calc.idx_vec) {
+      |                      ^
+44407 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayConstrMgr.cpp:16:10: warning: variable name 'it' is too short, expected at least 3 characters [readability-identifier-length]
+   16 |     auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
+      |          ^
+46109 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:126:22: warning: variable name 'e' is too short, expected at least 3 characters [readability-identifier-length]
+  126 |     for (const auto &e : {node_b, node_c}) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:159:9: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  159 |     rng([&](const auto &wc) {
+      |         ^
+      |                             -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:159:25: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  159 |     rng([&](const auto &wc) {
+      |                         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:171:24: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  171 |     auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
+      |                        ^
+      |                                          -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:171:39: warning: parameter name 'c' is too short, expected at least 3 characters [readability-identifier-length]
+  171 |     auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
+      |                                       ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:173:10: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  173 |     rng3([&](const auto & /* c */) {
+      |          ^
+      |                                    -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:180:22: warning: variable name 'c' is too short, expected at least 3 characters [readability-identifier-length]
+  180 |     for (const auto &c : num) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:185:17: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  185 |             rng([&](const auto &wc) {
+      |                 ^
+      |                                     -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:185:33: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  185 |             rng([&](const auto &wc) {
+      |                                 ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:191:18: warning: variable name 'it' is too short, expected at least 3 characters [readability-identifier-length]
+  191 |             auto it = this->hyprgraph.gr[net].begin();
+      |                  ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:192:48: warning: statement should be inside braces [readability-braces-around-statements]
+  192 |             for (; part[*it] != part_idx; ++it);
+      |                                                ^
+      |                                                 {
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:234:5: warning: use a ranges version of this algorithm [modernize-use-ranges]
+    1 |     std::fill(this->delta_gain_v.begin(), this->delta_gain_v.end(), 0);
+      |     ^~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~~~~~~~~~~
+      |     std::ranges::fill this->delta_gain_v
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:255:10: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  255 |     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:256:5: warning: use a ranges version of this algorithm [modernize-use-ranges]
+  256 |     fill(this->delta_gain_w.begin(), this->delta_gain_w.end(), 0);
+      |     ^~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~~~~~~~~~~
+      |     std::ranges::fill this->delta_gain_w
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:271:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  271 |             rng_w([&gain](const auto &dgwc) {
+      |                   ^
+      |                                             -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:275:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  275 |             rng_v([&gain](const auto &dgvc) {
+      |                   ^
+      |                                             -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:293:64: warning: 2 adjacent parameters of 'init_idx_vec' of similar type ('const typename Gnl::node_t &') are easily swapped by mistake [bugprone-easily-swappable-parameters]
+  293 | template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+      |                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  294 |                                                                const typename Gnl::node_t &net) {
+      |                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:293:92: note: the first parameter in the range is 'v'
+  293 | template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+      |                                                                                            ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:294:92: note: the last parameter in the range is 'net'
+  294 |                                                                const typename Gnl::node_t &net) {
+      |                                                                                            ^~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:293:92: warning: parameter name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  293 | template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+      |                                                                                            ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:297:23: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  297 |     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
+      |                       ^
+      |                                           -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:297:40: warning: parameter name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  297 |     auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
+      |                                        ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:298:9: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  298 |     rng([&](const auto &wc) {
+      |         ^
+      |                             -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:298:25: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  298 |     rng([&](const auto &wc) {
+      |                         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:319:10: warning: variable name 'l' is too short, expected at least 3 characters [readability-identifier-length]
+  319 |     auto l = move_info.from_part;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:320:10: warning: variable name 'u' is too short, expected at least 3 characters [readability-identifier-length]
+  320 |     auto u = move_info.to_part;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:333:26: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  333 |                     rngv([&gain](const auto &dgcv) {
+      |                          ^
+      |                                                    -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:351:18: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  351 |             rng0([&gain](const auto &dgc0) {
+      |                  ^
+      |                                            -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:356:18: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  356 |             rng1([&gain](const auto &dgc1) {
+      |                  ^
+      |                                            -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:364:22: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  364 |                 rngv([&gain](const auto &dgcv) {
+      |                      ^
+      |                                                -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:394:10: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  394 |     rng1([&](const auto &wc) {
+      |          ^
+      |                              -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:394:26: warning: parameter name 'wc' is too short, expected at least 3 characters [readability-identifier-length]
+  394 |     rng1([&](const auto &wc) {
+      |                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:403:10: warning: variable name 'l' is too short, expected at least 3 characters [readability-identifier-length]
+  403 |     auto l = move_info.from_part;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:404:10: warning: variable name 'u' is too short, expected at least 3 characters [readability-identifier-length]
+  404 |     auto u = move_info.to_part;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:413:18: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  413 |             rng2([&gain, &l](const auto &dgc) {
+      |                  ^
+      |                                               -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:419:22: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  419 |                 rng4([&gain](const auto &dgvc) {
+      |                      ^
+      |                                                -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:427:50: warning: statement should be inside braces [readability-braces-around-statements]
+  427 |             for (; part[*it1] != l; ++it1, ++it2);
+      |                                                  ^
+      |                                                   {
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainCalc.cpp:429:17: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  429 |             rng([&gain](const auto &dgc) {
+      |                 ^
+      |                                          -> auto
+45575 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainMgr.cpp:29:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   29 |     for (const auto &v : this->hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainMgr.cpp:30:20: warning: variable name 'pv' is too short, expected at least 3 characters [readability-identifier-length]
+   30 |         const auto pv = part[v];
+      |                    ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainMgr.cpp:31:26: warning: variable name 'k' is too short, expected at least 3 characters [readability-identifier-length]
+   31 |         for (const auto &k : this->rr.exclude(pv)) {
+      |                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMKWayGainMgr.cpp:39:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   39 |     for (const auto &v : this->hyprgraph.module_fixed) {
+      |                      ^
+42877 warnings generated.
+44717 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/HierNetlist.cpp:12:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   12 |     for (const auto &v : hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/HierNetlist.cpp:21:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   21 |     for (const auto &v : this->modules) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/HierNetlist.cpp:24:30: warning: variable name 'v2' is too short, expected at least 3 characters [readability-identifier-length]
+   24 |             for (const auto &v2 : hyprgraph.gr[net]) {
+      |                              ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/HierNetlist.cpp:28:24: warning: variable name 'v2' is too short, expected at least 3 characters [readability-identifier-length]
+   28 |             const auto v2 = this->node_down_map[v];
+      |                        ^
+53403 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/MLPartMgr.cpp:34:26: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   34 |     auto legalcheck_fn = [&]() {
+      |                          ^
+      |                                -> pair<__unwrap_ref_decay_t<LegalCheck &>, __unwrap_ref_decay_t<int &>>
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/MLPartMgr.cpp:43:24: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   43 |     auto optimize_fn = [&]() {
+      |                        ^
+      |                              -> int
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/MLPartMgr.cpp:70:59: warning: do not use 'std::endl' with streams; use '\n' instead [performance-avoid-endl]
+   70 |             std::cerr << "Out of Memory: " << e.what() << std::endl;
+      |                                                           ^~~~~~~~~
+      |                                                           '\n'
+45877 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/PartMgrBase.cpp:42:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   42 |     for (const auto &v : this->hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/PartMgrBase.cpp:59:16: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   59 |         auto &&v = rslt.first;
+      |                ^
+45467 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:31:6: warning: function 'create_contracted_subgraph' has cognitive complexity of 29 (threshold 25) [readability-function-cognitive-complexity]
+   31 | auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> dont_select)
+      |      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:37:14: note: nesting level increased to 1
+   37 |     rng_nets([&](const auto &netcur) {
+      |              ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:39:36: note: nesting level increased to 2
+   39 |             = accumulate(transform([&](const auto &v) { return hyprgraph.get_module_weight(v); },
+      |                                    ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:57:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+   57 |     for (const auto &v : hyprgraph) {
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:76:9: note: +1, including nesting penalty of 0, nesting level increased to 1
+   76 |         for (const auto &net : hyprgraph.nets) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:77:13: note: +2, including nesting penalty of 1, nesting level increased to 2
+   77 |             if (S.contains(net)) {
+      |             ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:81:17: note: +3, including nesting penalty of 2, nesting level increased to 3
+   81 |                 for (const auto &v : hyprgraph.gr[net]) {
+      |                 ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:86:15: note: +1, nesting level increased to 2
+   86 |             } else {
+      |               ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:91:9: note: +1, including nesting penalty of 0, nesting level increased to 1
+   91 |         for (const auto &v : hyprgraph) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:92:13: note: +2, including nesting penalty of 1, nesting level increased to 2
+   92 |             if (C.contains(v)) {
+      |             ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:111:9: note: +1, including nesting penalty of 0, nesting level increased to 1
+  111 |         for (const auto &v : modules) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:119:9: note: +1, including nesting penalty of 0, nesting level increased to 1
+  119 |         for (const auto &net : nets) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:126:9: note: +1, including nesting penalty of 0, nesting level increased to 1
+  126 |         for (const auto &v : hyprgraph) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:139:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  139 |     for (const auto &v : hyprgraph) {
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:140:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  140 |         for (const auto &net : hyprgraph.gr[v]) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:141:13: note: +3, including nesting penalty of 2, nesting level increased to 3
+  141 |             if (S.contains(net)) {
+      |             ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:156:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  156 |     for (const auto &keyvalue : node_up_dict.items()) {
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:170:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  170 |     for (auto &&net : S) {
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:171:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  171 |         for (auto &&v : hyprgraph.gr[net]) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:178:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  178 |     for (const auto &i_v : py::range(numModules)) {
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:179:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  179 |         if (cluster_down_map.contains(i_v)) {
+      |         ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:182:11: note: +1, nesting level increased to 2
+  182 |         } else {
+      |           ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:195:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  195 |     for (const auto &v : hyprgraph.modules) {
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:37:14: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   37 |     rng_nets([&](const auto &netcur) {
+      |              ^
+      |                                      -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:39:36: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+   39 |             = accumulate(transform([&](const auto &v) { return hyprgraph.get_module_weight(v); },
+      |                                    ^
+      |                                                       -> auto
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:39:52: warning: parameter name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   39 |             = accumulate(transform([&](const auto &v) { return hyprgraph.get_module_weight(v); },
+      |                                                    ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:51:10: warning: variable name 'S' is too short, expected at least 3 characters [readability-identifier-length]
+   51 |     auto S = py::set<node_t>{};
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:57:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   57 |     for (const auto &v : hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:71:14: warning: variable name 'C' is too short, expected at least 3 characters [readability-identifier-length]
+   71 |         auto C = py::set<node_t>{};
+      |              ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:81:34: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   81 |                 for (const auto &v : hyprgraph.gr[net]) {
+      |                                  ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:91:26: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   91 |         for (const auto &v : hyprgraph) {
+      |                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:111:26: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  111 |         for (const auto &v : modules) {
+      |                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:112:29: warning: redundant explicit casting to the same type 'index_t' (aka 'unsigned int') as the sub-expression, remove this casting [readability-redundant-casting]
+  112 |             module_map[v] = index_t(i_v);
+      |                             ^~~~~~~~   ~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:110:14: note: source type originates from referencing this variable
+  110 |         auto i_v = index_t(0);
+      |         ~~~~ ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:120:31: warning: redundant explicit casting to the same type 'index_t' (aka 'unsigned int') as the sub-expression, remove this casting [readability-redundant-casting]
+  120 |             net_up_map[net] = index_t(i_net) + numModules;
+      |                               ^~~~~~~~     ~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:118:14: note: source type originates from referencing this variable
+  118 |         auto i_net = index_t(0);
+      |         ~~~~ ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:126:26: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  126 |         for (const auto &v : hyprgraph) {
+      |                          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:137:10: warning: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length]
+  137 |     auto g = graph_t(num_vertices);
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:139:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  139 |     for (const auto &v : hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:148:10: warning: variable name 'gr' is too short, expected at least 3 characters [readability-identifier-length]
+  148 |     auto gr = std::move(g);
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:157:16: warning: variable name 'v1' is too short, expected at least 3 characters [readability-identifier-length]
+  157 |         auto &&v1 = std::get<0>(keyvalue);
+      |                ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:158:16: warning: variable name 'v2' is too short, expected at least 3 characters [readability-identifier-length]
+  158 |         auto &&v2 = std::get<1>(keyvalue);
+      |                ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:171:21: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  171 |         for (auto &&v : hyprgraph.gr[net]) {
+      |                     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:183:24: warning: variable name 'v2' is too short, expected at least 3 characters [readability-identifier-length]
+  183 |             const auto v2 = node_down_map[i_v];
+      |                        ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/min_cover.cpp:195:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+  195 |     for (const auto &v : hyprgraph.modules) {
+      |                      ^
+53978 warnings generated.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:25:39: warning: result of a `data()` call may not be null terminated, provide size information to the callee to prevent potential issues [bugprone-suspicious-stringview-data-usage]
+   25 |     auto json = ofstream{jsonFileName.data()};
+      |                          ~~~~~~~~~~~~~^~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:50:22: warning: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length]
+   50 |     for (const auto &v : hyprgraph) {
+      |                      ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:65:39: warning: result of a `data()` call may not be null terminated, provide size information to the callee to prevent potential issues [bugprone-suspicious-stringview-data-usage]
+   65 |     auto netD = ifstream{netDFileName.data()};
+      |                          ~~~~~~~~~~~~~^~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:73:10: warning: variable name 't' is too short, expected at least 3 characters [readability-identifier-length]
+   73 |     char t = 0;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:86:10: warning: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length]
+   86 |     auto g = graph_t(num_vertices);
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:89:5: warning: do not declare C-style arrays, use 'std::array' instead [modernize-avoid-c-arrays]
+   89 |     char lineBuffer[bufferSize];  // Does it work for other compiler?
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:92:12: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+   92 |     node_t w = 0;
+      |            ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:93:13: warning: variable name 'e' is too short, expected at least 3 characters [readability-identifier-length]
+   93 |     index_t e = numModules - 1;
+      |             ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:94:10: warning: variable name 'c' is too short, expected at least 3 characters [readability-identifier-length]
+   94 |     char c = 0;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:95:14: warning: variable name 'i' is too short, expected at least 3 characters [readability-identifier-length]
+   95 |     uint32_t i = 0;
+      |              ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:160:37: warning: result of a `data()` call may not be null terminated, provide size information to the callee to prevent potential issues [bugprone-suspicious-stringview-data-usage]
+  160 |     auto are = ifstream{areFileName.data()};
+      |                         ~~~~~~~~~~~~^~~~
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:162:54: warning: do not use 'endl' with streams; use '\n' instead [performance-avoid-endl]
+  162 |         cerr << " Could not open " << areFileName << endl;
+      |                                                      ^~~~
+      |                                                      '\n'
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:168:5: warning: do not declare C-style arrays, use 'std::array' instead [modernize-avoid-c-arrays]
+  168 |     char lineBuffer[bufferSize];
+      |     ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:170:10: warning: variable name 'c' is too short, expected at least 3 characters [readability-identifier-length]
+  170 |     char c = 0;
+      |          ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:171:12: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+  171 |     node_t w = 0;
+      |            ^
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:198:55: warning: do not use 'endl' with streams; use '\n' instead [performance-avoid-endl]
+  198 |                  << R"(expect keyword "a" or "p")" << endl;
+      |                                                       ^~~~
+      |                                                       '\n'
+43996 warnings generated.
+31010 warnings and 1 error generated.
+Error while processing /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/spdlog_example.cpp.
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/spdlog_example.cpp:1:10: error: 'spdlog/spdlog.h' file not found [clang-diagnostic-error]
+    1 | #include <spdlog/spdlog.h>
+      |          ^~~~~~~~~~~~~~~~~

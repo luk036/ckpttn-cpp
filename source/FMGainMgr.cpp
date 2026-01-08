@@ -24,7 +24,7 @@ using namespace std;
 template <typename Gnl, typename GainCalc, class Derived>
 FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl &hyprgraph, uint8_t num_parts)
     : hyprgraph{hyprgraph}, num_parts{num_parts}, gain_calc{hyprgraph, num_parts} {
-    static_assert(is_base_of<FMGainMgr<Gnl, GainCalc, Derived>, Derived>::value,
+    static_assert(is_base_of_v<FMGainMgr<Gnl, GainCalc, Derived>, Derived>,
                   "base derived consistence");
     const auto pmax = int(hyprgraph.get_max_degree());
     for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {

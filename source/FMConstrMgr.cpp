@@ -36,10 +36,10 @@ FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_
  * @param[in] part
  */
 template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> part) {
-    fill(this->diff.begin(), this->diff.end(), 0);
-    for (const auto &v : this->hyprgraph) {
-        // auto weight_v = this->hyprgraph.get_module_weight(v);
-        this->diff[part[v]] += this->hyprgraph.get_module_weight(v);
+    std::ranges::fill(this->diff, 0);
+    for (const auto &module : this->hyprgraph) {
+        // auto weight_module = this->hyprgraph.get_module_weight(module);
+        this->diff[part[module]] += this->hyprgraph.get_module_weight(module);
     }
 }
 

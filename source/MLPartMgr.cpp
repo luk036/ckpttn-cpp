@@ -67,7 +67,7 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> pa
                 }
             }
         } catch(const std::bad_alloc& e) {
-            std::cerr << "Out of Memory: " << e.what() << std::endl;
+            std::cerr << "Out of Memory: " << e.what() << '\n';
         }
     }
 

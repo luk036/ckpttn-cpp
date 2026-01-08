@@ -114,25 +114,26 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
                                                std::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
 
-    auto rng = all(this->hyprgraph.gr[net]);
-    rng([&](const auto &wc) {
-        num[part[*wc]] += 1;
+    auto range = all(this->hyprgraph.gr[net]);
+    range([&](const auto &weighted_cell) {
+        num[part[*weighted_cell]] += 1;
         return true;
     });
 
     const uint32_t weight = this->hyprgraph.get_net_weight(net);
 
     // #pragma unroll
-    for (const auto &k : {0U, 1U}) {
-        if (num[k] == 0) {
-            rng([&](const auto &wc) {
-                this->_decrease_gain(*wc, weight);
+    for (const auto &part_idx : {0U, 1U}) {
+        if (num[part_idx] == 0) {
+            range([&](const auto &weighted_cell) {
+                this->_decrease_gain(*weighted_cell, weight);
                 return true;
             });
-        } else if (num[k] == 1) {
-            auto it = this->hyprgraph.gr[net].begin();
-            for (; part[*it] != k; ++it);
-            this->_increase_gain(*it, weight);
+        } else if (num[part_idx] == 1) {
+            auto iterator = this->hyprgraph.gr[net].begin();
+            for (; part[*iterator] != part_idx; ++iterator) {
+            }
+            this->_increase_gain(*iterator, weight);
         }
     }
 
@@ -168,13 +169,13 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
+template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &module,
                                                              const typename Gnl::node_t &net) {
     this->idx_vec.clear();
-    auto rng1 = all(this->hyprgraph.gr[net]);
-    auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
-    rng([&](const auto &wc) {
-        this->idx_vec.push_back(*wc);
+    auto range1 = all(this->hyprgraph.gr[net]);
+    auto range = filter([&module](const auto &cell) { return cell != module; }, range1);
+    range([&](const auto &weighted_cell) {
+        this->idx_vec.push_back(*weighted_cell);
         return true;
     });
 }
@@ -218,35 +219,36 @@ template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
     std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};
-    auto rng1 = all(this->idx_vec);
-    rng1([&](const auto &wc) {
-        num[part[*wc]] += 1;
+    auto range1 = all(this->idx_vec);
+    range1([&](const auto &weighted_cell) {
+        num[part[*weighted_cell]] += 1;
         return true;
     });
 
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<int>(degree, 0);
     auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
-    auto rng2 = all(delta_gain);
-    // auto rng3 = zip2(rng1, rng2);
+    auto range2 = all(delta_gain);
+    // auto range3 = zip2(range1, range2);
 
     // #pragma unroll
-    for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
-        if (num[l_part] == 0) {
-            rng2([&](const auto &dgc) {
-                *dgc -= gain;
+    for (const auto &target_part : {move_info.from_part, move_info.to_part}) {
+        if (num[target_part] == 0) {
+            range2([&](const auto &delta_gain_cell) {
+                *delta_gain_cell -= gain;
                 return true;
             });
-        } else if (num[l_part] == 1) {
-            auto it1 = this->idx_vec.begin();
-            auto it2 = delta_gain.begin();
-            for (; part[*it1] != l_part; ++it1, ++it2);
-            *it2 += gain;
+        } else if (num[target_part] == 1) {
+            auto iter1 = this->idx_vec.begin();
+            auto iter2 = delta_gain.begin();
+            for (; part[*iter1] != target_part; ++iter1, ++iter2) {
+            }
+            *iter2 += gain;
 
-            // rng3([&](const auto &zc) {
-            //     auto part_w = part[std::get<0>(*zc)];
-            //     if (part_w == l_part) {
-            //         std::get<1>(*zc) += gain;
+            // range3([&](const auto &zipped_cell) {
+            //     auto part_w = part[std::get<0>(*zipped_cell)];
+            //     if (part_w == target_part) {
+            //         std::get<1>(*zipped_cell) += gain;
             //         return false;
             //     }
             //     return true;

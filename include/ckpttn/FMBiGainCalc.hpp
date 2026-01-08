@@ -96,7 +96,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] v The vertex to initialize the index vector for.
      * @param[in] net The net to initialize the index vector for.
      */
-    void init_idx_vec(const node_t &v, const node_t &net);
+    void init_idx_vec(const node_t &module, const node_t &net);
 
     /**
      * @brief Update a 2-pin net during a move operation.
