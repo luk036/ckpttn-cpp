@@ -114,7 +114,7 @@
             </dt>
             <dd>This function does nothing in 2-way partitioning.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a36dbd260825fb0b9ce37a8170ca3baba" class="m-doc">init_idx_vec</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&amp; v,
+              <span class="m-doc-wrap-bumper">void <a href="#a8ce7650dee0ec301763735709647106d" class="m-doc">init_idx_vec</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&amp; module,
               const <a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&amp; net)</span>
             </dt>
             <dd>Initializes the index vector for a given vertex and net.</dd>
@@ -202,12 +202,12 @@
             </table>
 <p>This function initializes the <a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a> object by resetting the total cost, vertex list, and initial gain list. It then calls the _init_gain function for each net in the hypergraph to initialize the gain values.</p>
           </div></section>
-          <section class="m-doc-details" id="a36dbd260825fb0b9ce37a8170ca3baba"><div>
+          <section class="m-doc-details" id="a8ce7650dee0ec301763735709647106d"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Gnl&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void FMBiGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a36dbd260825fb0b9ce37a8170ca3baba" class="m-doc-self">init_idx_vec</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&amp; v,
+              <span class="m-doc-wrap-bumper">void FMBiGainCalc&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8ce7650dee0ec301763735709647106d" class="m-doc-self">init_idx_vec</a>(</span><span class="m-doc-wrap">const <a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&amp; module,
               const <a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&amp; net)</span></span>
             </h3>
             <p>Initializes the index vector for a given vertex and net.</p>
@@ -217,8 +217,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The vertex to initialize the index vector for.</td>
+                  <td style="width: 1%">module</td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>net&nbsp;<span class="m-label m-flat m-info">in</span></td>
