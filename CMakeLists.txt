@@ -58,11 +58,7 @@ include(specific.cmake)
 file(GLOB_RECURSE headers CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
 )
-# Remove spdlog_example.hpp from headers to avoid compilation issues
-list(FILTER headers EXCLUDE REGEX ".*spdlog_example\\.hpp$")
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
-# Remove spdlog_example.cpp from sources to avoid compilation issues
-list(FILTER sources EXCLUDE REGEX ".*spdlog_example\\.cpp$")
 
 # ---- Create library ----
 

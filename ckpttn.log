@@ -1,0 +1,12 @@
+[2026-02-26 10:29:57.709] [file_logger] [info] CkPttn message: Test message 1 from wrapper
+[2026-02-26 10:29:57.713] [file_logger] [info] CkPttn message: Test message 2 from wrapper
+[2026-02-26 10:29:57.715] [file_logger] [info] CkPttn message: Test message 3 from wrapper
+[2026-02-26 10:30:30.445] [file_logger] [info] CkPttn message: Integration test initialization
+[2026-02-26 10:30:30.449] [file_logger] [info] CkPttn message: Testing circuit partitioning context
+[2026-02-26 10:30:30.450] [file_logger] [info] CkPttn message: Integration test completed successfully
+[2026-02-26 11:01:02.019] [file_logger] [info] CkPttn message: Test message 1 from wrapper
+[2026-02-26 11:01:02.023] [file_logger] [info] CkPttn message: Test message 2 from wrapper
+[2026-02-26 11:01:02.035] [file_logger] [info] CkPttn message: Test message 3 from wrapper
+[2026-02-26 11:01:09.302] [file_logger] [info] CkPttn message: Integration test initialization
+[2026-02-26 11:01:09.306] [file_logger] [info] CkPttn message: Testing circuit partitioning context
+[2026-02-26 11:01:09.307] [file_logger] [info] CkPttn message: Integration test completed successfully

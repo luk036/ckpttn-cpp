@@ -1,0 +1,5 @@
+[2026-02-26 10:30:21.574] [ckpttn_logger] [info] Starting ckpttn spdlog example
+[2026-02-26 10:30:21.579] [ckpttn_logger] [info] This is a sample logging function for the circuit partitioning library
+[2026-02-26 10:30:21.579] [ckpttn_logger] [warning] Sample warning message
+[2026-02-26 10:30:21.579] [ckpttn_logger] [info] Sample partition data: 6 nodes partitioned
+[2026-02-26 10:30:21.579] [ckpttn_logger] [info] Finished ckpttn spdlog example

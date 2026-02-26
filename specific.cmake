@@ -5,25 +5,13 @@ find_package(Threads REQUIRED)
 # ${Boost_LIBRARIES}") # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
 # target_include_directories(Boost::boost # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS}) endif()
 
-# Only add fmt if it's not already added by spdlog
-if(NOT TARGET fmt::fmt AND NOT TARGET spdlog::spdlog)
-  CPMAddPackage(
-    NAME fmt
-    GIT_TAG 11.0.0
-    GITHUB_REPOSITORY fmtlib/fmt
-    OPTIONS "FMT_INSTALL ON" # Create an installable target for export sets
-  )
-endif()
-
-# Add fmt if spdlog is using external fmt
-if(TARGET spdlog::spdlog AND NOT TARGET fmt::fmt)
-  CPMAddPackage(
-    NAME fmt
-    GIT_TAG 11.0.0
-    GITHUB_REPOSITORY fmtlib/fmt
-    OPTIONS "FMT_INSTALL ON" # Create an installable target for export sets
-  )
-endif()
+# Add spdlog for logging functionality - use bundled fmt to avoid compatibility issues
+CPMAddPackage(
+  NAME spdlog
+  GIT_TAG v1.15.0
+  GITHUB_REPOSITORY gabime/spdlog
+  OPTIONS "SPDLOG_INSTALL YES"
+)
 
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0") CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
@@ -72,4 +60,9 @@ set(SPECIFIC_LIBS MyWheel::MyWheel NetlistX::NetlistX XNetwork::XNetwork Py2Cpp:
 # Only add fmt::fmt to SPECIFIC_LIBS if we're using external fmt
 if(TARGET fmt::fmt)
   list(APPEND SPECIFIC_LIBS fmt::fmt)
+endif()
+
+# Add spdlog::spdlog to SPECIFIC_LIBS for logging functionality
+if(TARGET spdlog::spdlog)
+  list(APPEND SPECIFIC_LIBS spdlog::spdlog)
 endif()
