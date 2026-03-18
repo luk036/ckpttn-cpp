@@ -93,7 +93,7 @@ template <typename Gnl> class FMBiGainCalc {
      * This function is used to initialize the index vector for a given vertex and net in the
      * FMBiGainCalc object.
      *
-     * @param[in] v The vertex to initialize the index vector for.
+     * @param[in] module The vertex to initialize the index vector for.
      * @param[in] net The net to initialize the index vector for.
      */
     void init_idx_vec(const node_t &module, const node_t &net);
