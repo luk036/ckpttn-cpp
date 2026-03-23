@@ -17,9 +17,10 @@
 // };
 
 /**
- * @brief Netlist
+ * @brief Netlist data structure
  *
  * Netlist is implemented by xnetwork::Graph, which is a networkx-like graph.
+ * It represents a circuit netlist with modules (nodes) and nets (hyperedges).
  *
  */
 template <typename graph_t> struct Netlist {
@@ -28,17 +29,28 @@ template <typename graph_t> struct Netlist {
     using index_t = typename nodeview_t::key_type;
     // using graph_t = xnetwork::Graph<graph_t>;
 
+    /// @brief The underlying graph structure
     graph_t gr;
+    /// @brief Node view for modules (circuit components)
     nodeview_t modules;
+    /// @brief Node view for nets (connections)
     nodeview_t nets;
+    /// @brief Number of modules in the netlist
     size_t num_modules{};
+    /// @brief Number of nets in the netlist
     size_t num_nets{};
+    /// @brief Number of pads (I/O nodes)
     size_t num_pads = 0U;
+    /// @brief Maximum degree among all modules
     size_t max_degree{};
+    /// @brief Maximum degree among all nets
     size_t max_net_degree{};
     // std::uint8_t cost_model = 0;
+    /// @brief Weight for each module
     std::vector<unsigned int> module_weight;
+    /// @brief Flag indicating whether any modules have fixed positions
     bool has_fixed_modules{};
+    /// @brief Set of modules with fixed positions
     py::set<node_t> module_fixed;
 
   public:
@@ -184,6 +196,8 @@ using index_t = uint32_t;
 using SimpleNetlist = Netlist<graph_t>;
 
 template <typename Node> struct Snapshot {
+    /// @brief Set of external nets (nets crossing partition boundaries)
     py::set<Node> extern_nets;
+    /// @brief Dictionary mapping external modules to their partition assignments
     py::dict<index_t, std::uint8_t> extern_modules;
 };

@@ -16,9 +16,14 @@ template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
 
 /**
- * @brief FMKWayGainCalc
+ * @brief K-Way Fiduccia-Mattheyses Gain Calculator
  *
- * @tparam Gnl
+ * The `FMKWayGainCalc` class computes gain values for k-way partitioning.
+ * It tracks gain values for each vertex in each partition based on the number
+ * of nets that would become internal (gain) or external (loss) when moving a
+ * vertex between partitions.
+ *
+ * @tparam Gnl The hypergraph type
  */
 template <typename Gnl> class FMKWayGainCalc {
     friend class FMKWayGainMgr<Gnl>;
@@ -26,20 +31,32 @@ template <typename Gnl> class FMKWayGainCalc {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
+    /// @brief Reference to the hypergraph being partitioned
     const Gnl &hyprgraph;
+    /// @brief Number of partitions
     std::uint8_t num_parts;
+    /// @brief Round-robin iterator for excluding partitions
     fun::Robin<std::uint8_t> rr;
     // size_t num_modules;
+    /// @brief Total cost of the current partitioning
     int total_cost{0};
+    /// @brief Stack buffer for memory resource
     uint8_t stack_buf[20000];
+    /// @brief Monotonic memory resource for efficient allocation
     FMPmr::monotonic_buffer_resource rsrc;
+    /// @brief Vertex lists for each partition
     std::vector<std::vector<Item>> vertex_list;
+    /// @brief Initial gain lists for each partition
     std::vector<std::vector<int>> init_gain_list;
+    /// @brief Delta gain vector for vertices
     FMPmr::vector<int> delta_gain_v;
 
   public:
+    /// @brief Delta gain values for each partition
     FMPmr::vector<int> delta_gain_w;
+    /// @brief Index vector for net vertex enumeration
     FMPmr::vector<node_t> idx_vec;
+    /// @brief Whether to use special handling for 2-pin nets (optimization)
     bool special_handle_2pin_nets{true};  // @TODO should be template parameter
 
     /**

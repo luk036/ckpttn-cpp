@@ -51,6 +51,7 @@ template <typename Container> class ShiftArray : public Container {
     using value_type = typename Container::value_type;
 
   private:
+    /// @brief The starting index offset
     size_t _start{0U};
 
   public:
@@ -68,17 +69,17 @@ template <typename Container> class ShiftArray : public Container {
     explicit ShiftArray(Container &&base) : Container{std::forward<Container>(base)} {}
 
     /**
-     * @brief Set the start object
+     * @brief Set the start index for shifted access.
      *
-     * @param[in] start
+     * @param[in] start The starting index offset
      */
     void set_start(const size_t &start) { this->_start = start; }
 
     /**
-     * @brief
+     * @brief Access element with shifted index (const version).
      *
-     * @param[in] index
-     * @return const value_type&
+     * @param[in] index The shifted index
+     * @return const value_type& Reference to the element
      */
     auto operator[](const size_t &index) const -> const value_type & {
         assert(index >= this->_start);
@@ -86,10 +87,10 @@ template <typename Container> class ShiftArray : public Container {
     }
 
     /**
-     * @brief
+     * @brief Access element with shifted index (non-const version).
      *
-     * @param[in] index
-     * @return value_type&
+     * @param[in] index The shifted index
+     * @return value_type& Reference to the element
      */
     auto operator[](const size_t &index) -> value_type & {
         return Container::operator[](index - this->_start);

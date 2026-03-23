@@ -10,13 +10,18 @@ template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
 
 /**
- * @brief FMKWayGainMgr
+ * @brief K-Way Fiduccia-Mattheyses Gain Manager
  *
- * @tparam Gnl Generalized Netlist
+ * The `FMKWayGainMgr` class is a gain manager specialized for k-way partitioning.
+ * It uses the FM (Fiduccia-Mattheyses) algorithm to compute and manage gains
+ * for moving vertices among multiple partitions.
+ *
+ * @tparam Gnl The hypergraph type (Generalized Netlist)
  */
 template <typename Gnl> class FMKWayGainMgr
     : public FMGainMgr<Gnl, FMKWayGainCalc<Gnl>, FMKWayGainMgr<Gnl>> {
   private:
+    /// @brief Round-robin iterator for excluding partitions
     fun::Robin<std::uint8_t> rr;
 
   public:

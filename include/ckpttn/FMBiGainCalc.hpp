@@ -16,9 +16,13 @@ template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
 
 /**
- * @brief FMBiGainCalc
+ * @brief Binary Fiduccia-Mattheyses Gain Calculator
  *
- * @tparam Gnl
+ * The `FMBiGainCalc` class computes gain values for 2-way partitioning.
+ * It tracks gain values for each vertex based on the number of nets that would
+ * become internal (gain) or external (loss) when moving a vertex between partitions.
+ *
+ * @tparam Gnl The hypergraph type
  */
 template <typename Gnl> class FMBiGainCalc {
     friend class FMBiGainMgr<Gnl>;
@@ -28,16 +32,25 @@ template <typename Gnl> class FMBiGainCalc {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   private:
+    /// @brief Reference to the hypergraph being partitioned
     const Gnl &hyprgraph;
+    /// @brief List of vertex links for bucket-based gain management
     std::vector<Item> vertex_list;
+    /// @brief Initial gain values for each vertex
     std::vector<int> init_gain_list;
+    /// @brief Total cost of the current partitioning
     int total_cost{0};
+    /// @brief Stack buffer for memory resource
     uint8_t stack_buf[8192];  // TODO
+    /// @brief Monotonic memory resource for efficient allocation
     FMPmr::monotonic_buffer_resource rsrc;
 
   public:
+    /// @brief Delta gain for the winning partition
     int delta_gain_w{};
+    /// @brief Index vector for net vertex enumeration
     FMPmr::vector<node_t> idx_vec;
+    /// @brief Whether to use special handling for 2-pin nets (optimization)
     bool special_handle_2pin_nets{true};
 
     /**

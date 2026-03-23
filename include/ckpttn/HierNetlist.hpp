@@ -19,12 +19,13 @@
 // };
 
 /**
- * @brief HierNetlist
+ * @brief Hierarchical Netlist
  *
- * HierNetlist is implemented by xnetwork::Graph, which is a networkx-like
- * graph.
+ * HierNetlist extends the Netlist class to support multi-level partitioning algorithms.
+ * It maintains additional mappings and weights for hierarchical (coarsening) representations
+ * of the netlist during the partitioning process.
  *
- * @tparam graph_t
+ * @tparam graph_t The graph type (e.g., xnetwork::SimpleGraph)
  */
 template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
   public:
@@ -33,10 +34,15 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     using index_t = typename nodeview_t::key_type;
 
     /* For multi-level algorithms */
+    /// @brief Pointer to the parent netlist in the hierarchy
     const Netlist<graph_t> *parent;
+    /// @brief Mapping from this level's nodes to parent's nodes (upward)
     std::vector<node_t> node_up_map;
+    /// @brief Mapping from this level's nodes to children's nodes (downward)
     std::vector<node_t> node_down_map;
+    /// @brief Mapping from cluster index to child nodes
     py::dict<index_t, node_t> cluster_down_map;
+    /// @brief Net weights for each net in the hierarchical netlist
     ShiftArray<std::vector<uint32_t>> net_weight{};
 
     /**

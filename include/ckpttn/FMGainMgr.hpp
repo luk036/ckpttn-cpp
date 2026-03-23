@@ -13,11 +13,16 @@ template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
 
 /**
- * @brief
+ * @brief Fiduccia-Mattheyses Gain Manager
  *
- * @tparam Gnl
- * @tparam GainCalc
- * @tparam Derived
+ * The `FMGainMgr` class is a CRTP base class for managing the gain calculation
+ * and bucket structure used in the Fiduccia-Mattheyses partitioning algorithm.
+ * It provides methods for initializing gains, selecting vertices to move,
+ * and updating gain values after moves.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
  */
 template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     Derived &self = *static_cast<Derived *>(this);
@@ -25,12 +30,17 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
   protected:
+    /// @brief Waiting list for vertices awaiting movement
     Dllist<std::pair<node_t, uint32_t>> waiting_list{std::make_pair(node_t{}, uint32_t(0))};
+    /// @brief Reference to the hypergraph being partitioned
     const Gnl &hyprgraph;
+    /// @brief Gain buckets for each partition (used in bucket-based gain management)
     std::vector<BPQueue<node_t>> gain_bucket;
+    /// @brief Number of partitions
     std::uint8_t num_parts;
 
   public:
+    /// @brief Gain calculator instance
     GainCalc gain_calc;
 
     // int total_cost;

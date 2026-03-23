@@ -55,11 +55,13 @@ class PartMgrBase {
     // using Der = Derived<Gnl, GainMgr, ConstrMgr>;
 
   protected:
-    // Der& self = *static_cast<Der*>(this);
-
+    /// @brief Reference to the hypergraph being partitioned
     const Gnl &hyprgraph;
+    /// @brief Gain manager for computing and managing gains
     GainMgr &gain_mgr;
+    /// @brief Constraint manager for validating partition constraints
     ConstrMgr &validator;
+    /// @brief Number of partitions
     size_t num_parts;
     // std::vector<std::uint8_t> snapshot;
     // std::vector<std::uint8_t> part;
@@ -79,40 +81,40 @@ class PartMgrBase {
         : hyprgraph{hyprgraph}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
 
     /**
-     * @brief
+     * @brief Initializes the partition manager with the given partition.
      *
-     * @param[in,out] part
+     * @param[in,out] part The partition vector to initialize.
      */
     void init(std::span<std::uint8_t> part);
 
     /**
-     * @brief
+     * @brief Legalizes the partition to satisfy balance constraints.
      *
-     * @param[in,out] part
-     * @return LegalCheck
+     * @param[in,out] part The partition to legalize.
+     * @return LegalCheck The result of the legality check.
      */
     auto legalize(std::span<std::uint8_t> part) -> LegalCheck;
 
     /**
-     * @brief
+     * @brief Optimizes the partition using the FM algorithm.
      *
-     * @param[in,out] part
+     * @param[in,out] part The partition to optimize.
      */
     void optimize(std::span<std::uint8_t> part);
 
   private:
     /**
-     * @brief
+     * @brief Performs a single pass of the FM optimization algorithm.
      *
-     * @param[in,out] part
+     * @param[in,out] part The partition to optimize.
      */
     void _optimize_1pass(std::span<std::uint8_t> part);
 
     /**
-     * @brief
+     * @brief Takes a snapshot of the current partition state.
      *
-     * @param[in] part
-     * @return std::vector<std::uint8_t>
+     * @param[in] part The current partition to snapshot.
+     * @return std::vector<std::uint8_t> The snapshot data.
      */
     auto take_snapshot(std::span<const std::uint8_t> part) -> std::vector<std::uint8_t> {
         // const auto N = part.size();
@@ -127,10 +129,10 @@ class PartMgrBase {
     }
 
     /**
-     * @brief
+     * @brief Restores the partition from a previously saved snapshot.
      *
-     * @param[in] snapshot
-     * @param[in,out] part
+     * @param[in] snapshot The snapshot data to restore from.
+     * @param[in,out] part The partition to restore.
      */
     auto restore_part(const std::vector<std::uint8_t> &snapshot,
                       std::span<std::uint8_t> part) -> void {

@@ -28,11 +28,15 @@ enum class LegalCheck;
  */
 class MLPartMgr {
   private:
+    /// @brief Balance tolerance for partition constraints
     double bal_tol;
+    /// @brief Number of partitions
     std::uint8_t num_parts;
+    /// @brief Size limit for transitioning from multi-level to flat FM
     size_t limitsize{7U};
 
   public:
+    /// @brief Total cost of the current partitioning solution
     int total_cost{};
 
     /**

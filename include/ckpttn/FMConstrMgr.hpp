@@ -23,14 +23,21 @@ enum class LegalCheck { NotSatisfied, GetBetter, AllSatisfied };
  */
 template <typename Gnl> class FMConstrMgr {
   private:
+    /// @brief Reference to the hypergraph being partitioned
     const Gnl &hyprgraph;
+    /// @brief Balance tolerance for partition constraints
     double bal_tol;
+    /// @brief Total weight of all modules in the hypergraph
     unsigned int total_weight{0};
-    unsigned int weight{};  // cache value
+    /// @brief Cached weight value for temporary calculations
+    unsigned int weight{};
 
   protected:
+    /// @brief Difference between current partition weight and target for each partition
     std::vector<unsigned int> diff;
+    /// @brief Lower bound for partition weight (based on balance tolerance)
     unsigned int lowerbound{};
+    /// @brief Number of partitions
     std::uint8_t num_parts;
 
     using node_t = typename Gnl::node_t;

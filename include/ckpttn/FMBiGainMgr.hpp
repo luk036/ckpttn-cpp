@@ -9,9 +9,13 @@
 // struct FMBiGainMgr;
 
 /**
- * @brief FMBiGainMgr
+ * @brief Binary Fiduccia-Mattheyses Gain Manager
  *
- * @tparam Gnl
+ * The `FMBiGainMgr` class is a gain manager specialized for 2-way partitioning.
+ * It uses the FM (Fiduccia-Mattheyses) algorithm to compute and manage gains
+ * for moving vertices between two partitions.
+ *
+ * @tparam Gnl The hypergraph type
  */
 template <typename Gnl> class FMBiGainMgr
     : public FMGainMgr<Gnl, FMBiGainCalc<Gnl>, FMBiGainMgr<Gnl>> {
