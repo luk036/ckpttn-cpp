@@ -97,15 +97,15 @@
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ad82f0c0274f7245168f498d0c098cd83" class="m-doc">set_start</a>(</span><span class="m-doc-wrap">const size_t&amp; start)</span>
             </dt>
-            <dd>Set the start object.</dd>
+            <dd>Set the start index for shifted access.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ae83e6c32393a6dea019aebe24a5ef8ef" class="m-doc">operator[]</a>(</span><span class="m-doc-wrap">const size_t&amp; index) const -&gt; const value_type &amp; -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Access element with shifted index (const version).</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a93048453259608c107aaa93244e3ece2" class="m-doc">operator[]</a>(</span><span class="m-doc-wrap">const size_t&amp; index) -&gt; value_type &amp; -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Access element with shifted index (non-const version).</dd>
           </dl>
         </section>
         <section>
@@ -137,7 +137,7 @@
               </div>
               <span class="m-doc-wrap-bumper">void ShiftArray&lt;Container&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad82f0c0274f7245168f498d0c098cd83" class="m-doc-self">set_start</a>(</span><span class="m-doc-wrap">const size_t&amp; start)</span></span>
             </h3>
-            <p>Set the start object.</p>
+            <p>Set the start index for shifted access.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -145,7 +145,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">start&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The starting index offset</td>
                 </tr>
               </tbody>
             </table>
@@ -157,6 +157,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto ShiftArray&lt;Container&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae83e6c32393a6dea019aebe24a5ef8ef" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">const size_t&amp; index) const -&gt; const value_type &amp;</span></span>
             </h3>
+            <p>Access element with shifted index (const version).</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -164,13 +165,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">index&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The shifted index</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>const value_type&amp;</td>
+                  <td>const value_type&amp; Reference to the element</td>
                 </tr>
               </tfoot>
             </table>
@@ -182,6 +183,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto ShiftArray&lt;Container&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a93048453259608c107aaa93244e3ece2" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">const size_t&amp; index) -&gt; value_type &amp;</span></span>
             </h3>
+            <p>Access element with shifted index (non-const version).</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -189,13 +191,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">index&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The shifted index</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>value_type&amp;</td>
+                  <td>value_type&amp; Reference to the element</td>
                 </tr>
               </tfoot>
             </table>

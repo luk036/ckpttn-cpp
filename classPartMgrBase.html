@@ -135,15 +135,15 @@
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ab137211b607d923b14ceac08ea49130a" class="m-doc">init</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
             </dt>
-            <dd></dd>
+            <dd>Initializes the partition manager with the given partition.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a481739e49b70e0dbfacee86fcae48814" class="m-doc">legalize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Legalizes the partition to satisfy balance constraints.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a53f137ac40413ba43cefc2efd96af0fa" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
             </dt>
-            <dd></dd>
+            <dd>Optimizes the partition using the FM algorithm.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -161,19 +161,19 @@
             <dt id="af30c16d03d9c4083391cdfc500f103ea">
               const Gnl&amp; <a href="#af30c16d03d9c4083391cdfc500f103ea" class="m-doc-self">hyprgraph</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Reference to the hypergraph being partitioned.</dd>
             <dt id="a87d6a70db75bcb86cac2fc3fd4fcbbfd">
               GainMgr&amp; <a href="#a87d6a70db75bcb86cac2fc3fd4fcbbfd" class="m-doc-self">gain_mgr</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Gain manager for computing and managing gains.</dd>
             <dt id="ae718a21223df29d2905be126df005198">
               ConstrMgr&amp; <a href="#ae718a21223df29d2905be126df005198" class="m-doc-self">validator</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Constraint manager for validating partition constraints.</dd>
             <dt id="a284e27f1e55e6b378624323e2cd6806d">
               size_t <a href="#a284e27f1e55e6b378624323e2cd6806d" class="m-doc-self">num_parts</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Number of partitions.</dd>
           </dl>
         </section>
         <section>
@@ -220,6 +220,7 @@
               </div>
               <span class="m-doc-wrap-bumper">void PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab137211b607d923b14ceac08ea49130a" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span></span>
             </h3>
+            <p>Initializes the partition manager with the given partition.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -227,7 +228,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
-                  <td></td>
+                  <td>The partition vector to initialize.</td>
                 </tr>
               </tbody>
             </table>
@@ -239,6 +240,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a481739e49b70e0dbfacee86fcae48814" class="m-doc-self">legalize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck</span></span>
             </h3>
+            <p>Legalizes the partition to satisfy balance constraints.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -246,13 +248,13 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
-                  <td></td>
+                  <td>The partition to legalize.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>LegalCheck</td>
+                  <td>LegalCheck The result of the legality check.</td>
                 </tr>
               </tfoot>
             </table>
@@ -264,6 +266,7 @@
               </div>
               <span class="m-doc-wrap-bumper">void PartMgrBase&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a53f137ac40413ba43cefc2efd96af0fa" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span></span>
             </h3>
+            <p>Optimizes the partition using the FM algorithm.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -271,7 +274,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
-                  <td></td>
+                  <td>The partition to optimize.</td>
                 </tr>
               </tbody>
             </table>

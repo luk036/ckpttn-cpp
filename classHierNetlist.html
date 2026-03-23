@@ -53,7 +53,7 @@
           <div class="m-doc-template">template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;</div>
           HierNetlist <span class="m-thin">class</span>
         </h1>
-        <p><a href="classHierNetlist.html" class="m-doc">HierNetlist</a>.</p>
+        <p>Hierarchical <a href="structNetlist.html" class="m-doc">Netlist</a>.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -69,7 +69,7 @@
             </li>
           </ul>
         </nav>
-<p><a href="classHierNetlist.html" class="m-doc">HierNetlist</a> is implemented by xnetwork::Graph, which is a networkx-like graph.</p>
+<p><a href="classHierNetlist.html" class="m-doc">HierNetlist</a> extends the <a href="structNetlist.html" class="m-doc">Netlist</a> class to support multi-level partitioning algorithms. It maintains additional mappings and weights for hierarchical (coarsening) representations of the netlist during the partitioning process.</p>
         <section id="base-classes">
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
@@ -77,7 +77,7 @@
               <div class="m-doc-template">template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;</div>
               struct <a href="structNetlist.html" class="m-doc">Netlist&lt;graph_t&gt;</a>
             </dt>
-            <dd><a href="structNetlist.html" class="m-doc">Netlist</a>.</dd>
+            <dd><a href="structNetlist.html" class="m-doc">Netlist</a> data structure.</dd>
           </dl>
         </section>
         <section id="pub-types">
@@ -133,23 +133,23 @@
             <dt id="a8d070dd3d8115074ff6a13b008a6d987">
               const <a href="structNetlist.html" class="m-doc">Netlist</a>&lt;<a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;* <a href="#a8d070dd3d8115074ff6a13b008a6d987" class="m-doc-self">parent</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Pointer to the parent netlist in the hierarchy.</dd>
             <dt id="ae038d30afe9800e886b8b515dfcd6fd3">
               std::vector&lt;<a href="classHierNetlist.html#a17234f434b063f9d1f19af64b5d17cea" class="m-doc">node_<wbr />t</a>&gt; <a href="#ae038d30afe9800e886b8b515dfcd6fd3" class="m-doc-self">node_up_map</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Mapping from this level&#x27;s nodes to parent&#x27;s nodes (upward)</dd>
             <dt id="afd2a6fe606296fdf9dc232d4f729bd46">
               std::vector&lt;<a href="classHierNetlist.html#a17234f434b063f9d1f19af64b5d17cea" class="m-doc">node_<wbr />t</a>&gt; <a href="#afd2a6fe606296fdf9dc232d4f729bd46" class="m-doc-self">node_down_map</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Mapping from this level&#x27;s nodes to children&#x27;s nodes (downward)</dd>
             <dt id="ae1e8a7dd987f1d78aff1f886a00df15e">
               py::dict&lt;<a href="classHierNetlist.html#a01879587a7ad780d222f8513401398bb" class="m-doc">index_<wbr />t</a>, <a href="classHierNetlist.html#a17234f434b063f9d1f19af64b5d17cea" class="m-doc">node_<wbr />t</a>&gt; <a href="#ae1e8a7dd987f1d78aff1f886a00df15e" class="m-doc-self">cluster_down_map</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Mapping from cluster index to child nodes.</dd>
             <dt id="a4e377a81693f6689ac1e4b92969f7e14">
               <a href="classShiftArray.html" class="m-doc">ShiftArray</a>&lt;std::vector&lt;uint32_t&gt;&gt; <a href="#a4e377a81693f6689ac1e4b92969f7e14" class="m-doc-self">net_weight</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Net weights for each net in the hierarchical netlist.</dd>
           </dl>
         </section>
         <section>

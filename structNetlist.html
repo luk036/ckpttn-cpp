@@ -53,7 +53,7 @@
           <div class="m-doc-template">template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;</div>
           Netlist <span class="m-thin">struct</span>
         </h1>
-        <p><a href="structNetlist.html" class="m-doc">Netlist</a>.</p>
+        <p><a href="structNetlist.html" class="m-doc">Netlist</a> data structure.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -69,7 +69,7 @@
             </li>
           </ul>
         </nav>
-<p><a href="structNetlist.html" class="m-doc">Netlist</a> is implemented by xnetwork::Graph, which is a networkx-like graph.</p>
+<p><a href="structNetlist.html" class="m-doc">Netlist</a> is implemented by xnetwork::Graph, which is a networkx-like graph. It represents a circuit netlist with modules (nodes) and nets (hyperedges).</p>
         <section id="derived-classes">
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
@@ -77,7 +77,7 @@
               <div class="m-doc-template">template&lt;typename <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a>&gt;</div>
               class <a href="classHierNetlist.html" class="m-doc">HierNetlist</a>
             </dt>
-            <dd><a href="classHierNetlist.html" class="m-doc">HierNetlist</a>.</dd>
+            <dd>Hierarchical <a href="structNetlist.html" class="m-doc">Netlist</a>.</dd>
           </dl>
         </section>
         <section id="pub-types">
@@ -161,47 +161,47 @@
             <dt id="ab5d5334506d55effea54712a9c9def7a">
               <a href="netlist_8hpp.html#abf8ac668235c649d61f393bab7d9d761" class="m-doc">graph_<wbr />t</a> <a href="#ab5d5334506d55effea54712a9c9def7a" class="m-doc-self">gr</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The underlying graph structure.</dd>
             <dt id="a4d5429a1cac4012bee42baa6af6da465">
               <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a> <a href="#a4d5429a1cac4012bee42baa6af6da465" class="m-doc-self">modules</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Node view for modules (circuit components)</dd>
             <dt id="ae287f5164ee28a97fcc77259be7b0d9e">
               <a href="structNetlist.html#a08ef86caa175ac7ce7cec591e3543183" class="m-doc">nodeview_<wbr />t</a> <a href="#ae287f5164ee28a97fcc77259be7b0d9e" class="m-doc-self">nets</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Node view for nets (connections)</dd>
             <dt id="ab038735024d9565b63b93541e95257e6">
               size_t <a href="#ab038735024d9565b63b93541e95257e6" class="m-doc-self">num_modules</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Number of modules in the netlist.</dd>
             <dt id="a8d5f506f47c558e26ed25241ba573318">
               size_t <a href="#a8d5f506f47c558e26ed25241ba573318" class="m-doc-self">num_nets</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Number of nets in the netlist.</dd>
             <dt id="a810e2ab434d47f937ea505efebb03bb7">
               size_t <a href="#a810e2ab434d47f937ea505efebb03bb7" class="m-doc-self">num_pads</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Number of pads (I/O nodes)</dd>
             <dt id="a616ca78f9fdf8aac081166f8c1b28141">
               size_t <a href="#a616ca78f9fdf8aac081166f8c1b28141" class="m-doc-self">max_degree</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Maximum degree among all modules.</dd>
             <dt id="a0dadd0fa16e56f9fa3f108c789a507eb">
               size_t <a href="#a0dadd0fa16e56f9fa3f108c789a507eb" class="m-doc-self">max_net_degree</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Maximum degree among all nets.</dd>
             <dt id="af7ba33ae5b1a807f0d64311093433ad0">
               std::vector&lt;unsigned int&gt; <a href="#af7ba33ae5b1a807f0d64311093433ad0" class="m-doc-self">module_weight</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Weight for each module.</dd>
             <dt id="a256acc61e0209546de91bd0634bd5874">
               bool <a href="#a256acc61e0209546de91bd0634bd5874" class="m-doc-self">has_fixed_modules</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Flag indicating whether any modules have fixed positions.</dd>
             <dt id="ab78a880e6c7779fb96eaa4b8ff1efade">
               py::set&lt;<a href="structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669" class="m-doc">node_<wbr />t</a>&gt; <a href="#ab78a880e6c7779fb96eaa4b8ff1efade" class="m-doc-self">module_fixed</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Set of modules with fixed positions.</dd>
           </dl>
         </section>
         <section>

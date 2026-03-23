@@ -53,6 +53,7 @@
           <div class="m-doc-template">template&lt;typename Gnl, typename GainCalc, class Derived&gt;</div>
           FMGainMgr <span class="m-thin">class</span>
         </h1>
+        <p>Fiduccia-Mattheyses Gain Manager.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -60,15 +61,15 @@
           <tbody>
             <tr>
               <td style="width: 1%">Gnl</td>
-              <td></td>
+              <td>The hypergraph type</td>
             </tr>
             <tr>
               <td>GainCalc</td>
-              <td></td>
+              <td>The gain calculator type</td>
             </tr>
             <tr>
               <td>Derived</td>
-              <td></td>
+              <td>The derived gain manager type (CRTP)</td>
             </tr>
           </tbody>
         </table>
@@ -86,6 +87,7 @@
             </li>
           </ul>
         </nav>
+<p>The <code><a href="classFMGainMgr.html" class="m-doc">FMGainMgr</a></code> class is a CRTP base class for managing the gain calculation and bucket structure used in the Fiduccia-Mattheyses partitioning algorithm. It provides methods for initializing gains, selecting vertices to move, and updating gain values after moves.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
@@ -132,7 +134,7 @@
             <dt id="a5c502f5b6f304a1fe0e578908c99f602">
               GainCalc <a href="#a5c502f5b6f304a1fe0e578908c99f602" class="m-doc-self">gain_calc</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Gain calculator instance.</dd>
           </dl>
         </section>
         <section id="pro-attribs">
@@ -141,19 +143,19 @@
             <dt id="a7ee68d341befb3e9fed2fa83a67dd163">
               Dllist&lt;std::pair&lt;node_t, uint32_t&gt;&gt; <a href="#a7ee68d341befb3e9fed2fa83a67dd163" class="m-doc-self">waiting_list</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Waiting list for vertices awaiting movement.</dd>
             <dt id="a3fc65830b12073435ffdbfc01858e2cd">
               const Gnl&amp; <a href="#a3fc65830b12073435ffdbfc01858e2cd" class="m-doc-self">hyprgraph</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Reference to the hypergraph being partitioned.</dd>
             <dt id="aa2bb19eb298bf216edef3e36d916722f">
               std::vector&lt;BPQueue&lt;node_t&gt;&gt; <a href="#aa2bb19eb298bf216edef3e36d916722f" class="m-doc-self">gain_bucket</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Gain buckets for each partition (used in bucket-based gain management)</dd>
             <dt id="a3f6da7f51462c6c2ff2c552d1dac2cbd">
               std::uint8_t <a href="#a3f6da7f51462c6c2ff2c552d1dac2cbd" class="m-doc-self">num_parts</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Number of partitions.</dd>
           </dl>
         </section>
         <section>

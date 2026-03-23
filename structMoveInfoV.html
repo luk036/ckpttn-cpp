@@ -53,6 +53,7 @@
           <div class="m-doc-template">template&lt;typename Node&gt;</div>
           MoveInfoV <span class="m-thin">struct</span>
         </h1>
+        <p>Move information for a single vertex (without net reference)</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -60,7 +61,7 @@
           <tbody>
             <tr>
               <td style="width: 1%">Node</td>
-              <td></td>
+              <td>The node type (typically representing a module)</td>
             </tr>
           </tbody>
         </table>
@@ -75,21 +76,22 @@
             </li>
           </ul>
         </nav>
+<p>This struct stores simplified information about moving a vertex from one partition to another. Used in the FM algorithm for gain calculation and constraint checking.</p>
         <section id="pub-attribs">
           <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
             <dt id="ade553dd8faf763e1ab2b62aba66b3313">
               Node <a href="#ade553dd8faf763e1ab2b62aba66b3313" class="m-doc-self">v</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The vertex being moved.</dd>
             <dt id="ad26c0030fbbd91222328889d36f62008">
               std::uint8_t <a href="#ad26c0030fbbd91222328889d36f62008" class="m-doc-self">from_part</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The partition the vertex is moving from.</dd>
             <dt id="a0b471bab9b34d69193066603f9837e79">
               std::uint8_t <a href="#a0b471bab9b34d69193066603f9837e79" class="m-doc-self">to_part</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The partition the vertex is moving to.</dd>
           </dl>
         </section>
       </div>

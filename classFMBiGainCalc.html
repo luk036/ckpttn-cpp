@@ -53,7 +53,7 @@
           <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           FMBiGainCalc <span class="m-thin">class</span>
         </h1>
-        <p><a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a>.</p>
+        <p>Binary Fiduccia-Mattheyses Gain Calculator.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -61,7 +61,7 @@
           <tbody>
             <tr>
               <td style="width: 1%">Gnl</td>
-              <td></td>
+              <td>The hypergraph type</td>
             </tr>
           </tbody>
         </table>
@@ -79,6 +79,7 @@
             </li>
           </ul>
         </nav>
+<p>The <code><a href="classFMBiGainCalc.html" class="m-doc">FMBiGainCalc</a></code> class computes gain values for 2-way partitioning. It tracks gain values for each vertex based on the number of nets that would become internal (gain) or external (loss) when moving a vertex between partitions.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
@@ -141,15 +142,15 @@
             <dt id="ad4bf0252eb109d2fc9a1b4180fe5b726">
               int <a href="#ad4bf0252eb109d2fc9a1b4180fe5b726" class="m-doc-self">delta_gain_w</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Delta gain for the winning partition.</dd>
             <dt id="ae2529f9f637771f223b89720f290da68">
               FMPmr::vector&lt;<a href="classFMBiGainCalc.html#af6c3f169aec620f23574b4c339c13e1b" class="m-doc">node_<wbr />t</a>&gt; <a href="#ae2529f9f637771f223b89720f290da68" class="m-doc-self">idx_vec</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Index vector for net vertex enumeration.</dd>
             <dt id="a90d72089c9d1e469973add70f44846d4">
               bool <a href="#a90d72089c9d1e469973add70f44846d4" class="m-doc-self">special_handle_2pin_nets</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Whether to use special handling for 2-pin nets (optimization)</dd>
           </dl>
         </section>
         <section>

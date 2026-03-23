@@ -53,7 +53,7 @@
           <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           FMKWayGainCalc <span class="m-thin">class</span>
         </h1>
-        <p><a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a>.</p>
+        <p>K-Way Fiduccia-Mattheyses Gain Calculator.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -61,7 +61,7 @@
           <tbody>
             <tr>
               <td style="width: 1%">Gnl</td>
-              <td></td>
+              <td>The hypergraph type</td>
             </tr>
           </tbody>
         </table>
@@ -79,6 +79,7 @@
             </li>
           </ul>
         </nav>
+<p>The <code><a href="classFMKWayGainCalc.html" class="m-doc">FMKWayGainCalc</a></code> class computes gain values for k-way partitioning. It tracks gain values for each vertex in each partition based on the number of nets that would become internal (gain) or external (loss) when moving a vertex between partitions.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
@@ -137,15 +138,15 @@
             <dt id="ab070ea468fd6680096709ae131746103">
               FMPmr::vector&lt;int&gt; <a href="#ab070ea468fd6680096709ae131746103" class="m-doc-self">delta_gain_w</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Delta gain values for each partition.</dd>
             <dt id="a95e557aee7793c9a41f396db2a1959a0">
               FMPmr::vector&lt;node_t&gt; <a href="#a95e557aee7793c9a41f396db2a1959a0" class="m-doc-self">idx_vec</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Index vector for net vertex enumeration.</dd>
             <dt id="afb4fac21ef6bbc6868c58aa3c85196cb">
               bool <a href="#afb4fac21ef6bbc6868c58aa3c85196cb" class="m-doc-self">special_handle_2pin_nets</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Whether to use special handling for 2-pin nets (optimization)</dd>
           </dl>
         </section>
         <section>

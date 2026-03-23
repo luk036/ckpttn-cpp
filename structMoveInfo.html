@@ -53,6 +53,7 @@
           <div class="m-doc-template">template&lt;typename Node&gt;</div>
           MoveInfo <span class="m-thin">struct</span>
         </h1>
+        <p>Move information for a single vertex in a net.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -60,7 +61,7 @@
           <tbody>
             <tr>
               <td style="width: 1%">Node</td>
-              <td></td>
+              <td>The node type (typically representing a module or net)</td>
             </tr>
           </tbody>
         </table>
@@ -75,25 +76,26 @@
             </li>
           </ul>
         </nav>
+<p>This struct stores information about moving a single vertex from one partition to another. Used in the FM algorithm to track gain calculations for individual net-pin relationships.</p>
         <section id="pub-attribs">
           <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
             <dt id="a6aaff2026ae6920e58e3c3e019519d77">
               Node <a href="#a6aaff2026ae6920e58e3c3e019519d77" class="m-doc-self">net</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The net being processed.</dd>
             <dt id="a72c6115733d2467f2d0f52fbd94613cc">
               Node <a href="#a72c6115733d2467f2d0f52fbd94613cc" class="m-doc-self">v</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The vertex being moved.</dd>
             <dt id="ac8ed36eb580d8c79250e057d2fdc1fd1">
               std::uint8_t <a href="#ac8ed36eb580d8c79250e057d2fdc1fd1" class="m-doc-self">from_part</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The partition the vertex is moving from.</dd>
             <dt id="a396c13e225fa71c6e0fa6c30bc56fd3c">
               std::uint8_t <a href="#a396c13e225fa71c6e0fa6c30bc56fd3c" class="m-doc-self">to_part</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>The partition the vertex is moving to.</dd>
           </dl>
         </section>
       </div>
