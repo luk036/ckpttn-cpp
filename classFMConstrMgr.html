@@ -130,6 +130,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a2cbe15e25375df537ba01c916f55aa38" class="m-doc">update_move</a>(</span><span class="m-doc-wrap">const <a href="structMoveInfoV.html" class="m-doc">MoveInfoV</a>&lt;<a href="classFMConstrMgr.html#ad9c3956e7666d36de98c5bd1b835a996" class="m-doc">node_<wbr />t</a>&gt;&amp; move_info_v) -&gt; void -&gt; auto</span>
             </dt>
             <dd>Update the partitioning based on the proposed node moves.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0407011a3368f315842c7796083f8531" class="m-doc">final_check</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; bool -&gt; auto</span>
+            </dt>
+            <dd>Performs a final check on the partitioning based on the given partition information.</dd>
           </dl>
         </section>
         <section id="pro-types">
@@ -303,6 +307,26 @@
                 <tr>
                   <td style="width: 1%">move_info_v&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>A vector of information about the proposed node moves.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0407011a3368f315842c7796083f8531"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto FMConstrMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0407011a3368f315842c7796083f8531" class="m-doc-self">final_check</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; bool</span></span>
+            </h3>
+            <p>Performs a final check on the partitioning based on the given partition information.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The partition information to check.</td>
                 </tr>
               </tbody>
             </table>
