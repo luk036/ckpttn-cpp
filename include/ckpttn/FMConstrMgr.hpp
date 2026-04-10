@@ -96,4 +96,11 @@ template <typename Gnl> class FMConstrMgr {
      * @param[in] move_info_v A vector of information about the proposed node moves.
      */
     auto update_move(const MoveInfoV<node_t> &move_info_v) -> void;
-};
+
+    /**
+     * @brief Performs a final check on the partitioning based on the given partition information.
+     *
+     * @param[in] part The partition information to check.
+     */
+    auto final_check(std::span<const std::uint8_t> part) -> bool;
+  };

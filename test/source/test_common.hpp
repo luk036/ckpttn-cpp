@@ -18,7 +18,8 @@ void run_PartMgr(const SimpleNetlist &hyprgraph) {
     ConstrMgr constr_mgr{hyprgraph, 0.4};
     FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr> part_mgr{hyprgraph, gain_mgr, constr_mgr};
     std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    part_mgr.legalize(part);
+    auto legal_check = part_mgr.legalize(part);
+    CHECK(legal_check == LegalCheck::AllSatisfied);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
     CHECK(totalcostbefore >= 0);
@@ -36,7 +37,8 @@ void run_PartMgr(const SimpleNetlist &hyprgraph, uint8_t num_parts) {
     FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr> part_mgr{hyprgraph, gain_mgr, constr_mgr, num_parts};
     std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
 
-    part_mgr.legalize(part);
+    auto legal_check = part_mgr.legalize(part);
+    CHECK(legal_check == LegalCheck::AllSatisfied);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
     CHECK(totalcostbefore >= 0);

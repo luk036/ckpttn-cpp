@@ -111,6 +111,15 @@ class PartMgrBase {
     void _optimize_1pass(std::span<std::uint8_t> part);
 
     /**
+     * @brief Performs a final check on the partitioning based on the given partition information.
+     *
+     * @param[in] part The partition information to check.
+     */
+    auto final_check(std::span<const std::uint8_t> part) -> bool {
+        return this->validator.final_check(part);
+    }
+
+    /**
      * @brief Takes a snapshot of the current partition state.
      *
      * @param[in] part The current partition to snapshot.

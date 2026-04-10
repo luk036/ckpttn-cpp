@@ -97,6 +97,29 @@ void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t> &move_i
     this->diff[move_info_v.from_part] -= this->weight;
 }
 
+/**
+ * The code snippet is defining the `final_check` function in the `FMConstrMgr` class template. This
+ * function takes a `part` vector as input and checks if the final partitioning satisfies the balance
+ * constraints. It first initializes the `diff` vector using the `init` function, and then iterates 
+ * through the `diff` vector to check if any part is below the `lowerbound`. If any part is
+ * below the `lowerbound`, it returns `false`, indicating that the final partitioning does not satisfy
+ * the balance constraints. If all parts are above or equal to the `lowerbound`, it returns `true`, 
+ * indicating that the final partitioning satisfies the balance constraints.
+ *
+ * @param[in] part The partition information to check.
+ * @return true If the final partitioning satisfies the balance constraints.
+ * @return false If the final partitioning does not satisfy the balance constraints.
+ */
+template <typename Gnl> auto FMConstrMgr<Gnl>::final_check(std::span<const uint8_t> part) -> bool {
+    this->init(part);
+    for (const auto &localdiff : this->diff) {
+        if (localdiff < this->lowerbound) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // Instantiation
 #include <netlistx/netlist.hpp>  // for Netlist, SimpleNetlist
 #include <py2cpp/range.hpp>      // for _iterator
