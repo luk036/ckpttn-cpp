@@ -1,3 +1,5 @@
+#include <ckpttn/readwrite.hpp>
+
 #include <cctype>                      // for isspace, isdigit
 #include <cstdint>                     // for uint32_t
 #include <cstdlib>                     // for exit, size_t
@@ -10,6 +12,7 @@
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>      // for std
 // #include <__hash_table>  // for __hash_const_iterator, operator!=
+#include <sstream>    // for istringstream, ostringstream
 #include <string_view>  // for std::string_view
 #include <vector>       // for vector
 
@@ -211,5 +214,237 @@ void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName) {
         lineno++;
     }
 
-    hyprgraph.module_weight = std::move(module_weight);
+hyprgraph.module_weight = std::move(module_weight);
+}
+
+// ============================================================================
+// New read/write functions for CLI
+// ============================================================================
+
+auto detect_input_format(const std::string& filename) -> InputFormat {
+    auto n = filename.size();
+    if (n >= 4 && filename.substr(n - 4) == ".net") {
+        return InputFormat::netD;
+    }
+    if (n >= 4 && filename.substr(n - 4) == ".hgr") {
+        return InputFormat::hmetis;
+    }
+    if (n >= 5 && filename.substr(n - 5) == ".json") {
+        return InputFormat::json;
+    }
+    if (n >= 6 && filename.substr(n - 6) == ".graph") {
+        return InputFormat::hmetis;
+    }
+    if (n >= 7 && filename.substr(n - 7) == ".dimacs") {
+        return InputFormat::dimacs;
+    }
+    return InputFormat::auto_detect;
+}
+
+auto read_hmetis_format(const std::string& filename) -> SimpleNetlist {
+    auto file = ifstream{filename};
+    if (file.fail()) {
+        cerr << "Error: Can't open file " << filename << ".\n";
+        exit(1);
+    }
+
+    uint32_t num_nets = 0;
+    uint32_t num_vertices = 0;
+    uint32_t fmt = 0;
+    file >> num_nets >> num_vertices;
+    if (file.fail()) {
+        cerr << "Error: Invalid hMetis format in file " << filename << ".\n";
+        exit(1);
+    }
+    file >> fmt;
+
+    const auto num_modules = num_vertices;
+    const auto total_vertices = num_modules + num_nets;
+    auto g = graph_t(total_vertices);
+
+    string line;
+    getline(file, line);
+
+    uint32_t net_idx = 0;
+    for (; net_idx < num_nets && getline(file, line); ++net_idx) {
+        if (line.empty() || line[0] == 'c') {
+            --net_idx;
+            continue;
+        }
+        istringstream iss(line);
+        uint32_t v;
+        while (iss >> v) {
+            if (v < num_modules) {
+                g.add_edge(v, num_modules + net_idx);
+            }
+        }
+    }
+
+    return SimpleNetlist{g, num_modules, num_nets};
+}
+
+auto read_json_format(const std::string& filename) -> SimpleNetlist {
+    auto file = ifstream{filename};
+    if (file.fail()) {
+        cerr << "Error: Can't open file " << filename << ".\n";
+        exit(1);
+    }
+
+    ostringstream oss;
+    oss << file.rdbuf();
+
+    cerr << "Error: JSON format not fully implemented.\n";
+    exit(1);
+}
+
+auto read_dimacs_format(const std::string& filename) -> SimpleNetlist {
+    auto file = ifstream{filename};
+    if (file.fail()) {
+        cerr << "Error: Can't open file " << filename << ".\n";
+        exit(1);
+    }
+
+    uint32_t num_vertices = 0;
+    uint32_t num_nets = 0;
+    string line;
+
+    while (getline(file, line)) {
+        if (line.empty()) continue;
+
+        if (line[0] == 'c') {
+            continue;
+        }
+
+        if (line[0] == 'p') {
+            istringstream iss(line);
+            string p, hypre;
+            iss >> p >> hypre >> num_vertices >> num_nets;
+            continue;
+        }
+
+        if (line[0] == 'e') {
+            continue;
+        }
+    }
+
+    auto g = graph_t(num_vertices + num_nets);
+    return SimpleNetlist{g, num_vertices, num_nets};
+}
+
+auto read_netD_format(const std::string& filename) -> SimpleNetlist {
+    auto netD = ifstream{filename};
+    if (netD.fail()) {
+        cerr << "Error: Can't open file " << filename << ".\n";
+        exit(1);
+    }
+
+    char t = 0;
+    uint32_t numPins = 0;
+    uint32_t numNets = 0;
+    uint32_t numModules = 0;
+    index_t padOffset = 0;
+
+    netD >> t;
+    netD >> numPins >> numNets >> numModules >> padOffset;
+
+    const auto num_vertices = numModules + numNets;
+    auto g = graph_t(num_vertices);
+
+    constexpr index_t bufferSize = 100;
+    char lineBuffer[bufferSize];
+    netD.getline(lineBuffer, bufferSize);
+
+    index_t w = 0;
+    index_t e = numModules - 1;
+    char c = 0;
+    uint32_t i = 0;
+    for (; i < numPins; ++i) {
+        if (netD.eof()) {
+            break;
+        }
+        do {
+            netD.get(c);
+        } while ((isspace(c) != 0));
+        if (c == '\n') {
+            continue;
+        }
+        if (c == 'a') {
+            netD >> w;
+        } else if (c == 'p') {
+            netD >> w;
+            w += padOffset;
+        }
+        do {
+            netD.get(c);
+        } while ((isspace(c) != 0));
+        if (c == 's') {
+            ++e;
+        }
+
+        g.add_edge(w, e);
+
+        do {
+            netD.get(c);
+        } while ((isspace(c) != 0) && c != '\n');
+        if (c != '\n') {
+            netD.getline(lineBuffer, bufferSize);
+        }
+    }
+
+    e -= numModules - 1;
+    if (e < numNets) {
+        numNets = e;
+    }
+
+    auto hyprgraph = SimpleNetlist{g, numModules, numNets};
+    hyprgraph.num_pads = numModules - padOffset - 1;
+    return hyprgraph;
+}
+
+auto read_hypergraph(const std::string& filename, InputFormat format) -> SimpleNetlist {
+    auto actual_format = format;
+    if (format == InputFormat::auto_detect) {
+        actual_format = detect_input_format(filename);
+    }
+
+    switch (actual_format) {
+        case InputFormat::hmetis:
+            return read_hmetis_format(filename);
+        case InputFormat::json:
+            return read_json_format(filename);
+        case InputFormat::dimacs:
+            return read_dimacs_format(filename);
+        case InputFormat::netD:
+            return read_netD_format(filename);
+        case InputFormat::auto_detect:
+            return read_netD_format(filename);
+        default:
+            cerr << "Error: Unknown input format.\n";
+            exit(1);
+    }
+}
+
+void write_hmetis_partition(const vector<uint8_t>& part, ostream& os) {
+    for (const auto p : part) {
+        os << static_cast<int>(p) << "\n";
+    }
+}
+
+void write_json_partition(const vector<uint8_t>& part, ostream& os) {
+    os << "[";
+    for (size_t i = 0; i < part.size(); ++i) {
+        os << static_cast<int>(part[i]);
+        if (i < part.size() - 1) {
+            os << ", ";
+        }
+    }
+    os << "]\n";
+}
+
+void write_partition(const vector<uint8_t>& part, ostream& os, OutputFormat format) {
+    if (format == OutputFormat::json) {
+        write_json_partition(part, os);
+    } else {
+        write_hmetis_partition(part, os);
+    }
 }
