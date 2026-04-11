@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
+#include <ckpttn/FMConstrMgr.hpp>    // for FMConstrMgr, LegalCheck, move_info_v
 #include <cstdint>                   // for uint8_t
 #include <netlistx/netlist.hpp>      // for SimpleNetlist
 #include <string_view>               // for std::string_view
