@@ -40,4 +40,4 @@ jobs:
         run: cmake --build build -j4
 
       - name: run
-        run: ./build/standalone/CkPttn
+        run: ./build/standalone/CkPttn -v
