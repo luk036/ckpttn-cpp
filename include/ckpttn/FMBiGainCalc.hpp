@@ -33,7 +33,7 @@ template <typename Gnl> class FMBiGainCalc {
 
   private:
     /// @brief Reference to the hypergraph being partitioned
-    const Gnl &hyprgraph;
+    const Gnl& hyprgraph;
     /// @brief List of vertex links for bucket-based gain management
     std::vector<Item> vertex_list;
     /// @brief Initial gain values for each vertex
@@ -58,13 +58,13 @@ template <typename Gnl> class FMBiGainCalc {
      *
      * @param[in] hyprgraph The hypergraph to use for the FMBiGainCalc object.
      */
-    explicit FMBiGainCalc(const Gnl &hyprgraph, std::uint8_t /*num_parts*/)
+    explicit FMBiGainCalc(const Gnl& hyprgraph, std::uint8_t /*num_parts*/)
         : hyprgraph{hyprgraph},
           vertex_list(hyprgraph.number_of_modules()),
           init_gain_list(hyprgraph.number_of_modules(), 0),
           rsrc(stack_buf, sizeof stack_buf),
           idx_vec(&rsrc) {
-        for (const auto &v : this->hyprgraph) {
+        for (const auto& v : this->hyprgraph) {
             this->vertex_list[v].data = std::make_pair(v, uint32_t(0));
         }
     }
@@ -81,13 +81,13 @@ template <typename Gnl> class FMBiGainCalc {
      */
     auto init(std::span<const std::uint8_t> part) -> int {
         this->total_cost = 0;
-        for (auto &vlink : this->vertex_list) {
+        for (auto& vlink : this->vertex_list) {
             vlink.data.second = 0U;
         }
-        for (auto &elem : this->init_gain_list) {
+        for (auto& elem : this->init_gain_list) {
             elem = 0;
         }
-        for (const auto &net : this->hyprgraph.nets) {
+        for (const auto& net : this->hyprgraph.nets) {
             this->_init_gain(net, part);
         }
         return this->total_cost;
@@ -109,7 +109,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] module The vertex to initialize the index vector for.
      * @param[in] net The net to initialize the index vector for.
      */
-    void init_idx_vec(const node_t &module, const node_t &net);
+    void init_idx_vec(const node_t& module, const node_t& net);
 
     /**
      * @brief Update a 2-pin net during a move operation.
@@ -121,8 +121,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return The vertex that was moved.
      */
-    auto update_move_2pin_net(std::span<const std::uint8_t> part,
-                              const MoveInfo<node_t> &move_info) -> node_t;
+    auto update_move_2pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> node_t;
 
     /**
      * @brief Update the gain values for a 3-pin net during a move operation.
@@ -134,8 +134,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] move_info The information about the move being performed.
      * @return A vector of integers representing the updated gain values for the net.
      */
-    auto update_move_3pin_net(std::span<const std::uint8_t> part,
-                              const MoveInfo<node_t> &move_info) -> std::vector<int>;
+    auto update_move_3pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> std::vector<int>;
 
     /**
      * @brief Update the gain values for a general net during a move operation.
@@ -148,7 +148,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @return A vector of integers representing the updated gain values for the net.
      */
     auto update_move_general_net(std::span<const std::uint8_t> part,
-                                 const MoveInfo<node_t> &move_info) -> std::vector<int>;
+                                 const MoveInfo<node_t>& move_info) -> std::vector<int>;
 
   private:
     /**
@@ -161,7 +161,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] weight The amount to modify the gain by (positive to increase, negative to
      * decrease).
      */
-    auto _modify_gain(const node_t &w, int weight) -> void {
+    auto _modify_gain(const node_t& w, int weight) -> void {
         // this->vertex_list[node_w].data.second += weight;
         this->init_gain_list[w] += weight;
     }
@@ -175,7 +175,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] w The vertex to increase the gain for.
      * @param[in] weight The amount to increase the gain by.
      */
-    auto _increase_gain(const node_t &w, uint32_t weight) -> void {
+    auto _increase_gain(const node_t& w, uint32_t weight) -> void {
         // this->vertex_list[w].data.second += weight;
         this->init_gain_list[w] += weight;
     }
@@ -189,7 +189,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] w The vertex to decrease the gain for.
      * @param[in] weight The amount to decrease the gain by.
      */
-    auto _decrease_gain(const node_t &w, uint32_t weight) -> void {
+    auto _decrease_gain(const node_t& w, uint32_t weight) -> void {
         // this->vertex_list[w].data.second += weight;
         this->init_gain_list[w] -= weight;
     }
@@ -203,7 +203,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain(const node_t& net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a 2-pin net.
@@ -214,7 +214,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain_2pin_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain_2pin_net(const node_t& net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a 3-pin net.
@@ -225,7 +225,7 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain_3pin_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain_3pin_net(const node_t& net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a general net.
@@ -236,5 +236,5 @@ template <typename Gnl> class FMBiGainCalc {
      * @param[in] net The net for which to initialize the gain values.
      * @param[in] part The current partition information.
      */
-    auto _init_gain_general_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain_general_net(const node_t& net, std::span<const std::uint8_t> part) -> void;
 };

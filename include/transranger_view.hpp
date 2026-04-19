@@ -33,10 +33,10 @@ namespace transrangers {
             using difference_type = std::ptrdiff_t;
 
             iterator_base() = default;
-            iterator_base(const Ranger &rgr) : rgr{rgr} {} /* invalid till first ++ */
-            iterator_base(const iterator_base &) = default;
+            iterator_base(const Ranger& rgr) : rgr{rgr} {} /* invalid till first ++ */
+            iterator_base(const iterator_base&) = default;
 
-            iterator_base &operator=(const iterator_base &x) {
+            iterator_base& operator=(const iterator_base& x) {
                 /* Direct assignment fails to compile sometimes (e.g. when
                  * ranges::views::unique is part of the chain), no idea why.
                  */
@@ -48,7 +48,7 @@ namespace transrangers {
             }
 
             decltype(auto) operator*() const { return *p; }
-            Iterator &operator++() {
+            Iterator& operator++() {
                 final().advance();
                 return final();
             }
@@ -58,8 +58,8 @@ namespace transrangers {
                 return x;
             }
 
-            friend bool operator==(const iterator_base &x, const sentinel &) { return x.end; }
-            friend bool operator!=(const iterator_base &x, const sentinel &y) { return !(x == y); }
+            friend bool operator==(const iterator_base& x, const sentinel&) { return x.end; }
+            friend bool operator!=(const iterator_base& x, const sentinel& y) { return !(x == y); }
 
           protected:
             ranges::semiregular_box<Ranger> rgr;
@@ -67,7 +67,7 @@ namespace transrangers {
             typename Ranger::cursor p;
 
           private:
-            Iterator & final() { return static_cast<Iterator &>(*this); }
+            Iterator& final() { return static_cast<Iterator&>(*this); }
         };
 
         template <typename Ranger> class input_iterator
@@ -95,10 +95,10 @@ namespace transrangers {
           public:
             using super::super;
 
-            friend bool operator==(const forward_iterator &x, const forward_iterator &y) {
+            friend bool operator==(const forward_iterator& x, const forward_iterator& y) {
                 return x.n == y.n;
             }
-            friend bool operator!=(const forward_iterator &x, const forward_iterator &y) {
+            friend bool operator!=(const forward_iterator& x, const forward_iterator& y) {
                 return !(x == y);
             }
 

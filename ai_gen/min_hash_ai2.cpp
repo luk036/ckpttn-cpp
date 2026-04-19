@@ -42,7 +42,7 @@ class MinHash {
     }
 
     // Calculate the Jaccard similarity with another minhash
-    double jaccard(MinHash &other) {
+    double jaccard(MinHash& other) {
         // Check if the masks are the same
         for (int i = 0; i < k; i++) {
             if (masks[i] != other.masks[i]) {

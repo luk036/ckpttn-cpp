@@ -1,7 +1,8 @@
-#include "test_common.hpp"
 #include <ckpttn/readwrite.hpp>
 #include <netlistx/netlist.hpp>
 #include <sstream>
+
+#include "test_common.hpp"
 
 TEST_CASE("detect_input_format") {
     CHECK(detect_input_format("test.hgr") == InputFormat::hmetis);

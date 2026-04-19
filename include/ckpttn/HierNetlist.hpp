@@ -35,7 +35,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
 
     /* For multi-level algorithms */
     /// @brief Pointer to the parent netlist in the hierarchy
-    const Netlist<graph_t> *parent;
+    const Netlist<graph_t>* parent;
     /// @brief Mapping from this level's nodes to parent's nodes (upward)
     std::vector<node_t> node_up_map;
     /// @brief Mapping from this level's nodes to children's nodes (downward)
@@ -52,7 +52,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param[in] modules The nodeview of modules for the HierNetlist.
      * @param[in] nets The nodeview of nets for the HierNetlist.
      */
-    HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets);
+    HierNetlist(graph_t gr, const nodeview_t& modules, const nodeview_t& nets);
 
     /**
      * @brief Projection down
@@ -82,7 +82,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
      * @param net The net for which to retrieve the weight.
      * @return The weight of the specified net.
      */
-    auto get_net_weight(const node_t &net) const -> uint32_t {
+    auto get_net_weight(const node_t& net) const -> uint32_t {
         return this->net_weight.empty() ? 1U : this->net_weight[net];
     }
 };
@@ -95,7 +95,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
  * @param[in] nets The nodeview of nets for the HierNetlist.
  */
 template <typename graph_t>
-HierNetlist<graph_t>::HierNetlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets)
+HierNetlist<graph_t>::HierNetlist(graph_t gr, const nodeview_t& modules, const nodeview_t& nets)
     : Netlist<graph_t>{std::move(gr), modules, nets} {}
 
 // template <typename graph_t>

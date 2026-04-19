@@ -32,7 +32,7 @@ template <typename Gnl> class FMKWayGainCalc {
 
   private:
     /// @brief Reference to the hypergraph being partitioned
-    const Gnl &hyprgraph;
+    const Gnl& hyprgraph;
     /// @brief Number of partitions
     std::uint8_t num_parts;
     /// @brief Round-robin iterator for excluding partitions
@@ -65,7 +65,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] hyprgraph The netlist.
      * @param[in] num_parts The number of partitions.
      */
-    FMKWayGainCalc(const Gnl &hyprgraph, std::uint8_t num_parts)
+    FMKWayGainCalc(const Gnl& hyprgraph, std::uint8_t num_parts)
         : hyprgraph{hyprgraph},
           num_parts{num_parts},
           rr{num_parts},
@@ -78,7 +78,7 @@ template <typename Gnl> class FMKWayGainCalc {
         for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {
             auto vec = std::vector<Item>{};
             vec.reserve(hyprgraph.number_of_modules());
-            for (const auto &v : this->hyprgraph) {
+            for (const auto& v : this->hyprgraph) {
                 vec.emplace_back(Item(std::make_pair(v, 0)));
             }
             this->vertex_list.emplace_back(std::move(vec));
@@ -107,17 +107,17 @@ template <typename Gnl> class FMKWayGainCalc {
      */
     auto init(std::span<const std::uint8_t> part) -> int {
         this->total_cost = 0;
-        for (auto &vec : this->vertex_list) {
-            for (auto &vlink : vec) {
+        for (auto& vec : this->vertex_list) {
+            for (auto& vlink : vec) {
                 vlink.data.second = 0U;
             }
         }
-        for (auto &vec : this->init_gain_list) {
-            for (auto &elem : vec) {
+        for (auto& vec : this->init_gain_list) {
+            for (auto& elem : vec) {
                 elem = 0;
             }
         }
-        for (const auto &net : this->hyprgraph.nets) {
+        for (const auto& net : this->hyprgraph.nets) {
             this->_init_gain(net, part);
         }
         return this->total_cost;
@@ -142,8 +142,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info The information about the move that was performed.
      * @return The updated gain for the 2-pin net.
      */
-    auto update_move_2pin_net(std::span<const std::uint8_t> part,
-                              const MoveInfo<node_t> &move_info) -> node_t;
+    auto update_move_2pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> node_t;
 
     /**
      * @brief Initializes the index vector for a given vertex and net.
@@ -154,7 +154,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] v The vertex to initialize the index vector for.
      * @param[in] net The net that the vertex belongs to.
      */
-    void init_idx_vec(const node_t &v, const node_t &net);
+    void init_idx_vec(const node_t& v, const node_t& net);
 
     using ret_info = std::vector<std::vector<int>>;
 
@@ -169,8 +169,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info The information about the move that was performed.
      * @return The updated gain for the 3-pin net.
      */
-    auto update_move_3pin_net(std::span<const std::uint8_t> part,
-                              const MoveInfo<node_t> &move_info) -> ret_info;
+    auto update_move_3pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
+        -> ret_info;
 
     /**
      * @brief Updates the gain for a general net after a move.
@@ -191,7 +191,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @return ret_info
      */
     auto update_move_general_net(std::span<const std::uint8_t> part,
-                                 const MoveInfo<node_t> &move_info) -> ret_info;
+                                 const MoveInfo<node_t>& move_info) -> ret_info;
 
   private:
     /**
@@ -205,8 +205,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] part_v The partition from which the vertex is being moved.
      * @param[in] weight The weight to be added or subtracted from the gain value.
      */
-    auto _modify_gain(const node_t &v, std::uint8_t part_v, int weight) -> void {
-        for (const auto &k : this->rr.exclude(part_v)) {
+    auto _modify_gain(const node_t& v, std::uint8_t part_v, int weight) -> void {
+        for (const auto& k : this->rr.exclude(part_v)) {
             // this->vertex_list[k][v].data.second += weight;
             this->init_gain_list[k][v] += weight;
         }
@@ -223,8 +223,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] part_v The partition from which the vertex is being moved.
      * @param[in] weight The weight to be added to the gain value.
      */
-    auto _increase_gain(const node_t &v, std::uint8_t part_v, uint32_t weight) -> void {
-        for (const auto &k : this->rr.exclude(part_v)) {
+    auto _increase_gain(const node_t& v, std::uint8_t part_v, uint32_t weight) -> void {
+        for (const auto& k : this->rr.exclude(part_v)) {
             // this->vertex_list[k][v].data.second += weight;
             this->init_gain_list[k][v] += weight;
         }
@@ -241,8 +241,8 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] part_v The partition from which the vertex is being moved.
      * @param[in] weight The weight to be subtracted from the gain value.
      */
-    auto _decrease_gain(const node_t &v, std::uint8_t part_v, uint32_t weight) -> void {
-        for (const auto &k : this->rr.exclude(part_v)) {
+    auto _decrease_gain(const node_t& v, std::uint8_t part_v, uint32_t weight) -> void {
+        for (const auto& k : this->rr.exclude(part_v)) {
             // this->vertex_list[k][v].data.second += weight;
             this->init_gain_list[k][v] -= weight;
         }
@@ -257,7 +257,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] net The net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
      */
-    auto _init_gain(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain(const node_t& net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a 2-pin net in the partitioning.
@@ -268,7 +268,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] net The 2-pin net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
      */
-    auto _init_gain_2pin_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain_2pin_net(const node_t& net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a 3-pin net in the partitioning.
@@ -279,7 +279,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] net The 3-pin net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
      */
-    auto _init_gain_3pin_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain_3pin_net(const node_t& net, std::span<const std::uint8_t> part) -> void;
 
     /**
      * @brief Initializes the gain values for a general net in the partitioning.
@@ -290,5 +290,5 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] net The net for which the gain values are to be initialized.
      * @param[in] part The current partitioning of the vertices.
      */
-    auto _init_gain_general_net(const node_t &net, std::span<const std::uint8_t> part) -> void;
+    auto _init_gain_general_net(const node_t& net, std::span<const std::uint8_t> part) -> void;
 };

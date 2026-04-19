@@ -13,13 +13,13 @@ using namespace std;
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
+extern void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName);
 // extern tuple<py::set<node_t>, int>
 // min_net_cover_pd(SimpleNetlist &, const vector<int> &);
 
 using node_t = SimpleNetlist::node_t;
-extern auto create_contracted_subgraph(const SimpleNetlist &,
-                                       py::set<node_t>) -> unique_ptr<SimpleHierNetlist>;
+extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
+    -> unique_ptr<SimpleHierNetlist>;
 
 //
 // Primal-dual algorithm for minimum vertex cover problem
@@ -72,7 +72,7 @@ TEST_CASE("Test contraction subgraph ibm01") {
     auto part4 = vector<uint8_t>(H3->number_of_modules(), 0);
     auto i = uint8_t(0);
 
-    for (auto &item : part3) {
+    for (auto& item : part3) {
         item = ++i % 6;
     }
     H3->projection_down(part3, part2);

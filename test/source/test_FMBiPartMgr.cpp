@@ -1,7 +1,8 @@
-#include "test_common.hpp"
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr
 #include <netlistx/netlist.hpp>      // for SimpleNetlist
+
+#include "test_common.hpp"
 
 TEST_CASE("Test FMBiPartMgr") {
     const auto hyprgraph = create_test_netlist();

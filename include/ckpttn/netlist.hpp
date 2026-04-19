@@ -66,7 +66,7 @@ template <typename graph_t> struct Netlist {
      * @param[in] modules module nodes
      * @param[in] nets net nodes
      */
-    Netlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets);
+    Netlist(graph_t gr, const nodeview_t& modules, const nodeview_t& nets);
 
     /**
      * @brief Construct a new Netlist object
@@ -130,7 +130,7 @@ template <typename graph_t> struct Netlist {
      * @param[in] v
      * @return int
      */
-    auto get_module_weight(const node_t &v) const -> unsigned int {
+    auto get_module_weight(const node_t& v) const -> unsigned int {
         return this->module_weight.empty() ? 1U : this->module_weight[v];
     }
 
@@ -139,7 +139,7 @@ template <typename graph_t> struct Netlist {
      *
      * @return int
      */
-    auto get_net_weight(const node_t & /*net*/) const -> uint32_t {
+    auto get_net_weight(const node_t& /*net*/) const -> uint32_t {
         // return this->net_weight.is_empty() ? 1
         //                                 :
         //                                 this->net_weight[this->net_map[net]];
@@ -148,7 +148,7 @@ template <typename graph_t> struct Netlist {
 };
 
 template <typename graph_t>
-Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t &modules, const nodeview_t &nets)
+Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t& modules, const nodeview_t& nets)
     : gr{std::move(gr)},
       modules{modules},
       nets{nets},
@@ -170,14 +170,14 @@ Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t &modules, const nodeview_
     // this->max_net_degree = this->gr.degree(*result2);
 
     this->max_degree = 0U;
-    for (const auto &v : this->modules) {
+    for (const auto& v : this->modules) {
         if (this->max_degree < this->gr.degree(v)) {
             this->max_degree = this->gr.degree(v);
         }
     }
 
     this->max_net_degree = 0U;
-    for (const auto &net : this->nets) {
+    for (const auto& net : this->nets) {
         if (this->max_net_degree < this->gr.degree(net)) {
             this->max_net_degree = this->gr.degree(net);
         }

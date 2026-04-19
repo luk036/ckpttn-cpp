@@ -8,8 +8,8 @@ using namespace std;
 template <typename graph_t>
 void HierNetlist<graph_t>::projection_up(std::span<const uint8_t> part,
                                          std::span<uint8_t> part_up) const {
-    const auto &hyprgraph = *this->parent;
-    for (const auto &v : hyprgraph) {
+    const auto& hyprgraph = *this->parent;
+    for (const auto& v : hyprgraph) {
         part_up[this->node_up_map[v]] = part[v];
     }
 }
@@ -17,11 +17,11 @@ void HierNetlist<graph_t>::projection_up(std::span<const uint8_t> part,
 template <typename graph_t>
 void HierNetlist<graph_t>::projection_down(std::span<const uint8_t> part,
                                            std::span<uint8_t> part_down) const {
-    const auto &hyprgraph = *this->parent;
-    for (const auto &v : this->modules) {
+    const auto& hyprgraph = *this->parent;
+    for (const auto& v : this->modules) {
         if (this->cluster_down_map.contains(v)) {
             const auto net = this->cluster_down_map.at(v);
-            for (const auto &v2 : hyprgraph.gr[net]) {
+            for (const auto& v2 : hyprgraph.gr[net]) {
                 part_down[v2] = part[v];
             }
         } else {

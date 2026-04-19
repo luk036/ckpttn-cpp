@@ -1,6 +1,5 @@
+#include <cctype>  // for isspace, isdigit
 #include <ckpttn/readwrite.hpp>
-
-#include <cctype>                      // for isspace, isdigit
 #include <cstdint>                     // for uint32_t
 #include <cstdlib>                     // for exit, size_t
 #include <fstream>                     // for operator<<, basic_ostream, cha...
@@ -12,7 +11,7 @@
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>      // for std
 // #include <__hash_table>  // for __hash_const_iterator, operator!=
-#include <sstream>    // for istringstream, ostringstream
+#include <sstream>      // for istringstream, ostringstream
 #include <string_view>  // for std::string_view
 #include <vector>       // for vector
 
@@ -24,7 +23,7 @@
 using namespace std;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
-void writeJSON(std::string_view jsonFileName, const SimpleNetlist &hyprgraph) {
+void writeJSON(std::string_view jsonFileName, const SimpleNetlist& hyprgraph) {
     auto json = ofstream{jsonFileName.data()};
     if (json.fail()) {
         cerr << "Error: Can't open file " << jsonFileName << ".\n";
@@ -43,15 +42,15 @@ void writeJSON(std::string_view jsonFileName, const SimpleNetlist &hyprgraph) {
 
     json << R"( "nodes": [)"
          << "\n";
-    for (const auto &node : hyprgraph.gr) {
+    for (const auto& node : hyprgraph.gr) {
         json << "  { \"id\": " << node << " },\n";
     }
     json << " ],\n";
 
     json << R"( "links": [)"
          << "\n";
-    for (const auto &v : hyprgraph) {
-        for (const auto &net : hyprgraph.gr[v]) {
+    for (const auto& v : hyprgraph) {
+        for (const auto& net : hyprgraph.gr[v]) {
             json << "  {\n";
             json << "   \"source\": " << v << ",\n";
             json << "   \"target\": " << net << "\n";
@@ -159,7 +158,7 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
 }
 
 // Read the IBM .are format
-void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName) {
+void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName) {
     auto are = ifstream{areFileName.data()};
     if (are.fail()) {
         cerr << " Could not open " << areFileName << endl;
@@ -214,7 +213,7 @@ void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName) {
         lineno++;
     }
 
-hyprgraph.module_weight = std::move(module_weight);
+    hyprgraph.module_weight = std::move(module_weight);
 }
 
 // ============================================================================

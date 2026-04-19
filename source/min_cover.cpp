@@ -28,15 +28,15 @@ using node_t = typename SimpleNetlist::node_t;
  *
  * @todo simplify this function
  */
-auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> dont_select)
+auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> dont_select)
     -> std::unique_ptr<SimpleHierNetlist> {
     using namespace transrangers;
 
     auto weight_dict = py::dict<node_t, unsigned int>{};
     auto rng_nets = all(hyprgraph.nets);
-    rng_nets([&](const auto &netcur) {
+    rng_nets([&](const auto& netcur) {
         weight_dict[*netcur]
-            = accumulate(transform([&](const auto &v) { return hyprgraph.get_module_weight(v); },
+            = accumulate(transform([&](const auto& v) { return hyprgraph.get_module_weight(v); },
                                    all(hyprgraph.gr[*netcur])),
                          0U);
         return true;
@@ -54,7 +54,7 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
 
     auto module_up_map = py::dict<node_t, node_t>{};
     module_up_map.reserve(hyprgraph.number_of_modules());
-    for (const auto &v : hyprgraph) {
+    for (const auto& v : hyprgraph) {
         module_up_map[v] = v;
     }
 
@@ -73,12 +73,12 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
         C.reserve(3 * S.size());  // TODO
         clusters.reserve(S.size());
 
-        for (const auto &net : hyprgraph.nets) {
+        for (const auto& net : hyprgraph.nets) {
             if (S.contains(net)) {
                 // auto net_cur = hyprgraph.gr[net].begin();
                 // auto master = *net_cur;
                 clusters.push_back(net);
-                for (const auto &v : hyprgraph.gr[net]) {
+                for (const auto& v : hyprgraph.gr[net]) {
                     module_up_map[v] = net;
                     C.insert(v);
                 }
@@ -88,7 +88,7 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
             }
         }
         modules.reserve(hyprgraph.modules.size() - C.size() + clusters.size());
-        for (const auto &v : hyprgraph) {
+        for (const auto& v : hyprgraph) {
             if (C.contains(v)) {
                 continue;
             }
@@ -108,7 +108,7 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
         auto module_map = py::dict<node_t, index_t>{};
         module_map.reserve(numModules);
         auto i_v = index_t(0);
-        for (const auto &v : modules) {
+        for (const auto& v : modules) {
             module_map[v] = index_t(i_v);
             ++i_v;
         }
@@ -116,14 +116,14 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
         // auto net_map = py::dict<node_t, index_t> {};
         net_up_map.reserve(numNets);
         auto i_net = index_t(0);
-        for (const auto &net : nets) {
+        for (const auto& net : nets) {
             net_up_map[net] = index_t(i_net) + numModules;
             ++i_net;
         }
 
         node_up_dict.reserve(hyprgraph.number_of_modules());
 
-        for (const auto &v : hyprgraph) {
+        for (const auto& v : hyprgraph) {
             node_up_dict[v] = module_map[module_up_map[v]];
         }
         // for (const auto& net : nets)
@@ -136,8 +136,8 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
     // auto R = py::range<node_t>(0, num_vertices);
     auto g = graph_t(num_vertices);
     // gr.add_nodes_from(nodes);
-    for (const auto &v : hyprgraph) {
-        for (const auto &net : hyprgraph.gr[v]) {
+    for (const auto& v : hyprgraph) {
+        for (const auto& net : hyprgraph.gr[v]) {
             if (S.contains(net)) {
                 continue;
             }
@@ -153,9 +153,9 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
     auto node_down_map = std::vector<node_t>{};
     node_down_map.resize(numModules);
     // for (const auto& [v1, v2] : node_up_dict.items())
-    for (const auto &keyvalue : node_up_dict.items()) {
-        auto &&v1 = std::get<0>(keyvalue);
-        auto &&v2 = std::get<1>(keyvalue);
+    for (const auto& keyvalue : node_up_dict.items()) {
+        auto&& v1 = std::get<0>(keyvalue);
+        auto&& v2 = std::get<1>(keyvalue);
         node_down_map[v2] = v1;
     }
     auto cluster_down_map = py::dict<index_t, node_t>{};
@@ -167,15 +167,15 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
     //     auto&& net = get<1>(keyvalue);
     //     cluster_down_map[node_up_dict[v]] = net;
     // }
-    for (auto &&net : S) {
-        for (auto &&v : hyprgraph.gr[net]) {
+    for (auto&& net : S) {
+        for (auto&& v : hyprgraph.gr[net]) {
             cluster_down_map[node_up_dict[v]] = net;
         }
     }
 
     auto module_weight = std::vector<unsigned int>{};
     module_weight.reserve(numModules);
-    for (const auto &i_v : py::range(numModules)) {
+    for (const auto& i_v : py::range(numModules)) {
         if (cluster_down_map.contains(i_v)) {
             const auto net = cluster_down_map[i_v];
             module_weight.push_back(weight_dict[net]);
@@ -192,7 +192,7 @@ auto create_contracted_subgraph(const SimpleNetlist &hyprgraph, py::set<node_t> 
     // else:
     //     raise NotImplementedError
     auto node_up_map = std::vector<node_t>(hyprgraph.modules.size());
-    for (const auto &v : hyprgraph.modules) {
+    for (const auto& v : hyprgraph.modules) {
         node_up_map[v] = node_up_dict[v];
     }
 

@@ -56,11 +56,11 @@ class PartMgrBase {
 
   protected:
     /// @brief Reference to the hypergraph being partitioned
-    const Gnl &hyprgraph;
+    const Gnl& hyprgraph;
     /// @brief Gain manager for computing and managing gains
-    GainMgr &gain_mgr;
+    GainMgr& gain_mgr;
     /// @brief Constraint manager for validating partition constraints
-    ConstrMgr &validator;
+    ConstrMgr& validator;
     /// @brief Number of partitions
     size_t num_parts;
     // std::vector<std::uint8_t> snapshot;
@@ -77,7 +77,7 @@ class PartMgrBase {
      * @param[in,out] constr_mgr
      * @param[in] num_parts
      */
-    PartMgrBase(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
+    PartMgrBase(const Gnl& hyprgraph, GainMgr& gain_mgr, ConstrMgr& constr_mgr, size_t num_parts)
         : hyprgraph{hyprgraph}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
 
     /**
@@ -143,8 +143,8 @@ class PartMgrBase {
      * @param[in] snapshot The snapshot data to restore from.
      * @param[in,out] part The partition to restore.
      */
-    auto restore_part(const std::vector<std::uint8_t> &snapshot,
-                      std::span<std::uint8_t> part) -> void {
+    auto restore_part(const std::vector<std::uint8_t>& snapshot, std::span<std::uint8_t> part)
+        -> void {
         // std::copy(snapshot.begin(), snapshot.end(), part.begin());
         const auto N = part.size();
         for (auto idx = 0U; idx != N; ++idx) {

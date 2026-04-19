@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase
 
-#include <netlistx/netlist.hpp>          // for Netlist, SimpleNetlist, graph_t
+#include <netlistx/netlist.hpp>        // for Netlist, SimpleNetlist, graph_t
 #include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph
 // #include <py2cpp/py2cpp.hpp>
 // #include <__config>     // for std
@@ -38,7 +38,7 @@ auto create_dwarf() -> SimpleNetlist {
     // auto R = py::range(num_nodes);
     // graph_t g{R, R};
     xnetwork::SimpleGraph g(num_nodes);
-    for (const auto &e : edge_array) {
+    for (const auto& e : edge_array) {
         g.add_edge(e.first, e.second);
     }
     // using node_t = typename boost::graph_traits<graph_t>::vertex_descriptor;
@@ -79,7 +79,7 @@ auto create_test_netlist() -> SimpleNetlist {
     // auto gr = py::GraphAdaptor<graph_t>{std::move(g)};
     // const auto R = py::range(num_nodes);
     graph_t g(num_nodes);
-    for (const auto &e : edge_array) {
+    for (const auto& e : edge_array) {
         g.add_edge(e.first, e.second);
     }
 

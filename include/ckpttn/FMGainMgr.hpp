@@ -25,7 +25,7 @@ template <typename Node> struct MoveInfoV;
  * @tparam Derived The derived gain manager type (CRTP)
  */
 template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
-    Derived &self = *static_cast<Derived *>(this);
+    Derived& self = *static_cast<Derived*>(this);
     using node_t = typename Gnl::node_t;
     using Item = Dllink<std::pair<node_t, uint32_t>>;
 
@@ -33,7 +33,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     /// @brief Waiting list for vertices awaiting movement
     Dllist<std::pair<node_t, uint32_t>> waiting_list{std::make_pair(node_t{}, uint32_t(0))};
     /// @brief Reference to the hypergraph being partitioned
-    const Gnl &hyprgraph;
+    const Gnl& hyprgraph;
     /// @brief Gain buckets for each partition (used in bucket-based gain management)
     std::vector<BPQueue<node_t>> gain_bucket;
     /// @brief Number of partitions
@@ -53,7 +53,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] hyprgraph The hypergraph to manage the gains for.
      * @param[in] num_parts The number of partitions in the hypergraph.
      */
-    FMGainMgr(const Gnl &hyprgraph, std::uint8_t num_parts);
+    FMGainMgr(const Gnl& hyprgraph, std::uint8_t num_parts);
 
     /**
      * @brief Initializes the FMGainMgr with the given partition information.
@@ -106,8 +106,8 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] part The current partition information.
      * @param[in] move_info_v The set of moves to update the gain information for.
      */
-    auto update_move(std::span<const std::uint8_t> part,
-                     const MoveInfoV<node_t> &move_info_v) -> void;
+    auto update_move(std::span<const std::uint8_t> part, const MoveInfoV<node_t>& move_info_v)
+        -> void;
 
   private:
     /**
@@ -117,7 +117,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] move_info The information about the move to update the gain for.
      */
     auto _update_move_2pin_net(std::span<const std::uint8_t> part,
-                               const MoveInfo<node_t> &move_info) -> void;
+                               const MoveInfo<node_t>& move_info) -> void;
 
     /**
      * @brief Updates the gain information for a 3-pin net after a move.
@@ -126,7 +126,7 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] move_info The information about the move to update the gain for.
      */
     auto _update_move_3pin_net(std::span<const std::uint8_t> part,
-                               const MoveInfo<node_t> &move_info) -> void;
+                               const MoveInfo<node_t>& move_info) -> void;
 
     /**
      * @brief Updates the gain information for a general net (not 2-pin or 3-pin) after a move.
@@ -135,5 +135,5 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
      * @param[in] move_info The information about the move to update the gain for.
      */
     auto _update_move_general_net(std::span<const std::uint8_t> part,
-                                  const MoveInfo<node_t> &move_info) -> void;
+                                  const MoveInfo<node_t>& move_info) -> void;
 };

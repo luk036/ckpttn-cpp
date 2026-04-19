@@ -2,12 +2,11 @@
 
 #include <cstdint>
 #include <fstream>
+#include <netlistx/netlist.hpp>
 #include <ostream>
 #include <string>
 #include <string_view>
 #include <vector>
-
-#include <netlistx/netlist.hpp>
 #include <xnetwork/classes/graph.hpp>
 
 enum class InputFormat { hmetis, json, dimacs, netD, auto_detect };
@@ -24,12 +23,12 @@ auto read_dimacs_format(const std::string& filename) -> SimpleNetlist;
 
 auto read_netD_format(const std::string& filename) -> SimpleNetlist;
 
-auto read_hypergraph(const std::string& filename,
-                    InputFormat format = InputFormat::auto_detect) -> SimpleNetlist;
+auto read_hypergraph(const std::string& filename, InputFormat format = InputFormat::auto_detect)
+    -> SimpleNetlist;
 
 void write_hmetis_partition(const std::vector<std::uint8_t>& part, std::ostream& os);
 
 void write_json_partition(const std::vector<std::uint8_t>& part, std::ostream& os);
 
 void write_partition(const std::vector<std::uint8_t>& part, std::ostream& os,
-                  OutputFormat format = OutputFormat::hmetis);
+                     OutputFormat format = OutputFormat::hmetis);

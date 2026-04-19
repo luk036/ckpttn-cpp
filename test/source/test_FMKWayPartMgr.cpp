@@ -1,7 +1,8 @@
-#include "test_common.hpp"
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <netlistx/netlist.hpp>        // for SimpleNetlist
+
+#include "test_common.hpp"
 
 TEST_CASE("Test FMKWayPartMgr") {
     const auto hyprgraph = create_dwarf();

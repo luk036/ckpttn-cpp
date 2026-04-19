@@ -25,7 +25,7 @@ using namespace transrangers;
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net,
+template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net,
                                                              std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
@@ -55,7 +55,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
  * @param[in] part
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
+void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -83,7 +83,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
  * @param[in] part
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
+void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -123,7 +123,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
         return;
     }
 
-    for (const auto &e : {node_b, node_c}) {
+    for (const auto& e : {node_b, node_c}) {
         this->_decrease_gain(e, part[node_b], weight);
         // this->vertex_list[part[node_a]][e].data.second += weight;
         this->init_gain_list[part[node_a]][e] += weight;
@@ -145,7 +145,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
  * @param[in] part
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
+void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
                                                  std::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
@@ -156,7 +156,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
     //   num[part[w]] += 1;
     // }
     auto rng = all(this->hyprgraph.gr[net]);
-    rng([&](const auto &wc) {
+    rng([&](const auto& wc) {
         num[part[*wc]] += 1;
         return true;
     });
@@ -168,21 +168,21 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net
     //   }
     // }
     auto rng2 = all(num);
-    auto rng3 = filter([](const auto &c) { return c > 0; }, rng2);
+    auto rng3 = filter([](const auto& c) { return c > 0; }, rng2);
 
-    rng3([&](const auto & /* c */) {
+    rng3([&](const auto& /* c */) {
         this->total_cost += weight;
         return true;
     });
     this->total_cost -= weight;
 
     auto part_idx = 0U;
-    for (const auto &c : num) {
+    for (const auto& c : num) {
         if (c == 0) {
             // for (const auto &w : this->hyprgraph.gr[net]) {
             //   this->init_gain_list[k][w] -= int(weight);
             // }
-            rng([&](const auto &wc) {
+            rng([&](const auto& wc) {
                 // this->vertex_list[part_idx][*wc].data.second -= weight;
                 this->init_gain_list[part_idx][*wc] -= int(weight);
                 return true;
@@ -244,7 +244,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
-                                               const MoveInfo<typename Gnl::node_t> &move_info) ->
+                                               const MoveInfo<typename Gnl::node_t>& move_info) ->
     typename Gnl::node_t {
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
@@ -258,7 +258,7 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
     auto rng_v = all(this->delta_gain_v);
 
     // #pragma unroll
-    for (const auto &l_part : {move_info.from_part, move_info.to_part}) {
+    for (const auto& l_part : {move_info.from_part, move_info.to_part}) {
         if (part[w] == l_part) {
             // for (auto &dgw : delta_gain_w) {
             //   dgw += gain;
@@ -268,11 +268,11 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
             // }
 
             // luk: two ranges cannot zipped because of different lengths
-            rng_w([&gain](const auto &dgwc) {
+            rng_w([&gain](const auto& dgwc) {
                 *dgwc += gain;
                 return true;
             });
-            rng_v([&gain](const auto &dgvc) {
+            rng_v([&gain](const auto& dgvc) {
                 *dgvc += gain;
                 return true;
             });
@@ -290,12 +290,12 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &v,
-                                                               const typename Gnl::node_t &net) {
+template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
+                                                               const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     auto rng1 = all(this->hyprgraph.gr[net]);
-    auto rng = filter([&v](const auto &w) { return w != v; }, rng1);
-    rng([&](const auto &wc) {
+    auto rng = filter([&v](const auto& w) { return w != v; }, rng1);
+    rng([&](const auto& wc) {
         this->idx_vec.push_back(*wc);
         return true;
     });
@@ -308,9 +308,10 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gn
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
-    std::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info) -> FMKWayGainCalc<Gnl>::ret_info {
+template <typename Gnl>
+auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
+                                               const MoveInfo<typename Gnl::node_t>& move_info)
+    -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
     auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
@@ -330,7 +331,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
                     // for (auto &dgv : this->delta_gain_v) {
                     //   dgv -= weight;
                     // }
-                    rngv([&gain](const auto &dgcv) {
+                    rngv([&gain](const auto& dgcv) {
                         *dgcv -= gain;
                         return true;
                     });
@@ -348,12 +349,12 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
     // #pragma unroll
     for (auto i = 0; i != 2; ++i) {
         if (part_w == l) {
-            rng0([&gain](const auto &dgc0) {
+            rng0([&gain](const auto& dgc0) {
                 *dgc0 += gain;
                 return true;
             });
         } else if (part_u == l) {
-            rng1([&gain](const auto &dgc1) {
+            rng1([&gain](const auto& dgc1) {
                 *dgc1 += gain;
                 return true;
             });
@@ -361,7 +362,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
             delta_gain[0][l] -= gain;
             delta_gain[1][l] -= gain;
             if (part_w == u || part_u == u) {
-                rngv([&gain](const auto &dgcv) {
+                rngv([&gain](const auto& dgcv) {
                     *dgcv -= gain;
                     return true;
                 });
@@ -381,9 +382,10 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_3pin_net(
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_general_net(
-    std::span<const uint8_t> part,
-    const MoveInfo<typename Gnl::node_t> &move_info) -> FMKWayGainCalc<Gnl>::ret_info {
+template <typename Gnl>
+auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
+                                                  const MoveInfo<typename Gnl::node_t>& move_info)
+    -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, from_part, to_part] = move_info;
     // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
@@ -391,7 +393,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_general_net(
     // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
     auto num = std::vector<uint8_t>(this->num_parts, 0);
     auto rng1 = all(this->idx_vec);
-    rng1([&](const auto &wc) {
+    rng1([&](const auto& wc) {
         num[part[*wc]] += 1;
         return true;
     });
@@ -410,13 +412,13 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_general_net(
     // #pragma unroll
     for (auto idx = 0; idx != 2; ++idx) {
         if (num[l] == 0) {
-            rng2([&gain, &l](const auto &dgc) {
+            rng2([&gain, &l](const auto& dgc) {
                 (*dgc)[l] -= gain;
                 return true;
             });
 
             if (num[u] > 0) {
-                rng4([&gain](const auto &dgvc) {
+                rng4([&gain](const auto& dgvc) {
                     *dgvc -= gain;
                     return true;
                 });
@@ -426,7 +428,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_general_net(
             auto it2 = delta_gain.begin();
             for (; part[*it1] != l; ++it1, ++it2);
             auto rng = all(*it2);
-            rng([&gain](const auto &dgc) {
+            rng([&gain](const auto& dgc) {
                 *dgc += gain;
                 return true;
             });

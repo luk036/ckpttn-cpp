@@ -29,30 +29,30 @@ class BPQueue {
     }
     class BPQueueIterator {
       private:
-        BPQueue *bpq;
+        BPQueue* bpq;
         int curkey;
         typename Dllist<std::vector<int>>::iterator curitem;
 
       public:
-        BPQueueIterator(BPQueue *bpq) {
+        BPQueueIterator(BPQueue* bpq) {
             this->bpq = bpq;
             this->curkey = bpq->_max;
             this->curitem = bpq->_bucket[bpq->_max].begin();
         }
         Item operator*() { return *curitem; }
-        BPQueueIterator &operator++() {
+        BPQueueIterator& operator++() {
             while (curkey > 0) {
                 try {
                     ++curitem;
                     return *this;
-                } catch (std::exception &e) {
+                } catch (std::exception& e) {
                     curkey -= 1;
                     curitem = bpq->_bucket[curkey].begin();
                 }
             }
             throw std::out_of_range("BPQueueIterator out of range");
         }
-        bool operator!=(const BPQueueIterator &other) const {
+        bool operator!=(const BPQueueIterator& other) const {
             return curkey != other.curkey || curitem != other.curitem;
         }
     };

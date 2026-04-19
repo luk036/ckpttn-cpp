@@ -73,5 +73,5 @@ class MLPartMgr {
      * @return LegalCheck The legality check result of the partitioning.
      */
     template <typename Gnl, typename PartMgr>
-    auto run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+    auto run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
 };

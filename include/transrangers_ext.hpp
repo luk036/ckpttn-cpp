@@ -37,7 +37,7 @@ namespace transrangers {
      * @param[in] rng
      * @return auto
      */
-    template <typename Range> auto skip_first(Range &&rng) {
+    template <typename Range> auto skip_first(Range&& rng) {
         using std::begin;
         using std::end;
         using cursor = decltype(begin(rng));
@@ -61,7 +61,7 @@ namespace transrangers {
      * @tparam Range
      */
     template <typename Range> struct skip_first_copy {
-        using ranger = decltype(skip_first(std::declval<Range &>()));
+        using ranger = decltype(skip_first(std::declval<Range&>()));
         using cursor = typename ranger::cursor;
 
         /**
@@ -71,7 +71,7 @@ namespace transrangers {
          * @param[in] p
          * @return auto
          */
-        template <typename F> auto operator()(const F &p) { return rgr(p); }
+        template <typename F> auto operator()(const F& p) { return rgr(p); }
 
         Range rng;
         ranger rgr = skip_first(rng);
@@ -86,8 +86,8 @@ namespace transrangers {
      * skip_first_copy<Range>>::type
      */
     template <typename Range>
-    typename std::enable_if<std::is_rvalue_reference<Range &&>::value, skip_first_copy<Range>>::type
-    skip_first(Range &&rng) {
+    typename std::enable_if<std::is_rvalue_reference<Range&&>::value, skip_first_copy<Range>>::type
+    skip_first(Range&& rng) {
         return skip_first_copy<Range>{std::move(rng)};
     }
 
@@ -98,7 +98,7 @@ namespace transrangers {
      * @param[in] rng
      * @return auto
      */
-    template <typename Range> auto skip_last(Range &&rng) {
+    template <typename Range> auto skip_last(Range&& rng) {
         using std::begin;
         using std::end;
         using cursor = decltype(begin(rng));
@@ -122,7 +122,7 @@ namespace transrangers {
      * @tparam Range
      */
     template <typename Range> struct skip_last_copy {
-        using ranger = decltype(skip_last(std::declval<Range &>()));
+        using ranger = decltype(skip_last(std::declval<Range&>()));
         using cursor = typename ranger::cursor;
 
         /**
@@ -132,7 +132,7 @@ namespace transrangers {
          * @param[in] p
          * @return auto
          */
-        template <typename F> auto operator()(const F &p) { return rgr(p); }
+        template <typename F> auto operator()(const F& p) { return rgr(p); }
 
         Range rng;
         ranger rgr = skip_last(rng);
@@ -147,8 +147,8 @@ namespace transrangers {
      * skip_last_copy<Range>>::type
      */
     template <typename Range>
-    typename std::enable_if<std::is_rvalue_reference<Range &&>::value, skip_last_copy<Range>>::type
-    skip_last(Range &&rng) {
+    typename std::enable_if<std::is_rvalue_reference<Range&&>::value, skip_last_copy<Range>>::type
+    skip_last(Range&& rng) {
         return skip_last_copy<Range>{std::move(rng)};
     }
 
@@ -160,7 +160,7 @@ namespace transrangers {
      * @param[in] rng
      * @return auto
      */
-    template <typename Range> auto skip_both(Range &&rng) {
+    template <typename Range> auto skip_both(Range&& rng) {
         using std::begin;
         using std::end;
         using cursor = decltype(begin(rng));
@@ -184,7 +184,7 @@ namespace transrangers {
      * @tparam Range
      */
     template <typename Range> struct skip_both_copy {
-        using ranger = decltype(skip_both(std::declval<Range &>()));
+        using ranger = decltype(skip_both(std::declval<Range&>()));
         using cursor = typename ranger::cursor;
 
         /**
@@ -194,7 +194,7 @@ namespace transrangers {
          * @param[in] p
          * @return auto
          */
-        template <typename F> auto operator()(const F &p) { return rgr(p); }
+        template <typename F> auto operator()(const F& p) { return rgr(p); }
 
         Range rng;
         ranger rgr = skip_both(rng);
@@ -209,8 +209,8 @@ namespace transrangers {
      * skip_both_copy<Range>>::type
      */
     template <typename Range>
-    typename std::enable_if<std::is_rvalue_reference<Range &&>::value, skip_both_copy<Range>>::type
-    skip_both(Range &&rng) {
+    typename std::enable_if<std::is_rvalue_reference<Range&&>::value, skip_both_copy<Range>>::type
+    skip_both(Range&& rng) {
         return skip_both_copy<Range>{std::move(rng)};
     }
 
@@ -223,7 +223,7 @@ namespace transrangers {
      */
     template <typename Ranger> auto enumerate(Ranger rgr) {
         return transform(
-            [index = std::size_t(0)](auto &&value) TRANSRANGERS_HOT_MUTABLE {
+            [index = std::size_t(0)](auto&& value) TRANSRANGERS_HOT_MUTABLE {
                 auto old = index;
                 index += 1;
                 return std::make_pair(old, std::move(value));
@@ -241,7 +241,7 @@ namespace transrangers {
      * @return T
      */
     template <typename Ranger, typename T> T partial_sum(Ranger rgr, T init) {
-        rgr([&init](const auto &p) TRANSRANGERS_HOT {
+        rgr([&init](const auto& p) TRANSRANGERS_HOT {
             init = std::move(init) + *p;
             *p = init;
             return true;
@@ -267,13 +267,13 @@ namespace transrangers {
          * @param[in] p
          */
         template <class type_parameter_4_0>
-        TRANSRANGERS_HOT inline auto operator()(const type_parameter_4_0 &p) const {
+        TRANSRANGERS_HOT inline auto operator()(const type_parameter_4_0& p) const {
             std::get<I + 1>(zp.ps) = p;
             return false;
         }
 
       private:
-        cursor &zp;
+        cursor& zp;
 
       public:
         /**
@@ -281,7 +281,7 @@ namespace transrangers {
          *
          * @param[in] _zp
          */
-        __lambda_255_33(cursor &_zp) : zp{_zp} {}
+        __lambda_255_33(cursor& _zp) : zp{_zp} {}
     };
 
     /**
@@ -305,8 +305,8 @@ namespace transrangers {
         }
 
       private:
-        cursor &zp;
-        std::tuple<Rangers...> &rgrs;
+        cursor& zp;
+        std::tuple<Rangers...>& rgrs;
 
       public:
         /**
@@ -315,7 +315,7 @@ namespace transrangers {
          * @param[in] _zp
          * @param[in] _rgrs
          */
-        __lambda_249_18(cursor &_zp, std::tuple<Rangers...> &_rgrs) : zp{_zp}, rgrs{_rgrs} {}
+        __lambda_249_18(cursor& _zp, std::tuple<Rangers...>& _rgrs) : zp{_zp}, rgrs{_rgrs} {}
     };
 
     /**
@@ -337,7 +337,7 @@ namespace transrangers {
          * @param[in] p
          */
         template <class type_parameter_2_0>
-        TRANSRANGERS_HOT inline auto operator()(const type_parameter_2_0 &p) const {
+        TRANSRANGERS_HOT inline auto operator()(const type_parameter_2_0& p) const {
             std::get<0>(zp.ps) = p;
             if (__lambda_249_18{zp, rgrs}(std::index_sequence_for<Rangers...>{})) {
                 finished = true;
@@ -348,14 +348,14 @@ namespace transrangers {
         }
 
       private:
-        bool &finished;
-        type_parameter_1_0 &dst;
-        cursor &zp;
-        std::tuple<Rangers...> &rgrs;
+        bool& finished;
+        type_parameter_1_0& dst;
+        cursor& zp;
+        std::tuple<Rangers...>& rgrs;
 
       public:
-        __lambda_246_16(bool &_finished, type_parameter_1_0 &_dst, cursor &_zp,
-                        std::tuple<Rangers...> &_rgrs)
+        __lambda_246_16(bool& _finished, type_parameter_1_0& _dst, cursor& _zp,
+                        std::tuple<Rangers...>& _rgrs)
             : finished{_finished}, dst{_dst}, zp{_zp}, rgrs{_rgrs} {}
     };
 
@@ -375,7 +375,7 @@ namespace transrangers {
         std::tuple<Rangers...> rgrs;
 
       public:
-        __lambda_244_25(cursor _zp, const Ranger &_rgr, const Rangers &..._rgrs)
+        __lambda_244_25(cursor _zp, const Ranger& _rgr, const Rangers&... _rgrs)
             : zp{_zp}, rgr{_rgr}, rgrs{_rgrs...} {}
     };
 

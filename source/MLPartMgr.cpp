@@ -1,19 +1,19 @@
 #include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::AllSatisfied
 #include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
 #include <cstdint>                 // for uint8_t
+#include <iostream>                // for std::cerr
 #include <memory>                  // for unique_ptr
 #include <netlistx/netlist.hpp>    // for SimpleNetlist
+#include <new>                     // for std::bad_alloc
 #include <py2cpp/set.hpp>          // for set
 #include <span>                    // for span
 #include <utility>                 // for pair
 #include <vector>                  // for vector
-#include <new>                     // for std::bad_alloc
-#include <iostream>                // for std::cerr
 
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
 
 using node_t = typename SimpleNetlist::node_t;
-extern auto create_contracted_subgraph(const SimpleNetlist &, py::set<node_t>)
+extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
 /**
@@ -27,7 +27,7 @@ extern auto create_contracted_subgraph(const SimpleNetlist &, py::set<node_t>)
  * @return LegalCheck
  */
 template <typename Gnl, typename PartMgr>
-auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {
+auto MLPartMgr::run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {
     using GainMgr = typename PartMgr::GainMgr_;
     using ConstrMgr = typename PartMgr::ConstrMgr_;
 
@@ -57,7 +57,8 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> pa
 
     if (hyprgraph.number_of_modules() >= this->limitsize) {  // OK
         try {
-            const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
+            const auto hgr2
+                = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
             if (hgr2->number_of_modules() <= hyprgraph.number_of_modules()) {
                 auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
                 hgr2->projection_up(part, part2);
@@ -66,7 +67,7 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> pa
                     hgr2->projection_down(part2, part);
                 }
             }
-        } catch(const std::bad_alloc& e) {
+        } catch (const std::bad_alloc& e) {
             std::cerr << "Out of Memory: " << e.what() << '\n';
         }
     }
@@ -84,9 +85,9 @@ auto MLPartMgr::run_FMPartition(const Gnl &hyprgraph, std::span<std::uint8_t> pa
 template auto MLPartMgr::run_FMPartition<
     SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-    const SimpleNetlist &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+    const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
 
 template auto MLPartMgr::run_FMPartition<
     SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
-    const SimpleNetlist &hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+    const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;

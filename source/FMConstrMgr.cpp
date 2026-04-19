@@ -15,11 +15,11 @@ using namespace std;
 /** This is the constructor of the `FMConstrMgr` class template. It initializes the object with the
 given parameters `hyprgraph`, `bal_tol`, and `num_parts`. */
 template <typename Gnl>
-FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
+FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& hyprgraph, double bal_tol, uint8_t num_parts)
     : hyprgraph{hyprgraph}, bal_tol{bal_tol}, diff(num_parts, 0), num_parts{num_parts} {
     using namespace transrangers;
     this->total_weight = accumulate(
-        transform([&](const auto &v) { return hyprgraph.get_module_weight(v); }, all(hyprgraph)),
+        transform([&](const auto& v) { return hyprgraph.get_module_weight(v); }, all(hyprgraph)),
         0U);
     // this->total_weight = 0U;
     // for (const auto &v : hyprgraph) {
@@ -37,7 +37,7 @@ FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_
  */
 template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> part) {
     std::ranges::fill(this->diff, 0);
-    for (const auto &module : this->hyprgraph) {
+    for (const auto& module : this->hyprgraph) {
         // auto weight_module = this->hyprgraph.get_module_weight(module);
         this->diff[part[module]] += this->hyprgraph.get_module_weight(module);
     }
@@ -50,8 +50,9 @@ template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> par
  * @param[in] move_info_v
  * @return LegalCheck
  */
-template <typename Gnl> auto FMConstrMgr<Gnl>::check_legal(
-    const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck {
+template <typename Gnl>
+auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
+    -> LegalCheck {
     this->weight = this->hyprgraph.get_module_weight(move_info_v.v);
     const auto diffFrom = this->diff[move_info_v.from_part];
     if (diffFrom < this->lowerbound + this->weight) {
@@ -72,8 +73,9 @@ template <typename Gnl> auto FMConstrMgr<Gnl>::check_legal(
  * @return true
  * @return false
  */
-template <typename Gnl> auto FMConstrMgr<Gnl>::check_constraints(
-    const MoveInfoV<typename Gnl::node_t> &move_info_v) -> bool {
+template <typename Gnl>
+auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& move_info_v)
+    -> bool {
     // const auto& [v, from_part, to_part] = move_info_v;
 
     this->weight = this->hyprgraph.get_module_weight(move_info_v.v);
@@ -91,7 +93,7 @@ template <typename Gnl> auto FMConstrMgr<Gnl>::check_constraints(
  * @param[in] move_info_v
  */
 template <typename Gnl>
-void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t> &move_info_v) {
+void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t>& move_info_v) {
     // auto [v, from_part, to_part] = move_info_v;
     this->diff[move_info_v.to_part] += this->weight;
     this->diff[move_info_v.from_part] -= this->weight;
@@ -99,12 +101,12 @@ void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t> &move_i
 
 /**
  * The code snippet is defining the `final_check` function in the `FMConstrMgr` class template. This
- * function takes a `part` vector as input and checks if the final partitioning satisfies the balance
- * constraints. It first initializes the `diff` vector using the `init` function, and then iterates 
- * through the `diff` vector to check if any part is below the `lowerbound`. If any part is
- * below the `lowerbound`, it returns `false`, indicating that the final partitioning does not satisfy
- * the balance constraints. If all parts are above or equal to the `lowerbound`, it returns `true`, 
- * indicating that the final partitioning satisfies the balance constraints.
+ * function takes a `part` vector as input and checks if the final partitioning satisfies the
+ * balance constraints. It first initializes the `diff` vector using the `init` function, and then
+ * iterates through the `diff` vector to check if any part is below the `lowerbound`. If any part is
+ * below the `lowerbound`, it returns `false`, indicating that the final partitioning does not
+ * satisfy the balance constraints. If all parts are above or equal to the `lowerbound`, it returns
+ * `true`, indicating that the final partitioning satisfies the balance constraints.
  *
  * @param[in] part The partition information to check.
  * @return true If the final partitioning satisfies the balance constraints.
@@ -112,7 +114,7 @@ void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t> &move_i
  */
 template <typename Gnl> auto FMConstrMgr<Gnl>::final_check(std::span<const uint8_t> part) -> bool {
     this->init(part);
-    for (const auto &localdiff : this->diff) {
+    for (const auto& localdiff : this->diff) {
         if (localdiff < this->lowerbound) {
             return false;
         }

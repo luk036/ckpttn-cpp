@@ -1,17 +1,5 @@
 #define CKPTTN_VERSION "1.0"
 
-#include <cstdint>
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <string_view>
-#include <vector>
-
-#include <cxxopts.hpp>
-#include <netlistx/netlist.hpp>
-#include <xnetwork/classes/graph.hpp>
-
 #include <ckpttn/FMBiConstrMgr.hpp>
 #include <ckpttn/FMBiGainMgr.hpp>
 #include <ckpttn/FMKWayConstrMgr.hpp>
@@ -19,6 +7,16 @@
 #include <ckpttn/FMPartMgr.hpp>
 #include <ckpttn/MLPartMgr.hpp>
 #include <ckpttn/readwrite.hpp>
+#include <cstdint>
+#include <cstdlib>
+#include <cxxopts.hpp>
+#include <fstream>
+#include <iostream>
+#include <netlistx/netlist.hpp>
+#include <string>
+#include <string_view>
+#include <vector>
+#include <xnetwork/classes/graph.hpp>
 
 using graph_t = xnetwork::SimpleGraph;
 using index_t = std::uint32_t;
@@ -62,7 +60,7 @@ auto run_binary_partition(const SimpleNetlist& hyprgraph, double balance_tol,
 }
 
 auto run_kway_partition(const SimpleNetlist& hyprgraph, double balance_tol,
-                       std::span<std::uint8_t> part, std::uint8_t num_parts) -> int {
+                        std::span<std::uint8_t> part, std::uint8_t num_parts) -> int {
     using GainMgr = FMKWayGainMgr<SimpleNetlist>;
     using ConstrMgr = FMKWayConstrMgr<SimpleNetlist>;
     using PartMgr = FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr>;
@@ -74,8 +72,7 @@ auto run_kway_partition(const SimpleNetlist& hyprgraph, double balance_tol,
 
 auto main(int argc, char** argv) -> int {
     cxxopts::Options options(
-        *argv,
-        "ckpttn - A hypergraph partitioner compatible with hMetis and KaHyPar");
+        *argv, "ckpttn - A hypergraph partitioner compatible with hMetis and KaHyPar");
 
     std::string hypergraph_file;
     std::uint32_t k = 2;
@@ -98,43 +95,42 @@ auto main(int argc, char** argv) -> int {
     double time_limit = 0.0;
     std::uint32_t max_quality = 0;
 
-    options.add_options()
-        ("h,help", "Show help")
-        ("v,version", "Print the current version number")
+    options.add_options()("h,help", "Show help")("v,version", "Print the current version number")
 
-        ("hypergraph_file", "Input hypergraph file", cxxopts::value<std::string>(hypergraph_file))
-        ("k", "Number of parts", cxxopts::value<std::uint32_t>(k)->default_value("2"))
-        ("epsilon", "Imbalance factor (0.05 = 5%)", cxxopts::value<double>(epsilon)->default_value("0.05"))
+        ("hypergraph_file", "Input hypergraph file", cxxopts::value<std::string>(hypergraph_file))(
+            "k", "Number of parts", cxxopts::value<std::uint32_t>(k)->default_value("2"))(
+            "epsilon", "Imbalance factor (0.05 = 5%)",
+            cxxopts::value<double>(epsilon)->default_value("0.05"))
 
-        ("i,input-format", "Input format: hmetis, json, dimacs, auto",
-            cxxopts::value<std::string>(input_format_str)->default_value("auto"))
-        ("f,fixed", "File with pre-assigned vertices",
-            cxxopts::value<std::string>(fixed_file)->default_value(""))
+            ("i,input-format", "Input format: hmetis, json, dimacs, auto",
+             cxxopts::value<std::string>(input_format_str)->default_value("auto"))(
+                "f,fixed", "File with pre-assigned vertices",
+                cxxopts::value<std::string>(fixed_file)->default_value(""))
 
-        ("o,output", "Output partition file (default: stdout)",
-            cxxopts::value<std::string>(output_file)->default_value(""))
-        ("output-format", "Output format: hmetis, json",
-            cxxopts::value<std::string>(output_format_str)->default_value("hmetis"))
-        ("q,quiet", "Suppress output")
+                ("o,output", "Output partition file (default: stdout)",
+                 cxxopts::value<std::string>(output_file)->default_value(""))(
+                    "output-format", "Output format: hmetis, json",
+                    cxxopts::value<std::string>(output_format_str)->default_value("hmetis"))(
+                    "q,quiet", "Suppress output")
 
-        ("p,preset", "Preset: default, quality, highest_quality, deterministic, large_k",
-            cxxopts::value<std::string>(preset_str)->default_value("default"))
-        ("objective", "Objective: cut, km1, soed, km1a",
-            cxxopts::value<std::string>(objective)->default_value("cut"))
-        ("mode", "Mode: direct, recursive",
-            cxxopts::value<std::string>(mode_str)->default_value("recursive"))
-        ("t,threads", "Number of threads",
-            cxxopts::value<std::uint32_t>(threads)->default_value("1"))
+                    ("p,preset",
+                     "Preset: default, quality, highest_quality, deterministic, large_k",
+                     cxxopts::value<std::string>(preset_str)->default_value("default"))(
+                        "objective", "Objective: cut, km1, soed, km1a",
+                        cxxopts::value<std::string>(objective)->default_value("cut"))(
+                        "mode", "Mode: direct, recursive",
+                        cxxopts::value<std::string>(mode_str)->default_value("recursive"))(
+                        "t,threads", "Number of threads",
+                        cxxopts::value<std::uint32_t>(threads)->default_value("1"))
 
-        ("s,seed", "Random seed",
-            cxxopts::value<std::uint32_t>(seed)->default_value("0"))
-        ("verbose", "Verbose output")
+                        ("s,seed", "Random seed",
+                         cxxopts::value<std::uint32_t>(seed)->default_value("0"))("verbose",
+                                                                                  "Verbose output")
 
-        ("time-limit", "Time limit in seconds",
-            cxxopts::value<double>(time_limit)->default_value("0"))
-        ("max-quality", "Maximum quality",
-            cxxopts::value<std::uint32_t>(max_quality)->default_value("0"))
-    ;
+                            ("time-limit", "Time limit in seconds",
+                             cxxopts::value<double>(time_limit)->default_value("0"))(
+                                "max-quality", "Maximum quality",
+                                cxxopts::value<std::uint32_t>(max_quality)->default_value("0"));
 
     options.parse_positional({"hypergraph_file", "k", "epsilon"});
 
@@ -236,8 +232,7 @@ Compatible with hMetis and KaHyPar CLI.
     if (verbose) {
         std::cerr << "Hypergraph: " << hyprgraph.number_of_modules() << " vertices, "
                   << hyprgraph.number_of_nets() << " nets" << std::endl;
-        std::cerr << "K=" << k << ", epsilon=" << epsilon
-                 << ", preset=" << preset_str << std::endl;
+        std::cerr << "K=" << k << ", epsilon=" << epsilon << ", preset=" << preset_str << std::endl;
     }
 
     auto num_modules = hyprgraph.number_of_modules();
@@ -252,7 +247,7 @@ Compatible with hMetis and KaHyPar CLI.
         total_cost = run_binary_partition(hyprgraph, config.balance_tolerance, part);
     } else {
         total_cost = run_kway_partition(hyprgraph, config.balance_tolerance, part,
-                                      static_cast<std::uint8_t>(k));
+                                        static_cast<std::uint8_t>(k));
     }
 
     if (verbose) {

@@ -1,20 +1,20 @@
 #pragma once
 
-#include <ckpttn/FMPartMgr.hpp>      // for FMPartMgr
-#include <ckpttn/FMConstrMgr.hpp>    // for FMConstrMgr, LegalCheck, move_info_v
-#include <cstdint>                   // for uint8_t
-#include <netlistx/netlist.hpp>      // for SimpleNetlist
-#include <string_view>               // for std::string_view
-#include <vector>                    // for vector
 #include <doctest/doctest.h>
+
+#include <ckpttn/FMConstrMgr.hpp>  // for FMConstrMgr, LegalCheck, move_info_v
+#include <ckpttn/FMPartMgr.hpp>    // for FMPartMgr
+#include <cstdint>                 // for uint8_t
+#include <netlistx/netlist.hpp>    // for SimpleNetlist
+#include <string_view>             // for std::string_view
+#include <vector>                  // for vector
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
+extern void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName);
 
-template <typename GainMgr, typename ConstrMgr>
-void run_PartMgr(const SimpleNetlist &hyprgraph) {
+template <typename GainMgr, typename ConstrMgr> void run_PartMgr(const SimpleNetlist& hyprgraph) {
     GainMgr gain_mgr{hyprgraph};
     ConstrMgr constr_mgr{hyprgraph, 0.4};
     FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr> part_mgr{hyprgraph, gain_mgr, constr_mgr};
@@ -32,10 +32,11 @@ void run_PartMgr(const SimpleNetlist &hyprgraph) {
 }
 
 template <typename GainMgr, typename ConstrMgr>
-void run_PartMgr(const SimpleNetlist &hyprgraph, uint8_t num_parts) {
+void run_PartMgr(const SimpleNetlist& hyprgraph, uint8_t num_parts) {
     GainMgr gain_mgr{hyprgraph, num_parts};
     ConstrMgr constr_mgr{hyprgraph, 0.4, num_parts};
-    FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr> part_mgr{hyprgraph, gain_mgr, constr_mgr, num_parts};
+    FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr> part_mgr{hyprgraph, gain_mgr, constr_mgr,
+                                                          num_parts};
     std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
 
     auto legal_check = part_mgr.legalize(part);

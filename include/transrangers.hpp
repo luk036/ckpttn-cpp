@@ -41,7 +41,7 @@ namespace transrangers {
     template <typename Cursor, typename F> auto ranger(F f) { return ranger_class<Cursor, F>{f}; }
 
     // all, all_copy
-    template <typename Range> auto all(Range &&rng) {
+    template <typename Range> auto all(Range&& rng) {
         using std::begin;
         using std::end;
         using cursor = decltype(begin(rng));
@@ -59,31 +59,31 @@ namespace transrangers {
     }
 
     template <typename Range> struct all_copy {
-        using ranger = decltype(all(std::declval<Range &>()));
+        using ranger = decltype(all(std::declval<Range&>()));
         using cursor = typename ranger::cursor;
 
-        template <typename F> auto operator()(const F &p) { return rgr(p); }
+        template <typename F> auto operator()(const F& p) { return rgr(p); }
 
         Range rng;
         ranger rgr = all(rng);
     };
 
     template <typename Range>
-    typename std::enable_if<std::is_rvalue_reference<Range &&>::value, all_copy<Range>>::type all(
-        Range &&rng) {
+    typename std::enable_if<std::is_rvalue_reference<Range&&>::value, all_copy<Range>>::type all(
+        Range&& rng) {
         return all_copy<Range>{std::move(rng)};
     }
 
     // filter
     template <typename Pred> auto pred_box(Pred pred) {
-        return [=](auto &&...x) -> int { return pred(std::forward<decltype(x)>(x)...); };
+        return [=](auto&&... x) -> int { return pred(std::forward<decltype(x)>(x)...); };
     }
 
     template <typename Pred, typename Ranger> auto filter(Pred pred_, Ranger rgr) {
         using cursor = typename Ranger::cursor;
 
         return ranger<cursor>([=, pred = pred_box(pred_)](auto dst) TRANSRANGERS_HOT_MUTABLE {
-            return rgr([&](const auto &p) TRANSRANGERS_HOT { return pred(*p) ? dst(p) : true; });
+            return rgr([&](const auto& p) TRANSRANGERS_HOT { return pred(*p) ? dst(p) : true; });
         });
     }
 
@@ -91,14 +91,14 @@ namespace transrangers {
         decltype(auto) operator*() const { return (*pf)(*p); }
 
         Cursor p;
-        F *pf;
+        F* pf;
     };
 
     template <typename Cursor, typename F>
     struct deref_fun<Cursor, F,
                      typename std::enable_if<std::is_trivially_default_constructible<F>::value
                                              && std::is_empty<F>::value>::type> {
-        deref_fun(Cursor p = {}, F * = nullptr) : p{p} {}
+        deref_fun(Cursor p = {}, F* = nullptr) : p{p} {}
 
         decltype(auto) operator*() const { return F()(*p); }
 
@@ -110,7 +110,7 @@ namespace transrangers {
         using cursor = deref_fun<typename Ranger::cursor, F>;
 
         return ranger<cursor>([=](auto dst) TRANSRANGERS_HOT_MUTABLE {
-            return rgr([&](const auto &p) TRANSRANGERS_HOT { return dst(cursor{p, &f}); });
+            return rgr([&](const auto& p) TRANSRANGERS_HOT { return dst(cursor{p, &f}); });
         });
     }
 
@@ -120,7 +120,7 @@ namespace transrangers {
 
         return ranger<cursor>([=](auto dst) TRANSRANGERS_HOT_MUTABLE {
             if (n)
-                return rgr([&](const auto &p) TRANSRANGERS_HOT {
+                return rgr([&](const auto& p) TRANSRANGERS_HOT {
                            --n;
                            return dst(p) && (n != 0);
                        })
@@ -152,14 +152,14 @@ namespace transrangers {
         return ranger<cursor>([=, start = true, p = cursor{}](auto dst) TRANSRANGERS_HOT_MUTABLE {
             if (start) {
                 start = false;
-                if (rgr([&](const auto &q) TRANSRANGERS_HOT {
+                if (rgr([&](const auto& q) TRANSRANGERS_HOT {
                         p = q;
                         return false;
                     }))
                     return true;
                 if (!dst(p)) return false;
             }
-            return rgr([&, prev = p](const auto &q) TRANSRANGERS_HOT_MUTABLE {
+            return rgr([&, prev = p](const auto& q) TRANSRANGERS_HOT_MUTABLE {
                 if ((*prev == *q) || dst(q)) {
                     prev = q;
                     return true;
@@ -173,7 +173,7 @@ namespace transrangers {
 
     // join
     struct identity_adaption {
-        template <typename T> static decltype(auto) adapt(T &&srgr) {
+        template <typename T> static decltype(auto) adapt(T&& srgr) {
             return std::forward<decltype(srgr)>(srgr);
         }
     };
@@ -204,7 +204,7 @@ namespace transrangers {
     // }
 
     struct all_adaption {
-        template <typename T> static auto adapt(T &&srgn) {
+        template <typename T> static auto adapt(T&& srgn) {
             return all(std::forward<decltype(srgn)>(srgn));
         }
     };
@@ -217,7 +217,7 @@ namespace transrangers {
     template <typename... Rangers> struct zip_cursor {
         auto operator*() const {
             return std::apply(
-                [](const auto &...ps) { return std::tuple<decltype(*ps)...>{*ps...}; }, ps);
+                [](const auto&... ps) { return std::tuple<decltype(*ps)...>{*ps...}; }, ps);
         }
 
         std::tuple<typename Rangers::cursor...> ps;
@@ -277,9 +277,9 @@ namespace transrangers {
 
         return ranger<cursor>([=, zp = cursor{}](auto dst) TRANSRANGERS_HOT_MUTABLE {
             bool finished = false;
-            return rgr1([&](const auto &p) TRANSRANGERS_HOT {
+            return rgr1([&](const auto& p) TRANSRANGERS_HOT {
                        std::get<0>(zp.ps) = p;
-                       if (rgr2([&](const auto &p) TRANSRANGERS_HOT {
+                       if (rgr2([&](const auto& p) TRANSRANGERS_HOT {
                                std::get<1>(zp.ps) = p;
                                return false;
                            })) {
@@ -294,7 +294,7 @@ namespace transrangers {
 
     // accumulate
     template <typename Ranger, typename T> T accumulate(Ranger rgr, T init) {
-        rgr([&](const auto &p) TRANSRANGERS_HOT {
+        rgr([&](const auto& p) TRANSRANGERS_HOT {
             init = std::move(init) + *p;
             return true;
         });

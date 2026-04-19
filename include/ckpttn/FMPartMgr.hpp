@@ -38,7 +38,7 @@ class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
      * @param[in,out] constr_mgr The constraint manager used for the partitioning
      * @param[in] num_parts The number of partitions to create
      */
-    FMPartMgr(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr, size_t num_parts)
+    FMPartMgr(const Gnl& hyprgraph, GainMgr& gain_mgr, ConstrMgr& constr_mgr, size_t num_parts)
         : Base{hyprgraph, gain_mgr, constr_mgr, num_parts} {}
 
     /**
@@ -48,7 +48,7 @@ class FMPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
      * @param[in,out] gain_mgr The gain manager used for the partitioning
      * @param[in,out] constr_mgr The constraint manager used for the partitioning
      */
-    FMPartMgr(const Gnl &hyprgraph, GainMgr &gain_mgr, ConstrMgr &constr_mgr)
+    FMPartMgr(const Gnl& hyprgraph, GainMgr& gain_mgr, ConstrMgr& constr_mgr)
         : Base{hyprgraph, gain_mgr, constr_mgr, 2} {}
 
     // /**

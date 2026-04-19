@@ -39,7 +39,7 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part
     this->init(part);
 
     // Zero-weighted modules does not contribute legalization
-    for (const auto &v : this->hyprgraph) {
+    for (const auto& v : this->hyprgraph) {
         if (this->hyprgraph.get_module_weight(v) != 0U) {
             continue;
         }
@@ -56,8 +56,8 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part
             break;
         }
         const auto rslt = this->gain_mgr.select_togo(to_part);
-        auto &&v = rslt.first;
-        auto &&gainmax = rslt.second;
+        auto&& v = rslt.first;
+        auto&& gainmax = rslt.second;
         const auto from_part = part[v];
         // assert(v == v);
         assert(from_part != to_part);

@@ -23,15 +23,16 @@ template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::u
  * @param[in] move_info_v
  * @return LegalCheck
  */
-template <typename Gnl> auto FMKWayConstrMgr<Gnl>::check_legal(
-    const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck {
+template <typename Gnl>
+auto FMKWayConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
+    -> LegalCheck {
     const auto status = FMConstrMgr<Gnl>::check_legal(move_info_v);
     if (status != LegalCheck::AllSatisfied) {
         return status;
     }
     this->illegal[move_info_v.from_part] = 0;
     this->illegal[move_info_v.to_part] = 0;
-    for (const auto &value : this->illegal) {
+    for (const auto& value : this->illegal) {
         if (value == 1) {
             return LegalCheck::GetBetter;  // get better, but still illegal
         }

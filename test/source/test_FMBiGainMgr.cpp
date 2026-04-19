@@ -18,7 +18,7 @@ using namespace std;
  * @param[in] hyprgraph
  * @param[in] part_test
  */
-void run_FMBiGainMgr(const SimpleNetlist &hyprgraph, std::span<uint8_t> part) {
+void run_FMBiGainMgr(const SimpleNetlist& hyprgraph, std::span<uint8_t> part) {
     FMBiGainMgr<SimpleNetlist> mgr{hyprgraph};
     mgr.init(part);
     while (!mgr.is_empty()) {

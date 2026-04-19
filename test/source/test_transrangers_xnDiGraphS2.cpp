@@ -12,12 +12,12 @@
  * @tparam Graph
  * @param[in] gra
  */
-template <typename Graph> static void do_case(const Graph &gra) {
+template <typename Graph> static void do_case(const Graph& gra) {
     using namespace transrangers;
 
     auto count = 0U;
     auto rng = all(gra);
-    rng([&count](const auto & /* node */) {
+    rng([&count](const auto& /* node */) {
         ++count;
         return true;
     });
@@ -39,7 +39,7 @@ template <typename Graph> static void do_case(const Graph &gra) {
 
     auto deg = 0U;
     auto rng2 = all(gra[1U]);
-    rng2([&deg](const auto & /* x */) {
+    rng2([&deg](const auto& /* x */) {
         ++deg;
         return true;
     });

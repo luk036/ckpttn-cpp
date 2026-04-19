@@ -23,20 +23,20 @@ using namespace std;
 template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(std::span<const uint8_t> part) -> int {
     auto total_cost = Base::init(part);
 
-    for (auto &bckt : this->gain_bucket) {
+    for (auto& bckt : this->gain_bucket) {
         bckt.clear();
     }
-    for (const auto &v : this->hyprgraph) {
+    for (const auto& v : this->hyprgraph) {
         const auto pv = part[v];
-        for (const auto &k : this->rr.exclude(pv)) {
-            auto &vlink = this->gain_calc.vertex_list[k][v];
+        for (const auto& k : this->rr.exclude(pv)) {
+            auto& vlink = this->gain_calc.vertex_list[k][v];
             this->gain_bucket[k].append(vlink, this->gain_calc.init_gain_list[k][v]);
         }
-        auto &vlink = this->gain_calc.vertex_list[pv][v];
+        auto& vlink = this->gain_calc.vertex_list[pv][v];
         this->gain_bucket[pv].set_key(vlink, 0);
         this->waiting_list.append(vlink);
     }
-    for (const auto &v : this->hyprgraph.module_fixed) {
+    for (const auto& v : this->hyprgraph.module_fixed) {
         this->lock_all(part[v], v);
     }
     return total_cost;
@@ -50,7 +50,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(std::span<const uint8_t> p
  * @param[in] gain
  */
 template <typename Gnl>
-void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t> &move_info_v,
+void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& move_info_v,
                                        int gain) {
     // const auto& [v, from_part, to_part] = move_info_v;
 
@@ -59,7 +59,7 @@ void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t> &mo
             continue;
         }
         this->gain_bucket[part_idx].modify_key(this->gain_calc.vertex_list[part_idx][move_info_v.v],
-                                        this->gain_calc.delta_gain_v[part_idx]);
+                                               this->gain_calc.delta_gain_v[part_idx]);
     }
     this->_set_key(move_info_v.from_part, move_info_v.v, -gain);
     // this->_set_key(to_part, v, -2*this->pmax);

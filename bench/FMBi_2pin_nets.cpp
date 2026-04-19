@@ -12,7 +12,7 @@
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
 extern auto create_dwarf() -> SimpleNetlist;         // import create_dwarf
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
-extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
+extern void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName);
 
 /**
  * The function "run_FMBiPartMgr" runs the Fiduccia-Mattheyses Bi-partitioning algorithm on a given
@@ -24,7 +24,7 @@ extern void readAre(SimpleNetlist &hyprgraph, std::string_view areFileName);
  * @param[in] option The "option" parameter is a boolean value that determines whether a special
  * handling for 2-pin nets should be applied during the gain calculation.
  */
-void run_FMBiPartMgr(const SimpleNetlist &hyprgraph, bool option) {
+void run_FMBiPartMgr(const SimpleNetlist& hyprgraph, bool option) {
     FMBiGainMgr<SimpleNetlist> gain_mgr{hyprgraph};
     gain_mgr.gain_calc.special_handle_2pin_nets = option;
 
@@ -45,7 +45,7 @@ void run_FMBiPartMgr(const SimpleNetlist &hyprgraph, bool option) {
  *
  * @param[in] state
  */
-static void BM_with_2pin_nets(benchmark::State &state) {
+static void BM_with_2pin_nets(benchmark::State& state) {
     auto hyprgraph = readNetD("../../testcases/ibm03.net");
     readAre(hyprgraph, "../../testcases/ibm03.are");
 
@@ -64,7 +64,7 @@ BENCHMARK(BM_with_2pin_nets);
  *
  * @param[in] state
  */
-static void BM_without_2pin_nets(benchmark::State &state) {
+static void BM_without_2pin_nets(benchmark::State& state) {
     auto hyprgraph = readNetD("../../testcases/ibm03.net");
     readAre(hyprgraph, "../../testcases/ibm03.are");
 

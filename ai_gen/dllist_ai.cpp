@@ -7,26 +7,26 @@ template <typename T> class Dllink {
         next = prev = this;
         this->data = data;
     }
-    void appendleft(Dllink<T> *node) {
+    void appendleft(Dllink<T>* node) {
         node->next = next;
         next->prev = node;
         next = node;
         node->prev = this;
     }
-    Dllink<T> *next;
-    Dllink<T> *prev;
+    Dllink<T>* next;
+    Dllink<T>* prev;
     T data;
 };
 
 template <typename T> class DllIterator {
   public:
-    DllIterator(Dllink<T> *link) {
+    DllIterator(Dllink<T>* link) {
         this->link = link;
         cur = link->next;
     }
-    Dllink<T> *next() {
+    Dllink<T>* next() {
         if (cur != link) {
-            Dllink<T> *res = cur;
+            Dllink<T>* res = cur;
             cur = cur->next;
             return res;
         } else {
@@ -35,39 +35,39 @@ template <typename T> class DllIterator {
     }
 
   private:
-    Dllink<T> *link;
-    Dllink<T> *cur;
+    Dllink<T>* link;
+    Dllink<T>* cur;
 };
 
 template <typename T> class Dllist {
   public:
     Dllist(T data) { head = new Dllink<T>(data); }
     bool is_empty() { return head->next == head && head->prev == head; }
-    void appendleft(Dllink<T> *node) { head->appendleft(node); }
-    Dllink<T> *pop() {
-        Dllink<T> *node = head->prev;
+    void appendleft(Dllink<T>* node) { head->appendleft(node); }
+    Dllink<T>* pop() {
+        Dllink<T>* node = head->prev;
         node->prev->next = head;
         head->prev = node->prev;
         return node;
     }
-    Dllink<T> *popleft() {
-        Dllink<T> *node = head->next;
+    Dllink<T>* popleft() {
+        Dllink<T>* node = head->next;
         node->next->prev = head;
         head->next = node->next;
         return node;
     }
-    DllIterator<T> *__iter__() { return new DllIterator<T>(head); }
+    DllIterator<T>* __iter__() { return new DllIterator<T>(head); }
 
   private:
-    Dllink<T> *head;
+    Dllink<T>* head;
 };
 
 void test_dllink() {
-    Dllist<int> *L1 = new Dllist<int>(99);
-    Dllist<int> *L2 = new Dllist<int>(99);
-    Dllink<int> *d = new Dllink<int>(1);
-    Dllink<int> *e = new Dllink<int>(2);
-    Dllink<int> *f = new Dllink<int>(3);
+    Dllist<int>* L1 = new Dllist<int>(99);
+    Dllist<int>* L2 = new Dllist<int>(99);
+    Dllink<int>* d = new Dllink<int>(1);
+    Dllink<int>* e = new Dllink<int>(2);
+    Dllink<int>* f = new Dllink<int>(3);
     L1->appendleft(e);
     if (!L1->is_empty()) {
         cout << "not empty" << endl;
@@ -89,12 +89,12 @@ void test_dllink() {
         cout << "empty" << endl;
     }
     int count = 0;
-    DllIterator<int> *iter = L2->__iter__();
+    DllIterator<int>* iter = L2->__iter__();
     while (true) {
         try {
             iter->next();
             count++;
-        } catch (const char *msg) {
+        } catch (const char* msg) {
             break;
         }
     }

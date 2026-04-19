@@ -23,7 +23,7 @@ class MinHash {
     }
 
     // Add a document to the MinHash signature
-    void add(const std::string &v) {
+    void add(const std::string& v) {
         // Calculate the hashes for the document
         hashes = std::vector<int64_t>(k);
         hashes = std::bit_xor(_masks, hash(v));
@@ -32,7 +32,7 @@ class MinHash {
     }
 
     // Calculate the Jaccard similarity between two MinHash signatures
-    double jaccard(const MinHash &other) const {
+    double jaccard(const MinHash& other) const {
         // Check that the hash functions are the same
         if (!std::equal(_masks.begin(), _masks.end(), other._masks.begin())) {
             throw std::exception(

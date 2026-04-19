@@ -28,7 +28,7 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
      * @param[in] bal_tol The balance tolerance to use.
      * @param[in] num_parts The number of partitions.
      */
-    FMKWayConstrMgr(const Gnl &hyprgraph, double bal_tol, std::uint8_t num_parts)
+    FMKWayConstrMgr(const Gnl& hyprgraph, double bal_tol, std::uint8_t num_parts)
         : FMConstrMgr<Gnl>{hyprgraph, bal_tol, num_parts}, illegal(num_parts, 1) {}
 
     /**
@@ -46,7 +46,7 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
     auto init(std::span<const std::uint8_t> part) -> void {
         FMConstrMgr<Gnl>::init(part);
         auto it = this->diff.begin();
-        for (auto &il : this->illegal) {
+        for (auto& il : this->illegal) {
             il = (*it < this->lowerbound);
             ++it;
         }
@@ -58,5 +58,5 @@ template <typename Gnl> class FMKWayConstrMgr : public FMConstrMgr<Gnl> {
      * @param[in] move_info_v The move information to check.
      * @return LegalCheck The result of the legality check.
      */
-    auto check_legal(const MoveInfoV<typename Gnl::node_t> &move_info_v) -> LegalCheck;
+    auto check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v) -> LegalCheck;
 };

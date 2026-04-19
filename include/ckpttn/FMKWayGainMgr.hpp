@@ -35,7 +35,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] hyprgraph The hypergraph to use.
      * @param[in] num_parts The number of partitions.
      */
-    FMKWayGainMgr(const Gnl &hyprgraph, std::uint8_t num_parts)
+    FMKWayGainMgr(const Gnl& hyprgraph, std::uint8_t num_parts)
         : Base{hyprgraph, num_parts}, rr{num_parts} {}
 
     /**
@@ -54,7 +54,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] part_w The partition that the vertex belongs to.
      * @param[in] keys The new keys to set for the vertex in each partition.
      */
-    auto modify_key(const node_t &w, std::uint8_t part_w, std::span<const int> keys) -> void {
+    auto modify_key(const node_t& w, std::uint8_t part_w, std::span<const int> keys) -> void {
         for (auto k : this->rr.exclude(part_w)) {
             this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][w], keys[k]);
         }
@@ -66,7 +66,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] move_info_v The move information for the vertex.
      * @param[in] gain The gain associated with the move.
      */
-    auto update_move_v(const MoveInfoV<node_t> &move_info_v, int gain) -> void;
+    auto update_move_v(const MoveInfoV<node_t>& move_info_v, int gain) -> void;
 
     /**
      * @brief Locks the vertex link for the given partition and vertex.
@@ -74,8 +74,8 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] whichPart The partition to lock the vertex link for.
      * @param[in] v The vertex to lock the link for.
      */
-    auto lock(uint8_t whichPart, const node_t &v) -> void {
-        auto &vlink = this->gain_calc.vertex_list[whichPart][v];
+    auto lock(uint8_t whichPart, const node_t& v) -> void {
+        auto& vlink = this->gain_calc.vertex_list[whichPart][v];
         this->gain_bucket[whichPart].detach(vlink);
         vlink.lock();
     }
@@ -86,12 +86,12 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] from_part The partition to exclude from locking.
      * @param[in] v The vertex to lock the link for.
      */
-    auto lock_all(uint8_t /*from_part*/, const node_t &v) -> void {
+    auto lock_all(uint8_t /*from_part*/, const node_t& v) -> void {
         // for (const auto& [vlist, bckt] :
         //     views::zip(this->gain_calc.vertex_list, this->gain_bucket))
         auto bckt_it = this->gain_bucket.begin();
-        for (auto &vlist : this->gain_calc.vertex_list) {
-            auto &vlink = vlist[v];
+        for (auto& vlist : this->gain_calc.vertex_list) {
+            auto& vlink = vlist[v];
             bckt_it->detach(vlink);
             vlink.lock();  // lock
             ++bckt_it;
@@ -106,7 +106,7 @@ template <typename Gnl> class FMKWayGainMgr
      * @param[in] v The vertex to set the key for.
      * @param[in] key The new key to set for the vertex.
      */
-    auto _set_key(uint8_t whichPart, const node_t &v, int key) -> void {
+    auto _set_key(uint8_t whichPart, const node_t& v, int key) -> void {
         this->gain_bucket[whichPart].set_key(this->gain_calc.vertex_list[whichPart][v], key);
     }
 };

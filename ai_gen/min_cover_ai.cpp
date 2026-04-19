@@ -31,8 +31,8 @@ using Tuple = pair<Set, int>;
  * matchset (a set of matched elements) and the total primal cost (an integer or
  * float representing the total weight of the matching).
  */
-Tuple min_maximal_matching(HierNetlist *hyprgraph, MutableMapping weight, Set *matchset = nullptr,
-                           Set *dep = nullptr, ) {
+Tuple min_maximal_matching(HierNetlist* hyprgraph, MutableMapping weight, Set* matchset = nullptr,
+                           Set* dep = nullptr, ) {
     // If the `matchset` parameter is not provided, create a new set
     if (matchset == nullptr) {
         matchset = new Set();

@@ -22,7 +22,7 @@ using namespace transrangers;
  * @param[in] part
  */
 template <typename Gnl>
-void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, std::span<const uint8_t> part) {
+void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net, std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -51,7 +51,7 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t &net, std::span<co
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t &net,
+template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
                                                                     std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -75,7 +75,7 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t &net,
+template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
                                                                     std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -110,12 +110,12 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typena
  * @param[in] part
  */
 template <typename Gnl>
-void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
+void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
                                                std::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
 
     auto range = all(this->hyprgraph.gr[net]);
-    range([&](const auto &weighted_cell) {
+    range([&](const auto& weighted_cell) {
         num[part[*weighted_cell]] += 1;
         return true;
     });
@@ -123,9 +123,9 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
     const uint32_t weight = this->hyprgraph.get_net_weight(net);
 
     // #pragma unroll
-    for (const auto &part_idx : {0U, 1U}) {
+    for (const auto& part_idx : {0U, 1U}) {
         if (num[part_idx] == 0) {
-            range([&](const auto &weighted_cell) {
+            range([&](const auto& weighted_cell) {
                 this->_decrease_gain(*weighted_cell, weight);
                 return true;
             });
@@ -152,7 +152,7 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t &net,
  */
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
-                                             const MoveInfo<typename Gnl::node_t> &move_info) ->
+                                             const MoveInfo<typename Gnl::node_t>& move_info) ->
     typename Gnl::node_t {
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto node_w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
@@ -169,12 +169,12 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t &module,
-                                                             const typename Gnl::node_t &net) {
+template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& module,
+                                                             const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     auto range1 = all(this->hyprgraph.gr[net]);
-    auto range = filter([&module](const auto &cell) { return cell != module; }, range1);
-    range([&](const auto &weighted_cell) {
+    auto range = filter([&module](const auto& cell) { return cell != module; }, range1);
+    range([&](const auto& weighted_cell) {
         this->idx_vec.push_back(*weighted_cell);
         return true;
     });
@@ -187,8 +187,10 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_3pin_net(
-    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
+template <typename Gnl>
+auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
+                                             const MoveInfo<typename Gnl::node_t>& move_info)
+    -> vector<int> {
     // const auto& [net, v, from_part, _] = move_info;
 
     auto delta_gain = vector<int>{0, 0};
@@ -215,12 +217,14 @@ template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_3pin_net(
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
-    std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t> &move_info) -> vector<int> {
+template <typename Gnl>
+auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
+                                                const MoveInfo<typename Gnl::node_t>& move_info)
+    -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};
     auto range1 = all(this->idx_vec);
-    range1([&](const auto &weighted_cell) {
+    range1([&](const auto& weighted_cell) {
         num[part[*weighted_cell]] += 1;
         return true;
     });
@@ -232,9 +236,9 @@ template <typename Gnl> auto FMBiGainCalc<Gnl>::update_move_general_net(
     // auto range3 = zip2(range1, range2);
 
     // #pragma unroll
-    for (const auto &target_part : {move_info.from_part, move_info.to_part}) {
+    for (const auto& target_part : {move_info.from_part, move_info.to_part}) {
         if (num[target_part] == 0) {
-            range2([&](const auto &delta_gain_cell) {
+            range2([&](const auto& delta_gain_cell) {
                 *delta_gain_cell -= gain;
                 return true;
             });

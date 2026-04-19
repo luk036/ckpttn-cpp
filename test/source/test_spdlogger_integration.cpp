@@ -1,10 +1,12 @@
-#include "test_common.hpp"
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
+
 #include <ckpttn/logger.hpp>
 #include <ckpttn/spdlog_example.hpp>
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+
+#include "test_common.hpp"
 
 TEST_CASE("Test spdlogger wrapper function") {
     std::cout << "\n=== Testing spdlogger wrapper function ===" << std::endl;
@@ -148,7 +150,8 @@ TEST_CASE("Test comprehensive spdlogger integration") {
             wrapper_lines++;
         }
         wrapper_file.close();
-        std::cout << "✓ ckpttn.log (wrapper) exists with " << wrapper_lines << " lines" << std::endl;
+        std::cout << "✓ ckpttn.log (wrapper) exists with " << wrapper_lines << " lines"
+                  << std::endl;
     }
 
     std::ifstream direct_file("integration_test.log");
@@ -158,7 +161,8 @@ TEST_CASE("Test comprehensive spdlogger integration") {
             direct_lines++;
         }
         direct_file.close();
-        std::cout << "✓ integration_test.log (direct) exists with " << direct_lines << " lines" << std::endl;
+        std::cout << "✓ integration_test.log (direct) exists with " << direct_lines << " lines"
+                  << std::endl;
     }
 
     // Summary
