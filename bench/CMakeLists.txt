@@ -39,7 +39,7 @@ endforeach()
 
 # enable compiler warnings
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  target_compile_options(CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror)
+  target_compile_options(CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-literal-operator)
 elseif(MSVC)
   target_compile_options(CkPttn PUBLIC /W4 /WX /wd4996)
   # target_compile_definitions(CkPttnTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
