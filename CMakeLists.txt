@@ -39,15 +39,8 @@ include(cmake/tools.cmake)
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
-# CPMAddPackage(
-#     NAME spdlog
-#     GITHUB_REPOSITORY "gabime/spdlog"
-#     VERSION "1.15.0"
-#     OPTIONS
-#         "SPDLOG_FMT_EXTERNAL OFF"
-#         "SPDLOG_BUILD_SHARED OFF"
-#         "SPDLOG_INSTALL ON"
-# )
+# CPMAddPackage( NAME spdlog GITHUB_REPOSITORY "gabime/spdlog" VERSION "1.15.0" OPTIONS
+# "SPDLOG_FMT_EXTERNAL OFF" "SPDLOG_BUILD_SHARED OFF" "SPDLOG_INSTALL ON" )
 
 include(specific.cmake)
 
