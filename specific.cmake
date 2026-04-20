@@ -8,9 +8,9 @@ find_package(Threads REQUIRED)
 # Add spdlog for logging functionality - use bundled fmt to avoid compatibility issues
 CPMAddPackage(
   NAME spdlog
-  GIT_TAG v1.15.0
+  GIT_TAG v1.12.0
   GITHUB_REPOSITORY gabime/spdlog
-  OPTIONS "SPDLOG_INSTALL YES"
+  OPTIONS "SPDLOG_INSTALL YES" # create an installable target
 )
 
 # cpmaddpackage("gh:ericniebler/range-v3#0.10.0") CPMAddPackage("gh:microsoft/GSL@4.0.0")
