@@ -175,7 +175,7 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
     auto range1 = all(this->hyprgraph.gr[net]);
     auto range = filter([&module](const auto& cell) { return cell != module; }, range1);
     range([&](const auto& weighted_cell) {
-        this->idx_vec.push_back(*weighted_cell);
+        this->idx_vec.emplace_back(*weighted_cell);
         return true;
     });
 }

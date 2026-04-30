@@ -1,11 +1,9 @@
 #pragma once
 
 #include <cstdint>
-#include <fstream>
+#include <iosfwd>
 #include <netlistx/netlist.hpp>
-#include <ostream>
 #include <string>
-#include <string_view>
 #include <vector>
 #include <xnetwork/classes/graph.hpp>
 

@@ -26,7 +26,7 @@ TEST_CASE("Stress Test MLBiPartMgr ibm18") {
 
     double average_cost = static_cast<double>(total_cost_sum) / num_iterations;
     std::cout << "Average cost over " << num_iterations << " iterations: " << average_cost
-              << std::endl;
+              << '\n';
 
     CHECK(average_cost > 0);
 }

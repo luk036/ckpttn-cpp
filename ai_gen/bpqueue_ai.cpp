@@ -11,7 +11,7 @@ class BPQueue {
         _high = b - _offset;
         _bucket = std::vector<Dllist<std::vector<int>>>(
             this->_high + 1, Dllist<std::vector<int>>({std::vector<int>{i, 4848}}));
-        _bucket[0].push_back(sentinel);
+        _bucket[0].emplace_back(sentinel);
     }
     void clear() {
         while (_max > 0) {
@@ -25,7 +25,7 @@ class BPQueue {
         if (_max < it[0]) {
             _max = it[0];
         }
-        _bucket[it[0]].push_back(it);
+        _bucket[it[0]].emplace_back(it);
     }
     class BPQueueIterator {
       private:

@@ -296,7 +296,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gn
     auto rng1 = all(this->hyprgraph.gr[net]);
     auto rng = filter([&v](const auto& w) { return w != v; }, rng1);
     rng([&](const auto& wc) {
-        this->idx_vec.push_back(*wc);
+        this->idx_vec.emplace_back(*wc);
         return true;
     });
 }

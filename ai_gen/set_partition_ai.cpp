@@ -14,7 +14,7 @@ int stirling2nd(int n, int k) {
 
 void Move(int x, int y) {
     cnt += 1;
-    std::cout << x << " " << y << std::endl;
+    std::cout << x << " " << y << '\n';
 }
 
 void GEN1_even(int n, int k);
@@ -88,9 +88,9 @@ int main() {
         for (int j = 1; j < k; j++) {
             std::cout << b[j] << " ";
         }
-        std::cout << "]: Move " << i << " from block " << old << " to " << b[i] << std::endl;
+        std::cout << "]: Move " << i << " from block " << old << " to " << b[i] << '\n';
     }
     assert(stirling2nd(n, k) == cnt);
-    std::cout << "Done." << std::endl;
+    std::cout << "Done.\n";
     return 0;
 }

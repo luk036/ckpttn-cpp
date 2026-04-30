@@ -46,8 +46,8 @@ int main() {
         value = key * key;
     }
     for (auto& [key, value] : a) {
-        std::cout << key << ": " << value << std::endl;
+        std::cout << key << ": " << value << '\n';
     }
-    std::cout << a.__contains__(3) << std::endl;
+    std::cout << a.__contains__(3) << '\n';
     return 0;
 }

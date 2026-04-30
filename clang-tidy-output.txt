@@ -366,7 +366,7 @@ note: this fix will not be applied because it overlaps with another fix
       |                        ^
       |                              -> int
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/MLPartMgr.cpp:70:59: error: do not use 'std::endl' with streams; use '\n' instead [performance-avoid-endl,-warnings-as-errors]
-   70 |             std::cerr << "Out of Memory: " << e.what() << std::endl;
+   70 |             std::cerr << "Out of Memory: " << e.what() << '\n';
       |                                                           ^~~~~~~~~
       |                                                           '\n'
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/PartMgrBase.cpp:42:22: error: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
@@ -605,11 +605,11 @@ note: this fix will not be applied because it overlaps with another fix
    24 |     auto result = options.parse(argc, argv);
       |                   ^
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/standalone/source/main.cpp:27:40: error: do not use 'std::endl' with streams; use '\n' instead [performance-avoid-endl,-warnings-as-errors]
-   27 |         std::cout << options.help() << std::endl;
+   27 |         std::cout << options.help() << '\n';
       |                                        ^~~~~~~~~
       |                                        '\n'
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/standalone/source/main.cpp:32:62: error: do not use 'std::endl' with streams; use '\n' instead [performance-avoid-endl,-warnings-as-errors]
-   32 |         std::cout << "CkPttn, version " << CKPTTN_VERSION << std::endl;
+   32 |         std::cout << "CkPttn, version " << CKPTTN_VERSION << '\n';
       |                                                              ^~~~~~~~~
       |                                                              '\n'
 Suppressed 799096 warnings (799045 in non-user code, 51 NOLINT).

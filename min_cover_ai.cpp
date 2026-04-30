@@ -248,12 +248,12 @@ std::tuple<std::vector<Node>, std::vector<Node>, std::vector<Node>> setup(
 
     for (Node net : hyprgraph.nets) {
         if (s1.count(net)) {
-            clusters.push_back(net);
+            clusters.emplace_back(net);
             for (Node v : hyprgraph.ugraph.neighbors(net)) {
                 covered.insert(v);
             }
         } else {
-            nets.push_back(net);
+            nets.emplace_back(net);
         }
     }
 
@@ -341,10 +341,10 @@ std::pair<std::unordered_map<Node, size_t>, std::vector<Node>> purge_duplicate_n
         }
     }
 
-    std::cout << "removed " << removelist.size() << " nets" << std::endl;
+    std::cout << "removed " << removelist.size() << " nets\n";
     std::vector<Node> gr_nets;
     for (size_t i = num_modules; i < num_modules + nets.size(); ++i) {
-        gr_nets.push_back(i);
+        gr_nets.emplace_back(i);
     }
 
     std::vector<Node> updated_nets;
@@ -422,7 +422,7 @@ std::pair<HierNetlist, std::vector<size_t>> contract_subgraph(
 
     std::vector<Node> node_down_list = cell_list;
     for (Node net : clusters) {
-        node_down_list.push_back(*hyprgraph.ugraph.neighbors(net).begin());
+        node_down_list.emplace_back(*hyprgraph.ugraph.neighbors(net).begin());
     }
 
     hgr2.clusters = clusters;

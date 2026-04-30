@@ -77,14 +77,14 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
             if (S.contains(net)) {
                 // auto net_cur = hyprgraph.gr[net].begin();
                 // auto master = *net_cur;
-                clusters.push_back(net);
+                clusters.emplace_back(net);
                 for (const auto& v : hyprgraph.gr[net]) {
                     module_up_map[v] = net;
                     C.insert(v);
                 }
                 // cluster_map[master] = net;
             } else {
-                nets.push_back(net);
+                nets.emplace_back(net);
             }
         }
         modules.reserve(hyprgraph.modules.size() - C.size() + clusters.size());
@@ -92,7 +92,7 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
             if (C.contains(v)) {
                 continue;
             }
-            modules.push_back(v);
+            modules.emplace_back(v);
         }
         modules.insert(modules.end(), clusters.begin(), clusters.end());
     }
@@ -178,10 +178,10 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
     for (const auto& i_v : py::range(numModules)) {
         if (cluster_down_map.contains(i_v)) {
             const auto net = cluster_down_map[i_v];
-            module_weight.push_back(weight_dict[net]);
+            module_weight.emplace_back(weight_dict[net]);
         } else {
             const auto v2 = node_down_map[i_v];
-            module_weight.push_back(hyprgraph.get_module_weight(v2));
+            module_weight.emplace_back(hyprgraph.get_module_weight(v2));
         }
     }
 

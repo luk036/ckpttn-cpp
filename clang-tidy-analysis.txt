@@ -315,7 +315,7 @@
       |                        ^
       |                              -> int
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/MLPartMgr.cpp:70:59: warning: do not use 'std::endl' with streams; use '\n' instead [performance-avoid-endl]
-   70 |             std::cerr << "Out of Memory: " << e.what() << std::endl;
+   70 |             std::cerr << "Out of Memory: " << e.what() << '\n';
       |                                                           ^~~~~~~~~
       |                                                           '\n'
 45877 warnings generated.

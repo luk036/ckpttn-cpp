@@ -104,19 +104,19 @@ Tuple setup(Hypergraph& hyprgraph, MutableMapping& cluster_weight, Set& forbid) 
     vector<int> clusters;
     for (int net : hyprgraph.nets) {
         if (s1.count(net) > 0) {
-            clusters.push_back(net);
+            clusters.emplace_back(net);
             for (int v : hyprgraph.gra[net]) {
                 covered.insert(v);
             }
         } else {
-            nets.push_back(net);
+            nets.emplace_back(net);
         }
     }
 
     vector<int> cell_list;
     for (int v : hyprgraph.gra) {
         if (covered.count(v) == 0) {
-            cell_list.push_back(v);
+            cell_list.emplace_back(v);
         }
     }
 
@@ -145,7 +145,7 @@ unordered_map<int, vector<int>> construct_graph(Hypergraph& hyprgraph, vector<in
     for (int i_net = 0; i_net < nets.size(); i_net++) {
         int net = nets[i_net];
         for (int v : hyprgraph.gra[net]) {
-            gra[node_up_map[v]].push_back(i_net + num_modules);
+            gra[node_up_map[v]].emplace_back(i_net + num_modules);
         }
     }
 
@@ -193,7 +193,7 @@ Tuple purge_duplicate_nets(Hypergraph& hyprgraph, unordered_map<int, vector<int>
     vector<int> updated_nets;
     for (int net : nets) {
         if (removelist.count(net) == 0) {
-            updated_nets.push_back(net);
+            updated_nets.emplace_back(net);
         }
     }
 
@@ -211,7 +211,7 @@ Tuple reconstruct_graph(Hypergraph& hyprgraph, unordered_map<int, vector<int>>& 
     for (int i_net = 0; i_net < updated_nets.size(); i_net++) {
         int net = updated_nets[i_net];
         for (int v : gra[net]) {
-            gr2[v].push_back(num_modules + i_net);
+            gr2[v].emplace_back(num_modules + i_net);
         }
     }
 

@@ -137,7 +137,7 @@ auto main(int argc, char** argv) -> int {
     auto result = options.parse(argc, argv);
 
     if (result["help"].as<bool>()) {
-        std::cout << options.help() << std::endl;
+        std::cout << options.help() << '\n';
         std::cout << R"(
 Usage:
   ckpttn <hypergraph_file> [k] [epsilon]
@@ -154,7 +154,7 @@ Compatible with hMetis and KaHyPar CLI.
     }
 
     if (result["version"].as<bool>()) {
-        std::cout << "ckpttn " << CKPTTN_VERSION << std::endl;
+        std::cout << "ckpttn " << CKPTTN_VERSION << '\n';
         return 0;
     }
 
@@ -224,22 +224,22 @@ Compatible with hMetis and KaHyPar CLI.
     config.balance_tolerance = epsilon;
 
     if (verbose) {
-        std::cerr << "Reading hypergraph from " << hypergraph_file << "..." << std::endl;
+        std::cerr << "Reading hypergraph from " << hypergraph_file << "...\n";
     }
 
     auto hyprgraph = read_hypergraph(hypergraph_file, input_format);
 
     if (verbose) {
         std::cerr << "Hypergraph: " << hyprgraph.number_of_modules() << " vertices, "
-                  << hyprgraph.number_of_nets() << " nets" << std::endl;
-        std::cerr << "K=" << k << ", epsilon=" << epsilon << ", preset=" << preset_str << std::endl;
+                  << hyprgraph.number_of_nets() << " nets\n";
+        std::cerr << "K=" << k << ", epsilon=" << epsilon << ", preset=" << preset_str << '\n';
     }
 
     auto num_modules = hyprgraph.number_of_modules();
     auto part = std::vector<std::uint8_t>(num_modules, 0);
 
     if (verbose) {
-        std::cerr << "Running partitioning (preset: " << preset_str << ")..." << std::endl;
+        std::cerr << "Running partitioning (preset: " << preset_str << ")...\n";
     }
 
     int total_cost = 0;
@@ -251,8 +251,8 @@ Compatible with hMetis and KaHyPar CLI.
     }
 
     if (verbose) {
-        std::cerr << "Partitioning cost: " << total_cost << std::endl;
-        std::cerr << "Partition written to stdout" << std::endl;
+        std::cerr << "Partitioning cost: " << total_cost << '\n';
+        std::cerr << "Partition written to stdout\n";
     }
 
     if (output_file.empty()) {
