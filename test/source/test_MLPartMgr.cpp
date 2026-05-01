@@ -38,11 +38,11 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
-    CHECK(legal_check == LegalCheck::AllSatisfied);
+    CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
     CHECK(constr_mgr.final_check(part));
-    CHECK(part_mgr.total_cost == 2U);
+    CHECK_EQ(part_mgr.total_cost, 2U);
 }
 
 TEST_CASE("Test MLKWayPartMgr dwarf") {
@@ -55,11 +55,11 @@ TEST_CASE("Test MLKWayPartMgr dwarf") {
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
-    CHECK(legal_check == LegalCheck::AllSatisfied);
+    CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMKWayConstrMgr<SimpleNetlist>(hyprgraph, bal_tol, num_parts);
     CHECK(constr_mgr.final_check(part));
-    CHECK(part_mgr.total_cost == 4U);
+    CHECK_EQ(part_mgr.total_cost, 4U);
 }
 
 TEST_CASE("Test MLBiPartMgr p1") {
@@ -80,7 +80,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
             SimpleNetlist,
             FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
             hyprgraph, part);
-        CHECK(legal_check == LegalCheck::AllSatisfied);
+        CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
         auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
         CHECK(constr_mgr.final_check(part));
@@ -114,7 +114,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
             SimpleNetlist,
             FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
             hyprgraph, part);
-        CHECK(legal_check == LegalCheck::AllSatisfied);
+        CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
         auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
         CHECK(constr_mgr.final_check(part));
@@ -142,7 +142,7 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
-    CHECK(legal_check == LegalCheck::AllSatisfied);
+    CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
     CHECK(constr_mgr.final_check(part));
@@ -166,7 +166,7 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
-    CHECK(legal_check == LegalCheck::AllSatisfied);
+    CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
     CHECK(constr_mgr.final_check(part));

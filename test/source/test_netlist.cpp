@@ -92,11 +92,11 @@ auto create_test_netlist() -> SimpleNetlist {
 TEST_CASE("Test Netlist") {
     const auto hyprgraph = create_test_netlist();
 
-    CHECK(hyprgraph.number_of_modules() == 3);
-    CHECK(hyprgraph.number_of_nets() == 3);
-    // CHECK(hyprgraph.number_of_pins() == 6);
-    CHECK(hyprgraph.get_max_degree() == 3);
-    CHECK(hyprgraph.get_max_net_degree() == 3);
+    CHECK_EQ(hyprgraph.number_of_modules(), 3);
+    CHECK_EQ(hyprgraph.number_of_nets(), 3);
+    // CHECK_EQ(hyprgraph.number_of_pins(), 6);
+    CHECK_EQ(hyprgraph.get_max_degree(), 3);
+    CHECK_EQ(hyprgraph.get_max_net_degree(), 3);
     CHECK(!hyprgraph.has_fixed_modules);
 }
 
@@ -104,11 +104,11 @@ TEST_CASE("Test dwarf") {
     // static_assert(sizeof(double*) == 8);
     const auto hyprgraph = create_dwarf();
 
-    CHECK(hyprgraph.number_of_modules() == 7);
-    CHECK(hyprgraph.number_of_nets() == 6);
-    // CHECK(hyprgraph.number_of_pins() == 14);
-    CHECK(hyprgraph.get_max_degree() == 3);
-    CHECK(hyprgraph.get_max_net_degree() == 3);
+    CHECK_EQ(hyprgraph.number_of_modules(), 7);
+    CHECK_EQ(hyprgraph.number_of_nets(), 6);
+    // CHECK_EQ(hyprgraph.number_of_pins(), 14);
+    CHECK_EQ(hyprgraph.get_max_degree(), 3);
+    CHECK_EQ(hyprgraph.get_max_net_degree(), 3);
     CHECK(!hyprgraph.has_fixed_modules);
-    CHECK(hyprgraph.get_module_weight(1) == 3U);
+    CHECK_EQ(hyprgraph.get_module_weight(1), 3U);
 }

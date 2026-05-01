@@ -37,7 +37,7 @@ template <typename Graph> static void do_case(const Graph& gra) {
         return true;
     });
 
-    CHECK(gra.number_of_nodes() == count);
+    CHECK_EQ(gra.number_of_nodes(), count);
 
     auto deg = 0U;
     typename Graph::Node node{std::string{"B"}};

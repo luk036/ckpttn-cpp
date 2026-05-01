@@ -22,20 +22,20 @@ template <typename Graph> static void do_case(const Graph& gra) {
         return true;
     });
 
-    CHECK(gra.number_of_nodes() == count);
+    CHECK_EQ(gra.number_of_nodes(), count);
 
     // auto count2 = 0U;
     // for ([[maybe_unused]] auto _ : gra.edges())
     // {
     //     ++count2;
     // }
-    // CHECK(gra.number_of_edges() == count2);
+    // CHECK_EQ(gra.number_of_edges(), count2);
 
     // auto deg = 0U;
     // for ([[maybe_unused]] auto _ : gra[1U]) {
     //     ++deg;
     // }
-    // CHECK(gra.degree(1U) == deg);
+    // CHECK_EQ(gra.degree(1U), deg);
 
     auto deg = 0U;
     auto rng2 = all(gra[1U]);

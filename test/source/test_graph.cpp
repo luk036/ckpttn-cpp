@@ -27,7 +27,7 @@ TEST_CASE("Test xnetwork") {
         ++count;
     }
 
-    CHECK(gr.number_of_nodes() == count);
+    CHECK_EQ(gr.number_of_nodes(), count);
 
     auto deg = 0;
     for (auto _v : gr[a1]) {
@@ -35,5 +35,5 @@ TEST_CASE("Test xnetwork") {
         ++deg;
     }
 
-    CHECK(gr.degree(a1) == deg);
+    CHECK_EQ(gr.degree(a1), deg);
 }

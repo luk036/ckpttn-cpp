@@ -20,7 +20,7 @@ template <typename GainMgr, typename ConstrMgr> void run_PartMgr(const SimpleNet
     FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr> part_mgr{hyprgraph, gain_mgr, constr_mgr};
     std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     auto legal_check = part_mgr.legalize(part);
-    CHECK(legal_check == LegalCheck::AllSatisfied);
+    CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
     CHECK(totalcostbefore >= 0);
@@ -28,7 +28,7 @@ template <typename GainMgr, typename ConstrMgr> void run_PartMgr(const SimpleNet
     CHECK(part_mgr.total_cost >= 0);
     totalcostbefore = part_mgr.total_cost;
     part_mgr.init(part);
-    CHECK(part_mgr.total_cost == totalcostbefore);
+    CHECK_EQ(part_mgr.total_cost, totalcostbefore);
 }
 
 template <typename GainMgr, typename ConstrMgr>
@@ -40,7 +40,7 @@ void run_PartMgr(const SimpleNetlist& hyprgraph, uint8_t num_parts) {
     std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
 
     auto legal_check = part_mgr.legalize(part);
-    CHECK(legal_check == LegalCheck::AllSatisfied);
+    CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
     CHECK(totalcostbefore >= 0);
@@ -48,5 +48,5 @@ void run_PartMgr(const SimpleNetlist& hyprgraph, uint8_t num_parts) {
     CHECK(part_mgr.total_cost >= 0);
     totalcostbefore = part_mgr.total_cost;
     part_mgr.init(part);
-    CHECK(part_mgr.total_cost == totalcostbefore);
+    CHECK_EQ(part_mgr.total_cost, totalcostbefore);
 }

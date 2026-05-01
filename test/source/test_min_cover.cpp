@@ -28,14 +28,14 @@ extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
 // TEST_CASE("Test min_net_cover_pd dwarf", "[test_min_cover]") {
 //     auto hyprgraph = create_dwarf();
 //     auto [S, cost] = min_net_cover_pd(hyprgraph, hyprgraph.module_weight);
-//     CHECK(cost == 3);
+//     CHECK_EQ(cost, 3);
 // }
 
 // TEST_CASE("Test min_net_cover_pd ibm01", "[test_min_cover]") {
 //     auto hyprgraph = readNetD("../../testcases/ibm01.net");
 //     readAre(hyprgraph, "../../testcases/ibm01.are");
 //     auto [S, cost] = min_net_cover_pd(hyprgraph, hyprgraph.net_weight);
-//     CHECK(cost == 4053);
+//     CHECK_EQ(cost, 4053);
 // }
 
 TEST_CASE("Test contraction subgraph dwarf") {
@@ -43,7 +43,7 @@ TEST_CASE("Test contraction subgraph dwarf") {
     const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
     // auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t> {});
     CHECK(hgr2->number_of_modules() < 7);
-    CHECK(hgr2->number_of_nets() == 3);
+    CHECK_EQ(hgr2->number_of_nets(), 3);
     // CHECK(hgr2->number_of_pins() < 14);
     CHECK(hgr2->get_max_net_degree() <= 3);
 
@@ -54,7 +54,7 @@ TEST_CASE("Test contraction subgraph dwarf") {
     part2[1] = 2;
     hgr2->projection_down(part2, part);
     hgr2->projection_up(part, part3);
-    CHECK(part2 == part3);
+    CHECK_EQ(part2, part3);
 }
 
 TEST_CASE("Test contraction subgraph ibm01") {
@@ -77,7 +77,7 @@ TEST_CASE("Test contraction subgraph ibm01") {
     }
     H3->projection_down(part3, part2);
     H3->projection_up(part2, part4);
-    CHECK(part3 == part4);
+    CHECK_EQ(part3, part4);
 }
 
 TEST_CASE("Test contraction subgraph ibm18") {
@@ -98,5 +98,5 @@ TEST_CASE("Test contraction subgraph ibm18") {
     }
     H3->projection_down(part3, part2);
     H3->projection_up(part2, part4);
-    CHECK(part3 == part4);
+    CHECK_EQ(part3, part4);
 }

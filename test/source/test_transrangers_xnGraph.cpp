@@ -29,7 +29,7 @@ template <typename Graph> static void do_case(const Graph& gra) {
         ++count;
         return true;
     });
-    CHECK(gra.number_of_nodes() == count);
+    CHECK_EQ(gra.number_of_nodes(), count);
 
     auto deg = 0U;
     auto rng2 = all(gra[1U]);
@@ -37,7 +37,7 @@ template <typename Graph> static void do_case(const Graph& gra) {
         ++deg;
         return true;
     });
-    CHECK(gra.degree(1U) == deg);
+    CHECK_EQ(gra.degree(1U), deg);
 }
 
 /**
