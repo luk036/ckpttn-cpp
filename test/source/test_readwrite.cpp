@@ -15,8 +15,8 @@ TEST_CASE("detect_input_format") {
 
 TEST_CASE("read_netD_format") {
     auto hyprgraph = readNetD("../../testcases/p1.net");
-    CHECK(hyprgraph.number_of_modules() > 0);
-    CHECK(hyprgraph.number_of_nets() > 0);
+    CHECK_GT(hyprgraph.number_of_modules(), 0);
+    CHECK_GT(hyprgraph.number_of_nets(), 0);
 }
 
 // TEST_CASE("read_hmetis_format") {
@@ -53,10 +53,10 @@ TEST_CASE("write_partition") {
 
 TEST_CASE("read_hypergraph netD") {
     auto hyprgraph = readNetD("../../testcases/p1.net");
-    CHECK(hyprgraph.number_of_modules() > 0);
+    CHECK_GT(hyprgraph.number_of_modules(), 0);
 }
 
 TEST_CASE("read_hypergraph auto") {
     auto hyprgraph = readNetD("../../testcases/p1.net");
-    CHECK(hyprgraph.number_of_modules() > 0);
+    CHECK_GT(hyprgraph.number_of_modules(), 0);
 }

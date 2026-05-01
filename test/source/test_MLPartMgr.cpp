@@ -89,10 +89,10 @@ TEST_CASE("Test MLBiPartMgr p1") {
             mincost = part_mgr.total_cost;
         }
     }
-    // CHECK(part_mgr.total_cost >= 50);
-    // CHECK(part_mgr.total_cost <= 50);
-    CHECK(mincost >= 29U);
-    CHECK(mincost <= 73U);
+    // CHECK_GE(part_mgr.total_cost, 50);
+    // CHECK_LE(part_mgr.total_cost, 50);
+    CHECK_GE(mincost, 29U);
+    CHECK_LE(mincost, 73U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm01") {
@@ -123,10 +123,10 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
             mincost = part_mgr.total_cost;
         }
     }
-    // CHECK(part_mgr.total_cost >= 650);
-    // CHECK(part_mgr.total_cost <= 650);
-    CHECK(mincost >= 221U);
-    CHECK(mincost <= 695U);
+    // CHECK_GE(part_mgr.total_cost, 650);
+    // CHECK_LE(part_mgr.total_cost, 650);
+    CHECK_GE(mincost, 221U);
+    CHECK_LE(mincost, 695U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm03") {
@@ -149,8 +149,8 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
 
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
-    CHECK(part_mgr.total_cost >= 1104U);
-    CHECK(part_mgr.total_cost <= 2041U);
+    CHECK_GE(part_mgr.total_cost, 1104U);
+    CHECK_LE(part_mgr.total_cost, 2041U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm18") {
@@ -173,8 +173,8 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
 
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << endl;
-    CHECK(part_mgr.total_cost >= 1104U);
-    CHECK(part_mgr.total_cost <= 5112U);
+    CHECK_GE(part_mgr.total_cost, 1104U);
+    CHECK_LE(part_mgr.total_cost, 5112U);
 }
 
 /*

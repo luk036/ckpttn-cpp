@@ -35,9 +35,9 @@ void run_FMBiPartMgr(const SimpleNetlist& hyprgraph, bool option) {
     part_mgr.legalize(part);
     // auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
-    // CHECK(totalcostbefore >= 0);
-    // CHECK(part_mgr.total_cost <= totalcostbefore);
-    // CHECK(part_mgr.total_cost >= 0);
+    // CHECK_GE(totalcostbefore, 0);
+    // CHECK_LE(part_mgr.total_cost, totalcostbefore);
+    // CHECK_GE(part_mgr.total_cost, 0);
 }
 
 /**

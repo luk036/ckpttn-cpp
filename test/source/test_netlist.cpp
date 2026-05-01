@@ -97,7 +97,7 @@ TEST_CASE("Test Netlist") {
     // CHECK_EQ(hyprgraph.number_of_pins(), 6);
     CHECK_EQ(hyprgraph.get_max_degree(), 3);
     CHECK_EQ(hyprgraph.get_max_net_degree(), 3);
-    CHECK(!hyprgraph.has_fixed_modules);
+    CHECK_FALSE(hyprgraph.has_fixed_modules);
 }
 
 TEST_CASE("Test dwarf") {
@@ -109,6 +109,6 @@ TEST_CASE("Test dwarf") {
     // CHECK_EQ(hyprgraph.number_of_pins(), 14);
     CHECK_EQ(hyprgraph.get_max_degree(), 3);
     CHECK_EQ(hyprgraph.get_max_net_degree(), 3);
-    CHECK(!hyprgraph.has_fixed_modules);
+    CHECK_FALSE(hyprgraph.has_fixed_modules);
     CHECK_EQ(hyprgraph.get_module_weight(1), 3U);
 }

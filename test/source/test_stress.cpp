@@ -28,5 +28,5 @@ TEST_CASE("Stress Test MLBiPartMgr ibm18") {
     std::cout << "Average cost over " << num_iterations << " iterations: " << average_cost
               << '\n';
 
-    CHECK(average_cost > 0);
+    CHECK_GT(average_cost, 0);
 }

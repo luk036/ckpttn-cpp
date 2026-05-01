@@ -38,9 +38,9 @@ void run_FMKWayPartMgr(SimpleNetlist& hyprgraph, std::uint8_t num_parts, bool op
     part_mgr.legalize(part);
     // auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
-    // CHECK(totalcostbefore >= 0);
-    // CHECK(part_mgr.total_cost <= totalcostbefore);
-    // CHECK(part_mgr.total_cost >= 0);
+    // CHECK_GE(totalcostbefore, 0);
+    // CHECK_LE(part_mgr.total_cost, totalcostbefore);
+    // CHECK_GE(part_mgr.total_cost, 0);
 }
 
 /**

@@ -23,9 +23,9 @@ template <typename GainMgr, typename ConstrMgr> void run_PartMgr(const SimpleNet
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
-    CHECK(totalcostbefore >= 0);
-    CHECK(part_mgr.total_cost <= totalcostbefore);
-    CHECK(part_mgr.total_cost >= 0);
+    CHECK_GE(totalcostbefore, 0);
+    CHECK_LE(part_mgr.total_cost, totalcostbefore);
+    CHECK_GE(part_mgr.total_cost, 0);
     totalcostbefore = part_mgr.total_cost;
     part_mgr.init(part);
     CHECK_EQ(part_mgr.total_cost, totalcostbefore);
@@ -43,9 +43,9 @@ void run_PartMgr(const SimpleNetlist& hyprgraph, uint8_t num_parts) {
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
     auto totalcostbefore = part_mgr.total_cost;
     part_mgr.optimize(part);
-    CHECK(totalcostbefore >= 0);
-    CHECK(part_mgr.total_cost <= totalcostbefore);
-    CHECK(part_mgr.total_cost >= 0);
+    CHECK_GE(totalcostbefore, 0);
+    CHECK_LE(part_mgr.total_cost, totalcostbefore);
+    CHECK_GE(part_mgr.total_cost, 0);
     totalcostbefore = part_mgr.total_cost;
     part_mgr.init(part);
     CHECK_EQ(part_mgr.total_cost, totalcostbefore);

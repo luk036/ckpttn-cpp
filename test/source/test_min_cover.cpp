@@ -42,10 +42,10 @@ TEST_CASE("Test contraction subgraph dwarf") {
     const auto hyprgraph = create_dwarf();
     const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
     // auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t> {});
-    CHECK(hgr2->number_of_modules() < 7);
+    CHECK_LT(hgr2->number_of_modules(), 7);
     CHECK_EQ(hgr2->number_of_nets(), 3);
-    // CHECK(hgr2->number_of_pins() < 14);
-    CHECK(hgr2->get_max_net_degree() <= 3);
+    // CHECK_LT(hgr2->number_of_pins(), 14);
+    CHECK_LE(hgr2->get_max_net_degree(), 3);
 
     auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
     auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
@@ -62,10 +62,10 @@ TEST_CASE("Test contraction subgraph ibm01") {
     readAre(hyprgraph, "../../testcases/ibm01.are");
     auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
     auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t>{});
-    CHECK(hgr2->number_of_modules() < hyprgraph.number_of_modules());
-    CHECK(hgr2->number_of_nets() < hyprgraph.number_of_nets());
-    // CHECK(hgr2->number_of_pins() < hyprgraph.number_of_pins());
-    CHECK(hgr2->get_max_net_degree() <= hyprgraph.get_max_net_degree());
+    CHECK_LT(hgr2->number_of_modules(), hyprgraph.number_of_modules());
+    CHECK_LT(hgr2->number_of_nets(), hyprgraph.number_of_nets());
+    // CHECK_LT(hgr2->number_of_pins(), hyprgraph.number_of_pins());
+    CHECK_LE(hgr2->get_max_net_degree(), hyprgraph.get_max_net_degree());
 
     auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
     auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
@@ -85,10 +85,10 @@ TEST_CASE("Test contraction subgraph ibm18") {
     readAre(hyprgraph, "../../testcases/ibm18.are");
     auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
     auto H3 = create_contracted_subgraph(*hgr2, py::set<node_t>{});
-    CHECK(hgr2->number_of_modules() < hyprgraph.number_of_modules());
-    CHECK(hgr2->number_of_nets() < hyprgraph.number_of_nets());
-    // CHECK(hgr2->number_of_pins() < hyprgraph.number_of_pins());
-    CHECK(hgr2->get_max_net_degree() <= hyprgraph.get_max_net_degree());
+    CHECK_LT(hgr2->number_of_modules(), hyprgraph.number_of_modules());
+    CHECK_LT(hgr2->number_of_nets(), hyprgraph.number_of_nets());
+    // CHECK_LT(hgr2->number_of_pins(), hyprgraph.number_of_pins());
+    CHECK_LE(hgr2->get_max_net_degree(), hyprgraph.get_max_net_degree());
 
     auto part2 = vector<uint8_t>(hgr2->number_of_modules(), 0);
     auto part3 = vector<uint8_t>(H3->number_of_modules(), 0);
