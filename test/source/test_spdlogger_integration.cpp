@@ -150,8 +150,7 @@ TEST_CASE("Test comprehensive spdlogger integration") {
             wrapper_lines++;
         }
         wrapper_file.close();
-std::cout << "[OK] ckpttn.log (wrapper) exists with " << wrapper_lines << " lines"
-                  << '\n';
+        std::cout << "[OK] ckpttn.log (wrapper) exists with " << wrapper_lines << " lines" << '\n';
     }
 
     std::ifstream direct_file("integration_test.log");
@@ -161,12 +160,12 @@ std::cout << "[OK] ckpttn.log (wrapper) exists with " << wrapper_lines << " line
             direct_lines++;
         }
         direct_file.close();
-std::cout << "[OK] integration_test.log (direct) exists with " << direct_lines << " lines"
+        std::cout << "[OK] integration_test.log (direct) exists with " << direct_lines << " lines"
                   << '\n';
     }
 
     // Summary
-std::cout << "\n[Summary]\n";
+    std::cout << "\n[Summary]\n";
     std::cout << "========================================\n";
     std::cout << "[OK] Spdlogger integration test completed\n";
     std::cout << "[OK] Logger wrapper function works\n";
