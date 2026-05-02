@@ -58,9 +58,9 @@ template <typename graph_t> struct Netlist {
      * @brief Construct a new Netlist object
      *
      * Example:
-     * ```
+     * @verbatim
      * Netlist netlist(gr, modules, nets);
-     * ```
+     * @endverbatim
      *
      * @param[in] gr graph
      * @param[in] modules module nodes
