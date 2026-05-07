@@ -6,7 +6,7 @@
 #include <py2cpp/dict.hpp>             // for dict
 #include <py2cpp/set.hpp>              // for set
 #include <span>                        // for span
-#include <type_traits>                 // for move
+// #include <type_traits>                 // for move
 #include <vector>                      // for vector
 #include <xnetwork/classes/graph.hpp>  // for SimpleGraph, Graph, Graph<>::n...
 
