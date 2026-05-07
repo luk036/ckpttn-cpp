@@ -6,8 +6,8 @@
 #include <mywheel/dllist.hpp>   // for Dllink
 #include <span>                 // for span
 // #include <tuple>                // for tuple
-#include <utility>              // for pair
-#include <vector>               // for vector<>::const_iterator, vector
+#include <utility>  // for pair
+#include <vector>   // for vector<>::const_iterator, vector
 
 template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
