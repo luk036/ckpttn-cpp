@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cctype>  // for isspace, isdigit
 #include <ckpttn/readwrite.hpp>
 #include <cstdint>                     // for uint32_t
@@ -194,7 +195,7 @@ void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName) {
             are >> w;
         } else if (c == 'p') {
             are >> w;
-            w += node_t(padOffset);
+            w += static_cast<node_t>(padOffset);
         } else {
             cerr << "Syntax error in line " << lineno << ":"
                  << R"(expect keyword "a" or "p")" << '\n';
@@ -271,7 +272,7 @@ auto read_hmetis_format(const std::string& filename) -> SimpleNetlist {
             continue;
         }
         istringstream iss(line);
-        uint32_t v;
+        uint32_t v = 0;
         while (iss >> v) {
             if (v < num_modules) {
                 g.add_edge(v, num_modules + net_idx);
@@ -316,7 +317,8 @@ auto read_dimacs_format(const std::string& filename) -> SimpleNetlist {
 
         if (line[0] == 'p') {
             istringstream iss(line);
-            string p, hypre;
+            string p;
+            string hypre;
             iss >> p >> hypre >> num_vertices >> num_nets;
             continue;
         }
@@ -391,9 +393,7 @@ auto read_netD_format(const std::string& filename) -> SimpleNetlist {
     }
 
     e -= numModules - 1;
-    if (e < numNets) {
-        numNets = e;
-    }
+    numNets = std::min(e, numNets);
 
     auto hyprgraph = SimpleNetlist{g, numModules, numNets};
     hyprgraph.num_pads = numModules - padOffset - 1;

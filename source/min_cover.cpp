@@ -11,7 +11,7 @@
 #include <vector>                      // for vector<>::iterator, vector
 #include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
 
-using node_t = typename SimpleNetlist::node_t;
+using node_t = SimpleNetlist::node_t;
 // using namespace std;
 // using namespace transrangers;
 
@@ -101,13 +101,13 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
 
     // nodes.insert(nodes.end(), modules.begin(), modules.end());
     // nodes.insert(nodes.end(), nets.begin(), nets.end());
-    auto numModules = uint32_t(modules.size());
-    auto numNets = uint32_t(nets.size());
+    auto numModules = static_cast<uint32_t>(modules.size());
+    auto numNets = static_cast<uint32_t>(nets.size());
 
     {  // localize module_map and net_map
         auto module_map = py::dict<node_t, index_t>{};
         module_map.reserve(numModules);
-        auto i_v = index_t(0);
+        auto i_v = static_cast<index_t>(0);
         for (const auto& v : modules) {
             module_map[v] = i_v;
             ++i_v;
@@ -115,7 +115,7 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
 
         // auto net_map = py::dict<node_t, index_t> {};
         net_up_map.reserve(numNets);
-        auto i_net = index_t(0);
+        auto i_net = static_cast<index_t>(0);
         for (const auto& net : nets) {
             net_up_map[net] = i_net + numModules;
             ++i_net;

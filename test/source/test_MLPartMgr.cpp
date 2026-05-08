@@ -1,5 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, TestCase, CHECK
 
+#include <algorithm>
 #include <chrono>  // for duration, operator-, steady_clock
 #include <ckpttn/FMBiConstrMgr.hpp>
 #include <ckpttn/FMConstrMgr.hpp>
@@ -71,7 +72,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
     auto mincost = 1000;
     for (auto idx = 0; idx != 10; ++idx) {
         auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
-        auto whichPart = uint8_t(0);
+        auto whichPart = static_cast<uint8_t>(0);
         for (auto& elem : part) {
             whichPart ^= 1;
             elem = whichPart;
@@ -85,9 +86,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
         auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
         CHECK(constr_mgr.final_check(part));
 
-        if (mincost > part_mgr.total_cost) {
-            mincost = part_mgr.total_cost;
-        }
+        mincost = std::min(mincost, part_mgr.total_cost);
     }
     // CHECK_GE(part_mgr.total_cost, 50);
     // CHECK_LE(part_mgr.total_cost, 50);
@@ -105,7 +104,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     auto mincost = 1000;
     for (auto idx = 0; idx != 10; ++idx) {
         auto part = vector<uint8_t>(hyprgraph.number_of_modules(), 0);
-        auto whichPart = uint8_t(0);
+        auto whichPart = static_cast<uint8_t>(0);
         for (auto& elem : part) {
             whichPart ^= 1;
             elem = whichPart;
@@ -119,9 +118,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
         auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
         CHECK(constr_mgr.final_check(part));
 
-        if (mincost > part_mgr.total_cost) {
-            mincost = part_mgr.total_cost;
-        }
+        mincost = std::min(mincost, part_mgr.total_cost);
     }
     // CHECK_GE(part_mgr.total_cost, 650);
     // CHECK_LE(part_mgr.total_cost, 650);

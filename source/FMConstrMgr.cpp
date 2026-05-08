@@ -7,7 +7,7 @@
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV
 #include <cmath>                   // for round
 #include <span>                    // for span
-#include <transrangers.hpp>
+// #include <transrangers.hpp>
 #include <vector>  // for vector<>::iterator, vector
 
 using namespace std;
@@ -16,15 +16,10 @@ using namespace std;
 given parameters `hyprgraph`, `bal_tol`, and `num_parts`. */
 template <typename Gnl>
 FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& hyprgraph, double bal_tol, uint8_t num_parts)
-    : hyprgraph{hyprgraph}, bal_tol{bal_tol}, diff(num_parts, 0), num_parts{num_parts} {
-    using namespace transrangers;
-    this->total_weight = accumulate(
-        transform([&](const auto& v) { return hyprgraph.get_module_weight(v); }, all(hyprgraph)),
-        0U);
-    // this->total_weight = 0U;
-    // for (const auto &v : hyprgraph) {
-    //   this->total_weight += hyprgraph.get_module_weight(v);
-    // }
+    : hyprgraph{hyprgraph}, bal_tol{bal_tol}, diff(num_parts, 0), num_parts{num_parts} {    
+    for (const auto &v : hyprgraph) {
+      this->total_weight += hyprgraph.get_module_weight(v);
+    }
     const auto totalweightK = this->total_weight * (2.0 / this->num_parts);
     this->lowerbound = uint32_t(round(totalweightK * this->bal_tol));
 }

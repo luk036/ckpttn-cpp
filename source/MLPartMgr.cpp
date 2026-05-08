@@ -12,7 +12,7 @@
 
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
 
-using node_t = typename SimpleNetlist::node_t;
+using node_t = SimpleNetlist::node_t;
 extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
@@ -28,8 +28,8 @@ extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
  */
 template <typename Gnl, typename PartMgr>
 auto MLPartMgr::run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {
-    using GainMgr = typename PartMgr::GainMgr_;
-    using ConstrMgr = typename PartMgr::ConstrMgr_;
+    using GainMgr = PartMgr::GainMgr_;
+    using ConstrMgr = PartMgr::ConstrMgr_;
 
     auto legalcheck_fn = [&]() {
         GainMgr gain_mgr(hyprgraph, this->num_parts);
