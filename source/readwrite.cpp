@@ -24,7 +24,7 @@ using namespace std;
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
 void writeJSON(std::string_view jsonFileName, const SimpleNetlist& hyprgraph) {
-    auto json = ofstream{jsonFileName.data()};
+    auto json = ofstream{std::string(jsonFileName).c_str()};
     if (json.fail()) {
         cerr << "Error: Can't open file " << jsonFileName << ".\n";
         exit(1);
@@ -159,9 +159,9 @@ auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
 
 // Read the IBM .are format
 void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName) {
-    auto are = ifstream{areFileName.data()};
+    auto are = ifstream{std::string(areFileName)};
     if (are.fail()) {
-        cerr << " Could not open " << areFileName << endl;
+        cerr << " Could not open " << areFileName << '\n';
         exit(1);
     }
 
@@ -197,7 +197,7 @@ void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName) {
             w += node_t(padOffset);
         } else {
             cerr << "Syntax error in line " << lineno << ":"
-                 << R"(expect keyword "a" or "p")" << endl;
+                 << R"(expect keyword "a" or "p")" << '\n';
             exit(0);
         }
 
@@ -414,7 +414,6 @@ auto read_hypergraph(const std::string& filename, InputFormat format) -> SimpleN
         case InputFormat::dimacs:
             return read_dimacs_format(filename);
         case InputFormat::netD:
-            return read_netD_format(filename);
         case InputFormat::auto_detect:
             return read_netD_format(filename);
         default:

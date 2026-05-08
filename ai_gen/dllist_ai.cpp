@@ -70,23 +70,23 @@ void test_dllink() {
     Dllink<int>* f = new Dllink<int>(3);
     L1->appendleft(e);
     if (!L1->is_empty()) {
-        cout << "not empty" << endl;
+        cout << "not empty" << '\n';
     }
     L1->appendleft(f);
     L1->append(d);
     L2->append(L1->pop());
     L2->append(L1->popleft());
     if (!L1->is_empty()) {
-        cout << "not empty" << endl;
+        cout << "not empty" << '\n';
     }
     if (!L2->is_empty()) {
-        cout << "not empty" << endl;
+        cout << "not empty" << '\n';
     }
     e->prev->next = e->next;
     e->next->prev = e->prev;
     delete e;
     if (L1->is_empty()) {
-        cout << "empty" << endl;
+        cout << "empty" << '\n';
     }
     int count = 0;
     DllIterator<int>* iter = L2->__iter__();
@@ -100,7 +100,7 @@ void test_dllink() {
     }
     delete iter;
     if (count == 2) {
-        cout << "count is 2" << endl;
+        cout << "count is 2" << '\n';
     }
 }
 

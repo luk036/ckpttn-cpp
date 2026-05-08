@@ -561,7 +561,7 @@ note: this fix will not be applied because it overlaps with another fix
   160 |     auto are = ifstream{areFileName.data()};
       |                         ~~~~~~~~~~~~^~~~
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:162:54: error: do not use 'endl' with streams; use '\n' instead [performance-avoid-endl,-warnings-as-errors]
-  162 |         cerr << " Could not open " << areFileName << endl;
+  162 |         cerr << " Could not open " << areFileName << '\n';
       |                                                      ^~~~
       |                                                      '\n'
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:168:5: error: do not declare C-style arrays, use 'std::array' instead [cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays,-warnings-as-errors]
@@ -577,7 +577,7 @@ note: this fix will not be applied because it overlaps with another fix
   184 |         do {
       |         ^
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:198:55: error: do not use 'endl' with streams; use '\n' instead [performance-avoid-endl,-warnings-as-errors]
-  198 |                  << R"(expect keyword "a" or "p")" << endl;
+  198 |                  << R"(expect keyword "a" or "p")" << '\n';
       |                                                       ^~~~
       |                                                       '\n'
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:202:9: error: avoid do-while loops [cppcoreguidelines-avoid-do-while,-warnings-as-errors]

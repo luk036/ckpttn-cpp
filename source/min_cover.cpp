@@ -109,7 +109,7 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
         module_map.reserve(numModules);
         auto i_v = index_t(0);
         for (const auto& v : modules) {
-            module_map[v] = index_t(i_v);
+            module_map[v] = i_v;
             ++i_v;
         }
 
@@ -117,7 +117,7 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
         net_up_map.reserve(numNets);
         auto i_net = index_t(0);
         for (const auto& net : nets) {
-            net_up_map[net] = index_t(i_net) + numModules;
+            net_up_map[net] = i_net + numModules;
             ++i_net;
         }
 

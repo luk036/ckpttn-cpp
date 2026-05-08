@@ -498,7 +498,7 @@
   160 |     auto are = ifstream{areFileName.data()};
       |                         ~~~~~~~~~~~~^~~~
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:162:54: warning: do not use 'endl' with streams; use '\n' instead [performance-avoid-endl]
-  162 |         cerr << " Could not open " << areFileName << endl;
+  162 |         cerr << " Could not open " << areFileName << '\n';
       |                                                      ^~~~
       |                                                      '\n'
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:168:5: warning: do not declare C-style arrays, use 'std::array' instead [modernize-avoid-c-arrays]
@@ -511,7 +511,7 @@
   171 |     node_t w = 0;
       |            ^
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/readwrite.cpp:198:55: warning: do not use 'endl' with streams; use '\n' instead [performance-avoid-endl]
-  198 |                  << R"(expect keyword "a" or "p")" << endl;
+  198 |                  << R"(expect keyword "a" or "p")" << '\n';
       |                                                       ^~~~
       |                                                       '\n'
 43996 warnings generated.
