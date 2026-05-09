@@ -83,7 +83,7 @@
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:77: note: the last parameter in the range is 'num_parts'
    18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
       |                                                                             ^~~~~~~~~
-/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:53: note: 
+/data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:53: note:
    18 | FMConstrMgr<Gnl>::FMConstrMgr(const Gnl &hyprgraph, double bal_tol, uint8_t num_parts)
       |                                                     ^
 /data/data/com.termux/files/home/github/cpp/ckpttn-cpp/source/FMConstrMgr.cpp:18:69: note: 'double' and 'uint8_t' may be implicitly converted: 'double' -> 'uint8_t' (as 'unsigned char'), 'uint8_t' (as 'unsigned char') -> 'double'

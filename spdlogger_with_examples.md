@@ -392,7 +392,7 @@ xmake run test_final_spdlogger
 **Output:**
 ```
 ========================================
-  LdsGen Spdlogger Integration Test      
+  LdsGen Spdlogger Integration Test
 ========================================
 
 [Part 1] Testing ldsgen::log_with_spdlog()...
@@ -515,12 +515,12 @@ cmake --build build_test
 int main() {
     // Simple logging
     ldsgen::log_with_spdlog("Application started");
-    
+
     // Log operations
     ldsgen::log_with_spdlog("Processing data...");
     // ... do work ...
     ldsgen::log_with_spdlog("Processing completed");
-    
+
     return 0;
 }
 ```
@@ -533,13 +533,13 @@ int main() {
 
 void generate_vd_corput_sequence(size_t count) {
     ldsgen::log_with_spdlog("Starting VdCorput sequence generation");
-    
+
     ldsgen::VdCorput vdc(2);
     for (size_t i = 0; i < count; ++i) {
         auto point = vdc.pop();
         // Process point
     }
-    
+
     ldsgen::log_with_spdlog("VdCorput sequence generation completed");
 }
 ```
@@ -554,7 +554,7 @@ void generate_vd_corput_sequence(size_t count) {
 int main() {
     // Use wrapper for simple logging
     ldsgen::log_with_spdlog("Using wrapper function");
-    
+
     // Use direct spdlog for advanced features
     auto logger = spdlog::basic_logger_mt("advanced", "advanced.log");
     logger->set_level(spdlog::level::debug);
@@ -564,7 +564,7 @@ int main() {
     logger->warn("Warning message");
     logger->error("Error message");
     logger->flush();
-    
+
     return 0;
 }
 ```
@@ -579,14 +579,14 @@ int main() {
 void log_with_levels() {
     auto logger = spdlog::basic_logger_mt("levels", "levels.log");
     logger->set_level(spdlog::level::trace);
-    
+
     logger->trace("Trace message - most detailed");
     logger->debug("Debug message - development info");
     logger->info("Info message - general information");
     logger->warn("Warn message - potential issues");
     logger->error("Error message - error conditions");
     logger->critical("Critical message - severe errors");
-    
+
     logger->flush();
 }
 ```
@@ -602,13 +602,13 @@ void multi_sink_logging() {
     // Create multi-sink logger
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("multi.log");
-    
+
     std::vector<spdlog::sink_ptr> sinks {console_sink, file_sink};
     auto logger = std::make_shared<spdlog::logger>("multi", sinks.begin(), sinks.end());
-    
+
     logger->set_level(spdlog::level::info);
     logger->info("This goes to both console and file");
-    
+
     spdlog::register_logger(logger);
 }
 ```
@@ -1192,9 +1192,9 @@ xmake clean
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** 2026-02-16  
-**Author:** iFlow CLI  
+**Document Version:** 1.0
+**Last Updated:** 2026-02-16
+**Author:** iFlow CLI
 **Project:** lds-gen-cpp v1.2
 
 ---
