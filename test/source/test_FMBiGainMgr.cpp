@@ -1,10 +1,9 @@
 #include <doctest/doctest.h>  // for TestCase, TEST_CASE
-// #include <__config>                // for std
+
 #include <ckpttn/FMBiGainMgr.hpp>  // for FMBiGainMgr
 #include <cstdint>                 // for uint8_t
 #include <netlistx/netlist.hpp>    // for SimpleNetlist
 #include <span>                    // for span
-#include <tuple>                   // for tuple_element<>::type
 #include <vector>                  // for vector
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist

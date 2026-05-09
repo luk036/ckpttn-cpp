@@ -40,7 +40,7 @@ template <typename graph_t> struct Netlist {
     /// @brief Number of nets in the netlist
     size_t num_nets{};
     /// @brief Number of pads (I/O nodes)
-    size_t num_pads = 0U;
+    size_t num_pads{};
     /// @brief Maximum degree among all modules
     size_t max_degree{};
     /// @brief Maximum degree among all nets
@@ -168,15 +168,13 @@ Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t& modules, const nodeview_
     // const auto result2 =
     //     std::max_element(this->nets.begin(), this->nets.end(), deg_cmp);
     // this->max_net_degree = this->gr.degree(*result2);
-
-    this->max_degree = 0U;
+    
     for (const auto& v : this->modules) {
         if (this->max_degree < this->gr.degree(v)) {
             this->max_degree = this->gr.degree(v);
         }
     }
-
-    this->max_net_degree = 0U;
+    
     for (const auto& net : this->nets) {
         if (this->max_net_degree < this->gr.degree(net)) {
             this->max_net_degree = this->gr.degree(net);

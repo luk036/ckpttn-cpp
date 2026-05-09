@@ -101,7 +101,6 @@ TEST_CASE("Test Netlist") {
 }
 
 TEST_CASE("Test dwarf") {
-    // static_assert(sizeof(double*) == 8);
     const auto hyprgraph = create_dwarf();
 
     CHECK_EQ(hyprgraph.number_of_modules(), 7);

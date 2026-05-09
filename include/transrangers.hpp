@@ -49,11 +49,12 @@ namespace transrangers {
         return ranger<cursor>([first = begin(rng), last = end(rng)](auto dst)
                                   TRANSRANGERS_HOT_MUTABLE {
                                       auto it = first;
-                                      while (it != last)
+                                      while (it != last) {
                                           if (!dst(it++)) {
                                               first = it;
                                               return false;
                                           }
+                                      }
                                       return true;
                                   });
     }

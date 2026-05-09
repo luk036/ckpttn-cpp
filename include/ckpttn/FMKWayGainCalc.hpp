@@ -45,7 +45,7 @@ template <typename Gnl> class FMKWayGainCalc {
     /// @brief Monotonic memory resource for efficient allocation
     FMPmr::monotonic_buffer_resource rsrc;
     /// @brief Vertex lists for each partition
-    std::vector<std::vector<Item>> vertex_list;
+    std::vector<std::vector<Item>> vertex_list{};
     /// @brief Initial gain lists for each partition
     std::vector<std::vector<int>> init_gain_list;
     /// @brief Delta gain vector for vertices
@@ -70,7 +70,6 @@ template <typename Gnl> class FMKWayGainCalc {
           num_parts{num_parts},
           rr{num_parts},
           rsrc(stack_buf, sizeof stack_buf),
-          vertex_list{},
           init_gain_list(num_parts, std::vector<int>(hyprgraph.number_of_modules(), 0)),
           delta_gain_v(num_parts, 0, &rsrc),
           delta_gain_w(num_parts, 0, &rsrc),

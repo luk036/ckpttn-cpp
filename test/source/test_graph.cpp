@@ -22,16 +22,14 @@ TEST_CASE("Test xnetwork") {
     gr.add_edge(a2, n2);
 
     auto count = 0;
-    for (auto _v : gr) {
-        static_assert(sizeof _v >= 0, "make compiler happy");
+    for ([[maybe_unused]] auto _v : gr) {
         ++count;
     }
 
     CHECK_EQ(gr.number_of_nodes(), count);
 
     auto deg = 0;
-    for (auto _v : gr[a1]) {
-        static_assert(sizeof _v >= 0, "make compiler happy");
+    for ([[maybe_unused]] auto _v : gr[a1]) {
         ++deg;
     }
 

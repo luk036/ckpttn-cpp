@@ -65,7 +65,7 @@ void writeJSON(std::string_view jsonFileName, const SimpleNetlist& hyprgraph) {
 
 // Read the IBM .netD/.net format. Precondition: Netlist is empty.
 auto readNetD(std::string_view netDFileName) -> SimpleNetlist {
-    auto netD = ifstream{netDFileName.data()};
+    auto netD = ifstream{std::string(netDFileName)};
     if (netD.fail()) {
         cerr << "Error: Can't open file " << netDFileName << ".\n";
         exit(1);

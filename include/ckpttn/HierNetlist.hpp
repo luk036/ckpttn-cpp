@@ -43,7 +43,7 @@ template <typename graph_t> class HierNetlist : public Netlist<graph_t> {
     /// @brief Mapping from cluster index to child nodes
     py::dict<index_t, node_t> cluster_down_map;
     /// @brief Net weights for each net in the hierarchical netlist
-    ShiftArray<std::vector<uint32_t>> net_weight{};
+    ShiftArray<std::vector<uint32_t>> net_weight;
 
     /**
      * @brief Constructs a new HierNetlist object.
