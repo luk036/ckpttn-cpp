@@ -25,8 +25,8 @@ using namespace transrangers;
  * @param[in] net
  * @param[in] part
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const Gnl::node_t& net,
-                                                             std::span<const uint8_t> part) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::_init_gain(const Gnl::node_t& net, std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -244,8 +244,8 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
-                                               const MoveInfo<typename Gnl::node_t>& move_info) ->
-    Gnl::node_t {
+                                               const MoveInfo<typename Gnl::node_t>& move_info)
+    -> Gnl::node_t {
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
 
@@ -290,8 +290,8 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] move_info
  * @return ret_info
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const Gnl::node_t& v,
-                                                               const Gnl::node_t& net) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::init_idx_vec(const Gnl::node_t& v, const Gnl::node_t& net) {
     this->idx_vec.clear();
     auto rng1 = all(this->hyprgraph.gr[net]);
     auto rng = filter([&v](const auto& w) { return w != v; }, rng1);

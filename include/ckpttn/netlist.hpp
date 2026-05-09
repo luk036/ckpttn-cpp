@@ -168,13 +168,13 @@ Netlist<graph_t>::Netlist(graph_t gr, const nodeview_t& modules, const nodeview_
     // const auto result2 =
     //     std::max_element(this->nets.begin(), this->nets.end(), deg_cmp);
     // this->max_net_degree = this->gr.degree(*result2);
-    
+
     for (const auto& v : this->modules) {
         if (this->max_degree < this->gr.degree(v)) {
             this->max_degree = this->gr.degree(v);
         }
     }
-    
+
     for (const auto& net : this->nets) {
         if (this->max_net_degree < this->gr.degree(net)) {
             this->max_net_degree = this->gr.degree(net);
