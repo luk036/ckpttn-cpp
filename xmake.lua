@@ -5,7 +5,7 @@ add_requires("spdlog", {alias = "spdlog"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
 
-set_languages("c++23")
+set_languages("c++20")
 
 if is_plat("linux") then
     set_warnings("all", "error")
