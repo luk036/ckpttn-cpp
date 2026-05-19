@@ -1,0 +1,162 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "num_modules": 7,
+    "num_nets": 6,
+    "num_pads": 3
+  },
+  "nodes": [
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "0"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "1"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "2"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "3"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "4"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "5"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "6"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "7"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "8"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "9"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "10"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "11"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "id": "12"
+    }
+  ],
+  "edges": [
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "0",
+      "target": "7"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "0",
+      "target": "8"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "1",
+      "target": "7"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "1",
+      "target": "9"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "2",
+      "target": "8"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "2",
+      "target": "9"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "2",
+      "target": "10"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "3",
+      "target": "8"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "3",
+      "target": "9"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "3",
+      "target": "11"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "4",
+      "target": "7"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "5",
+      "target": "10"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "5",
+      "target": "12"
+    },
+    {
+      "weight": 1,
+      "dir": "B",
+      "source": "6",
+      "target": "11"
+    }
+  ]
+}

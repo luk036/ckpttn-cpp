@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yosys.readthedocs.io/schemas/netlist-json/v1.0",
+  "title": "Yosys Netlist JSON Format",
+  "description": "Schema for Yosys synthesis tool JSON netlist output",
+  "type": "object",
+  "required": ["creator", "modules"],
+  "additionalProperties": false,
+  "properties": {
+    "creator": {
+      "type": "string",
+      "description": "Tool that generated the file (e.g., 'Yosys 0.9+2406')",
+      "pattern": "^Yosys\\s+[\\w\\.\\+\\-]+"
+    },
+
+    "modules": {
+      "type": "object",
+      "description": "Dictionary of all modules in the design",
+      "additionalProperties": {
+        "$ref": "#/$defs/module"
+      },
+      "minProperties": 1
+    }
+  },
+
+  "$defs": {
+    "module": {
+      "type": "object",
+      "required": ["ports", "cells", "netnames"],
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        },
+
+        "parameter_default_values": {
+          "type": "object",
+          "description": "Default values for module parameters",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Parameter value as string"
+              },
+              {
+                "type": "integer",
+                "description": "Parameter value as integer"
+              }
+            ]
+          }
+        },
+
+        "ports": {
+          "type": "object",
+          "description": "Module port definitions",
+          "additionalProperties": {
+            "$ref": "#/$defs/port"
+          }
+        },
+
+        "cells": {
+          "type": "object",
+          "description": "Instances of sub-modules/primitives within this module",
+          "additionalProperties": {
+            "$ref": "#/$defs/cell"
+          }
+        },
+
+        "netnames": {
+          "type": "object",
+          "description": "Named nets/wires within the module",
+          "additionalProperties": {
+            "$ref": "#/$defs/netname"
+          }
+        }
+      }
+    },
+
+    "port": {
+      "type": "object",
+      "required": ["direction", "bits"],
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": ["input", "output", "inout"],
+          "description": "Port direction"
+        },
+
+        "bits": {
+          "type": "array",
+          "description": "Array of net IDs connected to this port",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+
+        "offset": {
+          "type": "integer",
+          "description": "Bit offset for slice connections",
+          "minimum": 0
+        },
+
+        "upto": {
+          "type": "boolean",
+          "description": "True if bits are in descending order"
+        },
+
+        "signed": {
+          "type": "boolean",
+          "description": "True if port represents signed value"
+        }
+      }
+    },
+
+    "cell": {
+      "type": "object",
+      "required": ["type", "connections"],
+      "additionalProperties": false,
+      "properties": {
+        "hide_name": {
+            "oneOf": [
+              {
+                "type": "boolean",
+                "description": "True if cell name is auto-generated/internal",
+                "default": false
+              },
+              {
+                "type": "integer",
+                "description": "1 if cell name is auto-generated/internal",
+                "default": 0
+              }
+            ]
+        },
+
+        "type": {
+          "type": "string",
+          "description": "Cell type (primitive or module name)",
+          "pattern": "^[\\$\\w_]+$"
+        },
+
+        "parameters": {
+          "type": "object",
+          "description": "Cell-specific parameters",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Parameter value as string"
+              },
+              {
+                "type": "integer",
+                "description": "Parameter value as integer"
+              }
+            ]
+          }
+        },
+
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        },
+
+        "port_directions": {
+          "type": "object",
+          "description": "Directions of cell's ports",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["input", "output", "inout"]
+          }
+        },
+
+        "connections": {
+          "type": "object",
+          "description": "How cell ports connect to nets",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "description": "Net ID (negative values indicate constants: -1=1'b1, -2=1'b0)"
+                },
+                {
+                  "type": "string",
+                  "description": "Constant value as string (e.g., '0', '1', 'x')"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    "netname": {
+      "type": "object",
+      "required": ["bits"],
+      "additionalProperties": false,
+      "properties": {
+        "hide_name": {
+          "oneOf": [
+            {
+              "type": "boolean",
+              "description": "True if net name is auto-generated/internal",
+              "default": false
+            },
+            {
+              "type": "integer",
+              "description": "1 if net name is auto-generated/internal",
+              "default": 0
+            }
+          ]
+        },
+
+        "bits": {
+          "type": "array",
+          "description": "Array of net IDs that comprise this named net",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        }
+      }
+    },
+
+    "attributes": {
+      "type": "object",
+      "description": "Key-value pairs for metadata/annotations",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "Attribute value as string"
+          },
+          {
+            "type": "integer",
+            "description": "Attribute value as integer"
+          },
+          {
+            "type": "boolean",
+            "description": "Attribute value as boolean"
+          }
+        ]
+      },
+      "propertyNames": {
+        "pattern": "^[\\w\\-_:]+$",
+        "description": "Attribute names can contain alphanumerics, underscores, hyphens, and colons"
+      }
+    },
+
+    "net_id": {
+      "type": "integer",
+      "description": "Identifier for a signal/net",
+      "minimum": -2147483648,
+      "maximum": 2147483647
+    }
+  }
+}

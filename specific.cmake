@@ -41,7 +41,7 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME NetlistX
-  GIT_TAG 1.0
+  GIT_TAG 1.1.2
   GITHUB_REPOSITORY luk036/netlistx-cpp
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )

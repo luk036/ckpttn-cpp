@@ -1,0 +1,44 @@
+{
+  "creator": "Yosys 0.9 (test)",
+  "modules": {
+    "top": {
+      "ports": {
+        "a": { "direction": "input", "bits": [ 0 ] },
+        "b": { "direction": "input", "bits": [ 1 ] },
+        "y": { "direction": "output", "bits": [ 3 ] }
+      },
+      "cells": {
+        "and1": {
+          "type": "$and",
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 0 ],
+            "B": [ 1 ],
+            "Y": [ 2 ]
+          }
+        },
+        "buf1": {
+          "type": "$buff",
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "Y": [ 3 ]
+          }
+        }
+      },
+      "netnames": {
+        "net_a": { "bits": [ 0 ] },
+        "net_b": { "bits": [ 1 ] },
+        "net_and_out": { "bits": [ 2 ] },
+        "net_y": { "bits": [ 3 ] }
+      }
+    }
+  }
+}

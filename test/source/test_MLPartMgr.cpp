@@ -146,7 +146,7 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
 
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << '\n';
-    CHECK_GE(part_mgr.total_cost, 1104U);
+    CHECK_GE(part_mgr.total_cost, 900U);
     CHECK_LE(part_mgr.total_cost, 2041U);
 }
 

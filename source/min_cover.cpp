@@ -3,203 +3,353 @@
 #include <memory>                      // for unique_ptr, make_unique
 #include <netlistx/netlist.hpp>        // for SimpleNetlist, index_t, Netlist
 #include <netlistx/netlist_algo.hpp>   // for min_maximal_matching
-#include <py2cpp/dict.hpp>             // for dict, dict<>::Base
-#include <py2cpp/range.hpp>            // for _iterator, iterable_wrapper
+#include <py2cpp/dict.hpp>             // for dict
+#include <py2cpp/range.hpp>            // for range
 #include <py2cpp/set.hpp>              // for set
-#include <transrangers.hpp>            // for accumlate, transform, all
-#include <utility>                     // for get
-#include <vector>                      // for vector<>::iterator, vector
-#include <xnetwork/classes/graph.hpp>  // for Graph, Graph<>::nodeview_t
+#include <utility>                     // for pair, move
+#include <vector>                      // for vector
+#include <xnetwork/classes/graph.hpp>  // for Graph, SimpleGraph
 
 using node_t = SimpleNetlist::node_t;
-// using namespace std;
-// using namespace transrangers;
+
+static constexpr uint32_t LOW_PIN_NET_THRESHOLD = 5;
 
 /**
- * The function creates a contraction subgraph object from a given netlist and a set of nodes to
- * exclude.
+ * @brief Setup function: find minimum maximal matching and create clusters, nets, cell_list.
  *
- * @param[in] hyprgraph A reference to a `SimpleNetlist` object, which represents a hierarchical
- * netlist.
- * @param[in] dont_select A set of nodes that should not be selected for contraction.
+ * This function performs the initial setup for clustering by:
+ * 1. Finding a minimum maximal matching in the hypergraph
+ * 2. Creating clusters from the matched nets
+ * 3. Separating remaining nets that weren't clustered
+ * 4. Collecting cells that weren't included in any clusters
  *
- * @return The function `create_contracted_subgraph` returns a `std::unique_ptr` to a
- * `SimpleHierNetlist` object.
+ * @param[in] hyprgraph The input hypergraph
+ * @param[in] cluster_weight Weight of each net for matching
+ * @param[in,out] forbid Set of forbidden vertices (dependents), modified in-place
+ * @return Tuple of {clusters, nets, cell_list}
+ */
+static auto setup(const SimpleNetlist& hyprgraph,
+                  const py::dict<node_t, unsigned int>& cluster_weight, py::set<node_t>& forbid)
+    -> std::tuple<std::vector<node_t>, std::vector<node_t>, std::vector<node_t>>
+{
+    py::set<node_t> s1;
+    min_maximal_matching(hyprgraph, cluster_weight, s1, forbid);
+
+    py::set<node_t> covered;
+    auto nets = std::vector<node_t>{};
+    auto clusters = std::vector<node_t>{};
+
+    for (const auto& net : hyprgraph.nets)
+    {
+        if (s1.contains(net))
+        {
+            clusters.emplace_back(net);
+            for (const auto& v : hyprgraph.gr[net])
+            {
+                covered.insert(v);
+            }
+        }
+        else
+        {
+            nets.emplace_back(net);
+        }
+    }
+
+    auto cell_list = std::vector<node_t>{};
+    for (const auto& v : hyprgraph)
+    {
+        if (!covered.contains(v))
+        {
+            cell_list.emplace_back(v);
+        }
+    }
+
+    return {std::move(clusters), std::move(nets), std::move(cell_list)};
+}
+
+/**
+ * @brief Construct a bipartite graph from cell list, clusters, and nets.
  *
- * @todo simplify this function
+ * @param[in] hyprgraph The input hypergraph
+ * @param[in] nets Nets that are not part of any cluster
+ * @param[in] cell_list Individual cells not covered by any cluster
+ * @param[in] clusters Cluster nets from the matching
+ * @return Pair of {bipartite graph, node_up_map}
+ */
+static auto construct_graph(const SimpleNetlist& hyprgraph, const std::vector<node_t>& nets,
+                            const std::vector<node_t>& cell_list,
+                            const std::vector<node_t>& clusters)
+    -> std::pair<graph_t, std::vector<node_t>>
+{
+    auto num_cell = static_cast<uint32_t>(cell_list.size());
+    auto num_clusters = static_cast<uint32_t>(clusters.size());
+    auto num_modules = num_cell + num_clusters;
+    auto num_nets = static_cast<uint32_t>(nets.size());
+
+    auto node_up_map = std::vector<node_t>(hyprgraph.modules.size());
+
+    // Cluster members map to indices [num_cell, num_modules)
+    for (auto i_v = 0U; i_v < num_clusters; ++i_v)
+    {
+        auto net = clusters[i_v];
+        for (const auto& v : hyprgraph.gr[net])
+        {
+            node_up_map[v] = i_v + num_cell;
+        }
+    }
+
+    for (auto i_v = 0U; i_v < num_cell; ++i_v)
+    {
+        node_up_map[cell_list[i_v]] = i_v;
+    }
+
+    auto g = graph_t(num_modules + num_nets);
+    for (auto i_net = 0U; i_net < num_nets; ++i_net)
+    {
+        auto net = nets[i_net];
+        for (const auto& v : hyprgraph.gr[net])
+        {
+            g.add_edge(node_up_map[v], i_net + num_modules);
+        }
+    }
+
+    return {std::move(g), std::move(node_up_map)};
+}
+
+/**
+ * @brief Purge duplicate nets (nets connecting the same set of modules).
+ *
+ * Identifies and removes duplicate nets by:
+ * 1. Checking for nets that connect exactly the same set of modules
+ * 2. For low-pin nets (<= 5 connections), does exact set comparison
+ * 3. Combining weights of duplicate nets into a single representative net
+ *
+ * @param[in] hyprgraph The input hypergraph
+ * @param[in] ugraph The intermediate bipartite graph
+ * @param[in] nets List of net IDs
+ * @param[in] num_clusters Number of clusters
+ * @param[in] num_modules Total number of modules (cells + clusters)
+ * @return Pair of {net_weight map, updated list of net indices}
+ */
+static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& ugraph,
+                                 const std::vector<node_t>& nets, uint32_t num_clusters,
+                                 uint32_t num_modules)
+    -> std::pair<py::dict<uint32_t, unsigned int>, std::vector<uint32_t>>
+{
+    auto num_nets = static_cast<uint32_t>(nets.size());
+    auto net_weight = py::dict<uint32_t, unsigned int>{};
+
+    for (auto i_net = 0U; i_net < num_nets; ++i_net)
+    {
+        auto net = nets[i_net];
+        auto wt = hyprgraph.get_net_weight(net);
+        if (wt != 1)
+        {
+            net_weight[num_modules + i_net] = wt;
+        }
+    }
+
+    auto removelist = py::set<uint32_t>{};
+    for (auto cluster = num_modules - num_clusters; cluster < num_modules; ++cluster)
+    {
+        for (const auto& net1 : ugraph[cluster])
+        {
+            if (net1 < num_modules || net1 >= num_modules + num_nets)
+            {
+                continue;
+            }
+
+            if (ugraph.degree(net1) == 1) // self-loop
+            {
+                removelist.insert(static_cast<uint32_t>(net1));
+                continue;
+            }
+
+            for (const auto& net2 : ugraph[cluster])
+            {
+                if (net2 == net1)
+                {
+                    continue;
+                }
+                if (ugraph.degree(net1) != ugraph.degree(net2))
+                {
+                    continue;
+                }
+
+                auto same = false;
+                if (ugraph.degree(net1) <= LOW_PIN_NET_THRESHOLD)
+                {
+                    // Check both nets connect the same set of modules
+                    const auto& set1 = ugraph[net1];
+                    const auto& set2 = ugraph[net2];
+                    if (set1.size() == set2.size())
+                    {
+                        same = true;
+                        for (const auto& v : set1)
+                        {
+                            if (!set2.contains(v))
+                            {
+                                same = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (same)
+                {
+                    removelist.insert(static_cast<uint32_t>(net2));
+                    net_weight[static_cast<uint32_t>(net1)]
+                        = net_weight.get(static_cast<uint32_t>(net1), 1U)
+                          + net_weight.get(static_cast<uint32_t>(net2), 1U);
+                }
+            }
+        }
+    }
+
+    auto updated_nets = std::vector<uint32_t>{};
+    for (auto i_net = num_modules; i_net < num_modules + num_nets; ++i_net)
+    {
+        if (!removelist.contains(i_net))
+        {
+            updated_nets.push_back(i_net);
+        }
+    }
+
+    return {std::move(net_weight), std::move(updated_nets)};
+}
+
+/**
+ * @brief Reconstruct graph after purging duplicate nets.
+ *
+ * @param[in] hyprgraph The input hypergraph
+ * @param[in] ugraph The intermediate bipartite graph
+ * @param[in] nets List of net IDs
+ * @param[in] num_clusters Number of clusters
+ * @param[in] num_modules Total number of modules
+ * @return Tuple of {reconstructed graph, net_weight map, number of nets}
+ */
+static auto reconstruct_graph(const SimpleNetlist& hyprgraph, const graph_t& ugraph,
+                              const std::vector<node_t>& nets, uint32_t num_clusters,
+                              uint32_t num_modules)
+    -> std::tuple<graph_t, py::dict<uint32_t, unsigned int>, uint32_t>
+{
+    auto [net_weight, updated_nets]
+        = purge_duplicate_nets(hyprgraph, ugraph, nets, num_clusters, num_modules);
+
+    auto num_nets = static_cast<uint32_t>(updated_nets.size());
+    auto gr2 = graph_t(num_modules + num_nets);
+
+    for (auto i_net = 0U; i_net < num_nets; ++i_net)
+    {
+        auto net = updated_nets[i_net];
+        for (const auto& v : ugraph[net])
+        {
+            gr2.add_edge(v, num_modules + i_net);
+        }
+    }
+
+    auto net_weight2 = py::dict<uint32_t, unsigned int>{};
+    for (auto i_net = 0U; i_net < num_nets; ++i_net)
+    {
+        auto net = updated_nets[i_net];
+        if (net_weight.contains(net))
+        {
+            net_weight2[i_net] = net_weight[net];
+        }
+    }
+
+    return {std::move(gr2), std::move(net_weight2), num_nets};
+}
+
+/**
+ * @brief Create a contracted subgraph from a hierarchical netlist.
+ *
+ * The main function that orchestrates the entire clustering process:
+ * 1. Calculating initial cluster weights
+ * 2. Setting up initial clusters and nets
+ * 3. Constructing the intermediate graph
+ * 4. Purging duplicates and reconstructing the final graph
+ * 5. Creating the hierarchical netlist structure with updated weights
+ *
+ * @param[in] hyprgraph The input hypergraph
+ * @param[in] dont_select Set of nets that should not be contracted
+ * @return The contracted hierarchical netlist
  */
 auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> dont_select)
-    -> std::unique_ptr<SimpleHierNetlist> {
-    using namespace transrangers;
-
-    auto weight_dict = py::dict<node_t, unsigned int>{};
-    auto rng_nets = all(hyprgraph.nets);
-    rng_nets([&](const auto& netcur) {
-        weight_dict[*netcur]
-            = accumulate(transform([&](const auto& v) { return hyprgraph.get_module_weight(v); },
-                                   all(hyprgraph.gr[*netcur])),
-                         0U);
-        return true;
-    });
-    // for (const auto &net : hyprgraph.nets) {
-    //   weight_dict[net] = accumulate(
-    //       transform([&](const auto &v) { return hyprgraph.get_module_weight(v); },
-    //                 all(hyprgraph.gr[net])),
-    //       0U);
-    // }
-
-    auto S = py::set<node_t>{};
-    auto& dep = dont_select;
-    min_maximal_matching(hyprgraph, weight_dict, S, dep);
-
-    auto module_up_map = py::dict<node_t, node_t>{};
-    module_up_map.reserve(hyprgraph.number_of_modules());
-    for (const auto& v : hyprgraph) {
-        module_up_map[v] = v;
+    -> std::unique_ptr<SimpleHierNetlist>
+{
+    auto cluster_weight = py::dict<node_t, unsigned int>{};
+    for (const auto& net : hyprgraph.nets)
+    {
+        auto sum = 0U;
+        for (const auto& v : hyprgraph.gr[net])
+        {
+            sum += hyprgraph.get_module_weight(v);
+        }
+        cluster_weight[net] = sum;
     }
 
-    // auto cluster_map = py::dict<node_t, node_t> {};
-    // cluster_map.reserve(S.size());
-    auto node_up_dict = py::dict<node_t, index_t>{};
-    auto net_up_map = py::dict<node_t, index_t>{};
+    auto [clusters, nets, cell_list] = setup(hyprgraph, cluster_weight, dont_select);
 
-    auto modules = std::vector<node_t>{};
-    auto nets = std::vector<node_t>{};
-    nets.reserve(hyprgraph.nets.size() - S.size());
+    auto [ugraph, node_up_map] = construct_graph(hyprgraph, nets, cell_list, clusters);
 
-    {  // localize C and clusters
-        auto C = py::set<node_t>{};
-        auto clusters = std::vector<node_t>{};
-        C.reserve(3 * S.size());  // TODO
-        clusters.reserve(S.size());
+    auto num_modules = static_cast<uint32_t>(cell_list.size() + clusters.size());
+    auto num_clusters = static_cast<uint32_t>(clusters.size());
 
-        for (const auto& net : hyprgraph.nets) {
-            if (S.contains(net)) {
-                // auto net_cur = hyprgraph.gr[net].begin();
-                // auto master = *net_cur;
-                clusters.emplace_back(net);
-                for (const auto& v : hyprgraph.gr[net]) {
-                    module_up_map[v] = net;
-                    C.insert(v);
-                }
-                // cluster_map[master] = net;
-            } else {
-                nets.emplace_back(net);
-            }
-        }
-        modules.reserve(hyprgraph.modules.size() - C.size() + clusters.size());
-        for (const auto& v : hyprgraph) {
-            if (C.contains(v)) {
-                continue;
-            }
-            modules.emplace_back(v);
-        }
-        modules.insert(modules.end(), clusters.begin(), clusters.end());
+    auto [gr2, net_weight2, num_nets]
+        = reconstruct_graph(hyprgraph, ugraph, nets, num_clusters, num_modules);
+
+
+    auto hgr2 = std::make_unique<SimpleHierNetlist>(
+        std::move(gr2), py::range(num_modules),
+        py::range(num_modules, num_modules + num_nets));
+
+    auto module_weight2 = std::vector<unsigned int>(num_modules, 0U);
+    auto num_cells = num_modules - num_clusters;
+
+    for (auto v = 0U; v < num_cells; ++v)
+    {
+        module_weight2[v] = hyprgraph.get_module_weight(cell_list[v]);
     }
-    // auto nodes = vector<node_t>{};
-    // nodes.reserve(modules.size() + nets.size());
-
-    // nodes.insert(nodes.end(), modules.begin(), modules.end());
-    // nodes.insert(nodes.end(), nets.begin(), nets.end());
-    auto numModules = static_cast<uint32_t>(modules.size());
-    auto numNets = static_cast<uint32_t>(nets.size());
-
-    {  // localize module_map and net_map
-        auto module_map = py::dict<node_t, index_t>{};
-        module_map.reserve(numModules);
-        auto i_v = static_cast<index_t>(0);
-        for (const auto& v : modules) {
-            module_map[v] = i_v;
-            ++i_v;
-        }
-
-        // auto net_map = py::dict<node_t, index_t> {};
-        net_up_map.reserve(numNets);
-        auto i_net = static_cast<index_t>(0);
-        for (const auto& net : nets) {
-            net_up_map[net] = i_net + numModules;
-            ++i_net;
-        }
-
-        node_up_dict.reserve(hyprgraph.number_of_modules());
-
-        for (const auto& v : hyprgraph) {
-            node_up_dict[v] = module_map[module_up_map[v]];
-        }
-        // for (const auto& net : nets)
-        // {
-        //     node_up_dict[net] = net_map[net] + numModules;
-        // }
+    for (auto i_v = 0U; i_v < num_clusters; ++i_v)
+    {
+        module_weight2[num_cells + i_v] = cluster_weight[clusters[i_v]];
     }
 
-    auto num_vertices = numModules + numNets;
-    // auto R = py::range<node_t>(0, num_vertices);
-    auto g = graph_t(num_vertices);
-    // gr.add_nodes_from(nodes);
-    for (const auto& v : hyprgraph) {
-        for (const auto& net : hyprgraph.gr[v]) {
-            if (S.contains(net)) {
-                continue;
-            }
-            g.add_edge(node_up_dict[v], net_up_map[net]);
+    auto node_down_map = std::vector<node_t>(cell_list.begin(), cell_list.end());
+    for (const auto& net : clusters)
+    {
+        node_down_map.emplace_back(*hyprgraph.gr[net].begin());
+    }
+
+    auto cluster_down_map = py::dict<uint32_t, node_t>{};
+    for (auto i_v = 0U; i_v < num_clusters; ++i_v)
+    {
+        auto net = clusters[i_v];
+        for (const auto& v : hyprgraph.gr[net])
+        {
+            cluster_down_map[node_up_map[v]] = net;
         }
-    }
-    // auto gr = py::GraphAdaptor<graph_t>(move(g));
-    auto gr = std::move(g);
-
-    auto hgr2 = std::make_unique<SimpleHierNetlist>(std::move(gr), py::range(numModules),
-                                                    py::range(numModules, numModules + numNets));
-
-    auto node_down_map = std::vector<node_t>{};
-    node_down_map.resize(numModules);
-    // for (const auto& [v1, v2] : node_up_dict.items())
-    for (const auto& keyvalue : node_up_dict.items()) {
-        auto&& v1 = std::get<0>(keyvalue);
-        auto&& v2 = std::get<1>(keyvalue);
-        node_down_map[v2] = v1;
-    }
-    auto cluster_down_map = py::dict<index_t, node_t>{};
-    // cluster_down_map.reserve(cluster_map.size()); // ???
-    // // for (const auto& [v, net] : cluster_map.items())
-    // for (const auto& keyvalue : cluster_map.items())
-    // {
-    //     auto&& v = get<0>(keyvalue);
-    //     auto&& net = get<1>(keyvalue);
-    //     cluster_down_map[node_up_dict[v]] = net;
-    // }
-    for (auto&& net : S) {
-        for (auto&& v : hyprgraph.gr[net]) {
-            cluster_down_map[node_up_dict[v]] = net;
-        }
-    }
-
-    auto module_weight = std::vector<unsigned int>{};
-    module_weight.reserve(numModules);
-    for (const auto& i_v : py::range(numModules)) {
-        if (cluster_down_map.contains(i_v)) {
-            const auto net = cluster_down_map[i_v];
-            module_weight.emplace_back(weight_dict[net]);
-        } else {
-            const auto v2 = node_down_map[i_v];
-            module_weight.emplace_back(hyprgraph.get_module_weight(v2));
-        }
-    }
-
-    // if isinstance(hyprgraph.modules, range):
-    //     node_up_map = [0 for _ in hyprgraph.modules]
-    // elif isinstance(hyprgraph.modules, list):
-    //     node_up_map = {}
-    // else:
-    //     raise NotImplementedError
-    auto node_up_map = std::vector<node_t>(hyprgraph.modules.size());
-    for (const auto& v : hyprgraph.modules) {
-        node_up_map[v] = node_up_dict[v];
     }
 
     hgr2->node_up_map = std::move(node_up_map);
     hgr2->node_down_map = std::move(node_down_map);
     hgr2->cluster_down_map = std::move(cluster_down_map);
-    hgr2->module_weight = std::move(module_weight);
+    hgr2->module_weight = std::move(module_weight2);
+
+    if (!net_weight2.empty())
+    {
+        hgr2->net_weight.set_start(0);
+        hgr2->net_weight.resize(num_nets, 1U);
+        for (auto i = 0U; i < num_nets; ++i)
+        {
+            if (net_weight2.contains(i))
+            {
+                hgr2->net_weight[i] = net_weight2[i];
+            }
+        }
+    }
+
     hgr2->parent = &hyprgraph;
     return hgr2;
 }
