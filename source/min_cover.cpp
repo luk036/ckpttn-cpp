@@ -1,11 +1,14 @@
+#include <array>                       // for array
 #include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
 #include <cstdint>                     // for uint32_t
+#include <limits>                      // for numeric_limits
 #include <memory>                      // for unique_ptr, make_unique
 #include <netlistx/netlist.hpp>        // for SimpleNetlist, index_t, Netlist
 #include <netlistx/netlist_algo.hpp>   // for min_maximal_matching
 #include <py2cpp/dict.hpp>             // for dict
 #include <py2cpp/range.hpp>            // for range
 #include <py2cpp/set.hpp>              // for set
+#include <unordered_map>               // for unordered_map
 #include <utility>                     // for pair, move
 #include <vector>                      // for vector
 #include <xnetwork/classes/graph.hpp>  // for Graph, SimpleGraph
@@ -13,6 +16,43 @@
 using node_t = SimpleNetlist::node_t;
 
 static constexpr uint32_t LOW_PIN_NET_THRESHOLD = 5;
+static constexpr uint32_t MINHASH_SIG_SIZE = 64;
+static constexpr double MINHASH_SIMILARITY = 0.8;
+static constexpr uint32_t MINHASH_MAX_DEGREE = 200;
+
+using minhash_sig_t = std::array<uint64_t, MINHASH_SIG_SIZE>;
+
+// Universal hash family: h_i(x) = hash_with_seed(x, seed_i)
+static auto hash_with_seed(uint32_t x, uint64_t seed) noexcept -> uint64_t {
+    auto h = seed;
+    h ^= static_cast<uint64_t>(x) + 0x9e3779b97f4a7c15ULL + (h << 6) + (h >> 2);
+    return h;
+}
+
+static auto minhash_signature(const graph_t& ugraph, uint32_t net) -> minhash_sig_t {
+    auto sig = minhash_sig_t{};
+    sig.fill(std::numeric_limits<uint64_t>::max());
+    for (const auto& v : ugraph[net]) {
+        for (auto i = 0U; i < MINHASH_SIG_SIZE; ++i) {
+            auto h = hash_with_seed(static_cast<uint32_t>(v), static_cast<uint64_t>(i));
+            if (h < sig[i]) {
+                sig[i] = h;
+            }
+        }
+    }
+    return sig;
+}
+
+static auto jaccard_similarity(const minhash_sig_t& sig1, const minhash_sig_t& sig2) noexcept
+    -> double {
+    auto matches = 0U;
+    for (auto i = 0U; i < MINHASH_SIG_SIZE; ++i) {
+        if (sig1[i] == sig2[i]) {
+            ++matches;
+        }
+    }
+    return static_cast<double>(matches) / static_cast<double>(MINHASH_SIG_SIZE);
+}
 
 /**
  * @brief Setup function: find minimum maximal matching and create clusters, nets, cell_list.
@@ -150,6 +190,7 @@ static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& 
     }
 
     auto removelist = py::set<uint32_t>{};
+    std::unordered_map<uint32_t, minhash_sig_t> sig_cache;
     for (auto cluster = num_modules - num_clusters; cluster < num_modules; ++cluster)
     {
         for (const auto& net1 : ugraph[cluster])
@@ -177,7 +218,8 @@ static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& 
                 }
 
                 auto same = false;
-                if (ugraph.degree(net1) <= LOW_PIN_NET_THRESHOLD)
+                auto deg = ugraph.degree(net1);
+                if (deg <= LOW_PIN_NET_THRESHOLD)
                 {
                     // Check both nets connect the same set of modules
                     const auto& set1 = ugraph[net1];
@@ -191,6 +233,45 @@ static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& 
                             {
                                 same = false;
                                 break;
+                            }
+                        }
+                    }
+                }
+                else if (deg <= MINHASH_MAX_DEGREE)
+                {
+                    // MinHash pre-filter: skip exact comparison unless likely duplicate
+                    auto it1 = sig_cache.find(static_cast<uint32_t>(net1));
+                    if (it1 == sig_cache.end())
+                    {
+                        it1 = sig_cache
+                                  .emplace(static_cast<uint32_t>(net1),
+                                           minhash_signature(ugraph, static_cast<uint32_t>(net1)))
+                                  .first;
+                    }
+                    auto it2 = sig_cache.find(static_cast<uint32_t>(net2));
+                    if (it2 == sig_cache.end())
+                    {
+                        it2 = sig_cache
+                                  .emplace(static_cast<uint32_t>(net2),
+                                           minhash_signature(ugraph, static_cast<uint32_t>(net2)))
+                                  .first;
+                    }
+                    auto sim = jaccard_similarity(it1->second, it2->second);
+                    if (sim >= MINHASH_SIMILARITY)
+                    {
+                        // Confirm with exact comparison to avoid false positives
+                        const auto& set1 = ugraph[net1];
+                        const auto& set2 = ugraph[net2];
+                        if (set1.size() == set2.size())
+                        {
+                            same = true;
+                            for (const auto& v : set1)
+                            {
+                                if (!set2.contains(v))
+                                {
+                                    same = false;
+                                    break;
+                                }
                             }
                         }
                     }

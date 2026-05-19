@@ -54,7 +54,11 @@ template <typename Gnl> class FMBiGainMgr
      * @param[in] key The new key value to be set for the vertex.
      */
     auto modify_key(const node_t& w, std::uint8_t part_w, int key) -> void {
-        this->gain_bucket[1 - part_w].modify_key(this->gain_calc.vertex_list[w], key);
+        auto& item = this->gain_calc.vertex_list[w];
+        if (item.is_locked()) {
+            return;
+        }
+        this->gain_bucket[1 - part_w].modify_key(item, key);
     }
 
     /**

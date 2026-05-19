@@ -56,7 +56,11 @@ template <typename Gnl> class FMKWayGainMgr
      */
     auto modify_key(const node_t& w, std::uint8_t part_w, std::span<const int> keys) -> void {
         for (auto k : this->rr.exclude(part_w)) {
-            this->gain_bucket[k].modify_key(this->gain_calc.vertex_list[k][w], keys[k]);
+            auto& item = this->gain_calc.vertex_list[k][w];
+            if (item.is_locked()) {
+                continue;
+            }
+            this->gain_bucket[k].modify_key(item, keys[k]);
         }
     }
 

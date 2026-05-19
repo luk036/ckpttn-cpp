@@ -38,17 +38,6 @@ template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part) -> LegalCheck {
     this->init(part);
 
-    // Zero-weighted modules does not contribute legalization
-    for (const auto& v : this->hyprgraph) {
-        if (this->hyprgraph.get_module_weight(v) != 0U) {
-            continue;
-        }
-        if (!this->hyprgraph.module_fixed.contains(v)) {
-            continue;
-        }
-        this->gain_mgr.lock_all(part[v], v);
-    }
-
     auto legalcheck = LegalCheck::NotSatisfied;
     while (legalcheck != LegalCheck::AllSatisfied) {
         const auto to_part = this->validator.select_togo();
