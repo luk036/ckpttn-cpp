@@ -19,7 +19,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /W4 /WX /wd4459 /wd4996 /wd4819", {force = true})
+    add_cxflags("/EHsc /W4 /WX /openmp /wd4459 /wd4996 /wd4819", {force = true})
 end
 
 if is_mode("coverage") then
@@ -34,6 +34,7 @@ target("CkPttn")
     add_includedirs("../mywheel-cpp/include", {public = true})
     add_includedirs("../netlistx-cpp/include", {public = true})
     add_files("source/*.cpp")
+    add_files("../netlistx-cpp/source/netlist_algo.cpp")
     add_files("../netlistx-cpp/source/readwrite.cpp")
     add_packages("ms-gsl")
     add_packages("spdlog")

@@ -133,20 +133,25 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
         }
         const auto move_info
             = MoveInfo<typename Gnl::node_t>{net, v, move_info_v.from_part, move_info_v.to_part};
-        if (!this->gain_calc.special_handle_2pin_nets) {
+        if (!this->gain_calc.special_handle_2pin_nets)
+        {
             this->gain_calc.init_idx_vec(v, net);
             this->_update_move_general_net(part, move_info);
             continue;
         }
-        if (degree == 2) {
+        if (degree == 2)
+        {
             this->_update_move_2pin_net(part, move_info);
-        } else {
-            this->gain_calc.init_idx_vec(v, net);
-            if (degree == 3) {
-                this->_update_move_3pin_net(part, move_info);
-            } else {
-                this->_update_move_general_net(part, move_info);
-            }
+            continue;
+        }
+        this->gain_calc.init_idx_vec(v, net);
+        if (degree == 3)
+        {
+            this->_update_move_3pin_net(part, move_info);
+        }
+        else
+        {
+            this->_update_move_general_net(part, move_info);
         }
     }
 }
@@ -183,22 +188,19 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
     // FMPmr::monotonic_buffer_resource rsrc(stack_buf, sizeof stack_buf);
     // auto idx_vec = FMPmr::vector<typename Gnl::node_t>(&rsrc);
 
-    auto delta_gain = this->gain_calc.update_move_3pin_net(part, move_info);
+    const auto delta_gain = this->gain_calc.update_move_3pin_net(part, move_info);
 
-    // for (const auto& [dGw, w] : views::zip(delta_gain,
-    // this->gain_calc.idx_vec))
     auto dGw_it = delta_gain.begin();
     for (const auto& w : this->gain_calc.idx_vec) {
-        self.modify_key(w, part[w], *dGw_it);
+        if constexpr (std::is_same_v<std::decay_t<decltype(*dGw_it)>, int>) {
+            if (*dGw_it != 0) {
+                self.modify_key(w, part[w], *dGw_it);
+            }
+        } else {
+            self.modify_key(w, part[w], *dGw_it);
+        }
         ++dGw_it;
     }
-
-    // const auto degree = this->gain_calc.idx_vec.size();
-    // for (size_t index = 0U; index != degree; ++index)
-    // {
-    //     const auto& w = this->gain_calc.idx_vec[index];
-    //     self.modify_key(w, part[w], delta_gain[index]);
-    // }
 }
 
 /**
@@ -216,7 +218,13 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
 
     auto dGw_it = delta_gain.begin();
     for (const auto& w : this->gain_calc.idx_vec) {
-        self.modify_key(w, part[w], *dGw_it);
+        if constexpr (std::is_same_v<std::decay_t<decltype(*dGw_it)>, int>) {
+            if (*dGw_it != 0) {
+                self.modify_key(w, part[w], *dGw_it);
+            }
+        } else {
+            self.modify_key(w, part[w], *dGw_it);
+        }
         ++dGw_it;
     }
 }

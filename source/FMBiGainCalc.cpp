@@ -170,8 +170,10 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @return ret_info
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& module,
-                                                             const typename Gnl::node_t& net) {
+                                                              const typename Gnl::node_t& net) {
     this->idx_vec.clear();
+    auto degree = this->hyprgraph.gr.degree(net);
+    this->idx_vec.reserve(degree - 1);
     auto range1 = all(this->hyprgraph.gr[net]);
     auto range = filter([&module](const auto& cell) { return cell != module; }, range1);
     range([&](const auto& weighted_cell) {

@@ -40,8 +40,10 @@ template <typename Gnl> class FMBiGainCalc {
     std::vector<int> init_gain_list;
     /// @brief Total cost of the current partitioning
     int total_cost{0};
+    /// @brief Stack buffer size for PMR memory resource (tunable per workload)
+    static constexpr size_t stack_buf_size = 8192;
     /// @brief Stack buffer for memory resource
-    uint8_t stack_buf[8192];  // TODO
+    uint8_t stack_buf[stack_buf_size];
     /// @brief Monotonic memory resource for efficient allocation
     FMPmr::monotonic_buffer_resource rsrc;
 
