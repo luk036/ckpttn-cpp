@@ -5,6 +5,17 @@ find_package(Threads REQUIRED)
 # ${Boost_LIBRARIES}") # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
 # target_include_directories(Boost::boost # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS}) endif()
 
+# Add fmt explicitly as a dependency. This must come BEFORE XNetwork and NetlistX
+# so that fmt::fmt target is always available when their CMakeLists.txt process.
+# Both XNetwork and NetlistX also add fmt internally, but CPM deduplication
+# ensures it's only added once.
+CPMAddPackage(
+  NAME fmt
+  GIT_TAG 12.1.0
+  GITHUB_REPOSITORY fmtlib/fmt
+  OPTIONS "FMT_INSTALL YES" # create an installable target
+)
+
 # Add spdlog for logging functionality - use bundled fmt to avoid compatibility issues
 CPMAddPackage(
   NAME spdlog
@@ -12,8 +23,6 @@ CPMAddPackage(
   GITHUB_REPOSITORY gabime/spdlog
   OPTIONS "SPDLOG_INSTALL YES" # create an installable target
 )
-
-# cpmaddpackage("gh:ericniebler/range-v3#0.10.0") CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC add_compile_options(-fcoroutines)
@@ -54,13 +63,8 @@ CPMAddPackage(
 )
 
 set(SPECIFIC_LIBS MyWheel::MyWheel NetlistX::NetlistX XNetwork::XNetwork Py2Cpp::Py2Cpp
-                  Threads::Threads
+                  Threads::Threads fmt::fmt
 )
-
-# Only add fmt::fmt to SPECIFIC_LIBS if we're using external fmt
-if(TARGET fmt::fmt)
-  list(APPEND SPECIFIC_LIBS fmt::fmt)
-endif()
 
 # Add spdlog::spdlog to SPECIFIC_LIBS for logging functionality
 if(TARGET spdlog::spdlog)
