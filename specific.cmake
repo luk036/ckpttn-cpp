@@ -16,12 +16,13 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-# Add spdlog for logging functionality - use bundled fmt to avoid compatibility issues
+# Add spdlog for logging functionality - use external fmt (added above) to avoid
+# duplicate symbol errors when both spdlog's bundled fmt and our separate fmt.lib are linked.
 CPMAddPackage(
   NAME spdlog
   GIT_TAG v1.17.0
   GITHUB_REPOSITORY gabime/spdlog
-  OPTIONS "SPDLOG_INSTALL YES" # create an installable target
+  OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_EXTERNAL ON" # create an installable target, use external fmt
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
