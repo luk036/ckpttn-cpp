@@ -70,8 +70,7 @@ static auto jaccard_similarity(const minhash_sig_t& sig1, const minhash_sig_t& s
  */
 static auto setup(const SimpleNetlist& hyprgraph,
                   const py::dict<node_t, unsigned int>& cluster_weight, py::set<node_t>& forbid)
-    -> std::tuple<std::vector<node_t>, std::vector<node_t>, std::vector<node_t>>
-{
+    -> std::tuple<std::vector<node_t>, std::vector<node_t>, std::vector<node_t>> {
     py::set<node_t> s1;
     min_maximal_matching(hyprgraph, cluster_weight, s1, forbid);
 
@@ -79,27 +78,20 @@ static auto setup(const SimpleNetlist& hyprgraph,
     auto nets = std::vector<node_t>{};
     auto clusters = std::vector<node_t>{};
 
-    for (const auto& net : hyprgraph.nets)
-    {
-        if (s1.contains(net))
-        {
+    for (const auto& net : hyprgraph.nets) {
+        if (s1.contains(net)) {
             clusters.emplace_back(net);
-            for (const auto& v : hyprgraph.gr[net])
-            {
+            for (const auto& v : hyprgraph.gr[net]) {
                 covered.insert(v);
             }
-        }
-        else
-        {
+        } else {
             nets.emplace_back(net);
         }
     }
 
     auto cell_list = std::vector<node_t>{};
-    for (const auto& v : hyprgraph)
-    {
-        if (!covered.contains(v))
-        {
+    for (const auto& v : hyprgraph) {
+        if (!covered.contains(v)) {
             cell_list.emplace_back(v);
         }
     }
@@ -119,8 +111,7 @@ static auto setup(const SimpleNetlist& hyprgraph,
 static auto construct_graph(const SimpleNetlist& hyprgraph, const std::vector<node_t>& nets,
                             const std::vector<node_t>& cell_list,
                             const std::vector<node_t>& clusters)
-    -> std::pair<graph_t, std::vector<node_t>>
-{
+    -> std::pair<graph_t, std::vector<node_t>> {
     auto num_cell = static_cast<uint32_t>(cell_list.size());
     auto num_clusters = static_cast<uint32_t>(clusters.size());
     auto num_modules = num_cell + num_clusters;
@@ -129,26 +120,21 @@ static auto construct_graph(const SimpleNetlist& hyprgraph, const std::vector<no
     auto node_up_map = std::vector<node_t>(hyprgraph.modules.size());
 
     // Cluster members map to indices [num_cell, num_modules)
-    for (auto i_v = 0U; i_v < num_clusters; ++i_v)
-    {
+    for (auto i_v = 0U; i_v < num_clusters; ++i_v) {
         auto net = clusters[i_v];
-        for (const auto& v : hyprgraph.gr[net])
-        {
+        for (const auto& v : hyprgraph.gr[net]) {
             node_up_map[v] = i_v + num_cell;
         }
     }
 
-    for (auto i_v = 0U; i_v < num_cell; ++i_v)
-    {
+    for (auto i_v = 0U; i_v < num_cell; ++i_v) {
         node_up_map[cell_list[i_v]] = i_v;
     }
 
     auto g = graph_t(num_modules + num_nets);
-    for (auto i_net = 0U; i_net < num_nets; ++i_net)
-    {
+    for (auto i_net = 0U; i_net < num_nets; ++i_net) {
         auto net = nets[i_net];
-        for (const auto& v : hyprgraph.gr[net])
-        {
+        for (const auto& v : hyprgraph.gr[net]) {
             g.add_edge(node_up_map[v], i_net + num_modules);
         }
     }
@@ -174,101 +160,80 @@ static auto construct_graph(const SimpleNetlist& hyprgraph, const std::vector<no
 static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& ugraph,
                                  const std::vector<node_t>& nets, uint32_t num_clusters,
                                  uint32_t num_modules)
-    -> std::pair<py::dict<uint32_t, unsigned int>, std::vector<uint32_t>>
-{
+    -> std::pair<py::dict<uint32_t, unsigned int>, std::vector<uint32_t>> {
     auto num_nets = static_cast<uint32_t>(nets.size());
     auto net_weight = py::dict<uint32_t, unsigned int>{};
 
-    for (auto i_net = 0U; i_net < num_nets; ++i_net)
-    {
+    for (auto i_net = 0U; i_net < num_nets; ++i_net) {
         auto net = nets[i_net];
         auto wt = hyprgraph.get_net_weight(net);
-        if (wt != 1)
-        {
+        if (wt != 1) {
             net_weight[num_modules + i_net] = wt;
         }
     }
 
     auto removelist = py::set<uint32_t>{};
     std::unordered_map<uint32_t, minhash_sig_t> sig_cache;
-    for (auto cluster = num_modules - num_clusters; cluster < num_modules; ++cluster)
-    {
-        for (const auto& net1 : ugraph[cluster])
-        {
-            if (net1 < num_modules || net1 >= num_modules + num_nets)
-            {
+    for (auto cluster = num_modules - num_clusters; cluster < num_modules; ++cluster) {
+        for (const auto& net1 : ugraph[cluster]) {
+            if (net1 < num_modules || net1 >= num_modules + num_nets) {
                 continue;
             }
 
-            if (ugraph.degree(net1) == 1) // self-loop
+            if (ugraph.degree(net1) == 1)  // self-loop
             {
                 removelist.insert(static_cast<uint32_t>(net1));
                 continue;
             }
 
-            for (const auto& net2 : ugraph[cluster])
-            {
-                if (net2 == net1)
-                {
+            for (const auto& net2 : ugraph[cluster]) {
+                if (net2 == net1) {
                     continue;
                 }
-                if (ugraph.degree(net1) != ugraph.degree(net2))
-                {
+                if (ugraph.degree(net1) != ugraph.degree(net2)) {
                     continue;
                 }
 
                 auto same = false;
                 auto deg = ugraph.degree(net1);
-                if (deg <= LOW_PIN_NET_THRESHOLD)
-                {
+                if (deg <= LOW_PIN_NET_THRESHOLD) {
                     // Check both nets connect the same set of modules
                     const auto& set1 = ugraph[net1];
                     const auto& set2 = ugraph[net2];
-                    if (set1.size() == set2.size())
-                    {
+                    if (set1.size() == set2.size()) {
                         same = true;
-                        for (const auto& v : set1)
-                        {
-                            if (!set2.contains(v))
-                            {
+                        for (const auto& v : set1) {
+                            if (!set2.contains(v)) {
                                 same = false;
                                 break;
                             }
                         }
                     }
-                }
-                else if (deg <= MINHASH_MAX_DEGREE)
-                {
+                } else if (deg <= MINHASH_MAX_DEGREE) {
                     // MinHash pre-filter: skip exact comparison unless likely duplicate
                     auto it1 = sig_cache.find(static_cast<uint32_t>(net1));
-                    if (it1 == sig_cache.end())
-                    {
+                    if (it1 == sig_cache.end()) {
                         it1 = sig_cache
                                   .emplace(static_cast<uint32_t>(net1),
                                            minhash_signature(ugraph, static_cast<uint32_t>(net1)))
                                   .first;
                     }
                     auto it2 = sig_cache.find(static_cast<uint32_t>(net2));
-                    if (it2 == sig_cache.end())
-                    {
+                    if (it2 == sig_cache.end()) {
                         it2 = sig_cache
                                   .emplace(static_cast<uint32_t>(net2),
                                            minhash_signature(ugraph, static_cast<uint32_t>(net2)))
                                   .first;
                     }
                     auto sim = jaccard_similarity(it1->second, it2->second);
-                    if (sim >= MINHASH_SIMILARITY)
-                    {
+                    if (sim >= MINHASH_SIMILARITY) {
                         // Confirm with exact comparison to avoid false positives
                         const auto& set1 = ugraph[net1];
                         const auto& set2 = ugraph[net2];
-                        if (set1.size() == set2.size())
-                        {
+                        if (set1.size() == set2.size()) {
                             same = true;
-                            for (const auto& v : set1)
-                            {
-                                if (!set2.contains(v))
-                                {
+                            for (const auto& v : set1) {
+                                if (!set2.contains(v)) {
                                     same = false;
                                     break;
                                 }
@@ -276,8 +241,7 @@ static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& 
                         }
                     }
                 }
-                if (same)
-                {
+                if (same) {
                     removelist.insert(static_cast<uint32_t>(net2));
                     net_weight[static_cast<uint32_t>(net1)]
                         = net_weight.get(static_cast<uint32_t>(net1), 1U)
@@ -288,10 +252,8 @@ static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& 
     }
 
     auto updated_nets = std::vector<uint32_t>{};
-    for (auto i_net = num_modules; i_net < num_modules + num_nets; ++i_net)
-    {
-        if (!removelist.contains(i_net))
-        {
+    for (auto i_net = num_modules; i_net < num_modules + num_nets; ++i_net) {
+        if (!removelist.contains(i_net)) {
             updated_nets.push_back(i_net);
         }
     }
@@ -312,29 +274,24 @@ static auto purge_duplicate_nets(const SimpleNetlist& hyprgraph, const graph_t& 
 static auto reconstruct_graph(const SimpleNetlist& hyprgraph, const graph_t& ugraph,
                               const std::vector<node_t>& nets, uint32_t num_clusters,
                               uint32_t num_modules)
-    -> std::tuple<graph_t, py::dict<uint32_t, unsigned int>, uint32_t>
-{
+    -> std::tuple<graph_t, py::dict<uint32_t, unsigned int>, uint32_t> {
     auto [net_weight, updated_nets]
         = purge_duplicate_nets(hyprgraph, ugraph, nets, num_clusters, num_modules);
 
     auto num_nets = static_cast<uint32_t>(updated_nets.size());
     auto gr2 = graph_t(num_modules + num_nets);
 
-    for (auto i_net = 0U; i_net < num_nets; ++i_net)
-    {
+    for (auto i_net = 0U; i_net < num_nets; ++i_net) {
         auto net = updated_nets[i_net];
-        for (const auto& v : ugraph[net])
-        {
+        for (const auto& v : ugraph[net]) {
             gr2.add_edge(v, num_modules + i_net);
         }
     }
 
     auto net_weight2 = py::dict<uint32_t, unsigned int>{};
-    for (auto i_net = 0U; i_net < num_nets; ++i_net)
-    {
+    for (auto i_net = 0U; i_net < num_nets; ++i_net) {
         auto net = updated_nets[i_net];
-        if (net_weight.contains(net))
-        {
+        if (net_weight.contains(net)) {
             net_weight2[i_net] = net_weight[net];
         }
     }
@@ -357,14 +314,11 @@ static auto reconstruct_graph(const SimpleNetlist& hyprgraph, const graph_t& ugr
  * @return The contracted hierarchical netlist
  */
 auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> dont_select)
-    -> std::unique_ptr<SimpleHierNetlist>
-{
+    -> std::unique_ptr<SimpleHierNetlist> {
     auto cluster_weight = py::dict<node_t, unsigned int>{};
-    for (const auto& net : hyprgraph.nets)
-    {
+    for (const auto& net : hyprgraph.nets) {
         auto sum = 0U;
-        for (const auto& v : hyprgraph.gr[net])
-        {
+        for (const auto& v : hyprgraph.gr[net]) {
             sum += hyprgraph.get_module_weight(v);
         }
         cluster_weight[net] = sum;
@@ -380,35 +334,28 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
     auto [gr2, net_weight2, num_nets]
         = reconstruct_graph(hyprgraph, ugraph, nets, num_clusters, num_modules);
 
-
-    auto hgr2 = std::make_unique<SimpleHierNetlist>(
-        std::move(gr2), py::range(num_modules),
-        py::range(num_modules, num_modules + num_nets));
+    auto hgr2 = std::make_unique<SimpleHierNetlist>(std::move(gr2), py::range(num_modules),
+                                                    py::range(num_modules, num_modules + num_nets));
 
     auto module_weight2 = std::vector<unsigned int>(num_modules, 0U);
     auto num_cells = num_modules - num_clusters;
 
-    for (auto v = 0U; v < num_cells; ++v)
-    {
+    for (auto v = 0U; v < num_cells; ++v) {
         module_weight2[v] = hyprgraph.get_module_weight(cell_list[v]);
     }
-    for (auto i_v = 0U; i_v < num_clusters; ++i_v)
-    {
+    for (auto i_v = 0U; i_v < num_clusters; ++i_v) {
         module_weight2[num_cells + i_v] = cluster_weight[clusters[i_v]];
     }
 
     auto node_down_map = std::vector<node_t>(cell_list.begin(), cell_list.end());
-    for (const auto& net : clusters)
-    {
+    for (const auto& net : clusters) {
         node_down_map.emplace_back(*hyprgraph.gr[net].begin());
     }
 
     auto cluster_down_map = py::dict<uint32_t, node_t>{};
-    for (auto i_v = 0U; i_v < num_clusters; ++i_v)
-    {
+    for (auto i_v = 0U; i_v < num_clusters; ++i_v) {
         auto net = clusters[i_v];
-        for (const auto& v : hyprgraph.gr[net])
-        {
+        for (const auto& v : hyprgraph.gr[net]) {
             cluster_down_map[node_up_map[v]] = net;
         }
     }
@@ -418,14 +365,11 @@ auto create_contracted_subgraph(const SimpleNetlist& hyprgraph, py::set<node_t> 
     hgr2->cluster_down_map = std::move(cluster_down_map);
     hgr2->module_weight = std::move(module_weight2);
 
-    if (!net_weight2.empty())
-    {
+    if (!net_weight2.empty()) {
         hgr2->net_weight.set_start(0);
         hgr2->net_weight.resize(num_nets, 1U);
-        for (auto i = 0U; i < num_nets; ++i)
-        {
-            if (net_weight2.contains(i))
-            {
+        for (auto i = 0U; i < num_nets; ++i) {
+            if (net_weight2.contains(i)) {
                 hgr2->net_weight[i] = net_weight2[i];
             }
         }

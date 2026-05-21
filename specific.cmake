@@ -5,10 +5,9 @@ find_package(Threads REQUIRED)
 # ${Boost_LIBRARIES}") # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
 # target_include_directories(Boost::boost # SYSTEM INTERFACE ${Boost_INCLUDE_DIRS}) endif()
 
-# Add fmt explicitly as a dependency. This must come BEFORE XNetwork and NetlistX
-# so that fmt::fmt target is always available when their CMakeLists.txt process.
-# Both XNetwork and NetlistX also add fmt internally, but CPM deduplication
-# ensures it's only added once.
+# Add fmt explicitly as a dependency. This must come BEFORE XNetwork and NetlistX so that fmt::fmt
+# target is always available when their CMakeLists.txt process. Both XNetwork and NetlistX also add
+# fmt internally, but CPM deduplication ensures it's only added once.
 CPMAddPackage(
   NAME fmt
   GIT_TAG 12.1.0
@@ -16,13 +15,14 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-# Add spdlog for logging functionality - use external fmt (added above) to avoid
-# duplicate symbol errors when both spdlog's bundled fmt and our separate fmt.lib are linked.
+# Add spdlog for logging functionality - use external fmt (added above) to avoid duplicate symbol
+# errors when both spdlog's bundled fmt and our separate fmt.lib are linked.
 CPMAddPackage(
   NAME spdlog
   GIT_TAG v1.17.0
   GITHUB_REPOSITORY gabime/spdlog
-  OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_EXTERNAL ON" # create an installable target, use external fmt
+  OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_EXTERNAL ON" # create an installable target, use external
+                                                        # fmt
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

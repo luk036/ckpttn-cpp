@@ -170,7 +170,7 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @return ret_info
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& module,
-                                                              const typename Gnl::node_t& net) {
+                                                             const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     auto degree = this->hyprgraph.gr.degree(net);
     this->idx_vec.reserve(degree - 1);

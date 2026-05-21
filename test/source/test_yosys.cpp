@@ -59,8 +59,7 @@ TEST_CASE("Test yosys sphere3hopf_netlist k-pin nets") {
 }
 
 TEST_CASE("Test yosys sphere3hopf_netlist_simple k-pin nets") {
-    const auto hyprgraph =
-        read_yosys_json("../../yosys_testcases/sphere3hopf_netlist_simple.json");
+    const auto hyprgraph = read_yosys_json("../../yosys_testcases/sphere3hopf_netlist_simple.json");
 
     CHECK_EQ(hyprgraph.number_of_modules(), 188);
     CHECK_EQ(hyprgraph.number_of_nets(), 2825);
