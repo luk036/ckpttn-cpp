@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <array>                       // for array
 #include <ckpttn/HierNetlist.hpp>      // for SimpleHierNetlist, HierNetlist
 #include <cstdint>                     // for uint32_t
@@ -35,9 +36,7 @@ static auto minhash_signature(const graph_t& ugraph, uint32_t net) -> minhash_si
     for (const auto& v : ugraph[net]) {
         for (auto i = 0U; i < MINHASH_SIG_SIZE; ++i) {
             auto h = hash_with_seed(static_cast<uint32_t>(v), static_cast<uint64_t>(i));
-            if (h < sig[i]) {
-                sig[i] = h;
-            }
+            sig[i] = std::min(h, sig[i]);
         }
     }
     return sig;
