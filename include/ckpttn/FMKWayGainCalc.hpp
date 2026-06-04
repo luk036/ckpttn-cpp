@@ -41,7 +41,7 @@ template <typename Gnl> class FMKWayGainCalc {
     /// @brief Total cost of the current partitioning
     int total_cost{0};
     /// @brief Stack buffer size for PMR memory resource (tunable per workload)
-    static constexpr size_t stack_buf_size = 20000;
+    static constexpr size_t stack_buf_size = 65536;
     /// @brief Stack buffer for memory resource
     uint8_t stack_buf[stack_buf_size];
     /// @brief Monotonic memory resource for efficient allocation

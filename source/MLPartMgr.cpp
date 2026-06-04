@@ -27,7 +27,7 @@ extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
  * @return LegalCheck
  */
 template <typename Gnl, typename PartMgr>
-auto MLPartMgr::run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {
+auto MLPartMgr::run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {
     using GainMgr = PartMgr::GainMgr_;
     using ConstrMgr = PartMgr::ConstrMgr_;
 
@@ -62,7 +62,7 @@ auto MLPartMgr::run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> pa
             if (hgr2->number_of_modules() <= hyprgraph.number_of_modules()) {
                 auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
                 hgr2->projection_up(part, part2);
-                auto legalcheck_recur = this->run_FMPartition<Gnl, PartMgr>(*hgr2, part2);
+                auto legalcheck_recur = this->run_Partition<Gnl, PartMgr>(*hgr2, part2);
                 if (legalcheck_recur == LegalCheck::AllSatisfied) {
                     hgr2->projection_down(part2, part);
                 }
@@ -81,13 +81,24 @@ auto MLPartMgr::run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> pa
 #include <ckpttn/FMKWayConstrMgr.hpp>  // for FMKWayConstrMgr
 #include <ckpttn/FMKWayGainMgr.hpp>    // for FMKWayGainMgr
 #include <ckpttn/FMPartMgr.hpp>        // for FMPartMgr
+#include <ckpttn/NNPartMgr.hpp>        // for NNPartMgr
 
-template auto MLPartMgr::run_FMPartition<
+template auto MLPartMgr::run_Partition<
     SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
 
-template auto MLPartMgr::run_FMPartition<
+template auto MLPartMgr::run_Partition<
     SimpleNetlist,
     FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
+    const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+
+template auto MLPartMgr::run_Partition<
+    SimpleNetlist,
+    NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+    const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+
+template auto MLPartMgr::run_Partition<
+    SimpleNetlist,
+    NNPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
     const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;

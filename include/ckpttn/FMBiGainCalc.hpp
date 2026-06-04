@@ -41,7 +41,7 @@ template <typename Gnl> class FMBiGainCalc {
     /// @brief Total cost of the current partitioning
     int total_cost{0};
     /// @brief Stack buffer size for PMR memory resource (tunable per workload)
-    static constexpr size_t stack_buf_size = 8192;
+    static constexpr size_t stack_buf_size = 32768;
     /// @brief Stack buffer for memory resource
     uint8_t stack_buf[stack_buf_size];
     /// @brief Monotonic memory resource for efficient allocation

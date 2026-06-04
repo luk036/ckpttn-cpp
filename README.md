@@ -18,7 +18,7 @@ The primary algorithmic approach utilized in this system is that of multi-level 
 
 The primary inputs for this system are a hypergraph, module weights (which represent the relative importance or size of each module in the graph), and an initial partitioning of the modules. The output is an optimized partitioning of the modules that satisfies the specified balance constraints and minimizes the total cost of the partitioning.
 
-The fundamental component of the algorithm is the run_FMPartition method, which is contained within the MLPartMgr class. This method accepts the hypergraph, module weights, and initial partitioning as inputs. The initial partitioning is first evaluated to ascertain its legality, that is, whether it satisfies the balance constraints. In the event that the initial partitioning is not found to be legal, the algorithm will return without implementing any changes. If the initial partitioning is found to be legal, the algorithm proceeds to optimize the partitioning.
+The fundamental component of the algorithm is the run_Partition method, which is contained within the MLPartMgr class. This method accepts the hypergraph, module weights, and initial partitioning as inputs. The initial partitioning is first evaluated to ascertain its legality, that is, whether it satisfies the balance constraints. In the event that the initial partitioning is not found to be legal, the algorithm will return without implementing any changes. If the initial partitioning is found to be legal, the algorithm proceeds to optimize the partitioning.
 
 The optimization process comprises two principal stages.
 

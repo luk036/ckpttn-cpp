@@ -8,7 +8,7 @@ ckpttn-cpp 是一个用于现代 C++ 的电路分区库，专为超图（hypergr
 
 ## 核心组件
 
-- **MLPartMgr**: 多级分区管理器，实现主分区算法 `run_FMPartition`。
+- **MLPartMgr**: 多级分区管理器，实现主分区算法 `run_Partition`。
 - **FMPartMgr**: Fiduccia-Mattheyses 分区算法管理器，继承自 `PartMgrBase`。
 - **Netlist**: 网表结构，基于 XNetwork 的图实现。
 - **HierNetlist**: 分层网表，用于多级算法中的图收缩和投影。

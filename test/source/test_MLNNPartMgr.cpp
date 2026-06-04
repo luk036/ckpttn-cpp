@@ -8,17 +8,17 @@
 #include <ckpttn/MLPartMgr.hpp>  // for MLPartMgr
 #include <cstdint>               // for uint8_t
 #include <iostream>              // for operator<<, basic_ostream, endl, cout
-#include <netlistx/netlist.hpp>  // for Netlist
+#include <netlistx/netlist.hpp>  // for Netlist, SimpleNetlis
 #include <string_view>           // for std::string_view
 #include <vector>                // for vector
 
-#include "ckpttn/PartMgrBase.hpp"  // for SimpleNetlist
+#include "ckpttn/NNPartMgr.hpp"
 
 template <typename Gnl> class FMBiConstrMgr;
 template <typename Gnl> class FMBiGainMgr;
 template <typename Gnl> class FMKWayConstrMgr;
 template <typename Gnl> class FMKWayGainMgr;
-template <typename Gnl, typename GainMgr, typename ConstrMgr> class FMPartMgr;
+template <typename Gnl, typename GainMgr, typename ConstrMgr> class NNPartMgr;
 
 using namespace std;
 
@@ -36,7 +36,7 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+        NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
@@ -53,7 +53,7 @@ TEST_CASE("Test MLKWayPartMgr dwarf") {
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
-        FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
+        NNPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
@@ -78,7 +78,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
         }
         auto legal_check = part_mgr.run_Partition<
             SimpleNetlist,
-            FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+            NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
             hyprgraph, part);
         CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
@@ -110,7 +110,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
         }
         auto legal_check = part_mgr.run_Partition<
             SimpleNetlist,
-            FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+            NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
             hyprgraph, part);
         CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
@@ -136,7 +136,7 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     auto begin = chrono::steady_clock::now();
     auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+        NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
@@ -146,7 +146,7 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << '\n';
     CHECK_GE(part_mgr.total_cost, 900U);
-    CHECK_LE(part_mgr.total_cost, 2041U);
+    CHECK_LE(part_mgr.total_cost, 2210U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm18") {
@@ -160,7 +160,7 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     auto begin = chrono::steady_clock::now();
     auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
+        NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 

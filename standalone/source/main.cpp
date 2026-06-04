@@ -6,16 +6,14 @@
 #include <ckpttn/FMKWayGainMgr.hpp>
 #include <ckpttn/FMPartMgr.hpp>
 #include <ckpttn/MLPartMgr.hpp>
-#include <ckpttn/readwrite.hpp>
+#include <netlistx/readwrite.hpp>
 #include <cstdint>
-#include <cstdlib>
 #include <cxxopts.hpp>
 #include <fstream>
 #include <iostream>
 #include <netlistx/netlist.hpp>
+#include <random>
 #include <string>
-#include <string_view>
-#include <vector>
 #include <xnetwork/classes/graph.hpp>
 
 using graph_t = xnetwork::SimpleGraph;
@@ -55,7 +53,7 @@ auto run_binary_partition(const SimpleNetlist& hyprgraph, double balance_tol,
     using PartMgr = FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr>;
 
     MLPartMgr ml_mgr(balance_tol, 2);
-    ml_mgr.run_FMPartition<SimpleNetlist, PartMgr>(hyprgraph, part);
+    ml_mgr.run_Partition<SimpleNetlist, PartMgr>(hyprgraph, part);
     return ml_mgr.total_cost;
 }
 
@@ -66,8 +64,19 @@ auto run_kway_partition(const SimpleNetlist& hyprgraph, double balance_tol,
     using PartMgr = FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr>;
 
     MLPartMgr ml_mgr(balance_tol, num_parts);
-    ml_mgr.run_FMPartition<SimpleNetlist, PartMgr>(hyprgraph, part);
+    ml_mgr.run_Partition<SimpleNetlist, PartMgr>(hyprgraph, part);
     return ml_mgr.total_cost;
+}
+
+template <typename Gen>
+auto random_init_part(std::span<std::uint8_t> part, const SimpleNetlist& hyprgraph,
+                      std::uint8_t num_parts, Gen& gen) -> void {
+    std::uniform_int_distribution<int> dist(0, num_parts - 1);
+    for (index_t i = 0; i < hyprgraph.number_of_modules(); ++i) {
+        if (!hyprgraph.module_fixed.contains(i)) {
+            part[i] = static_cast<std::uint8_t>(dist(gen));
+        }
+    }
 }
 
 auto main(int argc, char** argv) -> int {
@@ -102,7 +111,7 @@ auto main(int argc, char** argv) -> int {
             "epsilon", "Imbalance factor (0.05 = 5%)",
             cxxopts::value<double>(epsilon)->default_value("0.05"))
 
-            ("i,input-format", "Input format: hmetis, json, dimacs, auto",
+            ("i,input-format", "Input format: hmetis, json, yosys, dimacs, netd, auto",
              cxxopts::value<std::string>(input_format_str)->default_value("auto"))(
                 "f,fixed", "File with pre-assigned vertices",
                 cxxopts::value<std::string>(fixed_file)->default_value(""))
@@ -123,7 +132,7 @@ auto main(int argc, char** argv) -> int {
                         "t,threads", "Number of threads",
                         cxxopts::value<std::uint32_t>(threads)->default_value("1"))
 
-                        ("s,seed", "Random seed",
+                        ("s,seed", "Random seed (0 = use random device)",
                          cxxopts::value<std::uint32_t>(seed)->default_value("0"))("verbose",
                                                                                   "Verbose output")
 
@@ -147,6 +156,9 @@ Examples:
   ckpttn circuit.hgr 2 5
   ckpttn circuit.hgr 4 10 -o partition.txt
   ckpttn circuit.hgr -k 4 -e 0.03 -p quality
+  ckpttn circuit.hgr 2 5 -f fix.txt
+  ckpttn circuit.hgr 2 5 -s 42
+  ckpttn circuit.json 2 5 -i yosys --verbose
 
 Compatible with hMetis and KaHyPar CLI.
 )";
@@ -158,11 +170,14 @@ Compatible with hMetis and KaHyPar CLI.
         return 0;
     }
 
-    InputFormat input_format;
+    auto use_yosys = false;
+    InputFormat input_format = InputFormat::auto_detect;
     if (input_format_str == "hmetis") {
         input_format = InputFormat::hmetis;
     } else if (input_format_str == "json") {
         input_format = InputFormat::json;
+    } else if (input_format_str == "yosys") {
+        use_yosys = true;
     } else if (input_format_str == "dimacs") {
         input_format = InputFormat::dimacs;
     } else if (input_format_str == "netd") {
@@ -227,7 +242,25 @@ Compatible with hMetis and KaHyPar CLI.
         std::cerr << "Reading hypergraph from " << hypergraph_file << "...\n";
     }
 
-    auto hyprgraph = read_hypergraph(hypergraph_file, input_format);
+    auto hyprgraph = use_yosys 
+        ? read_yosys_json(hypergraph_file) 
+        : read_hypergraph(hypergraph_file, input_format);
+
+    if (!fixed_file.empty()) {
+        auto fix_fs = std::ifstream{fixed_file};
+        if (fix_fs.fail()) {
+            std::cerr << "Error: Can't open fixed modules file " << fixed_file << ".\n";
+            return 1;
+        }
+        std::uint32_t module_id = 0;
+        while (fix_fs >> module_id) {
+            hyprgraph.module_fixed.insert(module_id);
+        }
+        hyprgraph.has_fixed_modules = true;
+        if (verbose) {
+            std::cerr << "Fixed modules: " << hyprgraph.module_fixed.size() << '\n';
+        }
+    }
 
     if (verbose) {
         std::cerr << "Hypergraph: " << hyprgraph.number_of_modules() << " vertices, "
@@ -237,6 +270,12 @@ Compatible with hMetis and KaHyPar CLI.
 
     auto num_modules = hyprgraph.number_of_modules();
     auto part = std::vector<std::uint8_t>(num_modules, 0);
+
+    auto gen = seed != 0 ? std::mt19937{seed} : std::mt19937{std::random_device{}()};
+    random_init_part(part, hyprgraph, static_cast<std::uint8_t>(k), gen);
+    if (verbose && seed != 0) {
+        std::cerr << "Random seed: " << seed << '\n';
+    }
 
     if (verbose) {
         std::cerr << "Running partitioning (preset: " << preset_str << ")...\n";

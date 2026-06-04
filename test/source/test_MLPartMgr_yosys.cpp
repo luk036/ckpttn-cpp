@@ -19,7 +19,7 @@ TEST_CASE("Test MLBiPartMgr sphere_netlist") {
     const auto bal_tol = 0.3;
     MLPartMgr part_mgr{bal_tol};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_FMPartition<
+    auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
@@ -35,7 +35,7 @@ TEST_CASE("Test MLBiPartMgr sphere3hopf_netlist") {
     const auto bal_tol = 0.3;
     MLPartMgr part_mgr{bal_tol};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_FMPartition<
+    auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
@@ -52,7 +52,7 @@ TEST_CASE("Test MLKWayPartMgr sphere_netlist") {
     const auto num_parts = 3;
     MLPartMgr part_mgr{bal_tol, num_parts};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_FMPartition<
+    auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);
@@ -69,7 +69,7 @@ TEST_CASE("Test MLKWayPartMgr sphere3hopf_netlist") {
     const auto num_parts = 3;
     MLPartMgr part_mgr{bal_tol, num_parts};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_FMPartition<
+    auto legal_check = part_mgr.run_Partition<
         SimpleNetlist,
         FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>>(
         hyprgraph, part);

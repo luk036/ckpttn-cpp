@@ -18,7 +18,7 @@ TEST_CASE("Stress Test MLBiPartMgr ibm18") {
 
     for (int idx = 0; idx < num_iterations; ++idx) {
         std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-        part_mgr.run_FMPartition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+        part_mgr.run_Partition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                                           FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
                                                                                          part);
         total_cost_sum += part_mgr.total_cost;

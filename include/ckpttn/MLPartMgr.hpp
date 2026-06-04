@@ -33,7 +33,7 @@ class MLPartMgr {
     /// @brief Number of partitions
     std::uint8_t num_parts;
     /// @brief Size limit for transitioning from multi-level to flat FM
-    size_t limitsize{7U};
+    size_t limitsize{50U};
 
   public:
     /// @brief Total cost of the current partitioning solution
@@ -73,5 +73,5 @@ class MLPartMgr {
      * @return LegalCheck The legality check result of the partitioning.
      */
     template <typename Gnl, typename PartMgr>
-    auto run_FMPartition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+    auto run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
 };

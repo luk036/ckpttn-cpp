@@ -1,0 +1,119 @@
+#pragma once
+
+// **Special code for two-pin nets**
+
+#include <cstdint>  // for uint8_t
+#include <span>     // for span
+#include <vector>   // for vector
+// #include <xnetwork/classes/graph.hpp>
+
+// forward declare
+// template <typename graph_t> struct Netlist;
+// using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
+
+enum class LegalCheck;
+
+/**
+ * @brief No-Nonsense Partitioning Algorithm Manager Base
+ *
+ * `NNPartMgr` is a class for managing the No-Nonsense
+ * Partitioning Algorithm. It takes three template parameters: `Gnl` (graph
+ * type), `GainMgr` (gain manager type), and `ConstrMgr` (constraint manager
+ * type).
+ *
+ * In this partitioning method, the next solution $s'$ considered after
+ * solution $s$ is dervied by first applying a sequence of
+ * $t$ changes (moves) to $s$ (with $t$ dependent from
+ * $s$ and from the specific heuristic method), thus obtaining a
+ * sequence of solution $s,...,s_t$ and by successively
+ * choosing the best among these solutions.
+ *
+ * In order to do that, heuristics refer to a measure of the gain (and
+ * balance condition) associated to any sequence of changes performed on
+ * the current solution. Moreover, the length of the sequence generated
+ * is determined by evaluting a suitably defined $stopping rule$ at
+ * each iteration.
+ *
+ * Reference:
+ *   gr. Ausiello et al., Complexity and Approximation: Combinatorial
+ * Optimization Problems and Their Approximability Properties, Section 10.3.2.
+ *
+ * @tparam Gnl
+ * @tparam GainMgr
+ * @tparam ConstrMgr
+ * @tparam Derived
+ */
+template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
+class NNPartMgr {
+  public:
+    using GainCalc_ = typename GainMgr::GainCalc_;
+    using GainMgr_ = GainMgr;
+    using ConstrMgr_ = ConstrMgr;
+
+    // using Der = Derived<Gnl, GainMgr, ConstrMgr>;
+
+  protected:
+    /// @brief Reference to the hypergraph being partitioned
+    const Gnl& hyprgraph;
+    /// @brief Gain manager for computing and managing gains
+    GainMgr& gain_mgr;
+    /// @brief Constraint manager for validating partition constraints
+    ConstrMgr& validator;
+    /// @brief Number of partitions
+    size_t num_parts;
+    // std::vector<std::uint8_t> snapshot;
+    // std::vector<std::uint8_t> part;
+
+  public:
+    int total_cost{};
+
+    /**
+     * @brief Construct a new Part Mgr Base object
+     *
+     * @param[in] hyprgraph
+     * @param[in,out] gain_mgr
+     * @param[in,out] constr_mgr
+     * @param[in] num_parts
+     */
+    NNPartMgr(const Gnl& hyprgraph, GainMgr& gain_mgr, ConstrMgr& constr_mgr, size_t num_parts)
+        : hyprgraph{hyprgraph}, gain_mgr{gain_mgr}, validator{constr_mgr}, num_parts{num_parts} {}
+
+    /**
+     * @brief Initializes the partition manager with the given partition.
+     *
+     * @param[in,out] part The partition vector to initialize.
+     */
+    void init(std::span<std::uint8_t> part);
+
+    /**
+     * @brief Legalizes the partition to satisfy balance constraints.
+     *
+     * @param[in,out] part The partition to legalize.
+     * @return LegalCheck The result of the legality check.
+     */
+    auto legalize(std::span<std::uint8_t> part) -> LegalCheck;
+
+    /**
+     * @brief Optimizes the partition using the FM algorithm.
+     *
+     * @param[in,out] part The partition to optimize.
+     */
+    void optimize(std::span<std::uint8_t> part);
+
+  private:
+    /**
+     * @brief Performs a single pass of the FM optimization algorithm.
+     *
+     * @param[in,out] part The partition to optimize.
+     */
+    void _optimize_1pass(std::span<std::uint8_t> part);
+
+    /**
+     * @brief Performs a final check on the partitioning based on the given partition information.
+     *
+     * @param[in] part The partition information to check.
+     */
+    auto final_check(std::span<const std::uint8_t> part) -> bool {
+        return this->validator.final_check(part);
+    }
+};

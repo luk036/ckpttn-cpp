@@ -9,6 +9,6 @@
 namespace FMPmr = std::pmr;
 
 const auto FM_MAX_NUM_PARTITIONS = 255U;
-const auto FM_MAX_DEGREE = 65536U;
+const auto FM_MAX_DEGREE = 500U;
 
 // workaround clang
