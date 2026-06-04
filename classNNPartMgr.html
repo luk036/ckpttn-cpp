@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NNPartMgr class | CkPttn</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">CkPttn</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="NNPartMgr_8hpp.html">&lt;ckpttn/NNPartMgr.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;</div>
+          NNPartMgr <span class="m-thin">class</span>
+        </h1>
+        <p>No-Nonsense Partitioning Algorithm Manager Base.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Gnl</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>GainMgr</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>ConstrMgr</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#pro-attribs">Protected variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p><code><a href="classNNPartMgr.html" class="m-doc">NNPartMgr</a></code> is a class for managing the No-Nonsense Partitioning Algorithm. It takes three template parameters: <code>Gnl</code> (graph type), <code>GainMgr</code> (gain manager type), and <code>ConstrMgr</code> (constraint manager type).</p><p>In this partitioning method, the next solution $s&#x27;$ considered after solution $s$ is dervied by first applying a sequence of $t$ changes (moves) to $s$ (with $t$ dependent from $s$ and from the specific heuristic method), thus obtaining a sequence of solution $s,...,s_t$ and by successively choosing the best among these solutions.</p><p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p><p>Reference: gr. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="a6748643c46114413dd1b2dc4fb12f37a">
+              using <a href="#a6748643c46114413dd1b2dc4fb12f37a" class="m-doc-self">GainCalc_</a> = typename GainMgr::GainCalc_
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5495b36435abc190ce89b3da800e6d4f">
+              using <a href="#a5495b36435abc190ce89b3da800e6d4f" class="m-doc-self">GainMgr_</a> = GainMgr
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa46703e44d6c13f24b44a32269f39308">
+              using <a href="#aa46703e44d6c13f24b44a32269f39308" class="m-doc-self">ConstrMgr_</a> = ConstrMgr
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#acec9a2e2382131b72ebc5bf087dfcaef" class="m-doc">NNPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
+              GainMgr&amp; gain_mgr,
+              ConstrMgr&amp; constr_mgr,
+              size_t num_parts)</span>
+            </dt>
+            <dd>Construct a new Part Mgr Base object.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a38695fa05c1ed1763da87b5463efc9ae" class="m-doc">init</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
+            </dt>
+            <dd>Initializes the partition manager with the given partition.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0fc571e450e5c50d5fb667679a3b490" class="m-doc">legalize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck -&gt; auto</span>
+            </dt>
+            <dd>Legalizes the partition to satisfy balance constraints.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af6da413203f87ad92d8c0d79f36d8d5a" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
+            </dt>
+            <dd>Optimizes the partition using the FM algorithm.</dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a7da7420f884a059a1ca38f87af7c7f66">
+              int <a href="#a7da7420f884a059a1ca38f87af7c7f66" class="m-doc-self">total_cost</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pro-attribs">
+          <h2><a href="#pro-attribs">Protected variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a19f35864036727a56565765dada669fa">
+              const Gnl&amp; <a href="#a19f35864036727a56565765dada669fa" class="m-doc-self">hyprgraph</a>
+            </dt>
+            <dd>Reference to the hypergraph being partitioned.</dd>
+            <dt id="a3c577b94b228d9760a1fc0477d2f7705">
+              GainMgr&amp; <a href="#a3c577b94b228d9760a1fc0477d2f7705" class="m-doc-self">gain_mgr</a>
+            </dt>
+            <dd>Gain manager for computing and managing gains.</dd>
+            <dt id="a07c81e83218939d46dff49565795a07d">
+              ConstrMgr&amp; <a href="#a07c81e83218939d46dff49565795a07d" class="m-doc-self">validator</a>
+            </dt>
+            <dd>Constraint manager for validating partition constraints.</dd>
+            <dt id="a6ff24da9ff62a9cafa17fb11db00f46d">
+              size_t <a href="#a6ff24da9ff62a9cafa17fb11db00f46d" class="m-doc-self">num_parts</a>
+            </dt>
+            <dd>Number of partitions.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="acec9a2e2382131b72ebc5bf087dfcaef"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> NNPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acec9a2e2382131b72ebc5bf087dfcaef" class="m-doc-self">NNPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
+              GainMgr&amp; gain_mgr,
+              ConstrMgr&amp; constr_mgr,
+              size_t num_parts)</span></span>
+            </h3>
+            <p>Construct a new Part Mgr Base object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>gain_mgr&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>constr_mgr&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a38695fa05c1ed1763da87b5463efc9ae"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void NNPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a38695fa05c1ed1763da87b5463efc9ae" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span></span>
+            </h3>
+            <p>Initializes the partition manager with the given partition.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>The partition vector to initialize.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab0fc571e450e5c50d5fb667679a3b490"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto NNPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab0fc571e450e5c50d5fb667679a3b490" class="m-doc-self">legalize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part) -&gt; LegalCheck</span></span>
+            </h3>
+            <p>Legalizes the partition to satisfy balance constraints.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>The partition to legalize.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>LegalCheck The result of the legality check.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af6da413203f87ad92d8c0d79f36d8d5a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void NNPartMgr&lt;Gnl, GainMgr, ConstrMgr&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af6da413203f87ad92d8c0d79f36d8d5a" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span></span>
+            </h3>
+            <p>Optimizes the partition using the FM algorithm.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>The partition to optimize.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>CkPttn. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
