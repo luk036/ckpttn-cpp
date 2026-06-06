@@ -375,6 +375,17 @@ Compatible with hMetis and KaHyPar CLI.
     }
     auto part = std::move(best_part);
 
+    {
+        const auto balanced = (k == 2)
+            ? FMBiConstrMgr<SimpleNetlist>(hyprgraph, config.balance_tolerance).final_check(part)
+            : FMKWayConstrMgr<SimpleNetlist>(hyprgraph, config.balance_tolerance,
+                                             static_cast<std::uint8_t>(k))
+                  .final_check(part);
+        if (!balanced) {
+            std::cerr << "Warning: final partition does not satisfy the balance constraint\n";
+        }
+    }
+
     if (verbose) {
         std::cerr << "Partitioning cost: " << best_cost << '\n';
         std::cerr << "Partition written to stdout\n";
