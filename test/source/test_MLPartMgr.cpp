@@ -66,7 +66,7 @@ TEST_CASE("Test MLBiPartMgr p1") {
     const auto hyprgraph = readNetD("../../testcases/p1.net");
     const auto bal_tol = 0.3;
     MLPartMgr part_mgr{bal_tol};
-    part_mgr.set_limitsize(500);
+    part_mgr.set_limitsize(10);
 
     auto mincost = 1000;
     for (auto idx = 0; idx != 10; ++idx) {
@@ -98,7 +98,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     readAre(hyprgraph, "../../testcases/ibm01.are");
     const auto bal_tol = 0.4;
     MLPartMgr part_mgr{bal_tol};
-    part_mgr.set_limitsize(400);
+    part_mgr.set_limitsize(10);
 
     auto mincost = 1000;
     for (auto idx = 0; idx != 10; ++idx) {
@@ -130,7 +130,7 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     readAre(hyprgraph, "../../testcases/ibm03.are");
     const auto bal_tol = 0.45;
     MLPartMgr part_mgr{bal_tol};
-    part_mgr.set_limitsize(300);
+    part_mgr.set_limitsize(10);
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
@@ -154,7 +154,7 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     readAre(hyprgraph, "../../testcases/ibm18.are");
     const auto bal_tol = 0.45;
     MLPartMgr part_mgr{bal_tol};
-    part_mgr.set_limitsize(24000);
+    part_mgr.set_limitsize(23000);
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
