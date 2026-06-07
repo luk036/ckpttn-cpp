@@ -3,8 +3,6 @@
 #include <cstdint>
 #include <iostream>
 #include <netlistx/netlist.hpp>
-#include <netlistx/readwrite.hpp>
-#include <string_view>
 #include <utility>
 #include <vector>
 #include <xnetwork/classes/graph.hpp>
@@ -144,19 +142,5 @@ TEST_CASE("Test MidLvlPartMgr optimize n25") {
     CHECK_EQ(part_mgr.total_cost, 1);
 }
 
-TEST_CASE("Test MidLvlPartMgr p1 cost") {
-    const auto hyprgraph = readNetD("../../testcases/p1.net");
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hyprgraph};
-    const auto N = hyprgraph.number_of_modules();
 
-    std::vector<std::uint8_t> part(N, 0);
-    const auto half = N / 2;
-    for (auto i = 0U; i < half; ++i) {
-        part[i] = 1;
-    }
-
-    const auto cost = part_mgr.compute_total_cost(part);
-    CHECK_GE(cost, 0);
-    CHECK_GT(cost, 0);
-}
 

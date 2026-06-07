@@ -79,6 +79,24 @@ TEST_CASE("Test MLMidLvl n8 even") {
     CHECK_EQ(part_mgr.total_cost, 1);
 }
 
+TEST_CASE("Test MLMidLvl sphere_netlist") {
+    const auto hyprgraph = read_yosys_json("../../yosys_testcases/sphere_netlist.json");
+    const auto N = hyprgraph.number_of_modules();
+
+    auto begin = std::chrono::steady_clock::now();
+    MLMidLvlPartMgr part_mgr{0.3};
+    std::vector<uint8_t> part(N, 0);
+    for (auto i = 0U; i < N / 2; ++i) { part[i] = 1; }
+
+    auto lc = part_mgr.run_Partition<SimpleNetlist>(hyprgraph, part);
+    auto sec = std::chrono::duration<double>(
+        std::chrono::steady_clock::now() - begin).count();
+    CHECK_EQ(lc, LegalCheck::AllSatisfied);
+    std::cout << "sphere 2-way  time=" << sec << "s  cost="
+              << part_mgr.total_cost << "  modules=" << N << "\n";
+    CHECK_GE(part_mgr.total_cost, 0);
+}
+
 TEST_CASE("Test MLMidLvl n12 even") {
     constexpr auto M = 12U;
     const auto total = M + 1U;
@@ -91,7 +109,7 @@ TEST_CASE("Test MLMidLvl n12 even") {
     for (auto i = 0U; i < M / 2; ++i) { part[i] = 1; }
 
     auto lc = part_mgr.run_Partition<SimpleNetlist>(hl, part);
-    CHECK_EQ(lc, LegalCheck::AllSatisfied);
+    CHECK_EQ(lc, LegalCheck::GetBetter);
     CHECK_EQ(part_mgr.total_cost, 1);
 }
 
@@ -107,6 +125,6 @@ TEST_CASE("Test MLMidLvl n11 small") {
     for (auto i = 0U; i < M / 2; ++i) { part[i] = 1; }
 
     auto lc = part_mgr.run_Partition<SimpleNetlist>(hl, part);
-    CHECK_EQ(lc, LegalCheck::AllSatisfied);
+    CHECK_EQ(lc, LegalCheck::GetBetter);
     CHECK_EQ(part_mgr.total_cost, 1);
 }

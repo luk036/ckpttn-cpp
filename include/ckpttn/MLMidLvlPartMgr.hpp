@@ -22,5 +22,5 @@ class MLMidLvlPartMgr {
     double bal_tol;
     std::uint8_t num_parts;
     size_t limitsize{50U};
-    static constexpr size_t exhaustive_limit{10U};
+    static constexpr size_t exhaustive_limit{25U};
 };
