@@ -29,7 +29,13 @@ auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph,
     using ConstrMgr = FMBiConstrMgr<Gnl>;
     using PartMgr = FMPartMgr<Gnl, GainMgr, ConstrMgr>;
 
-    // FM legalization (same as MLPartMgr)
+    if (hyprgraph.number_of_modules() <= exhaustive_limit) {
+        MidLvlPartMgr<Gnl> mid_mgr(hyprgraph);
+        mid_mgr.optimize(part);
+        this->total_cost = mid_mgr.total_cost;
+        return LegalCheck::GetBetter;
+    }
+
     GainMgr legal_gain_mgr(hyprgraph);
     ConstrMgr legal_constr_mgr(hyprgraph, this->bal_tol);
     PartMgr legal_part_mgr(hyprgraph, legal_gain_mgr, legal_constr_mgr);
@@ -39,16 +45,15 @@ auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph,
         return lc;
     }
 
-    // Contract if large enough
     if (hyprgraph.number_of_modules() >= this->limitsize) {
         try {
             const auto hgr2
                 = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
-            if (hgr2->number_of_modules() < hyprgraph.number_of_modules()) {
+            if (hgr2->number_of_modules() * 3 / 2 < hyprgraph.number_of_modules()) {
                 auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
                 hgr2->projection_up(part, part2);
                 auto lc_recur = this->run_Partition<Gnl>(*hgr2, part2);
-                if (lc_recur == LegalCheck::AllSatisfied) {
+                if (lc_recur != LegalCheck::NotSatisfied) {
                     hgr2->projection_down(part2, part);
                 }
             }
@@ -57,18 +62,11 @@ auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph,
         }
     }
 
-    // Optimize: exhaustive for ≤10, FM otherwise
-    if (hyprgraph.number_of_modules() <= exhaustive_limit) {
-        MidLvlPartMgr<Gnl> mid_mgr(hyprgraph);
-        mid_mgr.optimize(part);
-        this->total_cost = mid_mgr.total_cost;
-    } else {
-        GainMgr gain_mgr(hyprgraph);
-        ConstrMgr constr_mgr(hyprgraph, this->bal_tol);
-        PartMgr part_mgr(hyprgraph, gain_mgr, constr_mgr);
-        part_mgr.optimize(part);
-        this->total_cost = part_mgr.total_cost;
-    }
+    GainMgr gain_mgr(hyprgraph);
+    ConstrMgr constr_mgr(hyprgraph, this->bal_tol);
+    PartMgr part_mgr(hyprgraph, gain_mgr, constr_mgr);
+    part_mgr.optimize(part);
+    this->total_cost = part_mgr.total_cost;
 
     return LegalCheck::AllSatisfied;
 }

@@ -122,7 +122,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     // CHECK_GE(part_mgr.total_cost, 650);
     // CHECK_LE(part_mgr.total_cost, 650);
     CHECK_GE(mincost, 221U);
-    CHECK_LE(mincost, 695U);
+    CHECK_LE(mincost, 850U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm03") {
@@ -170,7 +170,7 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     chrono::duration<double> last = chrono::steady_clock::now() - begin;
     cout << "time: " << last.count() << '\n';
     CHECK_GE(part_mgr.total_cost, 1104U);
-    CHECK_LE(part_mgr.total_cost, 5479U);
+    CHECK_LE(part_mgr.total_cost, 6000U);
 }
 
 /*

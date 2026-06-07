@@ -35,7 +35,7 @@ auto MidLvlPartMgr<Gnl>::compute_total_cost(std::span<const std::uint8_t> part) 
 template <typename Gnl>
 void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
     const auto num_modules = static_cast<int>(this->hyprgraph.number_of_modules());
-    const auto half_bits = (num_modules + 1) / 2;
+    const auto half_bits = num_modules / 2;
     const auto total_bits = 2 * half_bits + 1;
 
     this->total_cost = this->compute_total_cost(part);

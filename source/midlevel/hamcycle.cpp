@@ -36,6 +36,7 @@ MidHamCycle::MidHamCycle(const MidVertex &x, long long limit, MidVisitFunc visit
         std::vector<int> y_string(2 * n);
         y_tree.to_bitstring(y_string.data());
         std::vector<int> y_vec(y_string.begin(), y_string.end());
+        y_vec.reserve(y_vec.size() + 1);
         y_vec.push_back(0);
         xs = MidVertex(y_vec);
         this->y_ = xs;
@@ -45,6 +46,7 @@ MidHamCycle::MidHamCycle(const MidVertex &x, long long limit, MidVisitFunc visit
 
     std::vector<int> seq;
     std::vector<int> seq01;
+    seq01.reserve(1);
     seq01.push_back(2 * n);
     int dist_to_start = skip;
     bool final_path = false;

@@ -60,15 +60,15 @@ void MidVertex::steps_height(std::vector<std::vector<int>> &usteps_neg,
     for (int i = 0; i < static_cast<int>(this->bits_.size()) - 1; ++i) {
         if ((this->bits_[i] == 0) && (height <= 0)) {
             if (height == min_height) {
-                usteps_neg.push_back(std::vector<int>());
-                dsteps_neg.push_back(std::vector<int>());
+                usteps_neg.emplace_back();
+                dsteps_neg.emplace_back();
             }
             dsteps_neg[-height].push_back(i);
         }
         if ((this->bits_[i] == 1) && (height >= 0)) {
             if (height == max_height) {
-                usteps_pos.push_back(std::vector<int>());
-                dsteps_pos.push_back(std::vector<int>());
+                usteps_pos.emplace_back();
+                dsteps_pos.emplace_back();
             }
             usteps_pos[height].push_back(i);
         }

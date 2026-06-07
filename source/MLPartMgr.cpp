@@ -59,7 +59,7 @@ auto MLPartMgr::run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part
         try {
             const auto hgr2
                 = create_contracted_subgraph(hyprgraph, py::set<typename Gnl::node_t>{});
-            if (hgr2->number_of_modules() <= hyprgraph.number_of_modules()) {
+            if (hgr2->number_of_modules() * 3 / 2 < hyprgraph.number_of_modules()) {
                 auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
                 hgr2->projection_up(part, part2);
                 auto legalcheck_recur = this->run_Partition<Gnl, PartMgr>(*hgr2, part2);
