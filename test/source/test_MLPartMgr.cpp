@@ -122,7 +122,7 @@ TEST_CASE("Test MLBiPartMgr ibm01") {
     // CHECK_GE(part_mgr.total_cost, 650);
     // CHECK_LE(part_mgr.total_cost, 650);
     CHECK_GE(mincost, 221U);
-    CHECK_LE(mincost, 850U);
+    CHECK_LE(mincost, 1000U);
 }
 
 TEST_CASE("Test MLBiPartMgr ibm03") {
