@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ckpttn/ directory | CkPttn</title>
+  <title>MidLvlPartMgr class | CkPttn</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,75 +49,75 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          ckpttn<span class="m-breadcrumb">/</span> <span class="m-thin">directory</span>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="MidLvlPartMgr_8hpp.html">&lt;ckpttn/MidLvlPartMgr.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
+          MidLvlPartMgr <span class="m-thin">class</span>
         </h1>
-        <p><span></span></p>
+        <p>Exhaustive Partition Manager using Middle-Levels Gray Code.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Gnl</td>
+              <td>The hypergraph type (must match SimpleNetlist-like interface)</td>
+            </tr>
+          </tbody>
+        </table>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#subdirs">Directories</a></li>
-                <li><a href="#files">Files</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="subdirs">
-          <h2><a href="#subdirs">Directories</a></h2>
+<p><code><a href="classMidLvlPartMgr.html" class="m-doc">MidLvlPartMgr</a></code> enumerates all balanced (or near-balanced) 2-way partitions of a hypergraph&#x27;s modules using the Gray code order of the middle levels graph. Each step flips a single bit — moving one module to the opposite partition — exactly like the FM algorithm&#x27;s move operation, but exhaustively visiting all possible assignments instead of using local search.</p><p>For N modules:</p><ul><li>If N is odd: the middle levels bitstring has length N, visiting all states with floor(N/2) or ceil(N/2) ones.</li><li>If N is even: one dummy module is added (bitstring length N+1). The dummy module&#x27;s bit may float (0 or 1), so all balanced and near-balanced partitions of the N real modules are visited.</li></ul><p>The algorithm starts from the initial partition, traverses the full Hamilton cycle, snapshots the lowest-cost solution, and restores it.</p>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt>directory <a href="dir_73f62d4e80ba240a9f70e7e8273fdc29.html" class="m-doc">midlevel</a>/</dt>
+            <dt id="aba49859041f04a00baf7f90f96f8e337">
+              using <a href="#aba49859041f04a00baf7f90f96f8e337" class="m-doc-self">node_t</a> = typename Gnl::node_t
+            </dt>
             <dd><span></span></dd>
           </dl>
         </section>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="array__like_8hpp.html" class="m-doc">array_like.hpp</a></dt>
+            <dt id="af643b7d01b55e7d7d4d763e5854a6290">
+              <span class="m-doc-wrap-bumper"><a href="#af643b7d01b55e7d7d4d763e5854a6290" class="m-doc-self">MidLvlPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="FMBiConstrMgr_8hpp.html" class="m-doc">FMBiConstrMgr.hpp</a></dt>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a0376452d6ab1ad9c4caa30b53b15f8ea">
+              <span class="m-doc-wrap-bumper">void <a href="#a0376452d6ab1ad9c4caa30b53b15f8ea" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="FMBiGainCalc_8hpp.html" class="m-doc">FMBiGainCalc.hpp</a></dt>
+            <dt id="a5813f5fd4bc47eaa9dfa62d301c3bbfe">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5813f5fd4bc47eaa9dfa62d301c3bbfe" class="m-doc-self">compute_total_cost</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) const -&gt; int -&gt; auto</span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="FMBiGainMgr_8hpp.html" class="m-doc">FMBiGainMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMConstrMgr_8hpp.html" class="m-doc">FMConstrMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMGainMgr_8hpp.html" class="m-doc">FMGainMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMKWayConstrMgr_8hpp.html" class="m-doc">FMKWayConstrMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMKWayGainCalc_8hpp.html" class="m-doc">FMKWayGainCalc.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMKWayGainMgr_8hpp.html" class="m-doc">FMKWayGainMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMPartMgr_8hpp.html" class="m-doc">FMPartMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="FMPmrConfig_8hpp.html" class="m-doc">FMPmrConfig.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="HierNetlist_8hpp.html" class="m-doc">HierNetlist.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="logger_8hpp.html" class="m-doc">logger.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="MidLvlPartMgr_8hpp.html" class="m-doc">MidLvlPartMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="MLMidLvlPartMgr_8hpp.html" class="m-doc">MLMidLvlPartMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="MLPartMgr_8hpp.html" class="m-doc">MLPartMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="moveinfo_8hpp.html" class="m-doc">moveinfo.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="netlist_8hpp.html" class="m-doc">netlist.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="NNPartMgr_8hpp.html" class="m-doc">NNPartMgr.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="PartMgrBase_8hpp.html" class="m-doc">PartMgrBase.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="readwrite_8hpp.html" class="m-doc">readwrite.hpp</a></dt>
-            <dd><span></span></dd>
-            <dt>file <a href="spdlog__example_8hpp.html" class="m-doc">spdlog_example.hpp</a></dt>
-            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a1b6d9fda9ce13b1e6217a06def19a439">
+              int <a href="#a1b6d9fda9ce13b1e6217a06def19a439" class="m-doc-self">total_cost</a>
+            </dt>
+            <dd>Total cost of the best partition found.</dd>
           </dl>
         </section>
       </div>
