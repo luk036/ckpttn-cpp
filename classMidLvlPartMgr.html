@@ -53,18 +53,7 @@
           <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           MidLvlPartMgr <span class="m-thin">class</span>
         </h1>
-        <p>Exhaustive Partition Manager using Middle-Levels Gray Code.</p>
-        <table class="m-table m-fullwidth m-flat">
-          <thead>
-            <tr><th colspan="2">Template parameters</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="width: 1%">Gnl</td>
-              <td>The hypergraph type (must match SimpleNetlist-like interface)</td>
-            </tr>
-          </tbody>
-        </table>
+        <p><span></span></p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -79,7 +68,6 @@
             </li>
           </ul>
         </nav>
-<p><code><a href="classMidLvlPartMgr.html" class="m-doc">MidLvlPartMgr</a></code> enumerates all balanced (or near-balanced) 2-way partitions of a hypergraph&#x27;s modules using the Gray code order of the middle levels graph. Each step flips a single bit — moving one module to the opposite partition — exactly like the FM algorithm&#x27;s move operation, but exhaustively visiting all possible assignments instead of using local search.</p><p>For N modules:</p><ul><li>If N is odd: the middle levels bitstring has length N, visiting all states with floor(N/2) or ceil(N/2) ones.</li><li>If N is even: one dummy module is added (bitstring length N+1). The dummy module&#x27;s bit may float (0 or 1), so all balanced and near-balanced partitions of the N real modules are visited.</li></ul><p>The algorithm starts from the initial partition, traverses the full Hamilton cycle, snapshots the lowest-cost solution that satisfies balance constraints, and restores it.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
@@ -106,10 +94,6 @@
               <span class="m-doc-wrap-bumper">void <a href="#a0376452d6ab1ad9c4caa30b53b15f8ea" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a5813f5fd4bc47eaa9dfa62d301c3bbfe">
-              <span class="m-doc-wrap-bumper">auto <a href="#a5813f5fd4bc47eaa9dfa62d301c3bbfe" class="m-doc-self">compute_total_cost</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) const -&gt; int -&gt; auto</span>
-            </dt>
-            <dd><span></span></dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -118,7 +102,7 @@
             <dt id="a1b6d9fda9ce13b1e6217a06def19a439">
               int <a href="#a1b6d9fda9ce13b1e6217a06def19a439" class="m-doc-self">total_cost</a>
             </dt>
-            <dd>Total cost of the best partition found.</dd>
+            <dd><span></span></dd>
           </dl>
         </section>
       </div>
