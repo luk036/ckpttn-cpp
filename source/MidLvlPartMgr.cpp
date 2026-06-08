@@ -5,12 +5,14 @@
 #include <cstdint>
 #include <ckpttn/midlevel/hamcycle.hpp>
 #include <ckpttn/midlevel/vertex.hpp>
+#include <ckpttn/moveinfo.hpp>
 #include <netlistx/netlist.hpp>
 #include <span>
 #include <vector>
 
 template <typename Gnl>
-MidLvlPartMgr<Gnl>::MidLvlPartMgr(const Gnl& hyprgraph) : hyprgraph{hyprgraph} {}
+MidLvlPartMgr<Gnl>::MidLvlPartMgr(const Gnl& hyprgraph, double bal_tol)
+    : hyprgraph{hyprgraph}, constr_mgr{hyprgraph, bal_tol} {}
 
 template <typename Gnl>
 auto MidLvlPartMgr<Gnl>::compute_total_cost(std::span<const std::uint8_t> part) const -> int {
@@ -43,12 +45,14 @@ void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
     auto best_cost = this->total_cost;
 
     // Initialize current_part from the HamCycle's starting vertex
-    // (half_bits ones at the front, zeros elsewhere)
     auto current_part = std::vector<std::uint8_t>(num_modules, 0);
     for (auto i = 0; i < half_bits && i < num_modules; ++i) {
         current_part[i] = 1;
     }
     auto current_cost = this->compute_total_cost(current_part);
+
+    // Initialize constraint manager with the HamCycle starting state
+    this->constr_mgr.init(current_part);
 
     const auto& hl = this->hyprgraph;
     std::vector<int> init_bits(total_bits, 0);
@@ -62,14 +66,18 @@ void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
         }
         const auto to_part = static_cast<std::uint8_t>(bits[flipped_pos]);
         const auto from_part = static_cast<std::uint8_t>(1 - to_part);
-        const auto v = flipped_pos;
+        const auto v = static_cast<node_t>(flipped_pos);
+        const auto move_info_v = MoveInfoV<node_t>{v, from_part, to_part};
+
+        // Check if the resulting partition satisfies balance constraints
+        const auto legal = this->constr_mgr.check_legal(move_info_v);
 
         int delta = 0;
         for (const auto& net : hl.gr[v]) {
             int count_from = 0;
             int count_to = 0;
             for (const auto& other_v : hl.gr[net]) {
-                if (static_cast<int>(other_v) == v) {
+                if (other_v == v) {
                     continue;
                 }
                 if (current_part[other_v] == from_part) {
@@ -90,8 +98,10 @@ void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
 
         current_cost += delta;
         current_part[v] = to_part;
+        this->constr_mgr.update_move(move_info_v);
 
-        if (current_cost < best_cost) {
+        // Only snapshot when balance constraints are satisfied
+        if (legal == LegalCheck::AllSatisfied && current_cost < best_cost) {
             best_cost = current_cost;
             best_part = current_part;
         }

@@ -11,7 +11,7 @@
 
 TEST_CASE("Test MidLvlPartMgr default") {
     const auto hyprgraph = create_test_netlist();
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hyprgraph};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hyprgraph, 0.45};
     const auto N = hyprgraph.number_of_modules();
     std::vector<std::uint8_t> part(N, 0);
     const auto half = N / 2;
@@ -29,7 +29,7 @@ TEST_CASE("Test MidLvlPartMgr n5") {
     }
     SimpleNetlist hl(std::move(g), M, 1);
 
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hl};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hl, 0.45};
     std::vector<std::uint8_t> part(M, 0);
     for (auto i = 0U; i < M / 2; ++i) {
         part[i] = 1;
@@ -48,7 +48,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n8") {
     }
     SimpleNetlist hl(std::move(g), M, 1);
 
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hl};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hl, 0.45};
     std::vector<std::uint8_t> part(M, 0);
     for (auto i = 0U; i < M / 2; ++i) {
         part[i] = 1;
@@ -67,7 +67,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n11") {
     }
     SimpleNetlist hl(std::move(g), M, 1);
 
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hl};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hl, 0.45};
     std::vector<std::uint8_t> part(M, 0);
     for (auto i = 0U; i < M / 2; ++i) {
         part[i] = 1;
@@ -86,7 +86,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n15") {
     }
     SimpleNetlist hl(std::move(g), M, 1);
 
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hl};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hl, 0.45};
     std::vector<std::uint8_t> part(M, 0);
     for (auto i = 0U; i < M / 2; ++i) {
         part[i] = 1;
@@ -106,7 +106,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n20") {
     SimpleNetlist hl(std::move(g), M, 1);
 
     auto begin = std::chrono::steady_clock::now();
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hl};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hl, 0.45};
     std::vector<std::uint8_t> part(M, 0);
     for (auto i = 0U; i < M / 2; ++i) {
         part[i] = 1;
@@ -129,7 +129,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n25") {
     SimpleNetlist hl(std::move(g), M, 1);
 
     auto begin = std::chrono::steady_clock::now();
-    MidLvlPartMgr<SimpleNetlist> part_mgr{hl};
+    MidLvlPartMgr<SimpleNetlist> part_mgr{hl, 0.45};
     std::vector<std::uint8_t> part(M, 0);
     for (auto i = 0U; i < M / 2; ++i) {
         part[i] = 1;

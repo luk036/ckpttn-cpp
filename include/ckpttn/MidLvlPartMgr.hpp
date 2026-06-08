@@ -4,6 +4,8 @@
 #include <span>
 #include <vector>
 
+#include "FMBiConstrMgr.hpp"
+
 /**
  * @brief Exhaustive Partition Manager using Middle-Levels Gray Code
  *
@@ -21,7 +23,8 @@
  *    partitions of the N real modules are visited.
  *
  * The algorithm starts from the initial partition, traverses the full Hamilton
- * cycle, snapshots the lowest-cost solution, and restores it.
+ * cycle, snapshots the lowest-cost solution that satisfies balance constraints,
+ * and restores it.
  *
  * @tparam Gnl The hypergraph type (must match SimpleNetlist-like interface)
  */
@@ -33,7 +36,7 @@ class MidLvlPartMgr {
     /// @brief Total cost of the best partition found
     int total_cost{};
 
-    explicit MidLvlPartMgr(const Gnl& hyprgraph);
+    MidLvlPartMgr(const Gnl& hyprgraph, double bal_tol);
 
     void optimize(std::span<std::uint8_t> part);
 
@@ -41,4 +44,5 @@ class MidLvlPartMgr {
 
   private:
     const Gnl& hyprgraph;
+    FMBiConstrMgr<Gnl> constr_mgr;
 };

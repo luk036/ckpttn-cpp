@@ -30,9 +30,13 @@ auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph,
     using PartMgr = FMPartMgr<Gnl, GainMgr, ConstrMgr>;
 
     if (hyprgraph.number_of_modules() <= exhaustive_limit) {
-        MidLvlPartMgr<Gnl> mid_mgr(hyprgraph);
+        MidLvlPartMgr<Gnl> mid_mgr(hyprgraph, this->bal_tol);
         mid_mgr.optimize(part);
         this->total_cost = mid_mgr.total_cost;
+        if (auto constr_mgr = FMBiConstrMgr<Gnl>(hyprgraph, this->bal_tol);
+            constr_mgr.final_check(part)) {
+            return LegalCheck::AllSatisfied;
+        }
         return LegalCheck::GetBetter;
     }
 

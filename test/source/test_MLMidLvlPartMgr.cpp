@@ -75,7 +75,7 @@ TEST_CASE("Test MLMidLvl n8 even") {
     for (auto i = 0U; i < M / 2; ++i) { part[i] = 1; }
 
     auto lc = part_mgr.run_Partition<SimpleNetlist>(hl, part);
-    CHECK_EQ(lc, LegalCheck::GetBetter);
+    CHECK_EQ(lc, LegalCheck::AllSatisfied);
     CHECK_EQ(part_mgr.total_cost, 1);
 }
 
@@ -109,7 +109,7 @@ TEST_CASE("Test MLMidLvl n12 even") {
     for (auto i = 0U; i < M / 2; ++i) { part[i] = 1; }
 
     auto lc = part_mgr.run_Partition<SimpleNetlist>(hl, part);
-    CHECK_EQ(lc, LegalCheck::GetBetter);
+    CHECK_EQ(lc, LegalCheck::AllSatisfied);
     CHECK_EQ(part_mgr.total_cost, 1);
 }
 
@@ -125,6 +125,6 @@ TEST_CASE("Test MLMidLvl n11 small") {
     for (auto i = 0U; i < M / 2; ++i) { part[i] = 1; }
 
     auto lc = part_mgr.run_Partition<SimpleNetlist>(hl, part);
-    CHECK_EQ(lc, LegalCheck::GetBetter);
+    CHECK_EQ(lc, LegalCheck::AllSatisfied);
     CHECK_EQ(part_mgr.total_cost, 1);
 }

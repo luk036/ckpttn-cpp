@@ -12,6 +12,7 @@
 #include <string_view>           // for std::string_view
 #include <vector>                // for vector
 
+#include "ckpttn/FMPartMgr.hpp"     // for FMPartMgr
 #include "ckpttn/PartMgrBase.hpp"  // for SimpleNetlist
 
 template <typename Gnl> class FMBiConstrMgr;
