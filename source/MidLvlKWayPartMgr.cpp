@@ -1,7 +1,6 @@
 #include <ckpttn/MidLvlKWayPartMgr.hpp>
 
 #include <ckpttn/FMKWayConstrMgr.hpp>
-#include <ckpttn/MidLvlPartMgr.hpp>
 #include <ckpttn/midlevel/hamcycle.hpp>
 #include <ckpttn/midlevel/vertex.hpp>
 #include <ckpttn/moveinfo.hpp>
@@ -13,32 +12,11 @@
 MidLvlKWayPartMgr::MidLvlKWayPartMgr(double bal_tol, std::uint8_t num_parts)
     : bal_tol_{bal_tol}, num_parts_{num_parts} {}
 
-static auto compute_kway_cost(const SimpleNetlist& hl, std::span<const std::uint8_t> part) -> int {
-    auto cost = 0;
-    for (const auto& net : hl.nets) {
-        auto seen = std::uint8_t{0};
-        for (const auto& v : hl.gr[net]) {
-            seen |= static_cast<std::uint8_t>(1U << part[v]);
-        }
-        auto num_parts = 0;
-        for (auto p = 0U; p < 8U; ++p) {
-            if (seen & (1U << p)) {
-                ++num_parts;
-            }
-        }
-        if (num_parts > 1) {
-            cost += static_cast<int>(hl.get_net_weight(net));
-        }
-    }
-    return cost;
-}
-
 void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                                  const SimpleNetlist& hyprgraph) {
     const auto total_modules = hyprgraph.number_of_modules();
     auto current_part = std::vector<std::uint8_t>(part.begin(), part.end());
 
-    // Create constraint manager for balance tracking
     auto constr_mgr = FMKWayConstrMgr<SimpleNetlist>(hyprgraph, this->bal_tol_, this->num_parts_);
 
     auto improved = true;
@@ -74,11 +52,22 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                     }
                 }
 
-                // Initialize constraint manager to match current partition state
                 constr_mgr.init(current_part);
 
                 auto best_part = init_part;
-                auto best_cost = compute_kway_cost(hyprgraph, current_part);
+                auto best_cost = 0;
+                for (const auto& net : hyprgraph.nets) {
+                    auto seen = std::uint8_t{0};
+                    for (const auto& v : hyprgraph.gr[net]) {
+                        seen |= static_cast<std::uint8_t>(1U << current_part[v]);
+                    }
+                    for (auto p = 0U; p < 8U; ++p) {
+                        if (seen & (1U << p)) {
+                            ++best_cost;
+                            break;
+                        }
+                    }
+                }
 
                 auto local_part = init_part;
                 auto local_cost = best_cost;
@@ -97,34 +86,24 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                     const auto move_info_v = MoveInfoV<SimpleNetlist::node_t>{
                         v, from_part, to_part};
 
-                    // Check balance constraints for this move
                     const auto legal = constr_mgr.check_legal(move_info_v);
 
-                    int delta = 0;
+                    auto delta = 0;
                     for (const auto& net : hl.gr[v]) {
-                        int cnt_from = 0;
-                        int cnt_to = 0;
-                        int cnt_other = 0;
+                        auto cnt_from = 0;
+                        auto cnt_to = 0;
+                        auto cnt_other = 0;
                         for (const auto& w : hl.gr[net]) {
-                            if (w == v) {
-                                continue;
-                            }
-                            if (current_part[w] == from_part) {
-                                ++cnt_from;
-                            } else if (current_part[w] == to_part) {
-                                ++cnt_to;
-                            } else {
-                                ++cnt_other;
-                            }
+                            if (w == v) { continue; }
+                            if (current_part[w] == from_part) { ++cnt_from; }
+                            else if (current_part[w] == to_part) { ++cnt_to; }
+                            else { ++cnt_other; }
                         }
                         const auto wt = static_cast<int>(hl.get_net_weight(net));
-                        const bool before = (cnt_to > 0 || cnt_other > 0);
-                        const bool after = (cnt_from > 0 || cnt_other > 0);
-                        if (!before && after) {
-                            delta += wt;
-                        } else if (before && !after) {
-                            delta -= wt;
-                        }
+                        const auto before = (cnt_to > 0 || cnt_other > 0);
+                        const auto after = (cnt_from > 0 || cnt_other > 0);
+                        if (!before && after) { delta += wt; }
+                        else if (before && !after) { delta -= wt; }
                     }
 
                     local_cost += delta;
@@ -133,7 +112,6 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                         bits[flipped_pos] == 0 ? 0U : 1U);
                     constr_mgr.update_move(move_info_v);
 
-                    // Only snapshot when balance constraints are satisfied
                     if (legal == LegalCheck::AllSatisfied && local_cost < best_cost) {
                         best_cost = local_cost;
                         best_part = local_part;

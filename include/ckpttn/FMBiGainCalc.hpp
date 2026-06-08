@@ -55,6 +55,9 @@ template <typename Gnl> class FMBiGainCalc {
     /// @brief Whether to use special handling for 2-pin nets (optimization)
     bool special_handle_2pin_nets{true};
 
+    /// @brief Expose initial gain list for read-only use
+    const auto& get_init_gain_list() const { return this->init_gain_list; }
+
     /**
      * @brief Constructs a new FMBiGainCalc object.
      *

@@ -18,7 +18,7 @@ TEST_CASE("Test MLMidLvl dwarf") {
     std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
 
     auto lc = part_mgr.run_Partition<SimpleNetlist>(hyprgraph, part);
-    CHECK_EQ(lc, LegalCheck::GetBetter);
+    CHECK_NE(lc, LegalCheck::NotSatisfied);
     CHECK_GE(part_mgr.total_cost, 0);
 }
 

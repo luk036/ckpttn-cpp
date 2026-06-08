@@ -12,8 +12,9 @@ The **middle-levels Gray code** enumerates all balanced 2-way partitions, guaran
 2. 🛡️ **Memory safety** — `reserve()` and `emplace_back()` to prevent VLA→vector pointer invalidation
 3. 🔢 **K-way partitioning** — pairwise exhaustive refinement on the full netlist with `bit_to_module` mapping
 4. 🏗️ **Multi-level K-way** — contraction + FM legalization + exhaustive leaf for ≤ $25K/2$ modules
+5. ⚖️ **Balance-aware exhaustive search** — MidLvl managers track weight balance via `FMConstrMgr`; snapshot only when constraints satisfied. Gain computation uses `FMBiGainCalc` directly (no FM bucket infrastructure)
 
-**68 tests pass** on Windows + macOS, covering IBM, p1, Yosys, and unit benchmarks.
+**65 tests pass** on Windows + macOS, covering IBM, p1, Yosys, and unit benchmarks.
 
 ---
 
@@ -167,13 +168,13 @@ If `cnt_other > 0`, net is already cut externally → $\Delta = 0$. Only nets en
 ```cpp
 class MidLvlKWayPartMgr {
     void optimize(part, hyprgraph) {
+        auto constr_mgr = FMKWayConstrMgr(...);
         for (pass < max_passes) {
             for (pair (i, j) of K parts) {
                 selected = modules where part[v] == i or j;
                 if (selected.size() <= 1 || selected.size() > 15) continue;
-                // bit_to_module: HamCycle bit pos → module index
-                init_bits = [half=1, half=0]; // balanced start
-                // visitor: use cnt_from/i, cnt_to/j, cnt_other/fixed
+                constr_mgr.init(current_part);
+                // visitor: check_legal → update_move, snapshot only if AllSatisfied
                 MidHamCycle(start_vertex, -1, visit_fn);
                 apply best partition found;
             }
@@ -260,7 +261,7 @@ class: nord-light, middle, center
 | MLMidLvl | 50 | 0.40s | 786 |
 | MLPartMgr | 50 | 0.39s | 786 |
 
-**Key insight**: Both solvers produce identical results — the cost difference (564→786) comes from the **contraction**, not the solver. ibm01's hypergraph structure doesn't contract well.
+**Key insight**: Both solvers produce identical results — the cost difference (564→786) comes from the **contraction**, not the solver. ibm01's hypergraph structure doesn't contract well. The MidLvl managers now additionally verify weight balance via `FMConstrMgr` before snapshotting, matching FM's constraint discipline.
 
 ---
 
@@ -272,9 +273,9 @@ class: nord-light, middle, center
 
 | Category | Count |
 |----------|-------|
-| MidLvlPartMgr (exhaustive) | 7 |
-| MLMidLvlPartMgr (multi-level 2-way) | 8 |
-| MidLvlKWayPartMgr (pairwise K-way) | 1 |
+| MidLvlPartMgr (exhaustive + balance-aware) | 7 |
+| MLMidLvlPartMgr (multi-level 2-way + balance-aware) | 8 |
+| MidLvlKWayPartMgr (pairwise K-way + balance-aware) | 1 |
 | MLMidLvlKWayPartMgr (multi-level K-way) | 2 |
 | FM bi-partition | 5 |
 | FM K-way | 3 |
@@ -295,7 +296,9 @@ class: nord-light, middle, center
 | Decision | Rationale |
 |----------|----------|
 | Leaf check **before** legalization | Exhaustive visits all balanced partitions |
-| Return `GetBetter` at leaf | Honest: can't confirm FM balance constraints |
+| Return `AllSatisfied` when weight-balanced | `FMConstrMgr.final_check()` confirms leaf meets tolerance |
+| Balance tracking via `FMConstrMgr` | Same constraint manager as FM, incremental `update_move` per flip |
+| Gain via `FMBiGainCalc` (no FM buckets) | `current_gain[]` updated by `update_move_*_net()` deltas; no locking or waiting lists |
 | Contraction guard ≤ 2/3 | Prevents 14-level ibm01 recursion |
 | `max_pair_modules = 15` | ~12,870 states, instant |
 | Full netlist (no sub-graph) | Correct K-way cost: `cnt_other` counts all fixed pins |
@@ -309,10 +312,12 @@ class: nord-light, middle, center
 
 | File | Purpose |
 |------|---------|
-| `MidLvlPartMgr` | Exhaustive 2-way (HamCycle + visitor) |
+| `MidLvlPartMgr` | Exhaustive 2-way (HamCycle + `FMBiGainCalc` gains + `FMBiConstrMgr` balance) |
 | `MLMidLvlPartMgr` | Multi-level 2-way (contract → exhaustive leaf) |
-| `MidLvlKWayPartMgr` | K-way pairwise (full netlist + `cnt_other`) |
+| `MidLvlKWayPartMgr` | K-way pairwise (full netlist + `cnt_other` + `FMKWayConstrMgr` balance) |
 | `MLMidLvlKWayPartMgr` | Multi-level K-way (contract → exhaustive K-way leaf) |
+| `FMBiGainCalc` / `FMKWayGainCalc` | Gain computation for initial gains and per-flip neighbor deltas |
+| `FMConstrMgr` / `FMBiConstrMgr` / `FMKWayConstrMgr` | Incremental weight-balance tracking, same as FM |
 | `hamcycle/vertex/tree` | Muetze-Nummenpalo algorithm (MSVC-adapted) |
 
 ---
@@ -320,9 +325,10 @@ class: nord-light, middle, center
 ### Limitations & Future Work 🚧
 
 - **Exponential**: only feasible for ≤ 25 modules (2-way) or ≤ 75 modules (K-way, distributed across pairs)
-- **Netlist scan per flip**: Each flip scans all nets of moved module; FMKWayGainCalc could pre-compute gains
+- **Netlist scan per flip** (K-way only): KWay gain manager has pre-existing heap issues; manual delta retained for K-way
+- **2-way uses FMBiGainCalc**: Gains computed and tracked in a local vector; no FM bucket/lock/waiting-list overhead
 - **ibm contraction**: Contraction degrades quality on ibm01 (564→786); per-benchmark limitsize tuning needed
-- **Balance tolerance**: Exhaustive assumes exactly balanced (weight $n$ or $n+1$)
+- **Balance tolerance**: Exhaustive assumes exactly balanced (weight $n$ or $n+1$); `FMConstrMgr` filters imbalanced snapshots
 - **K-way convergence**: 5 passes may not be enough for all cases; could add convergence check
 
 ---
