@@ -1,9 +1,8 @@
-#include <ckpttn/MLMidLvlPartMgr.hpp>
-
 #include <ckpttn/FMBiConstrMgr.hpp>
 #include <ckpttn/FMBiGainMgr.hpp>
 #include <ckpttn/FMPartMgr.hpp>
 #include <ckpttn/HierNetlist.hpp>
+#include <ckpttn/MLMidLvlPartMgr.hpp>
 #include <ckpttn/MidLvlPartMgr.hpp>
 #include <cstdint>
 #include <iostream>
@@ -22,8 +21,8 @@ MLMidLvlPartMgr::MLMidLvlPartMgr(double bal_tol, std::uint8_t num_parts)
     : bal_tol{bal_tol}, num_parts{num_parts} {}
 
 template <typename Gnl>
-auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph,
-                                     std::span<std::uint8_t> part) -> LegalCheck {
+auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part)
+    -> LegalCheck {
     using GainMgr = FMBiGainMgr<Gnl>;
     using ConstrMgr = FMBiConstrMgr<Gnl>;
     using PartMgr = FMPartMgr<Gnl, GainMgr, ConstrMgr>;
@@ -74,5 +73,6 @@ auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph,
     return LegalCheck::AllSatisfied;
 }
 
-template auto MLMidLvlPartMgr::run_Partition<SimpleNetlist>(
-    const SimpleNetlist& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+template auto MLMidLvlPartMgr::run_Partition<SimpleNetlist>(const SimpleNetlist& hyprgraph,
+                                                            std::span<std::uint8_t> part)
+    -> LegalCheck;

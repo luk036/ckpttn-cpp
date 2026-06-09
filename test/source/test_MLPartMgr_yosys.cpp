@@ -19,10 +19,10 @@ TEST_CASE("Test MLBiPartMgr sphere_netlist") {
     const auto bal_tol = 0.3;
     MLPartMgr part_mgr{bal_tol};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_Partition<
-        SimpleNetlist,
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-        hyprgraph, part);
+    auto legal_check
+        = part_mgr.run_Partition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
@@ -35,10 +35,10 @@ TEST_CASE("Test MLBiPartMgr sphere3hopf_netlist") {
     const auto bal_tol = 0.3;
     MLPartMgr part_mgr{bal_tol};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_Partition<
-        SimpleNetlist,
-        FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-        hyprgraph, part);
+    auto legal_check
+        = part_mgr.run_Partition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);

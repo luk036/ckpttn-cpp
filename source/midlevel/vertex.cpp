@@ -3,19 +3,17 @@
  * Original license: GPL v2+
  */
 
-#include <ckpttn/midlevel/vertex.hpp>
 #include <algorithm>
 #include <cassert>
+#include <ckpttn/midlevel/vertex.hpp>
 #include <vector>
 
-MidVertex::MidVertex(const std::vector<int> &x) : bits_(x) {
+MidVertex::MidVertex(const std::vector<int>& x) : bits_(x) {
     assert(x.size() % 2 == 1);
     assert(x.size() >= 3);
 }
 
-void MidVertex::rev_inv() {
-    rev_inv(0, static_cast<int>(this->bits_.size()) - 2);
-}
+void MidVertex::rev_inv() { rev_inv(0, static_cast<int>(this->bits_.size()) - 2); }
 
 void MidVertex::rev_inv(int left, int right) {
     for (int i = left; i <= right; ++i) {
@@ -46,10 +44,10 @@ int MidVertex::first_dive() const {
     return -1;
 }
 
-void MidVertex::steps_height(std::vector<std::vector<int>> &usteps_neg,
-                             std::vector<std::vector<int>> &usteps_pos,
-                             std::vector<std::vector<int>> &dsteps_neg,
-                             std::vector<std::vector<int>> &dsteps_pos) const {
+void MidVertex::steps_height(std::vector<std::vector<int>>& usteps_neg,
+                             std::vector<std::vector<int>>& usteps_pos,
+                             std::vector<std::vector<int>>& dsteps_neg,
+                             std::vector<std::vector<int>>& dsteps_pos) const {
     usteps_neg.resize(0);
     usteps_pos.resize(0);
     dsteps_neg.resize(0);
@@ -107,13 +105,11 @@ int MidVertex::count_ones() const {
 }
 
 bool MidVertex::is_first_vertex() const {
-    return ((count_flaws() == 0) &&
-            (count_ones() == static_cast<int>(this->bits_.size()) / 2));
+    return ((count_flaws() == 0) && (count_ones() == static_cast<int>(this->bits_.size()) / 2));
 }
 
 bool MidVertex::is_last_vertex() const {
-    return ((count_flaws() == 1) &&
-            (count_ones() == static_cast<int>(this->bits_.size()) / 2));
+    return ((count_flaws() == 1) && (count_ones() == static_cast<int>(this->bits_.size()) / 2));
 }
 
 int MidVertex::to_first_vertex() {
@@ -126,24 +122,18 @@ int MidVertex::to_first_vertex() {
         this->bits_[b + 1] = 0;
         return (2 * b + 2);
     } else {
-        std::vector<std::vector<int>> usteps_neg, dsteps_neg, usteps_pos,
-            dsteps_pos;
+        std::vector<std::vector<int>> usteps_neg, dsteps_neg, usteps_pos, dsteps_pos;
         steps_height(usteps_neg, usteps_pos, dsteps_neg, dsteps_pos);
         bool min_zero = (usteps_neg.size() == 0);
         bool unique_min;
-        unique_min = (min_zero ? (usteps_pos.front().size() == 1)
-                               : (usteps_neg.back().size() == 1));
-        bool middle_level = (2 * count_ones() + 1 ==
-                             static_cast<int>(this->bits_.size()));
+        unique_min
+            = (min_zero ? (usteps_pos.front().size() == 1) : (usteps_neg.back().size() == 1));
+        bool middle_level = (2 * count_ones() + 1 == static_cast<int>(this->bits_.size()));
         int to;
         if ((!unique_min && middle_level) || (unique_min && !middle_level)) {
-            to = (min_zero ? usteps_pos.front().front()
-                           : usteps_neg.back().front()) -
-                 1;
+            to = (min_zero ? usteps_pos.front().front() : usteps_neg.back().front()) - 1;
         } else {
-            to = (min_zero ? usteps_pos.front().back()
-                           : usteps_neg.back().back()) -
-                 1;
+            to = (min_zero ? usteps_pos.front().back() : usteps_neg.back().back()) - 1;
         }
         // shift this->bits_[0,to] to the right by one
         for (int i = to; i >= 0; --i) {
@@ -187,7 +177,7 @@ int MidVertex::to_last_vertex() {
     return d;
 }
 
-void MidVertex::compute_flip_seq_0(std::vector<int> &seq, bool flip) {
+void MidVertex::compute_flip_seq_0(std::vector<int>& seq, bool flip) {
     assert(is_first_vertex());
 
     if (!flip) {
@@ -231,8 +221,8 @@ void MidVertex::compute_flip_seq_0(std::vector<int> &seq, bool flip) {
         this->bits_[1] = 0;
         this->bits_[2] = 1;
 
-        assert((seq[0] == b) && (seq[1] == 0) && (seq[2] == 2) &&
-               (seq[3] == 1) && (seq[4] == 0) && (seq[5] == 2));
+        assert((seq[0] == b) && (seq[1] == 0) && (seq[2] == 2) && (seq[3] == 1) && (seq[4] == 0)
+               && (seq[5] == 2));
         seq[0] = b;
         seq[1] = 0;
         seq[2] = 1;
@@ -242,14 +232,13 @@ void MidVertex::compute_flip_seq_0(std::vector<int> &seq, bool flip) {
     }
 }
 
-void MidVertex::compute_flip_seq_0_rec(std::vector<int> &seq, int &idx, int left,
-                                       int right, int *next_step) const {
+void MidVertex::compute_flip_seq_0_rec(std::vector<int>& seq, int& idx, int left, int right,
+                                       int* next_step) const {
     const int length = right - left + 1;
     if (length <= 0) {
         return;
     }
-    assert((this->bits_[left] == 1) && (this->bits_[right] == 0) &&
-           (length % 2 == 0));
+    assert((this->bits_[left] == 1) && (this->bits_[right] == 0) && (length % 2 == 0));
 
     const int m = next_step[left];
     assert((m <= right) && (this->bits_[m] == 0));
@@ -261,7 +250,7 @@ void MidVertex::compute_flip_seq_0_rec(std::vector<int> &seq, int &idx, int left
     compute_flip_seq_0_rec(seq, idx, m + 1, right, next_step);
 }
 
-void MidVertex::compute_flip_seq_1(std::vector<int> &seq) const {
+void MidVertex::compute_flip_seq_1(std::vector<int>& seq) const {
     assert(is_last_vertex());
 
     const int b = first_dive();
@@ -278,14 +267,13 @@ void MidVertex::compute_flip_seq_1(std::vector<int> &seq) const {
     seq[idx++] = b;
 }
 
-void MidVertex::compute_flip_seq_1_rec(std::vector<int> &seq, int &idx, int left,
-                                       int right, int *next_step) const {
+void MidVertex::compute_flip_seq_1_rec(std::vector<int>& seq, int& idx, int left, int right,
+                                       int* next_step) const {
     const int length = right - left + 1;
     if (length <= 0) {
         return;
     }
-    assert((this->bits_[left] == 1) && (this->bits_[right] == 0) &&
-           (length % 2 == 0));
+    assert((this->bits_[left] == 1) && (this->bits_[right] == 0) && (length % 2 == 0));
 
     const int m = next_step[left];
     seq[idx++] = m;
@@ -296,7 +284,7 @@ void MidVertex::compute_flip_seq_1_rec(std::vector<int> &seq, int &idx, int left
     compute_flip_seq_1_rec(seq, idx, m + 1, right, next_step);
 }
 
-void MidVertex::aux_pointers(int a, int b, int *next_step) const {
+void MidVertex::aux_pointers(int a, int b, int* next_step) const {
     assert((a == b + 1) || ((this->bits_[a] == 1) && (this->bits_[b] == 0)));
     std::vector<int> left_ustep_height(b - a + 1);
     int height = 0;
@@ -316,14 +304,14 @@ void MidVertex::aux_pointers(int a, int b, int *next_step) const {
     assert(height == 0);
 }
 
-std::ostream &operator<<(std::ostream &os, const MidVertex &v) {
+std::ostream& operator<<(std::ostream& os, const MidVertex& v) {
     for (int i = 0; i < v.size(); ++i) {
         os << v[i];
     }
     return os;
 }
 
-bool bitstrings_less_than(int *x, int *y, int length) {
+bool bitstrings_less_than(int* x, int* y, int length) {
     for (int i = 0; i < length; ++i) {
         if (x[i] < y[i]) {
             return true;
@@ -334,7 +322,7 @@ bool bitstrings_less_than(int *x, int *y, int length) {
     return false;
 }
 
-bool bitstrings_equal(int *x, int *y, int length) {
+bool bitstrings_equal(int* x, int* y, int length) {
     for (int i = 0; i < length; ++i) {
         if (x[i] != y[i]) {
             return false;

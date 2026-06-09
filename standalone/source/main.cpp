@@ -7,8 +7,6 @@
 #include <ckpttn/FMPartMgr.hpp>
 #include <ckpttn/MLPartMgr.hpp>
 #include <ckpttn/NNPartMgr.hpp>
-#include <netlistx/readwrite.hpp>
-#include <xnetwork/thread_pool.hpp>
 #include <cstdint>
 #include <cxxopts.hpp>
 #include <fstream>
@@ -16,9 +14,11 @@
 #include <iostream>
 #include <limits>
 #include <netlistx/netlist.hpp>
+#include <netlistx/readwrite.hpp>
 #include <random>
 #include <string>
 #include <xnetwork/classes/graph.hpp>
+#include <xnetwork/thread_pool.hpp>
 
 using graph_t = xnetwork::SimpleGraph;
 using index_t = std::uint32_t;
@@ -94,9 +94,9 @@ auto run_nn_kway_partition(const SimpleNetlist& hyprgraph, double balance_tol,
     return ml_mgr.total_cost;
 }
 
-template <typename Gen>
-auto random_init_part(std::span<std::uint8_t> part, const SimpleNetlist& hyprgraph,
-                      std::uint8_t num_parts, Gen& gen) -> void {
+template <typename Gen> auto random_init_part(std::span<std::uint8_t> part,
+                                              const SimpleNetlist& hyprgraph,
+                                              std::uint8_t num_parts, Gen& gen) -> void {
     std::uniform_int_distribution<int> dist(0, num_parts - 1);
     for (index_t i = 0; i < hyprgraph.number_of_modules(); ++i) {
         if (!hyprgraph.module_fixed.contains(i)) {
@@ -270,9 +270,8 @@ Compatible with hMetis and KaHyPar CLI.
         std::cerr << "Reading hypergraph from " << hypergraph_file << "...\n";
     }
 
-    auto hyprgraph = use_yosys 
-        ? read_yosys_json(hypergraph_file) 
-        : read_hypergraph(hypergraph_file, input_format);
+    auto hyprgraph = use_yosys ? read_yosys_json(hypergraph_file)
+                               : read_hypergraph(hypergraph_file, input_format);
 
     if (!fixed_file.empty()) {
         auto fix_fs = std::ifstream{fixed_file};
@@ -320,52 +319,49 @@ Compatible with hMetis and KaHyPar CLI.
         const auto start_seed = seed != 0 ? seed : std::random_device{}();
         auto local_gen = std::mt19937{start_seed};
         random_init_part(best_part, hyprgraph, static_cast<std::uint8_t>(k), local_gen);
-        best_cost = k == 2
-            ? (use_recursive
-                   ? run_binary_partition(hyprgraph, config.balance_tolerance, best_part)
-                   : run_nn_binary_partition(hyprgraph, config.balance_tolerance, best_part))
-            : (use_recursive
-                   ? run_kway_partition(hyprgraph, config.balance_tolerance, best_part,
-                                        static_cast<std::uint8_t>(k))
-                   : run_nn_kway_partition(hyprgraph, config.balance_tolerance, best_part,
-                                           static_cast<std::uint8_t>(k)));
+        best_cost
+            = k == 2
+                  ? (use_recursive
+                         ? run_binary_partition(hyprgraph, config.balance_tolerance, best_part)
+                         : run_nn_binary_partition(hyprgraph, config.balance_tolerance, best_part))
+                  : (use_recursive
+                         ? run_kway_partition(hyprgraph, config.balance_tolerance, best_part,
+                                              static_cast<std::uint8_t>(k))
+                         : run_nn_kway_partition(hyprgraph, config.balance_tolerance, best_part,
+                                                 static_cast<std::uint8_t>(k)));
     } else {
         xnetwork::thread_pool pool(num_starts);
         std::vector<std::future<std::pair<int, std::vector<std::uint8_t>>>> futures;
         futures.reserve(num_starts);
 
         for (auto start = 0U; start < num_starts; ++start) {
-            const auto start_seed
-                = seed != 0 ? seed + start * 104729U : std::random_device{}();
-            futures.emplace_back(pool.enqueue(
-                [&hyprgraph, &config, k, use_recursive, start_seed, num_modules]()
-                    -> std::pair<int, std::vector<std::uint8_t>> {
-                    auto local_gen = std::mt19937{start_seed};
-                    auto local_part = std::vector<std::uint8_t>(num_modules, 0);
-                    random_init_part(local_part, hyprgraph, static_cast<std::uint8_t>(k),
-                                     local_gen);
-                    const auto local_cost
-                        = k == 2
-                            ? (use_recursive
-                                   ? run_binary_partition(hyprgraph, config.balance_tolerance,
-                                                          local_part)
-                                   : run_nn_binary_partition(hyprgraph,
-                                                             config.balance_tolerance, local_part))
-                            : (use_recursive
-                                   ? run_kway_partition(hyprgraph, config.balance_tolerance,
-                                                        local_part, static_cast<std::uint8_t>(k))
-                                   : run_nn_kway_partition(hyprgraph, config.balance_tolerance,
-                                                           local_part,
-                                                           static_cast<std::uint8_t>(k)));
-                    return {local_cost, std::move(local_part)};
-                }));
+            const auto start_seed = seed != 0 ? seed + start * 104729U : std::random_device{}();
+            futures.emplace_back(pool.enqueue([&hyprgraph, &config, k, use_recursive, start_seed,
+                                               num_modules]()
+                                                  -> std::pair<int, std::vector<std::uint8_t>> {
+                auto local_gen = std::mt19937{start_seed};
+                auto local_part = std::vector<std::uint8_t>(num_modules, 0);
+                random_init_part(local_part, hyprgraph, static_cast<std::uint8_t>(k), local_gen);
+                const auto local_cost
+                    = k == 2
+                          ? (use_recursive ? run_binary_partition(
+                                                 hyprgraph, config.balance_tolerance, local_part)
+                                           : run_nn_binary_partition(
+                                                 hyprgraph, config.balance_tolerance, local_part))
+                          : (use_recursive
+                                 ? run_kway_partition(hyprgraph, config.balance_tolerance,
+                                                      local_part, static_cast<std::uint8_t>(k))
+                                 : run_nn_kway_partition(hyprgraph, config.balance_tolerance,
+                                                         local_part, static_cast<std::uint8_t>(k)));
+                return {local_cost, std::move(local_part)};
+            }));
         }
 
         for (auto start = 0U; start < num_starts; ++start) {
             auto [local_cost, local_part] = futures[start].get();
             if (verbose) {
-                std::cerr << "  Start " << start + 1 << '/' << num_starts
-                          << " cost: " << local_cost << '\n';
+                std::cerr << "  Start " << start + 1 << '/' << num_starts << " cost: " << local_cost
+                          << '\n';
             }
             if (local_cost < best_cost) {
                 best_cost = local_cost;
@@ -376,11 +372,12 @@ Compatible with hMetis and KaHyPar CLI.
     auto part = std::move(best_part);
 
     {
-        const auto balanced = (k == 2)
-            ? FMBiConstrMgr<SimpleNetlist>(hyprgraph, config.balance_tolerance).final_check(part)
-            : FMKWayConstrMgr<SimpleNetlist>(hyprgraph, config.balance_tolerance,
-                                             static_cast<std::uint8_t>(k))
-                  .final_check(part);
+        const auto balanced
+            = (k == 2) ? FMBiConstrMgr<SimpleNetlist>(hyprgraph, config.balance_tolerance)
+                             .final_check(part)
+                       : FMKWayConstrMgr<SimpleNetlist>(hyprgraph, config.balance_tolerance,
+                                                        static_cast<std::uint8_t>(k))
+                             .final_check(part);
         if (!balanced) {
             std::cerr << "Warning: final partition does not satisfy the balance constraint\n";
         }

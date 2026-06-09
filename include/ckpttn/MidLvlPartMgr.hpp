@@ -6,8 +6,7 @@
 #include "FMBiConstrMgr.hpp"
 #include "FMBiGainCalc.hpp"
 
-template <typename Gnl>
-class MidLvlPartMgr {
+template <typename Gnl> class MidLvlPartMgr {
   public:
     using node_t = typename Gnl::node_t;
 

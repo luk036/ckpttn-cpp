@@ -1,9 +1,8 @@
 #pragma once
 
 #include <cstdint>
-#include <span>
-
 #include <netlistx/netlist.hpp>
+#include <span>
 
 class MidLvlKWayPartMgr {
   public:

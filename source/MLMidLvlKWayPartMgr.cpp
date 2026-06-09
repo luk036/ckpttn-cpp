@@ -1,10 +1,9 @@
-#include <ckpttn/MLMidLvlKWayPartMgr.hpp>
-
 #include <ckpttn/FMConstrMgr.hpp>
 #include <ckpttn/FMKWayConstrMgr.hpp>
 #include <ckpttn/FMKWayGainMgr.hpp>
 #include <ckpttn/FMPartMgr.hpp>
 #include <ckpttn/HierNetlist.hpp>
+#include <ckpttn/MLMidLvlKWayPartMgr.hpp>
 #include <ckpttn/MidLvlKWayPartMgr.hpp>
 #include <cstdint>
 #include <iostream>
@@ -22,8 +21,7 @@ extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
 MLMidLvlKWayPartMgr::MLMidLvlKWayPartMgr(double bal_tol, std::uint8_t num_parts)
     : bal_tol_{bal_tol}, num_parts_{num_parts} {}
 
-void MLMidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
-                                   const SimpleNetlist& hyprgraph) {
+void MLMidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part, const SimpleNetlist& hyprgraph) {
     using GainMgr = FMKWayGainMgr<SimpleNetlist>;
     using ConstrMgr = FMKWayConstrMgr<SimpleNetlist>;
     using PartMgr = FMPartMgr<SimpleNetlist, GainMgr, ConstrMgr>;
@@ -59,8 +57,7 @@ void MLMidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
 
     if (hyprgraph.number_of_modules() >= this->limitsize_) {
         try {
-            const auto hgr2
-                = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
+            const auto hgr2 = create_contracted_subgraph(hyprgraph, py::set<node_t>{});
             if (hgr2->number_of_modules() * 3 / 2 < hyprgraph.number_of_modules()) {
                 auto part2 = std::vector<std::uint8_t>(hgr2->number_of_modules(), 0);
                 hgr2->projection_up(part, part2);

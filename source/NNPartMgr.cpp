@@ -146,7 +146,7 @@ void NNPartMgr<Gnl, GainMgr, ConstrMgr>::optimize(std::span<std::uint8_t> part) 
 #include <xnetwork/classes/graph.hpp>
 
 template class NNPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>,
-                           FMKWayConstrMgr<SimpleNetlist>>;
+                         FMKWayConstrMgr<SimpleNetlist>>;
 
 #include <ckpttn/FMBiConstrMgr.hpp>  // for FMBiConstrMgr
 #include <ckpttn/FMBiGainMgr.hpp>    // for FMBiGainMgr

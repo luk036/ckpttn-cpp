@@ -113,8 +113,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n20") {
     }
 
     part_mgr.optimize(part);
-    auto sec = std::chrono::duration<double>(
-        std::chrono::steady_clock::now() - begin).count();
+    auto sec = std::chrono::duration<double>(std::chrono::steady_clock::now() - begin).count();
     std::cout << "n20  time=" << sec << "s\n";
     CHECK_EQ(part_mgr.total_cost, 1);
 }
@@ -136,11 +135,7 @@ TEST_CASE("Test MidLvlPartMgr optimize n25") {
     }
 
     part_mgr.optimize(part);
-    auto sec = std::chrono::duration<double>(
-        std::chrono::steady_clock::now() - begin).count();
+    auto sec = std::chrono::duration<double>(std::chrono::steady_clock::now() - begin).count();
     std::cout << "n25  time=" << sec << "s\n";
     CHECK_EQ(part_mgr.total_cost, 1);
 }
-
-
-

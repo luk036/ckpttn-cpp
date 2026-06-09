@@ -16,15 +16,17 @@
  */
 
 #include "tree.hpp"
-#include "vertex.hpp"
+
 #include <algorithm>
 #include <cassert>
 #include <cstring>
 #include <list>
 #include <vector>
 
-Tree::Tree(const Vertex &x) {
-    std::vector<int> xv = x.get_bits(); // extract bitstring representation
+#include "vertex.hpp"
+
+Tree::Tree(const Vertex& x) {
+    std::vector<int> xv = x.get_bits();  // extract bitstring representation
     assert(xv.size() % 2 == 1);
 
     this->root_ = 0;
@@ -32,8 +34,8 @@ Tree::Tree(const Vertex &x) {
     this->children_.resize(this->num_vertices_);
     this->parent_.resize(num_vertices_, 0);
 
-    int u = this->root_; // the current vertex
-    int n = 1;     // the number of vertices created so far
+    int u = this->root_;  // the current vertex
+    int n = 1;            // the number of vertices created so far
     int height = 0;
     for (int i = 0; i < xv.size() - 1; ++i) {
         if (x[i] == 1) {
@@ -100,8 +102,8 @@ bool Tree::is_tau_preimage() const {
 //   /|x
 //    y
 bool Tree::is_tau_image() const {
-    if ((this->num_vertices_ < 3) || (num_children(this->root_) < 2) ||
-        (num_children(ith_child(root_, 0)) > 0)) {
+    if ((this->num_vertices_ < 3) || (num_children(this->root_) < 2)
+        || (num_children(ith_child(root_, 0)) > 0)) {
         return false;
     }
     return true;
@@ -130,7 +132,7 @@ void Tree::move_leaf(int leaf, int new_parent, int pos) {
     // search through the children of the current parent
     for (std::list<int>::iterator it = this->children_[old_parent].begin();
          it != this->children_[old_parent].end(); ++it) {
-        if (*it == leaf) { // remove this child
+        if (*it == leaf) {  // remove this child
             this->children_[old_parent].erase(it);
             break;
         }
@@ -165,8 +167,7 @@ void Tree::rotate_children() { rotate_children(1); }
 void Tree::rotate_children(int k) {
     std::list<int>::iterator it = this->children_[root_].begin();
     std::advance(it, k);
-    std::rotate(this->children_[root_].begin(), it,
-                this->children_[root_].end());
+    std::rotate(this->children_[root_].begin(), it, this->children_[root_].end());
 }
 
 bool Tree::flip_tree() {
@@ -178,15 +179,15 @@ bool Tree::flip_tree() {
         if (is_flip_tree_tau()) {
             return true;
         }
-        tau(); // undo tau^{-1}
+        tau();  // undo tau^{-1}
     }
     return false;
 }
 
 void Tree::root_canonically() {
-    int c1, c2; // center vertices
+    int c1, c2;  // center vertices
     compute_center(c1, c2);
-    if (c2 != -1) { // centers are different
+    if (c2 != -1) {  // centers are different
         // compute bitstring representation x1 when rooting
         // the tree at c1 such that c2 is the leftmost child
         const int num_bits = 2 * (this->num_vertices_ - 1);
@@ -212,7 +213,7 @@ void Tree::root_canonically() {
             rotate_children(num_children(this->root_) - 1);
             assert((this->root_ == c1) && (ith_child(root_, 0) == c2));
         }
-    } else { // centers are the same
+    } else {  // centers are the same
         // root at the center and compute bitstring representation
         rotate_to_vertex(c1);
         const int num_bits = 2 * (this->num_vertices_ - 1);
@@ -227,7 +228,7 @@ void Tree::root_canonically() {
         for (int i = 0; i < num_bits; ++i) {
             if (x[i] == 1) {
                 ++depth;
-            } else { // x[i] == 0
+            } else {  // x[i] == 0
                 --depth;
             }
             subtree_count[i] = c;
@@ -249,11 +250,11 @@ void Tree::root_canonically() {
     }
 }
 
-void Tree::compute_center(int &c1, int &c2) const {
+void Tree::compute_center(int& c1, int& c2) const {
     // set vertex degrees and store leaves
     std::vector<int> degs(num_vertices_, 0);
     std::vector<int> leaves(num_vertices_,
-                            0); // for sure this many entries will be enough
+                            0);  // for sure this many entries will be enough
     int num_leaves = 0;
     for (int i = 0; i < num_vertices_; ++i) {
         degs[i] = deg(i);
@@ -273,19 +274,17 @@ void Tree::compute_center(int &c1, int &c2) const {
             for (std::list<int>::const_iterator it = this->children_[u].begin();
                  it != this->children_[u].end(); ++it) {
                 --degs[*it];
-                if (degs[*it] == 1) { // remember leaves for the next round
-                    leaves[num_new_leaves++] =
-                        *it; // we can fill the leaves for
-                             // the next round into the same
-                             // vector from the beginning,
-                             // as the number of leaves
-                             // decreases in every round
+                if (degs[*it] == 1) {                // remember leaves for the next round
+                    leaves[num_new_leaves++] = *it;  // we can fill the leaves for
+                                                     // the next round into the same
+                                                     // vector from the beginning,
+                                                     // as the number of leaves
+                                                     // decreases in every round
                 }
             }
             if (u != this->root_) {
                 --degs[this->parent_[u]];
-                if (degs[this->parent_[u]] ==
-                    1) { // remember leaves for the next round
+                if (degs[this->parent_[u]] == 1) {  // remember leaves for the next round
                     leaves[num_new_leaves++] = this->parent_[u];
                 }
             }
@@ -332,7 +331,7 @@ bool Tree::is_flip_tree_tau() {
             v = ith_child(root_, 0);
         };
     } else {
-        if (has_thin_leaf()) { // tree should not have thin leaves
+        if (has_thin_leaf()) {  // tree should not have thin leaves
             return false;
         }
         v = ith_child(root_, 0);
@@ -374,9 +373,8 @@ bool Tree::is_flip_tree_tau() {
 }
 
 bool Tree::is_star() const {
-    if ((this->num_vertices_ <= 3) ||
-        (deg(this->root_) == this->num_vertices_ - 1) ||
-        (deg(ith_child(root_, 0)) == this->num_vertices_ - 1)) {
+    if ((this->num_vertices_ <= 3) || (deg(this->root_) == this->num_vertices_ - 1)
+        || (deg(ith_child(root_, 0)) == this->num_vertices_ - 1)) {
         return true;
     }
     return false;
@@ -397,10 +395,9 @@ bool Tree::is_light_dumbbell() const {
 }
 
 bool Tree::is_thin_leaf(int u) const {
-    if (deg(u) > 1)
-        return false;
-    if (((u == this->root_) && (deg(ith_child(u, 0)) == 2)) ||
-        ((u != this->root_) && (deg(this->parent_[u]) == 2))) {
+    if (deg(u) > 1) return false;
+    if (((u == this->root_) && (deg(ith_child(u, 0)) == 2))
+        || ((u != this->root_) && (deg(this->parent_[u]) == 2))) {
         return true;
     } else {
         return false;
@@ -434,7 +431,7 @@ void Tree::to_bitstring(int x[]) const {
     to_bitstring_rec(x, root_, pos);
 }
 
-void Tree::to_bitstring_rec(int x[], int u, int &pos) const {
+void Tree::to_bitstring_rec(int x[], int u, int& pos) const {
     if (num_children(u) == 0) {
         return;
     } else {
@@ -457,7 +454,7 @@ int Tree::min_string_rotation(int x[], int length) {
     std::memcpy(xx + length, x, sizeof(int) * length);
     // failure function
     std::vector<int> fail(2 * length, -1);
-    int k = 0; // lexicographically smallest starting position found so far
+    int k = 0;  // lexicographically smallest starting position found so far
     for (int j = 1; j < 2 * length; ++j) {
         const int xj = xx[j];
         int i = fail[j - k - 1];

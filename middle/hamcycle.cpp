@@ -16,12 +16,14 @@
  */
 
 #include "hamcycle.hpp"
-#include "tree.hpp"
-#include "vertex.hpp"
+
 #include <cassert>
 #include <vector>
 
-HamCycle::HamCycle(const Vertex &x, long long limit, visit_f_t visit_f)
+#include "tree.hpp"
+#include "vertex.hpp"
+
+HamCycle::HamCycle(const Vertex& x, long long limit, visit_f_t visit_f)
     : x_(x), y_(x), limit_(limit), visit_f_(visit_f) {
     assert(this->x_.size() % 2 == 1);
     const int n = this->x_.size() / 2;
@@ -35,9 +37,9 @@ HamCycle::HamCycle(const Vertex &x, long long limit, visit_f_t visit_f)
     // contains the vertex this->x_.
 
     Vertex xs(this->x_);
-    int skip = 0;         // number of vertices which are not visited (skipped)
-                          // before reaching the first vertex x_
-    if (xs[2 * n] == 1) { // last bit == 1
+    int skip = 0;          // number of vertices which are not visited (skipped)
+                           // before reaching the first vertex x_
+    if (xs[2 * n] == 1) {  // last bit == 1
         // move backwards along the cycle to the first vertex of the
         // path in the graph \overline{\rev}(H_n)\circ 1 (this is the
         // last vertex of this oriented path, as the path is traversed
@@ -45,8 +47,8 @@ HamCycle::HamCycle(const Vertex &x, long long limit, visit_f_t visit_f)
         xs.rev_inv();
         skip += xs.to_last_vertex();
         xs.rev_inv();
-        xs[2 * n] = 0; // jump backwards to the graph H_n\circ 0 by
-                       // flipping last bit
+        xs[2 * n] = 0;  // jump backwards to the graph H_n\circ 0 by
+                        // flipping last bit
         skip++;
     }
     // move backwards along the cycle to the first vertex
@@ -64,13 +66,13 @@ HamCycle::HamCycle(const Vertex &x, long long limit, visit_f_t visit_f)
     // we may need to start from the other path
     if ((skip > 0) && (y_tree.flip_tree())) {
         if ((xs[1] == 1) && (skip <= 5)) {
-            skip = 6 - skip; // need to correct for the reverse traversal
-                             // of the initial part of flipped path
+            skip = 6 - skip;  // need to correct for the reverse traversal
+                              // of the initial part of flipped path
         }
         int y_string[2 * n];
         y_tree.to_bitstring(y_string);
         std::vector<int> y_vec(y_string, y_string + 2 * n);
-        y_vec.push_back(0); // add 0-bit at the end
+        y_vec.push_back(0);  // add 0-bit at the end
         xs = Vertex(y_vec);
         this->y_ = xs;
     }
@@ -82,17 +84,16 @@ HamCycle::HamCycle(const Vertex &x, long long limit, visit_f_t visit_f)
     // ##################################
     std::vector<int> seq;
     std::vector<int> seq01;
-    seq01.push_back(2 * n); // flip sequence that flips only the last bit
+    seq01.push_back(2 * n);  // flip sequence that flips only the last bit
     int dist_to_start = skip;
-    bool final_path =
-        false; // back in the path that contains the starting vertex
+    bool final_path = false;  // back in the path that contains the starting vertex
     while (true) {
         // #################################################
         // follow the path in the graph H_n\circ 0
         // #################################################
 
-        bool flip = y_tree.flip_tree(); // tau() or tau_inverse() is applied
-                                        // inside the function call
+        bool flip = y_tree.flip_tree();  // tau() or tau_inverse() is applied
+                                         // inside the function call
         y_tree.rotate();
 
         // compute flip sequence
@@ -157,16 +158,15 @@ HamCycle::HamCycle(const Vertex &x, long long limit, visit_f_t visit_f)
     }
 }
 
-bool HamCycle::flip_seq(const std::vector<int> &seq, int &dist_to_start,
-                        bool final_path) {
-    if ((dist_to_start > 0) || final_path ||
-        ((this->limit_ >= 0) && (this->length_ + seq.size() >= this->limit_))) {
+bool HamCycle::flip_seq(const std::vector<int>& seq, int& dist_to_start, bool final_path) {
+    if ((dist_to_start > 0) || final_path
+        || ((this->limit_ >= 0) && (this->length_ + seq.size() >= this->limit_))) {
         // apply only part of the flip sequence
         for (int j = 0; j < seq.size(); ++j) {
-            if ((final_path && (dist_to_start == 0)) ||
-                ((this->limit_ >= 0) && (this->length_ == this->limit_))) {
-                return true; // terminate Hamilton cycle
-                             // computation prematurely
+            if ((final_path && (dist_to_start == 0))
+                || ((this->limit_ >= 0) && (this->length_ == this->limit_))) {
+                return true;  // terminate Hamilton cycle
+                              // computation prematurely
             }
             const int i = seq[j];
             if ((dist_to_start == 0) || final_path) {
@@ -197,5 +197,5 @@ bool HamCycle::flip_seq(const std::vector<int> &seq, int &dist_to_start,
         }
         this->length_ += seq.size();
     }
-    return false; // continue Hamilton cycle computation
+    return false;  // continue Hamilton cycle computation
 }

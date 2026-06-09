@@ -27,12 +27,12 @@
 class Vertex {
   public:
     // constructor
-    explicit Vertex(const std::vector<int> &x);
+    explicit Vertex(const std::vector<int>& x);
 
-    const std::vector<int> &get_bits() const { return bits_; }
+    const std::vector<int>& get_bits() const { return bits_; }
     // allow bit vector access directly via the vertex object
-    int &operator[](int i) { return this->bits_[i]; }
-    const int &operator[](int i) const { return this->bits_[i]; }
+    int& operator[](int i) { return this->bits_[i]; }
+    const int& operator[](int i) const { return this->bits_[i]; }
     // the size of the bit vector representing the vertex (=2n+1)
     int size() { return this->bits_.size(); }
     const int size() const { return this->bits_.size(); }
@@ -59,7 +59,7 @@ class Vertex {
     // recursion rule sigma() defined in the paper. The current vertex is
     // modified temporarily, which is the only reason that this function is
     // not qualified as const.
-    void compute_flip_seq_0(std::vector<int> &seq, bool flip);
+    void compute_flip_seq_0(std::vector<int>& seq, bool flip);
     // Given a last vertex of a path, compute the sequence of bit positions
     // to be flipped to follow the corresponding path all the way to the
     // first vertex. The resulting positions are already transformed
@@ -72,7 +72,7 @@ class Vertex {
     // in the paper, we instead apply sigma() and transform the resulting
     // flip sequence afterwards. However, computing the recursion directly
     // via this modified recursion is faster in practice.
-    void compute_flip_seq_1(std::vector<int> &seq) const;
+    void compute_flip_seq_1(std::vector<int>& seq) const;
 
   private:
     // the bitstring representation of the vertex
@@ -93,10 +93,10 @@ class Vertex {
     // auxiliary function to compute the positions of all downsteps and
     // upsteps below the abscissa and above the abscissa sorted by
     // increasing depth/height of those steps
-    void steps_height(std::vector<std::vector<int>> &usteps_neg,
-                      std::vector<std::vector<int>> &usteps_pos,
-                      std::vector<std::vector<int>> &dsteps_neg,
-                      std::vector<std::vector<int>> &dsteps_pos) const;
+    void steps_height(std::vector<std::vector<int>>& usteps_neg,
+                      std::vector<std::vector<int>>& usteps_pos,
+                      std::vector<std::vector<int>>& dsteps_neg,
+                      std::vector<std::vector<int>>& dsteps_pos) const;
 
     // interpreting the bitstring representation as a Dyck path
     // (0=downstep, 1=upstep), count the number of downsteps below the
@@ -117,31 +117,29 @@ class Vertex {
     // decomposition to be performed in constant time).
     // This is the recursion rule sigma() defined in the paper.
     // The array next_step is allocated on the stack for speed reasons.
-    void compute_flip_seq_0_rec(std::vector<int> &seq, int &idx, int left,
-                                int right, int *next_step) const;
+    void compute_flip_seq_0_rec(std::vector<int>& seq, int& idx, int left, int right,
+                                int* next_step) const;
     // Auxiliary recursive version of the function compute_flip_seq_1().
-    void compute_flip_seq_1_rec(std::vector<int> &seq, int &idx, int left,
-                                int right, int *next_step) const;
+    void compute_flip_seq_1_rec(std::vector<int>& seq, int& idx, int left, int right,
+                                int* next_step) const;
     // Compute auxiliary bidirectional pointers for the Dyck path
     // in the range [a,b] below the hills of the Dyck path between
     // pairs of an upstep and downstep that 'see each other'.
     // We allocate this array on the stack for speed reasons.
-    void aux_pointers(int a, int b, int *next_step) const;
+    void aux_pointers(int a, int b, int* next_step) const;
 };
 
 // allow comparison between vertices (by comparing the corresponding bit
 // vectors)
-inline bool operator==(const Vertex &lhs, const Vertex &rhs) {
+inline bool operator==(const Vertex& lhs, const Vertex& rhs) {
     return lhs.get_bits() == rhs.get_bits();
 }
-inline bool operator!=(const Vertex &lhs, const Vertex &rhs) {
-    return !operator==(lhs, rhs);
-}
-std::ostream &operator<<(std::ostream &os, const Vertex &v);
+inline bool operator!=(const Vertex& lhs, const Vertex& rhs) { return !operator==(lhs, rhs); }
+std::ostream& operator<<(std::ostream& os, const Vertex& v);
 
 // compare two bitstrings of the same length (arrays of 0s and 1s)
 // lexicographically
-bool bitstrings_less_than(int *x, int *y, int length);
-bool bitstrings_equal(int *x, int *y, int length);
+bool bitstrings_less_than(int* x, int* y, int length);
+bool bitstrings_equal(int* x, int* y, int length);
 
 #endif

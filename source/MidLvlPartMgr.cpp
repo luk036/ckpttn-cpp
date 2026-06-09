@@ -1,6 +1,5 @@
-#include <ckpttn/MidLvlPartMgr.hpp>
-
 #include <ckpttn/FMPmrConfig.hpp>
+#include <ckpttn/MidLvlPartMgr.hpp>
 #include <ckpttn/midlevel/hamcycle.hpp>
 #include <ckpttn/midlevel/vertex.hpp>
 #include <ckpttn/moveinfo.hpp>
@@ -8,12 +7,10 @@
 #include <span>
 #include <vector>
 
-template <typename Gnl>
-MidLvlPartMgr<Gnl>::MidLvlPartMgr(const Gnl& hyprgraph, double bal_tol)
+template <typename Gnl> MidLvlPartMgr<Gnl>::MidLvlPartMgr(const Gnl& hyprgraph, double bal_tol)
     : hyprgraph{hyprgraph}, gain_calc{hyprgraph, 2}, constr_mgr{hyprgraph, bal_tol} {}
 
-template <typename Gnl>
-void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
+template <typename Gnl> void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
     const auto num_modules = static_cast<int>(this->hyprgraph.number_of_modules());
     const auto half_bits = num_modules / 2;
     const auto total_bits = 2 * half_bits + 1;

@@ -35,9 +35,8 @@ TEST_CASE("Test MLMidLvlKWayPartMgr p1 3-way") {
     }
 
     part_mgr.optimize(part, hyprgraph);
-    auto sec = std::chrono::duration<double>(
-        std::chrono::steady_clock::now() - begin).count();
-    std::cout << "MLMidLvl KWay p1 3-way  time=" << sec << "s  cost="
-              << part_mgr.total_cost << "\n";
+    auto sec = std::chrono::duration<double>(std::chrono::steady_clock::now() - begin).count();
+    std::cout << "MLMidLvl KWay p1 3-way  time=" << sec << "s  cost=" << part_mgr.total_cost
+              << "\n";
     CHECK_GE(part_mgr.total_cost, 0);
 }

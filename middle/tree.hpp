@@ -18,9 +18,10 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
-#include "vertex.hpp"
 #include <list>
 #include <vector>
+
+#include "vertex.hpp"
 
 // A class to represent and manipulate an ordered rooted tree in doubly linked
 // adjacency list representation.
@@ -36,11 +37,11 @@ class Tree {
     // adding any edges to the tree). For example, the bitstring
     // x=110111000010 corresponds to the following tree:
     //   /\
-  //  /\
-  //    \
-  //     \
-  //
-    explicit Tree(const Vertex &x);
+    //  /\
+    //    \
+    //     \
+    //
+    explicit Tree(const Vertex& x);
 
     // Decide if the tree is an end node of a directed edge in the
     // canonic spanning tree in the auxiliary graph defined in the paper
@@ -116,18 +117,18 @@ class Tree {
     // Compute the center vertices of the tree.
     // If there is only one center, then it is returned in c1 and c2 is set
     // to -1. If there are two centers, then they are returned in c1 and c2.
-    void compute_center(int &c1, int &c2) const;
+    void compute_center(int& c1, int& c2) const;
 
     // Decide if the the edge (tree,tau(tree)) in the auxiliary graph
     // defined in the paper belongs to the canonic spanning tree that
     // defines a Hamilton cycle in the middle levels graph. See the paper
     // for a detailed definition of this function. The function assumes that
     // is_tau_preimage(tree) == true.
-    bool is_flip_tree_tau(); // We promise that we do not modify the tree in
-                             // this function. For speed reasons however we
-                             // modify it temporarily and restore the state
-                             // at the end of the function rather than
-                             // making a copy of ourselves.
+    bool is_flip_tree_tau();  // We promise that we do not modify the tree in
+                              // this function. For speed reasons however we
+                              // modify it temporarily and restore the state
+                              // at the end of the function rather than
+                              // making a copy of ourselves.
 
     // checks if the tree is a star, rooted at the center of a leaf
     bool is_star() const;
@@ -146,7 +147,7 @@ class Tree {
     // Auxiliary recursive function to compute the bitstring representation.
     // The output array x should be allocated on the stack for speed
     // reasons.
-    void to_bitstring_rec(int x[], int u, int &pos) const;
+    void to_bitstring_rec(int x[], int u, int& pos) const;
 
     // Booth's algorithm to compute lexicographically smallest
     // rotation of the given string/array. Return value is the

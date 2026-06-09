@@ -15,8 +15,8 @@ class MLMidLvlPartMgr {
 
     void set_limitsize(size_t limit) { this->limitsize = limit; }
 
-    template <typename Gnl>
-    auto run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck;
+    template <typename Gnl> auto run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part)
+        -> LegalCheck;
 
   private:
     double bal_tol;

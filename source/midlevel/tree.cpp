@@ -3,15 +3,15 @@
  * Original license: GPL v2+
  */
 
-#include <ckpttn/midlevel/tree.hpp>
-#include <ckpttn/midlevel/vertex.hpp>
 #include <algorithm>
 #include <cassert>
+#include <ckpttn/midlevel/tree.hpp>
+#include <ckpttn/midlevel/vertex.hpp>
 #include <cstring>
 #include <list>
 #include <vector>
 
-MidTree::MidTree(const MidVertex &x) {
+MidTree::MidTree(const MidVertex& x) {
     std::vector<int> xv = x.get_bits();
     assert(xv.size() % 2 == 1);
 
@@ -76,8 +76,8 @@ bool MidTree::is_tau_preimage() const {
 }
 
 bool MidTree::is_tau_image() const {
-    if ((this->num_vertices_ < 3) || (num_children(this->root_) < 2) ||
-        (num_children(ith_child(root_, 0)) > 0)) {
+    if ((this->num_vertices_ < 3) || (num_children(this->root_) < 2)
+        || (num_children(ith_child(root_, 0)) > 0)) {
         return false;
     }
     return true;
@@ -137,8 +137,7 @@ void MidTree::rotate_children() { rotate_children(1); }
 void MidTree::rotate_children(int k) {
     std::list<int>::iterator it = this->children_[root_].begin();
     std::advance(it, k);
-    std::rotate(this->children_[root_].begin(), it,
-                this->children_[root_].end());
+    std::rotate(this->children_[root_].begin(), it, this->children_[root_].end());
 }
 
 bool MidTree::flip_tree() {
@@ -205,7 +204,7 @@ void MidTree::root_canonically() {
     }
 }
 
-void MidTree::compute_center(int &c1, int &c2) const {
+void MidTree::compute_center(int& c1, int& c2) const {
     std::vector<int> degs(num_vertices_, 0);
     std::vector<int> leaves(num_vertices_, 0);
     int num_leaves = 0;
@@ -307,9 +306,8 @@ bool MidTree::is_flip_tree_tau() {
 }
 
 bool MidTree::is_star() const {
-    if ((this->num_vertices_ <= 3) ||
-        (deg(this->root_) == this->num_vertices_ - 1) ||
-        (deg(ith_child(root_, 0)) == this->num_vertices_ - 1)) {
+    if ((this->num_vertices_ <= 3) || (deg(this->root_) == this->num_vertices_ - 1)
+        || (deg(ith_child(root_, 0)) == this->num_vertices_ - 1)) {
         return true;
     }
     return false;
@@ -330,10 +328,9 @@ bool MidTree::is_light_dumbbell() const {
 }
 
 bool MidTree::is_thin_leaf(int u) const {
-    if (deg(u) > 1)
-        return false;
-    if (((u == this->root_) && (deg(ith_child(u, 0)) == 2)) ||
-        ((u != this->root_) && (deg(this->parent_[u]) == 2))) {
+    if (deg(u) > 1) return false;
+    if (((u == this->root_) && (deg(ith_child(u, 0)) == 2))
+        || ((u != this->root_) && (deg(this->parent_[u]) == 2))) {
         return true;
     } else {
         return false;
@@ -367,7 +364,7 @@ void MidTree::to_bitstring(int x[]) const {
     to_bitstring_rec(x, root_, pos);
 }
 
-void MidTree::to_bitstring_rec(int x[], int u, int &pos) const {
+void MidTree::to_bitstring_rec(int x[], int u, int& pos) const {
     if (num_children(u) == 0) {
         return;
     } else {

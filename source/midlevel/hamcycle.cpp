@@ -3,13 +3,13 @@
  * Original license: GPL v2+
  */
 
+#include <cassert>
 #include <ckpttn/midlevel/hamcycle.hpp>
 #include <ckpttn/midlevel/tree.hpp>
 #include <ckpttn/midlevel/vertex.hpp>
-#include <cassert>
 #include <vector>
 
-MidHamCycle::MidHamCycle(const MidVertex &x, long long limit, MidVisitFunc visit_f)
+MidHamCycle::MidHamCycle(const MidVertex& x, long long limit, MidVisitFunc visit_f)
     : x_(x), y_(x), limit_(limit), visit_f_(std::move(visit_f)) {
     assert(this->x_.size() % 2 == 1);
     const int n = this->x_.size() / 2;
@@ -87,14 +87,13 @@ MidHamCycle::MidHamCycle(const MidVertex &x, long long limit, MidVisitFunc visit
     }
 }
 
-bool MidHamCycle::flip_seq(const std::vector<int> &seq, int &dist_to_start,
-                           bool final_path) {
+bool MidHamCycle::flip_seq(const std::vector<int>& seq, int& dist_to_start, bool final_path) {
     const auto seq_sz = static_cast<long long>(seq.size());
-    if ((dist_to_start > 0) || final_path ||
-        ((this->limit_ >= 0) && (this->length_ + seq_sz >= this->limit_))) {
+    if ((dist_to_start > 0) || final_path
+        || ((this->limit_ >= 0) && (this->length_ + seq_sz >= this->limit_))) {
         for (int j = 0; j < static_cast<int>(seq.size()); ++j) {
-            if ((final_path && (dist_to_start == 0)) ||
-                ((this->limit_ >= 0) && (this->length_ == this->limit_))) {
+            if ((final_path && (dist_to_start == 0))
+                || ((this->limit_ >= 0) && (this->length_ == this->limit_))) {
                 return true;
             }
             const int i = seq[j];

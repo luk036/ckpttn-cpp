@@ -6,15 +6,16 @@
 #ifndef CKPTTN_MIDLEVEL_HAMCYCLE_HPP
 #define CKPTTN_MIDLEVEL_HAMCYCLE_HPP
 
-#include "vertex.hpp"
 #include <functional>
 #include <vector>
 
-using MidVisitFunc = std::function<void(const std::vector<int> &y, int i)>;
+#include "vertex.hpp"
+
+using MidVisitFunc = std::function<void(const std::vector<int>& y, int i)>;
 
 class MidHamCycle {
   public:
-    explicit MidHamCycle(const MidVertex &x, long long limit, MidVisitFunc visit_f);
+    explicit MidHamCycle(const MidVertex& x, long long limit, MidVisitFunc visit_f);
     long long get_length() const { return length_; }
 
   private:
@@ -24,7 +25,7 @@ class MidHamCycle {
     MidVisitFunc visit_f_;
     long long length_;
 
-    bool flip_seq(const std::vector<int> &seq, int &dist_to_start, bool final_path);
+    bool flip_seq(const std::vector<int>& seq, int& dist_to_start, bool final_path);
 };
 
 #endif

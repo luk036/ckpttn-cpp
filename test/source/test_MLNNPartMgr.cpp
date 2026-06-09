@@ -34,10 +34,10 @@ TEST_CASE("Test MLBiPartMgr dwarf") {
     const auto bal_tol = 0.3;
     MLPartMgr part_mgr{bal_tol};
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-    auto legal_check = part_mgr.run_Partition<
-        SimpleNetlist,
-        NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-        hyprgraph, part);
+    auto legal_check
+        = part_mgr.run_Partition<SimpleNetlist, NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
@@ -134,10 +134,10 @@ TEST_CASE("Test MLBiPartMgr ibm03") {
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    auto legal_check = part_mgr.run_Partition<
-        SimpleNetlist,
-        NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-        hyprgraph, part);
+    auto legal_check
+        = part_mgr.run_Partition<SimpleNetlist, NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);
@@ -158,10 +158,10 @@ TEST_CASE("Test MLBiPartMgr ibm18") {
     vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
     // auto part_info = PartInfo{move(part), py::set<node_t>()};
     auto begin = chrono::steady_clock::now();
-    auto legal_check = part_mgr.run_Partition<
-        SimpleNetlist,
-        NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>>(
-        hyprgraph, part);
+    auto legal_check
+        = part_mgr.run_Partition<SimpleNetlist, NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                          FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                         part);
     CHECK_EQ(legal_check, LegalCheck::AllSatisfied);
 
     auto constr_mgr = FMBiConstrMgr<SimpleNetlist>(hyprgraph, bal_tol);

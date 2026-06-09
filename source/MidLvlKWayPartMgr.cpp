@@ -1,6 +1,5 @@
-#include <ckpttn/MidLvlKWayPartMgr.hpp>
-
 #include <ckpttn/FMKWayConstrMgr.hpp>
+#include <ckpttn/MidLvlKWayPartMgr.hpp>
 #include <ckpttn/midlevel/hamcycle.hpp>
 #include <ckpttn/midlevel/vertex.hpp>
 #include <ckpttn/moveinfo.hpp>
@@ -12,8 +11,7 @@
 MidLvlKWayPartMgr::MidLvlKWayPartMgr(double bal_tol, std::uint8_t num_parts)
     : bal_tol_{bal_tol}, num_parts_{num_parts} {}
 
-void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
-                                 const SimpleNetlist& hyprgraph) {
+void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part, const SimpleNetlist& hyprgraph) {
     const auto total_modules = hyprgraph.number_of_modules();
     auto current_part = std::vector<std::uint8_t>(part.begin(), part.end());
 
@@ -78,13 +76,12 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                         return;
                     }
                     const auto v = selected[flipped_pos];
-                    const auto to_part = static_cast<std::uint8_t>(
-                        bits[flipped_pos] == 0 ? i : j);
-                    const auto from_part = static_cast<std::uint8_t>(
-                        bits[flipped_pos] == 0 ? j : i);
+                    const auto to_part = static_cast<std::uint8_t>(bits[flipped_pos] == 0 ? i : j);
+                    const auto from_part
+                        = static_cast<std::uint8_t>(bits[flipped_pos] == 0 ? j : i);
 
-                    const auto move_info_v = MoveInfoV<SimpleNetlist::node_t>{
-                        v, from_part, to_part};
+                    const auto move_info_v
+                        = MoveInfoV<SimpleNetlist::node_t>{v, from_part, to_part};
 
                     const auto legal = constr_mgr.check_legal(move_info_v);
 
@@ -94,22 +91,31 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                         auto cnt_to = 0;
                         auto cnt_other = 0;
                         for (const auto& w : hl.gr[net]) {
-                            if (w == v) { continue; }
-                            if (current_part[w] == from_part) { ++cnt_from; }
-                            else if (current_part[w] == to_part) { ++cnt_to; }
-                            else { ++cnt_other; }
+                            if (w == v) {
+                                continue;
+                            }
+                            if (current_part[w] == from_part) {
+                                ++cnt_from;
+                            } else if (current_part[w] == to_part) {
+                                ++cnt_to;
+                            } else {
+                                ++cnt_other;
+                            }
                         }
                         const auto wt = static_cast<int>(hl.get_net_weight(net));
                         const auto before = (cnt_to > 0 || cnt_other > 0);
                         const auto after = (cnt_from > 0 || cnt_other > 0);
-                        if (!before && after) { delta += wt; }
-                        else if (before && !after) { delta -= wt; }
+                        if (!before && after) {
+                            delta += wt;
+                        } else if (before && !after) {
+                            delta -= wt;
+                        }
                     }
 
                     local_cost += delta;
                     current_part[v] = to_part;
-                    local_part[flipped_pos] = static_cast<std::uint8_t>(
-                        bits[flipped_pos] == 0 ? 0U : 1U);
+                    local_part[flipped_pos]
+                        = static_cast<std::uint8_t>(bits[flipped_pos] == 0 ? 0U : 1U);
                     constr_mgr.update_move(move_info_v);
 
                     if (legal == LegalCheck::AllSatisfied && local_cost < best_cost) {
@@ -123,9 +129,8 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
 
                 for (auto pos = 0; pos < num_modules; ++pos) {
                     auto v = selected[pos];
-                    current_part[v] = (best_part[pos] == 1U)
-                                          ? static_cast<std::uint8_t>(j)
-                                          : static_cast<std::uint8_t>(i);
+                    current_part[v] = (best_part[pos] == 1U) ? static_cast<std::uint8_t>(j)
+                                                             : static_cast<std::uint8_t>(i);
                 }
 
                 if (best_cost < this->total_cost || pass == 1) {
