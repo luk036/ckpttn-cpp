@@ -142,18 +142,14 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(std::span<std::uint8_t> part) {
-    // this->init(part);
-    // auto totalcostafter = this->total_cost;
-    while (true) {
+    for (int iter = 0; iter < 100; ++iter) {
         this->init(part);
         auto totalcostbefore = this->total_cost;
-        // assert(totalcostafter == totalcostbefore);
         this->_optimize_1pass(part);
         assert(this->total_cost <= totalcostbefore);
         if (this->total_cost == totalcostbefore) {
             break;
         }
-        // totalcostafter = this->total_cost;
     }
 }
 

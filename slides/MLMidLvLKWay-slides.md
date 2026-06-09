@@ -237,7 +237,20 @@ class: nord-light, middle, center
 
 ---
 
-### Benchmark Summary
+### Python Benchmark Results (ckpttnpy, bal_tol=0.45, limitsize=10, 5 runs)
+
+| Benchmark | K | Modules | FM-only cost | ML cost | Improvement | FM time | ML time |
+|-----------|---|---------|-------------|---------|-------------|---------|---------|
+| ibm01 | 2 | 12,752 | 766.2 | **679.8** | +11.3% | 12.7s | 29.4s |
+| ibm01 | 3 | 12,752 | 3010.6 | **1515.2** | +49.7% | 60.4s | 143.3s |
+| ibm01 | 5 | 12,752 | 4183.8 | **2112.0** | +49.5% | 168.3s | 272.0s |
+| p1 | 2 | 833 | 93.6 | **75.6** | +19.2% | 0.36s | 1.23s |
+| p1 | 3 | 833 | 162.4 | **112.8** | +30.5% | 2.67s | 4.29s |
+| p1 | 5 | 833 | 266.4 | **191.0** | +28.3% | 5.21s | 10.83s |
+
+ML beats FM across all testcases and all K values. The improvement widens with higher K — on ibm01, ML achieves **~50% lower cost** at K=3 and K=5. ML quality degrades more gracefully than FM as K increases.
+
+### C++ Benchmark Results (ckpttn-cpp)
 
 | Benchmark | K | Modules | Time | Cost |
 |-----------|---|---------|------|------|
@@ -250,6 +263,23 @@ class: nord-light, middle, center
 | n20 exhaustive | 2 | 20 | 0.20s | 1 |
 | n25 exhaustive | 2 | 25 | 3.4s | 1 |
 
+### ibm01 ML vs FM (C++, bal_tol=0.45, limitsize=2000, 5 runs)
+
+| Metric | FM-only | ML (multilevel) |
+|--------|---------|-----------------|
+| Average cost | 674.8 | **581.6** |
+| Improvement | — | **+13.8%** |
+
+### ibm03 ML vs FM (C++, bal_tol=0.45, limitsize=2000, 5 runs, 23,136 modules)
+
+| Metric | FM-only | ML (multilevel) |
+|--------|---------|-----------------|
+| Average cost | 3117 | **1313** |
+| Improvement | — | **+57.9%** |
+| Parity check (no contract) | — | = FM-only ✅ |
+
+The ML advantage is stronger on larger benchmarks (ibm03: 23K modules, 57.9% improvement vs ibm01: 12K modules, 13.8%). The multilevel coarsening helps FM escape local minima more effectively on bigger graphs.
+
 ---
 
 ### MLMidLvl vs MLPartMgr on ibm01
@@ -261,7 +291,9 @@ class: nord-light, middle, center
 | MLMidLvl | 50 | 0.40s | 786 |
 | MLPartMgr | 50 | 0.39s | 786 |
 
-**Key insight**: Both solvers produce identical results — the cost difference (564→786) comes from the **contraction**, not the solver. ibm01's hypergraph structure doesn't contract well. The MidLvl managers now additionally verify weight balance via `FMConstrMgr` before snapshotting, matching FM's constraint discipline.
+The ML cost (786 at limitsize=50) appears worse than FM-only (564) because the limitsize is too small — excessive contraction loses structural information. With `limitsize=2000, bal_tol=0.45`, ML is 13.8% **better** than FM-only (avg 581.6 vs 674.8), confirming the multilevel advantage. The parity test proves ML without contraction equals FM-only, so the framework itself is correct. The bal_tol also matters: at 0.4, ML was worse; the looser 0.45 gives FM refinement enough freedom at each level.
+
+**Key insight**: ML without contraction produces identical results to FM-only (parity check confirmed cost=694). With `limitsize=2000, bal_tol=0.45`, C++ ML is **13.8% better** than FM-only (avg 581.6 vs 674.8). The Python benchmark (`..\..\py\ckpttnpy\MLvsFM.md`) confirms the same direction: with `limitsize=10, bal_tol=0.45`, Python ML is **+11.3%** on ibm01 K=2. The multi-K Python results show the advantage grows to **~50% at K=3/K=5**, demonstrating that ML's multi-level coarsening helps FM escape local minima even more effectively as partition count increases. The bal_tol matters: at 0.4 ML was worse; at 0.45 the relaxed constraints give the contracted-level FM enough freedom to find good projections.
 
 ---
 
