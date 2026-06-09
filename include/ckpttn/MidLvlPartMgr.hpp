@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <span>
-#include <vector>
 
 #include "FMBiConstrMgr.hpp"
 #include "FMBiGainCalc.hpp"

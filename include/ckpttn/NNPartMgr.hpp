@@ -4,7 +4,6 @@
 
 #include <cstdint>  // for uint8_t
 #include <span>     // for span
-#include <vector>   // for vector
 // #include <xnetwork/classes/graph.hpp>
 
 // forward declare

@@ -87,7 +87,7 @@ void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
     };
 
     MidVertex start_vertex(init_bits);
-    MidHamCycle{start_vertex, -1, visit_fn};
+    MidHamCycle give_me_a_name{start_vertex, -1, visit_fn};
 
     for (auto i = 0; i < num_modules; ++i) {
         part[i] = best_part[i];

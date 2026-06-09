@@ -62,7 +62,7 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                         seen |= static_cast<std::uint8_t>(1U << current_part[v]);
                     }
                     for (auto p = 0U; p < 8U; ++p) {
-                        if (seen & (1U << p)) {
+                        if ((seen & (1U << p)) != 0U) {
                             ++best_cost;
                             break;
                         }
@@ -119,7 +119,7 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                 };
 
                 MidVertex start_vertex(init_bits);
-                MidHamCycle{start_vertex, -1, visit_fn};
+                MidHamCycle give_me_a_name{start_vertex, -1, visit_fn};
 
                 for (auto pos = 0; pos < num_modules; ++pos) {
                     auto v = selected[pos];
@@ -128,7 +128,7 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part,
                                           : static_cast<std::uint8_t>(i);
                 }
 
-                if (best_cost < static_cast<int>(this->total_cost) || pass == 1) {
+                if (best_cost < this->total_cost || pass == 1) {
                     this->total_cost = best_cost;
                     improved = true;
                 }

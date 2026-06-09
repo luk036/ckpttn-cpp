@@ -12,7 +12,6 @@
 #include <new>
 #include <py2cpp/set.hpp>
 #include <span>
-#include <utility>
 #include <vector>
 
 using node_t = SimpleNetlist::node_t;

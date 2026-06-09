@@ -8,7 +8,7 @@
 #include <utility>             // for pair
 #include <vector>              // for vector
 
-#include "FMPmrConfig.hpp"
+#include "FMPmrConfig.hpp"     // for FMPmr::monotonic_buffer_resource, FMPmr::vector
 
 // forward declare
 template <typename Gnl> class FMKWayGainMgr;

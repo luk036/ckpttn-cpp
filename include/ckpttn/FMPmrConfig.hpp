@@ -5,7 +5,7 @@
 // #include <boost/container/pmr/vector.hpp>
 // namespace FMPmr = boost::container::pmr;
 
-#include <memory_resource>
+#include <memory_resource>  // for std::pmr
 namespace FMPmr = std::pmr;
 
 const auto FM_MAX_NUM_PARTITIONS = 255U;
