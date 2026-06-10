@@ -204,7 +204,7 @@ TEST_CASE("MidVertex: compute_flip_seq_0 with flip and bits[1]=0") {
 
     // sequence should be non-empty with valid indices
     CHECK_GT(seq3.size(), 0);
-    CHECK_EQ(seq3[1], 0); // second element is always 0
+    CHECK_EQ(seq3[1], 0);  // second element is always 0
     for (auto idx : seq3) {
         CHECK_GE(idx, 0);
         CHECK_LT(idx, v3.size());
@@ -345,11 +345,3 @@ TEST_CASE("MidVertex: get_bits") {
     const MidVertex v(bits);
     CHECK_EQ(v.get_bits(), bits);
 }
-
-
-
-
-
-
-
-
