@@ -9,7 +9,7 @@ class MLMidLvlPartMgr {
   public:
     int total_cost{};
 
-    explicit MLMidLvlPartMgr(double bal_tol) : MLMidLvlPartMgr(bal_tol, 2) {}
+    explicit MLMidLvlPartMgr(double bal_tol);
 
     MLMidLvlPartMgr(double bal_tol, std::uint8_t num_parts);
 
@@ -20,7 +20,7 @@ class MLMidLvlPartMgr {
 
   private:
     double bal_tol;
-    std::uint8_t num_parts;
+    // std::uint8_t num_parts;
     size_t limitsize{50U};
     static constexpr size_t exhaustive_limit{25U};
 };

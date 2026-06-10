@@ -17,8 +17,8 @@ using node_t = SimpleNetlist::node_t;
 extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
-MLMidLvlPartMgr::MLMidLvlPartMgr(double bal_tol, std::uint8_t num_parts)
-    : bal_tol{bal_tol}, num_parts{num_parts} {}
+MLMidLvlPartMgr::MLMidLvlPartMgr(double bal_tol)
+    : bal_tol{bal_tol} {}
 
 template <typename Gnl>
 auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part)
