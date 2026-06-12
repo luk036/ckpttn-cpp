@@ -58,7 +58,7 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(std::span<const uint8_t> p
  */
 template <typename Gnl>
 void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& move_info_v,
-                                        int gain) {
+                                       int gain) {
     // const auto& [v, from_part, to_part] = move_info_v;
 
     for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {

@@ -31,7 +31,7 @@ using namespace transrangers;
  * @param[in] part The current partition assignment
  */
 template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net,
-                                                              std::span<const uint8_t> part) {
+                                                             std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -66,7 +66,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
-                                               std::span<const uint8_t> part) {
+                                              std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
     const auto node_v = *++net_cur;
@@ -99,7 +99,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
-                                               std::span<const uint8_t> part) {
+                                              std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
     const auto node_v = *++net_cur;
@@ -166,7 +166,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
-                                                  std::span<const uint8_t> part) {
+                                                 std::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
     //                                            sizeof StackBufLocal);
@@ -269,7 +269,7 @@ template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
-                                                const MoveInfo<typename Gnl::node_t>& move_info)
+                                               const MoveInfo<typename Gnl::node_t>& move_info)
     -> Gnl::node_t {
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
@@ -319,7 +319,7 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] net The net whose other vertices are collected
  */
 template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
-                                                                const typename Gnl::node_t& net) {
+                                                               const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     auto degree = this->hyprgraph.gr.degree(net);
     this->idx_vec.reserve(degree - 1);
@@ -344,7 +344,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gn
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
-                                                const MoveInfo<typename Gnl::node_t>& move_info)
+                                               const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
@@ -423,7 +423,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
-                                                   const MoveInfo<typename Gnl::node_t>& move_info)
+                                                  const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, from_part, to_part] = move_info;
     // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
