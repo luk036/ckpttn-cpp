@@ -6,7 +6,12 @@
 
 namespace spd = spdlog;
 
-// Simple function to demonstrate spdlog usage in the ckpttn library
+/**
+ * @brief Demonstrates spdlog usage in the ckpttn library.
+ *
+ * Creates a file-based logger, sets up formatting, and logs sample
+ * messages including partition data information.
+ */
 void run_spdlog_example() {
     // Create a file sink for logging
     auto file_sink = std::make_shared<spd::sinks::basic_file_sink_mt>("ckpttn_example.log", true);

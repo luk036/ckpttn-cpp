@@ -8,9 +8,24 @@
 #include <span>
 #include <vector>
 
+/**
+ * @brief Constructs a new MidLvlKWayPartMgr object.
+ *
+ * @param[in] bal_tol The balance tolerance for the partitioning
+ * @param[in] num_parts The number of partitions to create
+ */
 MidLvlKWayPartMgr::MidLvlKWayPartMgr(double bal_tol, std::uint8_t num_parts)
     : bal_tol_{bal_tol}, num_parts_{num_parts} {}
 
+/**
+ * @brief Optimizes the partition using exhaustive mid-level k-way search.
+ *
+ * Iterates over all partition pairs and uses the middle-levels Gray code
+ * algorithm to find the optimal k-way partitioning for small instances.
+ *
+ * @param[in,out] part The partition vector to optimize
+ * @param[in] hyprgraph The hypergraph to partition
+ */
 void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part, const SimpleNetlist& hyprgraph) {
     const auto total_modules = hyprgraph.number_of_modules();
     auto current_part = std::vector<std::uint8_t>(part.begin(), part.end());

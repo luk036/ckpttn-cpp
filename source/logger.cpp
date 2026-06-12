@@ -5,6 +5,15 @@
 
 namespace ckpttn {
 
+    /**
+     * @brief Logs a message to "ckpttn.log" using spdlog.
+     *
+     * Creates or re-creates a file logger called "file_logger" and writes
+     * the given message at the INFO level. The log pattern includes
+     * timestamps and severity.
+     *
+     * @param[in] message The message to log
+     */
     void log_with_spdlog(const std::string& message) {
         // Always create a fresh logger to ensure proper file handling
         std::shared_ptr<spdlog::logger> logger;

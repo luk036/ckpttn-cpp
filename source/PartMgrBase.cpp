@@ -12,12 +12,15 @@
 // using namespace std;
 
 /**
- * @brief
+ * @brief Initializes the partition manager with the given partition.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
+ * Delegates initialization to both the gain manager and constraint manager,
+ * and updates the total cost from the gain manager.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to initialize
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(std::span<std::uint8_t> part) {
@@ -26,13 +29,17 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::init(std::span<std::uint8_t> part) {
 }
 
 /**
- * @brief
+ * @brief Legalizes the partition to satisfy balance constraints.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
- * @return LegalCheck
+ * Iteratively moves vertices from overloaded partitions to underloaded ones,
+ * checking legality at each step, until all balance constraints are satisfied
+ * or no further legal moves are available.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to legalize
+ * @return LegalCheck The result of the legality check
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part) -> LegalCheck {
@@ -70,12 +77,16 @@ auto PartMgrBase<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part
 }
 
 /**
- * @brief
+ * @brief Performs a single pass of the FM optimization algorithm.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
+ * Iteratively selects the vertex with the highest gain, applies the move,
+ * takes snapshots when moves result in negative gain, and restores the
+ * best solution at the end of the pass.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to optimize
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_t> part) {
@@ -132,13 +143,16 @@ void PartMgrBase<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_
 }
 
 /**
- * @brief
+ * @brief Optimizes the partition using the FM algorithm.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @tparam Derived
- * @param[in] part
+ * Repeats FM passes (up to 100 iterations) until no further improvement
+ * in the total cost is observed. Each pass initializes the data structures
+ * and calls _optimize_1pass to perform a single pass of the algorithm.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to optimize
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void PartMgrBase<Gnl, GainMgr, ConstrMgr>::optimize(std::span<std::uint8_t> part) {

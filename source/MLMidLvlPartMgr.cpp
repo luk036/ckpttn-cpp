@@ -17,8 +17,26 @@ using node_t = SimpleNetlist::node_t;
 extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
+/**
+ * @brief Constructs a new MLMidLvlPartMgr object with the given balance tolerance.
+ *
+ * @param[in] bal_tol The balance tolerance for the partitioning
+ */
 MLMidLvlPartMgr::MLMidLvlPartMgr(double bal_tol) : bal_tol{bal_tol} {}
 
+/**
+ * @brief Runs the multi-level mid-level partitioning algorithm.
+ *
+ * For small hypergraphs (<= exhaustive_limit), uses exhaustive mid-level
+ * search directly. For larger instances, applies multi-level coarsening
+ * followed by mid-level refinement at the coarsest level, then projects
+ * results back down.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] hyprgraph The input hypergraph to partition
+ * @param[in,out] part The partition vector to store the result
+ * @return LegalCheck The legality check result
+ */
 template <typename Gnl>
 auto MLMidLvlPartMgr::run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part)
     -> LegalCheck {

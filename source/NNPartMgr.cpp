@@ -12,12 +12,14 @@
 // using namespace std;
 
 /**
- * @brief
+ * @brief Initializes the No-Nonsense partition manager with the given partition.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
+ * Delegates initialization to both the gain manager and constraint manager.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to initialize
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void NNPartMgr<Gnl, GainMgr, ConstrMgr>::init(std::span<std::uint8_t> part) {
@@ -26,13 +28,17 @@ void NNPartMgr<Gnl, GainMgr, ConstrMgr>::init(std::span<std::uint8_t> part) {
 }
 
 /**
- * @brief
+ * @brief Legalizes the partition to satisfy balance constraints.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
- * @return LegalCheck
+ * Iteratively moves vertices from overloaded partitions to underloaded ones,
+ * checking legality at each step, until all balance constraints are satisfied
+ * or no further legal moves are available.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to legalize
+ * @return LegalCheck The result of the legality check
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 auto NNPartMgr<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part) -> LegalCheck {
@@ -70,12 +76,15 @@ auto NNPartMgr<Gnl, GainMgr, ConstrMgr>::legalize(std::span<std::uint8_t> part) 
 }
 
 /**
- * @brief
+ * @brief Performs a single pass of the No-Nonsense optimization algorithm.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @param[in] part
+ * Similar to FM but stops as soon as a negative gain move is encountered
+ * (no look-ahead / rollback mechanism). Only selects positive gain moves.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to optimize
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void NNPartMgr<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_t> part) {
@@ -114,13 +123,16 @@ void NNPartMgr<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_t>
 }
 
 /**
- * @brief
+ * @brief Optimizes the partition using the No-Nonsense algorithm.
  *
- * @tparam Gnl
- * @tparam GainMgr
- * @tparam ConstrMgr
- * @tparam Derived
- * @param[in] part
+ * Repeats NN optimization passes until no further improvement in total cost.
+ * Unlike standard FM, this algorithm stops each pass at the first negative
+ * gain move without snapshot/rollback.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainMgr The gain manager type
+ * @tparam ConstrMgr The constraint manager type
+ * @param[in,out] part The partition vector to optimize
  */
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 void NNPartMgr<Gnl, GainMgr, ConstrMgr>::optimize(std::span<std::uint8_t> part) {

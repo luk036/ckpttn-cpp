@@ -14,12 +14,16 @@
 using namespace std;
 
 /**
- * @brief Construct a new FMGainMgr object
+ * @brief Constructs a new FMGainMgr object.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] hyprgraph
- * @param[in] num_parts
+ * Initializes the gain buckets for each partition based on the maximum
+ * degree of the hypergraph and the number of partitions.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] hyprgraph The hypergraph to manage gains for
+ * @param[in] num_parts The number of partitions
  */
 template <typename Gnl, typename GainCalc, class Derived>
 FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl& hyprgraph, uint8_t num_parts)
@@ -34,12 +38,15 @@ FMGainMgr<Gnl, GainCalc, Derived>::FMGainMgr(const Gnl& hyprgraph, uint8_t num_p
 }
 
 /**
- * @brief
+ * @brief Initializes the gain manager with the given partition.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] part
- * @return int
+ * Delegates initialization to the gain calculator and clears the waiting list.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] part The partition assignment to initialize from
+ * @return The total cost of the initial partition
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::init(std::span<const uint8_t> part) -> int {
@@ -49,10 +56,13 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::init(std::span<const uint8_t> part) -> i
 }
 
 /**
- * @brief
+ * @brief Checks if all gain buckets are empty.
  *
- * @return true
- * @return false
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @return true if all gain buckets have no candidates
+ * @return false if at least one bucket has candidates
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::is_empty() const -> bool {
@@ -64,12 +74,16 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::is_empty() const -> bool {
 }
 
 /**
- * @brief
+ * @brief Selects the best move across all partitions.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] part
- * @return pair<MoveInfoV<typename Gnl::node_t>, int>
+ * Finds the partition with the maximum gain value and returns the
+ * corresponding vertex and gain.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] part The current partition assignment
+ * @return A pair containing the move info and the gain of the selected move
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::select(std::span<const uint8_t> part)
@@ -92,12 +106,16 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select(std::span<const uint8_t> part)
 }
 
 /**
- * @brief
+ * @brief Selects the best move to a specific partition.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] to_part
- * @return pair<typename Gnl::node_t, int>
+ * Pops the vertex with the highest gain from the specified partition's
+ * bucket and appends it to the waiting list.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] to_part The target partition index
+ * @return A pair containing the selected vertex and its gain
  */
 template <typename Gnl, typename GainCalc, class Derived>
 auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t to_part)
@@ -113,12 +131,16 @@ auto FMGainMgr<Gnl, GainCalc, Derived>::select_togo(uint8_t to_part)
 }
 
 /**
- * @brief
+ * @brief Updates gain values for all nets affected by a vertex move.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] part
- * @param[in] move_info_v
+ * Iterates over all nets connected to the moved vertex and dispatches
+ * to specialized handlers based on net degree (2-pin, 3-pin, or general).
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] part The current partition assignment
+ * @param[in] move_info_v Information about the performed vertex move
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
@@ -153,12 +175,15 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a 2-pin net after a vertex move.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] part
- * @param[in] move_info
+ * Computes the delta gain for the other vertex and applies the key change.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the performed move
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_2pin_net(
@@ -170,12 +195,16 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_2pin_net(
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a 3-pin net after a vertex move.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] part
- * @param[in] move_info
+ * Computes delta gains for the two remaining vertices and applies
+ * the corresponding key changes.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the performed move
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
@@ -200,12 +229,16 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a general net (degree > 3) after a vertex move.
  *
- * @tparam GainCalc
- * @tparam Derived
- * @param[in] part
- * @param[in] move_info
+ * Computes delta gains for all remaining vertices in the net and applies
+ * the corresponding key changes.
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam GainCalc The gain calculator type
+ * @tparam Derived The derived gain manager type (CRTP)
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the performed move
  */
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(

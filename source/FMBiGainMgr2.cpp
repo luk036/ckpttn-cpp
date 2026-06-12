@@ -11,9 +11,14 @@
 using namespace std;
 
 /**
- * The code snippet is defining the `init` function for the `FMBiGainMgr` class template.
+ * @brief Initializes the binary gain manager with the given partition.
  *
- * @param[in] part
+ * Clears both gain buckets and populates them with initial gain values
+ * from the gain calculator. Locks any fixed modules in their partitions.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The partition assignment to initialize from
+ * @return The total cost of the initial partition
  */
 template <typename Gnl> auto FMBiGainMgr<Gnl>::init(std::span<const uint8_t> part) -> int {
     auto total_cost = Base::init(part);

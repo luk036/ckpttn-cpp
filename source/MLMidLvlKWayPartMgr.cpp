@@ -18,9 +18,24 @@ using node_t = SimpleNetlist::node_t;
 extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
+/**
+ * @brief Constructs a new MLMidLvlKWayPartMgr object.
+ *
+ * @param[in] bal_tol The balance tolerance for the partitioning
+ * @param[in] num_parts The number of partitions to create
+ */
 MLMidLvlKWayPartMgr::MLMidLvlKWayPartMgr(double bal_tol, std::uint8_t num_parts)
     : bal_tol_{bal_tol}, num_parts_{num_parts} {}
 
+/**
+ * @brief Optimizes the partition using multi-level mid-level k-way algorithm.
+ *
+ * Uses exhaustive mid-level search for small hypergraphs, or multi-level
+ * coarsening with FM-based refinement for larger instances.
+ *
+ * @param[in,out] part The partition vector to optimize
+ * @param[in] hyprgraph The hypergraph to partition
+ */
 void MLMidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part, const SimpleNetlist& hyprgraph) {
     using GainMgr = FMKWayGainMgr<SimpleNetlist>;
     using ConstrMgr = FMKWayConstrMgr<SimpleNetlist>;

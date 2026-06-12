@@ -17,14 +17,18 @@ extern auto create_contracted_subgraph(const SimpleNetlist&, py::set<node_t>)
     -> std::unique_ptr<SimpleHierNetlist>;
 
 /**
- * @brief run_Partition
+ * @brief Runs the multi-level Fiduccia-Mattheyses partitioning algorithm.
  *
- * @tparam Gnl
- * @tparam PartMgr
- * @param[in] hyprgraph
- * @param[in] hyprgraph
- * @param[in,out] part
- * @return LegalCheck
+ * Orchestrates the multi-level partitioning process:
+ * 1. Legalizes the initial partition
+ * 2. Recursively contracts the hypergraph if it exceeds the size limit
+ * 3. Runs FM optimization on the (possibly coarsened) hypergraph
+ *
+ * @tparam Gnl The hypergraph type
+ * @tparam PartMgr The partition manager type (e.g., FMPartMgr, NNPartMgr)
+ * @param[in] hyprgraph The input hypergraph to partition
+ * @param[in,out] part The partition vector to store the result
+ * @return LegalCheck The legality check result
  */
 template <typename Gnl, typename PartMgr>
 auto MLPartMgr::run_Partition(const Gnl& hyprgraph, std::span<std::uint8_t> part) -> LegalCheck {

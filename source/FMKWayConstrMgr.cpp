@@ -8,9 +8,10 @@
 #include "ckpttn/moveinfo.hpp"     // for MoveInfoV
 
 /**
- * @brief
+ * @brief Selects the partition with the minimum weight as the target for moves.
  *
- * @return std::uint8_t
+ * @tparam Gnl The hypergraph type
+ * @return The index of the partition with the minimum current weight
  */
 template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::uint8_t {
     auto it = std::min_element(this->diff.cbegin(), this->diff.cend());
@@ -18,10 +19,15 @@ template <typename Gnl> auto FMKWayConstrMgr<Gnl>::select_togo() const -> std::u
 }
 
 /**
- * @brief
+ * @brief Checks if a proposed move is legal for k-way partitioning.
  *
- * @param[in] move_info_v
- * @return LegalCheck
+ * Delegates to the base class for balance checking, then additionally
+ * verifies that all partitions have been brought to legality (no remaining
+ * illegal partitions).
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] move_info_v Information about the proposed vertex move
+ * @return LegalCheck The legality status of the proposed move
  */
 template <typename Gnl>
 auto FMKWayConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)

@@ -20,13 +20,18 @@ using namespace std;
 using namespace transrangers;
 
 /**
- * @brief
+ * @brief Initializes the gain values for a net in k-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * Dispatches to specialized handlers based on the net degree (2-pin, 3-pin,
+ * or general net). Nets with degree < 2 or > FM_MAX_DEGREE are skipped
+ * as they provide no gain when moving.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net,
-                                                             std::span<const uint8_t> part) {
+                                                              std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -49,14 +54,19 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
 }
 
 /**
- * @brief
+ * @brief Initializes gain values for a 2-pin net in k-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * If both pins share the same partition, decreases their gains for that
+ * partition. If they are in different partitions, adds to total cost
+ * and increases the gain of each pin in the other's partition.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The 2-pin net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
-                                              std::span<const uint8_t> part) {
+                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
     const auto node_v = *++net_cur;
@@ -77,14 +87,19 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
 }
 
 /**
- * @brief
+ * @brief Initializes gain values for a 3-pin net in k-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * Depending on the partition assignments of the three pins, adjusts
+ * gain values for each vertex in the relevant partitions and updates
+ * the total cost.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The 3-pin net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
-                                              std::span<const uint8_t> part) {
+                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
     const auto node_v = *++net_cur;
@@ -139,14 +154,19 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
 }
 
 /**
- * @brief
+ * @brief Initializes gain values for a general net (degree > 3) in k-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * Counts how many pins are in each partition, then adjusts gains across
+ * all partitions: partitions with 0 pins get negative gain for all vertices,
+ * partitions with exactly 1 pin get a positive gain for that vertex.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The general net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl>
 void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
-                                                 std::span<const uint8_t> part) {
+                                                  std::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
     //                                            sizeof StackBufLocal);
@@ -227,24 +247,29 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net
 }
 
 /**
- * @brief
+ * @brief Resets the delta gain vector to zero before processing a move.
  *
+ * Initializes the `delta_gain_v` vector for all partitions to 0
+ * in preparation for computing gain deltas for the current move.
  */
 template <typename Gnl> auto FMKWayGainCalc<Gnl>::update_move_init() -> void {
     std::ranges::fill(this->delta_gain_v, 0);
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a 2-pin net after a vertex move in k-way partitioning.
  *
- * @param[in] part
- * @param[in] move_info
- * @param[out] w
- * @return ret_2pin_info
+ * Computes delta gains for the other vertex and for the global delta_gain_v
+ * across the partitions involved in the move.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the move being performed
+ * @return The other vertex in the 2-pin net
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
-                                               const MoveInfo<typename Gnl::node_t>& move_info)
+                                                const MoveInfo<typename Gnl::node_t>& move_info)
     -> Gnl::node_t {
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
@@ -284,14 +309,17 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
 }
 
 /**
- * @brief
+ * @brief Initializes the index vector with all vertices in a net except the given one.
  *
- * @param[in] part
- * @param[in] move_info
- * @return ret_info
+ * Populates `idx_vec` with the neighbors of the given vertex in the
+ * specified net, excluding the vertex itself.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] v The vertex to exclude from the index vector
+ * @param[in] net The net whose other vertices are collected
  */
 template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
-                                                               const typename Gnl::node_t& net) {
+                                                                const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     auto degree = this->hyprgraph.gr.degree(net);
     this->idx_vec.reserve(degree - 1);
@@ -304,15 +332,19 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gn
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a 3-pin net after a vertex move in k-way partitioning.
  *
- * @param[in] part
- * @param[in] move_info
- * @return ret_info
+ * Computes delta gain contributions for the two remaining vertices and
+ * the global delta_gain_v based on partition assignments and the move.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the move being performed
+ * @return Vector of delta gain values for each remaining vertex (per partition)
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
-                                               const MoveInfo<typename Gnl::node_t>& move_info)
+                                                const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
     auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
@@ -378,15 +410,20 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a general net after a vertex move in k-way partitioning.
  *
- * @param[in] part
- * @param[in] move_info
- * @return ret_info
+ * Counts remaining vertices in each partition and computes delta gains
+ * for each vertex. Partitions with 0 pins get negative delta across all
+ * vertices; partitions with exactly 1 pin get positive delta for that pin.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the move being performed
+ * @return Vector of delta gain values for each remaining vertex (per partition)
  */
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
-                                                  const MoveInfo<typename Gnl::node_t>& move_info)
+                                                   const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     // const auto& [net, v, from_part, to_part] = move_info;
     // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];

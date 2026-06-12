@@ -12,8 +12,17 @@
 
 using namespace std;
 
-/** This is the constructor of the `FMConstrMgr` class template. It initializes the object with the
-given parameters `hyprgraph`, `bal_tol`, and `num_parts`. */
+/**
+ * @brief Constructs a new FMConstrMgr object.
+ *
+ * Computes the total module weight and the lower bound for each partition
+ * based on the balance tolerance.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] hyprgraph The hypergraph to manage constraints for
+ * @param[in] bal_tol The balance tolerance
+ * @param[in] num_parts The number of partitions
+ */
 template <typename Gnl>
 FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& hyprgraph, double bal_tol, uint8_t num_parts)
     : hyprgraph{hyprgraph}, bal_tol{bal_tol}, diff(num_parts, 0), num_parts{num_parts} {
@@ -25,10 +34,12 @@ FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& hyprgraph, double bal_tol, uint8_t num_
 }
 
 /**
- * The `init` function in the `FMConstrMgr` class template initializes the `diff` vector based on
- * the given `part` vector.
+ * @brief Initializes the constraint manager with the given partition.
  *
- * @param[in] part
+ * Resets the `diff` vector and accumulates module weights for each partition.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The partition assignment to initialize from
  */
 template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> part) {
     std::ranges::fill(this->diff, 0);
@@ -39,11 +50,15 @@ template <typename Gnl> void FMConstrMgr<Gnl>::init(std::span<const uint8_t> par
 }
 
 /**
- * The code snippet is defining the `check_legal` function in the `FMConstrMgr` class template. This
- * function takes a `MoveInfoV` object as input and returns a `LegalCheck` enum value.
+ * @brief Checks if a proposed move is legal and whether it improves balance.
  *
- * @param[in] move_info_v
- * @return LegalCheck
+ * Returns NotSatisfied if the source partition would drop below the lower bound,
+ * GetBetter if the move improves balance but destination is still below bound,
+ * or AllSatisfied if both partitions meet the balance constraints after the move.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] move_info_v Information about the proposed vertex move
+ * @return LegalCheck The legality status of the proposed move
  */
 template <typename Gnl>
 auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_info_v)
@@ -61,12 +76,15 @@ auto FMConstrMgr<Gnl>::check_legal(const MoveInfoV<typename Gnl::node_t>& move_i
 }
 
 /**
- * The code snippet is defining the `check_constraints` function in the `FMConstrMgr` class
- * template. This function takes a `MoveInfoV` object as input and returns a boolean value.
+ * @brief Checks if a proposed move satisfies the minimum balance constraint.
  *
- * @param[in] move_info_v
- * @return true
- * @return false
+ * Returns true only if the source partition has enough weight to lose the
+ * moved module without dropping below the lower bound.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] move_info_v Information about the proposed vertex move
+ * @return true if the move satisfies balance constraints
+ * @return false if the source partition would become underweight
  */
 template <typename Gnl>
 auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& move_info_v)
@@ -80,12 +98,13 @@ auto FMConstrMgr<Gnl>::check_constraints(const MoveInfoV<typename Gnl::node_t>& 
 }
 
 /**
- * The code snippet is defining the `update_move` function in the `FMConstrMgr` class template. This
- * function takes a `MoveInfoV` object as input and updates the `diff` vector based on the move
- * information. It increases the weight of the destination part by the weight of the moved node and
- * decreases the weight of the source part by the weight of the moved node.
+ * @brief Updates the partition weight differences after a move.
  *
- * @param[in] move_info_v
+ * Increases the weight of the destination partition and decreases the
+ * weight of the source partition by the module weight of the moved vertex.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] move_info_v Information about the performed vertex move
  */
 template <typename Gnl>
 void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t>& move_info_v) {
@@ -95,17 +114,15 @@ void FMConstrMgr<Gnl>::update_move(const MoveInfoV<typename Gnl::node_t>& move_i
 }
 
 /**
- * The code snippet is defining the `final_check` function in the `FMConstrMgr` class template. This
- * function takes a `part` vector as input and checks if the final partitioning satisfies the
- * balance constraints. It first initializes the `diff` vector using the `init` function, and then
- * iterates through the `diff` vector to check if any part is below the `lowerbound`. If any part is
- * below the `lowerbound`, it returns `false`, indicating that the final partitioning does not
- * satisfy the balance constraints. If all parts are above or equal to the `lowerbound`, it returns
- * `true`, indicating that the final partitioning satisfies the balance constraints.
+ * @brief Performs a final check that all partitions satisfy balance constraints.
  *
- * @param[in] part The partition information to check.
- * @return true If the final partitioning satisfies the balance constraints.
- * @return false If the final partitioning does not satisfy the balance constraints.
+ * Initializes the `diff` vector and verifies all partitions meet or exceed
+ * the lower bound weight.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The partition assignment to check
+ * @return true if all partitions satisfy the balance constraints
+ * @return false if any partition is below the lower bound
  */
 template <typename Gnl> auto FMConstrMgr<Gnl>::final_check(std::span<const uint8_t> part) -> bool {
     this->init(part);

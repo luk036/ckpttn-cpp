@@ -7,9 +7,26 @@
 #include <span>
 #include <vector>
 
+/**
+ * @brief Constructs a new MidLvlPartMgr object.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] hyprgraph The hypergraph to partition
+ * @param[in] bal_tol The balance tolerance for the partitioning
+ */
 template <typename Gnl> MidLvlPartMgr<Gnl>::MidLvlPartMgr(const Gnl& hyprgraph, double bal_tol)
     : hyprgraph{hyprgraph}, gain_calc{hyprgraph, 2}, constr_mgr{hyprgraph, bal_tol} {}
 
+/**
+ * @brief Optimizes the partition using exhaustive mid-level (Hamiltonian cycle) search.
+ *
+ * Enumerates all balanced 2-way partitions of the hypergraph using the
+ * middle-levels Gray code algorithm, tracking the best (lowest cost)
+ * partition found that satisfies balance constraints.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in,out] part The partition vector to optimize
+ */
 template <typename Gnl> void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t> part) {
     const auto num_modules = static_cast<int>(this->hyprgraph.number_of_modules());
     const auto half_bits = num_modules / 2;

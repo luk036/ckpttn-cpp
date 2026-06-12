@@ -5,6 +5,16 @@
 
 using namespace std;
 
+/**
+ * @brief Projects a partition from the current level up to the parent level.
+ *
+ * Maps each vertex's partition assignment from the current (child) level
+ * to the parent level using the upward node mapping.
+ *
+ * @tparam graph_t The graph type
+ * @param[in] part The partition assignment at the current level
+ * @param[out] part_up The projected partition assignment at the parent level
+ */
 template <typename graph_t>
 void HierNetlist<graph_t>::projection_up(std::span<const uint8_t> part,
                                          std::span<uint8_t> part_up) const {
@@ -14,6 +24,16 @@ void HierNetlist<graph_t>::projection_up(std::span<const uint8_t> part,
     }
 }
 
+/**
+ * @brief Projects a partition from the current level down to the child level.
+ *
+ * Maps partition assignments from the current (parent) level back to the
+ * child level using the downward node and cluster mappings.
+ *
+ * @tparam graph_t The graph type
+ * @param[in] part The partition assignment at the current level
+ * @param[out] part_down The projected partition assignment at the child level
+ */
 template <typename graph_t>
 void HierNetlist<graph_t>::projection_down(std::span<const uint8_t> part,
                                            std::span<uint8_t> part_down) const {

@@ -15,11 +15,15 @@ using namespace std;
 using namespace transrangers;
 
 /**
- * The code snippet is defining the `_init_gain` function template for the `FMBiGainCalc` class.
- * This function is responsible for initializing the gain values for a given net and partition.
+ * @brief Initializes the gain values for a net in 2-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * Dispatches to specialized handlers based on the net degree (2-pin, 3-pin,
+ * or general net). Nets with degree < 2 or > FM_MAX_DEGREE are skipped
+ * as they provide no gain when moving.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl>
 void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net, std::span<const uint8_t> part) {
@@ -45,14 +49,18 @@ void FMBiGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net, std::span<co
 }
 
 /**
- * The `_init_gain_2pin_net` function is a member function of the `FMBiGainCalc` class. It is
- * responsible for initializing the gain values for a 2-pin net in a given partition.
+ * @brief Initializes gain values for a 2-pin net in 2-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * If the two pins are in different partitions, increases their gains
+ * and adds to the total cost. If they are in the same partition,
+ * decreases their gains.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The 2-pin net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
-                                                                    std::span<const uint8_t> part) {
+                                                                     std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
     const auto node_v = *++net_cur;
@@ -69,14 +77,17 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_2pin_net(const typena
 }
 
 /**
- * The `_init_gain_3pin_net` function is a member function of the `FMBiGainCalc` class. It is
- * responsible for initializing the gain values for a 3-pin net in a given partition.
+ * @brief Initializes gain values for a 3-pin net in 2-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * Depending on which pins share the same partition, adjusts the gain
+ * values for the three vertices and updates the total cost accordingly.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The 3-pin net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
-                                                                    std::span<const uint8_t> part) {
+                                                                     std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
     const auto node_v = *++net_cur;
@@ -102,16 +113,20 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::_init_gain_3pin_net(const typena
 }
 
 /**
- * The `_init_gain_general_net` function is a member function of the `FMBiGainCalc` class. It is
- * responsible for initializing the gain values for a general net (with more than 3 pins) in a given
- * partition.
+ * @brief Initializes gain values for a general net (degree > 3) in 2-way partitioning.
  *
- * @param[in] net
- * @param[in] part
+ * Counts how many pins are in each partition, then adjusts gains:
+ * - If a partition has 0 pins: all vertices lose gain (moving to that part helps)
+ * - If a partition has 1 pin: that pin gains (moving it out would cut the net)
+ * - Adds to total cost if pins span both partitions.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] net The general net to initialize gains for
+ * @param[in] part The current partition assignment
  */
 template <typename Gnl>
 void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
-                                               std::span<const uint8_t> part) {
+                                                std::span<const uint8_t> part) {
     auto num = array<size_t, 2>{0U, 0U};
 
     auto range = all(this->hyprgraph.gr[net]);
@@ -143,16 +158,19 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a 2-pin net after a vertex move.
  *
- * @param[in] part
- * @param[in] move_info
- * @param[out] w
- * @return int
+ * Computes the delta gain for the other vertex in the 2-pin net and
+ * returns that vertex for key modification.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the move being performed
+ * @return The other vertex in the 2-pin net (whose gain needs updating)
  */
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
-                                             const MoveInfo<typename Gnl::node_t>& move_info)
+                                              const MoveInfo<typename Gnl::node_t>& move_info)
     -> Gnl::node_t {
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto node_w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
@@ -163,14 +181,17 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
 }
 
 /**
- * @brief
+ * @brief Initializes the index vector with all vertices in a net except the given module.
  *
- * @param[in] part
- * @param[in] move_info
- * @return ret_info
+ * Populates `idx_vec` with the neighbors of the given module in the specified net,
+ * reserving space for degree-1 elements.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] module The module (vertex) to exclude from the index vector
+ * @param[in] net The net whose other vertices are collected
  */
 template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& module,
-                                                             const typename Gnl::node_t& net) {
+                                                              const typename Gnl::node_t& net) {
     this->idx_vec.clear();
     auto degree = this->hyprgraph.gr.degree(net);
     this->idx_vec.reserve(degree - 1);
@@ -183,15 +204,19 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a 3-pin net after a vertex move.
  *
- * @param[in] part
- * @param[in] move_info
- * @return ret_info
+ * Computes the delta gain contributions for the two remaining vertices
+ * in the 3-pin net after the move, based on their partition assignments.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the move being performed
+ * @return Vector of delta gain values for the remaining vertices
  */
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
-                                             const MoveInfo<typename Gnl::node_t>& move_info)
+                                              const MoveInfo<typename Gnl::node_t>& move_info)
     -> vector<int> {
     // const auto& [net, v, from_part, _] = move_info;
 
@@ -213,15 +238,19 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
 }
 
 /**
- * @brief
+ * @brief Updates gain values for a general net (degree > 3) after a vertex move.
  *
- * @param[in] part
- * @param[in] move_info
- * @return ret_info
+ * Counts how many remaining vertices are in each partition and computes
+ * delta gains for each vertex based on partition counts (0 pins vs 1 pin).
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The current partition assignment
+ * @param[in] move_info Information about the move being performed
+ * @return Vector of delta gain values for each remaining vertex
  */
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
-                                                const MoveInfo<typename Gnl::node_t>& move_info)
+                                                 const MoveInfo<typename Gnl::node_t>& move_info)
     -> vector<int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};

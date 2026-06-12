@@ -15,10 +15,14 @@
 using namespace std;
 
 /**
- * @brief
+ * @brief Initializes the k-way gain manager with the given partition.
  *
- * @param[in] part
- * @return int
+ * Clears all gain buckets, populates them with initial gain values for
+ * each vertex and partition, and locks fixed modules.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] part The partition assignment to initialize from
+ * @return The total cost of the initial partition
  */
 template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(std::span<const uint8_t> part) -> int {
     auto total_cost = Base::init(part);
@@ -43,15 +47,18 @@ template <typename Gnl> auto FMKWayGainMgr<Gnl>::init(std::span<const uint8_t> p
 }
 
 /**
- * @brief
+ * @brief Updates vertex gains after a move in k-way partitioning.
  *
- * @param[in] part
- * @param[in] move_info_v
- * @param[in] gain
+ * Adjusts the gain keys for the moved vertex in all partitions except
+ * the source and destination, and updates the key in the source partition.
+ *
+ * @tparam Gnl The hypergraph type
+ * @param[in] move_info_v Information about the performed vertex move
+ * @param[in] gain The gain of the performed move
  */
 template <typename Gnl>
 void FMKWayGainMgr<Gnl>::update_move_v(const MoveInfoV<typename Gnl::node_t>& move_info_v,
-                                       int gain) {
+                                        int gain) {
     // const auto& [v, from_part, to_part] = move_info_v;
 
     for (auto part_idx = 0U; part_idx != this->num_parts; ++part_idx) {
