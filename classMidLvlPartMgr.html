@@ -53,7 +53,18 @@
           <div class="m-doc-template">template&lt;typename Gnl&gt;</div>
           MidLvlPartMgr <span class="m-thin">class</span>
         </h1>
-        <p><span></span></p>
+        <p>Mid-Level Partition Manager (2-way)</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Gnl</td>
+              <td>The hypergraph type</td>
+            </tr>
+          </tbody>
+        </table>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -68,6 +79,7 @@
             </li>
           </ul>
         </nav>
+<p>The <code><a href="classMidLvlPartMgr.html" class="m-doc">MidLvlPartMgr</a></code> class performs mid-level (exhaustive) partitioning for small hypergraphs using the middle-levels Gray code algorithm. It enumerates balanced partitions via Hamiltonian cycles to find the optimal 2-way partitioning for small instances.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
@@ -80,20 +92,20 @@
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a09663454f250978ce4aac0ab1e550bef">
-              <span class="m-doc-wrap-bumper"><a href="#a09663454f250978ce4aac0ab1e550bef" class="m-doc-self">MidLvlPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a09663454f250978ce4aac0ab1e550bef" class="m-doc">MidLvlPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
               double bal_tol)</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Constructs a new <a href="classMidLvlPartMgr.html" class="m-doc">MidLvlPartMgr</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="a0376452d6ab1ad9c4caa30b53b15f8ea">
-              <span class="m-doc-wrap-bumper">void <a href="#a0376452d6ab1ad9c4caa30b53b15f8ea" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0376452d6ab1ad9c4caa30b53b15f8ea" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Optimizes the partition using exhaustive mid-level search.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -102,8 +114,56 @@
             <dt id="a1b6d9fda9ce13b1e6217a06def19a439">
               int <a href="#a1b6d9fda9ce13b1e6217a06def19a439" class="m-doc-self">total_cost</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Total cost of the current partitioning solution.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a09663454f250978ce4aac0ab1e550bef"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> MidLvlPartMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a09663454f250978ce4aac0ab1e550bef" class="m-doc-self">MidLvlPartMgr</a>(</span><span class="m-doc-wrap">const Gnl&amp; hyprgraph,
+              double bal_tol)</span></span>
+            </h3>
+            <p>Constructs a new <a href="classMidLvlPartMgr.html" class="m-doc">MidLvlPartMgr</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The hypergraph to partition</td>
+                </tr>
+                <tr>
+                  <td>bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The balance tolerance for the partitioning</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0376452d6ab1ad9c4caa30b53b15f8ea"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Gnl&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void MidLvlPartMgr&lt;Gnl&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0376452d6ab1ad9c4caa30b53b15f8ea" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span></span>
+            </h3>
+            <p>Optimizes the partition using exhaustive mid-level search.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>The partition vector to optimize</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

@@ -52,7 +52,7 @@
           MLMidLvlKWayPartMgr <span class="m-thin">class</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="MLMidLvlKWayPartMgr_8hpp.html">&lt;ckpttn/MLMidLvlKWayPartMgr.hpp&gt;</a></div>
         </h1>
-        <p><span></span></p>
+        <p>Multi-Level Mid-Level K-Way Partition Manager.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -66,28 +66,29 @@
             </li>
           </ul>
         </nav>
+<p>The <code><a href="classMLMidLvlKWayPartMgr.html" class="m-doc">MLMidLvlKWayPartMgr</a></code> class combines multi-level partitioning with mid-level (exhaustive) refinement for k-way partitioning. For small hypergraphs it uses the exhaustive mid-level k-way search directly; for larger instances it applies multi-level coarsening followed by FM-based refinement on the coarsened graph.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a75961561b7a59ca3b9f136012cd9a33e">
-              <span class="m-doc-wrap-bumper"><a href="#a75961561b7a59ca3b9f136012cd9a33e" class="m-doc-self">MLMidLvlKWayPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a75961561b7a59ca3b9f136012cd9a33e" class="m-doc">MLMidLvlKWayPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
               std::uint8_t num_parts)</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Constructs a new <a href="classMLMidLvlKWayPartMgr.html" class="m-doc">MLMidLvlKWayPartMgr</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="a2b0a34e58f58d425a90fef696a7d9c5b">
-              <span class="m-doc-wrap-bumper">void <a href="#a2b0a34e58f58d425a90fef696a7d9c5b" class="m-doc-self">set_limitsize</a>(</span><span class="m-doc-wrap">size_t limit)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2b0a34e58f58d425a90fef696a7d9c5b" class="m-doc">set_limitsize</a>(</span><span class="m-doc-wrap">size_t limit)</span>
             </dt>
-            <dd><span></span></dd>
-            <dt id="af563b07d4bc1b4cf13cf616cafcb3c34">
-              <span class="m-doc-wrap-bumper">void <a href="#af563b07d4bc1b4cf13cf616cafcb3c34" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part,
+            <dd>Sets the size limit for multi-level coarsening.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af563b07d4bc1b4cf13cf616cafcb3c34" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part,
               const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; hyprgraph)</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Optimizes the partition using multi-level mid-level k-way algorithm.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -96,8 +97,72 @@
             <dt id="aeb286ed46013c70e76fc35aa859016c2">
               int <a href="#aeb286ed46013c70e76fc35aa859016c2" class="m-doc-self">total_cost</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Total cost of the current partitioning solution.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a75961561b7a59ca3b9f136012cd9a33e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> MLMidLvlKWayPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a75961561b7a59ca3b9f136012cd9a33e" class="m-doc-self">MLMidLvlKWayPartMgr</a>(</span><span class="m-doc-wrap">double bal_tol,
+              std::uint8_t num_parts)</span></span>
+            </h3>
+            <p>Constructs a new <a href="classMLMidLvlKWayPartMgr.html" class="m-doc">MLMidLvlKWayPartMgr</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bal_tol&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The balance tolerance for the partitioning</td>
+                </tr>
+                <tr>
+                  <td>num_parts&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The number of partitions to create</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2b0a34e58f58d425a90fef696a7d9c5b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void MLMidLvlKWayPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2b0a34e58f58d425a90fef696a7d9c5b" class="m-doc-self">set_limitsize</a>(</span><span class="m-doc-wrap">size_t limit)</span></span>
+            </h3>
+            <p>Sets the size limit for multi-level coarsening.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">limit&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The minimum module count to trigger coarsening</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af563b07d4bc1b4cf13cf616cafcb3c34"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void MLMidLvlKWayPartMgr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af563b07d4bc1b4cf13cf616cafcb3c34" class="m-doc-self">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part,
+              const <a href="netlist_8hpp.html#ab3f2eb4e24c39f06df0bf3f6df4ab4ad" class="m-doc">SimpleNetlist</a>&amp; hyprgraph)</span></span>
+            </h3>
+            <p>Optimizes the partition using multi-level mid-level k-way algorithm.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">part&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>The partition vector to optimize</td>
+                </tr>
+                <tr>
+                  <td>hyprgraph&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The hypergraph to partition</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>
