@@ -30,6 +30,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
   add_compile_options(/std:c++latest /await)
+  add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)
 else() # (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   # using clang
   add_compile_options(-stdlib=libc++)
