@@ -29,7 +29,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC add_compile_options(-fcoroutines)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
-  add_compile_options(/std:c++latest /await)
+  add_compile_options(/std:c++latest)
   add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)
 else() # (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   # using clang
@@ -45,7 +45,7 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME XNetwork
-  GIT_TAG 1.7.3
+  GIT_TAG 1.7.4
   GITHUB_REPOSITORY luk036/xnetwork-cpp
   OPTIONS "INSTALL_ONLY ON" # create an installable target
 )
