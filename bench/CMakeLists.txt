@@ -43,6 +43,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-literal-operator
   )
 elseif(MSVC)
-  target_compile_options(CkPttn PUBLIC /W4 /WX /wd5285 /wd4459 /wd4996)
+  target_compile_options(CkPttn PUBLIC /W4 /WX /wd5285 /wd4996)
   # target_compile_definitions(CkPttnTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
 endif()
