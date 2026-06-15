@@ -54,7 +54,7 @@ Add spdlog logging capability to provide structured, thread-safe file logging fo
 ### Dependencies
 - fmt v10.2.1 (already in project)
 - spdlog v1.12.0 (newly added)
-- doctest v2.4.11 (existing test framework)
+- doctest v2.5.2 (existing test framework)
 
 ---
 
@@ -493,7 +493,7 @@ cmake --build build_test
 
 **Result:**
 ```
-[doctest] doctest version is "2.4.11"
+[doctest] doctest version is "2.5.2"
 [doctest] run with "--help" for options
 ===============================================================================
 [doctest] test cases:   90 |   90 passed | 0 failed | 0 skipped
