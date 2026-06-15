@@ -69,8 +69,8 @@ TEST_CASE("Benchmark all") {
         const char* net;
         const char* are;
     };
-    TC cs[] = {{.net="../../testcases/ibm01.net", .are="../../testcases/ibm01.are"},
-               {.net="../../testcases/p1.net", .are=nullptr}};
+    TC cs[] = {{.net = "../../testcases/ibm01.net", .are = "../../testcases/ibm01.are"},
+               {.net = "../../testcases/p1.net", .are = nullptr}};
     cout << "\n=== ML vs FM (bal_tol=" << BAL_TOL << " limit=" << LIMIT << " runs=" << RUNS
          << ") ===\n";
     for (auto& c : cs) {

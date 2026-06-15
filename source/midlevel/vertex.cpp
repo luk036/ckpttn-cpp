@@ -121,42 +121,38 @@ int MidVertex::to_first_vertex() {
         this->bits_[0] = 1;
         this->bits_[b + 1] = 0;
         return (2 * b + 2);
-    } 
-        std::vector<std::vector<int>> usteps_neg, dsteps_neg, usteps_pos, dsteps_pos;
-        steps_height(usteps_neg, usteps_pos, dsteps_neg, dsteps_pos);
-        bool min_zero = (usteps_neg.size() == 0);
-        bool unique_min;
-        unique_min
-            = (min_zero ? (usteps_pos.front().size() == 1) : (usteps_neg.back().size() == 1));
-        bool middle_level = (2 * count_ones() + 1 == static_cast<int>(this->bits_.size()));
-        int to;
-        if ((!unique_min && middle_level) || (unique_min && !middle_level)) {
-            to = (min_zero ? usteps_pos.front().front() : usteps_neg.back().front()) - 1;
-        } else {
-            to = (min_zero ? usteps_pos.front().back() : usteps_neg.back().back()) - 1;
+    }
+    std::vector<std::vector<int>> usteps_neg, dsteps_neg, usteps_pos, dsteps_pos;
+    steps_height(usteps_neg, usteps_pos, dsteps_neg, dsteps_pos);
+    bool min_zero = (usteps_neg.size() == 0);
+    bool unique_min;
+    unique_min = (min_zero ? (usteps_pos.front().size() == 1) : (usteps_neg.back().size() == 1));
+    bool middle_level = (2 * count_ones() + 1 == static_cast<int>(this->bits_.size()));
+    int to;
+    if ((!unique_min && middle_level) || (unique_min && !middle_level)) {
+        to = (min_zero ? usteps_pos.front().front() : usteps_neg.back().front()) - 1;
+    } else {
+        to = (min_zero ? usteps_pos.front().back() : usteps_neg.back().back()) - 1;
+    }
+    // shift this->bits_[0,to] to the right by one
+    for (int i = to; i >= 0; --i) {
+        this->bits_[i + 1] = this->bits_[i];
+    }
+    this->bits_[0] = 1;
+    for (int d = 0;
+         d < static_cast<int>(dsteps_neg.size()) - ((unique_min && middle_level) ? 1 : 0); ++d) {
+        this->bits_[dsteps_neg[d].front() + 1] = 1;
+    }
+    for (int d = 0;
+         d < static_cast<int>(usteps_neg.size()) - ((unique_min && !middle_level) ? 1 : 0); ++d) {
+        this->bits_[usteps_neg[d].back()] = 0;
+    }
+    if (!middle_level) {
+        for (int d = ((min_zero && unique_min) ? 1 : 0); d <= 1; ++d) {
+            this->bits_[usteps_pos[d].back()] = 0;
         }
-        // shift this->bits_[0,to] to the right by one
-        for (int i = to; i >= 0; --i) {
-            this->bits_[i + 1] = this->bits_[i];
-        }
-        this->bits_[0] = 1;
-        for (int d = 0;
-             d < static_cast<int>(dsteps_neg.size()) - ((unique_min && middle_level) ? 1 : 0);
-             ++d) {
-            this->bits_[dsteps_neg[d].front() + 1] = 1;
-        }
-        for (int d = 0;
-             d < static_cast<int>(usteps_neg.size()) - ((unique_min && !middle_level) ? 1 : 0);
-             ++d) {
-            this->bits_[usteps_neg[d].back()] = 0;
-        }
-        if (!middle_level) {
-            for (int d = ((min_zero && unique_min) ? 1 : 0); d <= 1; ++d) {
-                this->bits_[usteps_pos[d].back()] = 0;
-            }
-        }
-        return 2 * (to + 1) + (middle_level ? 0 : 1);
-   
+    }
+    return 2 * (to + 1) + (middle_level ? 0 : 1);
 }
 
 int MidVertex::to_last_vertex() {
@@ -315,7 +311,8 @@ bool bitstrings_less_than(const int* x, const int* y, int length) {
     for (int i = 0; i < length; ++i) {
         if (x[i] < y[i]) {
             return true;
-        } if (x[i] > y[i]) {
+        }
+        if (x[i] > y[i]) {
             return false;
         }
     }

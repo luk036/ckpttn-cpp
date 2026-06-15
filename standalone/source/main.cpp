@@ -36,17 +36,17 @@ enum class Preset { default_preset, quality, highest_quality, deterministic, lar
 auto get_preset_config(Preset preset, std::uint8_t k) -> PresetConfig {
     switch (preset) {
         case Preset::default_preset:
-            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
+            return {.balance_tolerance = 0.03, .num_parts = k, .use_recursive = true};
         case Preset::quality:
-            return {.balance_tolerance=0.01, .num_parts=k, .use_recursive=false};
+            return {.balance_tolerance = 0.01, .num_parts = k, .use_recursive = false};
         case Preset::highest_quality:
-            return {.balance_tolerance=0.005, .num_parts=k, .use_recursive=false};
+            return {.balance_tolerance = 0.005, .num_parts = k, .use_recursive = false};
         case Preset::deterministic:
-            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
+            return {.balance_tolerance = 0.03, .num_parts = k, .use_recursive = true};
         case Preset::large_k:
-            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
+            return {.balance_tolerance = 0.03, .num_parts = k, .use_recursive = true};
         default:
-            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
+            return {.balance_tolerance = 0.03, .num_parts = k, .use_recursive = true};
     }
 }
 
