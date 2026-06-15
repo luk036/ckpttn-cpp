@@ -20,7 +20,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /utf-8 /W4 /WX /wd5285 /openmp /wd4996", {force = true})
+    add_cxflags("/EHsc /utf-8 /W4 /WX /wd5285 /openmp", {force = true})
 end
 
 if is_mode("coverage") then
