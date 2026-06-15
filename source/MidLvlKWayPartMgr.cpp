@@ -96,7 +96,7 @@ void MidLvlKWayPartMgr::optimize(std::span<std::uint8_t> part, const SimpleNetli
                         = static_cast<std::uint8_t>(bits[flipped_pos] == 0 ? j : i);
 
                     const auto move_info_v
-                        = MoveInfoV<SimpleNetlist::node_t>{v, from_part, to_part};
+                        = MoveInfoV<SimpleNetlist::node_t>{.v=v, .from_part=from_part, .to_part=to_part};
 
                     const auto legal = constr_mgr.check_legal(move_info_v);
 

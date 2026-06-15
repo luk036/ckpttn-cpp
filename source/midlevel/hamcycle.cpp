@@ -91,12 +91,11 @@ bool MidHamCycle::flip_seq(const std::vector<int>& seq, int& dist_to_start, bool
     const auto seq_sz = static_cast<long long>(seq.size());
     if ((dist_to_start > 0) || final_path
         || ((this->limit_ >= 0) && (this->length_ + seq_sz >= this->limit_))) {
-        for (int j = 0; j < static_cast<int>(seq.size()); ++j) {
+        for (int i : seq) {
             if ((final_path && (dist_to_start == 0))
                 || ((this->limit_ >= 0) && (this->length_ == this->limit_))) {
                 return true;
             }
-            const int i = seq[j];
             if ((dist_to_start == 0) || final_path) {
                 this->y_[i] = 1 - this->y_[i];
                 visit_f_(this->y_.get_bits(), i);
@@ -109,8 +108,7 @@ bool MidHamCycle::flip_seq(const std::vector<int>& seq, int& dist_to_start, bool
             }
         }
     } else {
-        for (int j = 0; j < static_cast<int>(seq.size()); ++j) {
-            const int i = seq[j];
+        for (int i : seq) {
             this->y_[i] = 1 - this->y_[i];
             visit_f_(this->y_.get_bits(), i);
         }

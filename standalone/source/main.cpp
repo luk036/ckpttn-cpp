@@ -23,7 +23,7 @@
 using graph_t = xnetwork::SimpleGraph;
 using index_t = std::uint32_t;
 using SimpleNetlist = Netlist<graph_t>;
-using node_t = typename SimpleNetlist::node_t;
+using node_t = SimpleNetlist::node_t;
 
 struct PresetConfig {
     double balance_tolerance;
@@ -36,17 +36,17 @@ enum class Preset { default_preset, quality, highest_quality, deterministic, lar
 auto get_preset_config(Preset preset, std::uint8_t k) -> PresetConfig {
     switch (preset) {
         case Preset::default_preset:
-            return {0.03, k, true};
+            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
         case Preset::quality:
-            return {0.01, k, false};
+            return {.balance_tolerance=0.01, .num_parts=k, .use_recursive=false};
         case Preset::highest_quality:
-            return {0.005, k, false};
+            return {.balance_tolerance=0.005, .num_parts=k, .use_recursive=false};
         case Preset::deterministic:
-            return {0.03, k, true};
+            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
         case Preset::large_k:
-            return {0.03, k, true};
+            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
         default:
-            return {0.03, k, true};
+            return {.balance_tolerance=0.03, .num_parts=k, .use_recursive=true};
     }
 }
 

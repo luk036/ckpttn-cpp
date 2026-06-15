@@ -53,7 +53,7 @@ inline bool operator==(const MidVertex& lhs, const MidVertex& rhs) {
 inline bool operator!=(const MidVertex& lhs, const MidVertex& rhs) { return !operator==(lhs, rhs); }
 std::ostream& operator<<(std::ostream& os, const MidVertex& v);
 
-bool bitstrings_less_than(int* x, int* y, int length);
-bool bitstrings_equal(int* x, int* y, int length);
+bool bitstrings_less_than(const int* x, const int* y, int length);
+bool bitstrings_equal(const int* x, const int* y, int length);
 
 #endif

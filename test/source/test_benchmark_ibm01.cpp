@@ -69,28 +69,30 @@ TEST_CASE("Benchmark all") {
         const char* net;
         const char* are;
     };
-    TC cs[] = {{"../../testcases/ibm01.net", "../../testcases/ibm01.are"},
-               {"../../testcases/p1.net", nullptr}};
+    TC cs[] = {{.net="../../testcases/ibm01.net", .are="../../testcases/ibm01.are"},
+               {.net="../../testcases/p1.net", .are=nullptr}};
     cout << "\n=== ML vs FM (bal_tol=" << BAL_TOL << " limit=" << LIMIT << " runs=" << RUNS
          << ") ===\n";
     for (auto& c : cs) {
         auto h = readNetD(c.net);
-        if (c.are) readAre(h, c.are);
+        if (c.are != nullptr) readAre(h, c.are);
         cout << "\n--- " << c.net << " ---\n";
         for (auto k : {2, 3, 5}) {
             auto N = h.number_of_modules();
-            cout << "  K=" << (int)k << " (" << N << " mods)\n";
-            vector<int> fc, mc;
-            vector<double> ft, mt;
+            cout << "  K=" << static_cast<int>(k) << " (" << N << " mods)\n";
+            vector<int> fc;
+            vector<int> mc;
+            vector<double> ft;
+            vector<double> mt;
             for (int r = 0; r < RUNS; ++r) {
                 mt19937 rg(SEED + r);
                 auto pt = vector<uint8_t>(N, 0);
                 if (k == 2) {
                     bernoulli_distribution d(0.5);
-                    for (size_t i = 0; i < N; ++i) pt[i] = (uint8_t)d(rg);
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 } else {
                     uniform_int_distribution<int> d(0, k - 1);
-                    for (size_t i = 0; i < N; ++i) pt[i] = (uint8_t)d(rg);
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 }
                 auto p = pt;
                 auto cr = run_fm(h, p, k);
@@ -102,7 +104,8 @@ TEST_CASE("Benchmark all") {
                 mt.push_back(cr.second);
             }
             auto a = [](auto& v) { return accumulate(v.begin(), v.end(), 0.0) / v.size(); };
-            double af = a(fc), am = a(mc);
+            double af = a(fc);
+            double am = a(mc);
             cout << "    FM=" << af << "(" << a(ft) << "s) ML=" << am << "(" << a(mt)
                  << "s) impr=" << (af - am) / af * 100 << "%\n";
         }

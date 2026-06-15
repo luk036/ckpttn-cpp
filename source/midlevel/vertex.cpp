@@ -121,7 +121,7 @@ int MidVertex::to_first_vertex() {
         this->bits_[0] = 1;
         this->bits_[b + 1] = 0;
         return (2 * b + 2);
-    } else {
+    } 
         std::vector<std::vector<int>> usteps_neg, dsteps_neg, usteps_pos, dsteps_pos;
         steps_height(usteps_neg, usteps_pos, dsteps_neg, dsteps_pos);
         bool min_zero = (usteps_neg.size() == 0);
@@ -156,7 +156,7 @@ int MidVertex::to_first_vertex() {
             }
         }
         return 2 * (to + 1) + (middle_level ? 0 : 1);
-    }
+   
 }
 
 int MidVertex::to_last_vertex() {
@@ -311,18 +311,18 @@ std::ostream& operator<<(std::ostream& os, const MidVertex& v) {
     return os;
 }
 
-bool bitstrings_less_than(int* x, int* y, int length) {
+bool bitstrings_less_than(const int* x, const int* y, int length) {
     for (int i = 0; i < length; ++i) {
         if (x[i] < y[i]) {
             return true;
-        } else if (x[i] > y[i]) {
+        } if (x[i] > y[i]) {
             return false;
         }
     }
     return false;
 }
 
-bool bitstrings_equal(int* x, int* y, int length) {
+bool bitstrings_equal(const int* x, const int* y, int length) {
     for (int i = 0; i < length; ++i) {
         if (x[i] != y[i]) {
             return false;

@@ -287,7 +287,7 @@ TEST_CASE("MidHamCycle: visit function receives valid indices") {
 
     auto max_idx = -1;
     auto visit_fn = [&](const std::vector<int>&, int i) {
-        if (i > max_idx) max_idx = i;
+        max_idx = std::max(i, max_idx);
     };
 
     MidHamCycle cycle(start, 20, visit_fn);

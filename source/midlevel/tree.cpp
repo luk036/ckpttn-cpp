@@ -12,7 +12,7 @@
 #include <vector>
 
 MidTree::MidTree(const MidVertex& x) {
-    std::vector<int> xv = x.get_bits();
+    const std::vector<int>& xv = x.get_bits();
     assert(xv.size() % 2 == 1);
 
     this->root_ = 0;
@@ -42,9 +42,9 @@ int MidTree::deg(int u) const {
     assert((0 <= u) && (u < this->num_vertices_));
     if (u == this->root_) {
         return static_cast<int>(this->children_[u].size());
-    } else {
+    } 
         return static_cast<int>(this->children_[u].size() + 1);
-    }
+   
 }
 
 int MidTree::num_children(int u) const {
@@ -55,7 +55,7 @@ int MidTree::num_children(int u) const {
 int MidTree::ith_child(int u, int i) const {
     assert((0 <= u) && (u < this->num_vertices_));
     assert((0 <= i) && (i < num_children(u)));
-    std::list<int>::const_iterator it = this->children_[u].begin();
+    auto it = this->children_[u].begin();
     std::advance(it, i);
     return *it;
 }
@@ -69,18 +69,12 @@ bool MidTree::is_tau_preimage() const {
         return false;
     }
     const int v = ith_child(u, 0);
-    if (num_children(v) != 0) {
-        return false;
-    }
-    return true;
+    return num_children(v) == 0;
 }
 
 bool MidTree::is_tau_image() const {
-    if ((this->num_vertices_ < 3) || (num_children(this->root_) < 2)
-        || (num_children(ith_child(root_, 0)) > 0)) {
-        return false;
-    }
-    return true;
+    return !((this->num_vertices_ < 3) || (num_children(this->root_) < 2)
+        || (num_children(ith_child(root_, 0)) > 0));
 }
 
 void MidTree::tau() {
@@ -103,14 +97,14 @@ void MidTree::move_leaf(int leaf, int new_parent, int pos) {
     assert((0 <= pos) && (pos <= static_cast<int>(this->children_[new_parent].size())));
     assert(num_children(leaf) == 0);
     const int old_parent = this->parent_[leaf];
-    for (std::list<int>::iterator it = this->children_[old_parent].begin();
+    for (auto it = this->children_[old_parent].begin();
          it != this->children_[old_parent].end(); ++it) {
         if (*it == leaf) {
             this->children_[old_parent].erase(it);
             break;
         }
     }
-    std::list<int>::iterator it = this->children_[new_parent].begin();
+    auto it = this->children_[new_parent].begin();
     std::advance(it, pos);
     this->children_[new_parent].insert(it, leaf);
     this->parent_[leaf] = new_parent;
@@ -135,7 +129,7 @@ void MidTree::rotate_to_vertex(int u) {
 void MidTree::rotate_children() { rotate_children(1); }
 
 void MidTree::rotate_children(int k) {
-    std::list<int>::iterator it = this->children_[root_].begin();
+    auto it = this->children_[root_].begin();
     std::advance(it, k);
     std::rotate(this->children_[root_].begin(), it, this->children_[root_].end());
 }
@@ -144,7 +138,7 @@ bool MidTree::flip_tree() {
     if (is_tau_preimage() && is_flip_tree_tau()) {
         tau();
         return true;
-    } else if (is_tau_image()) {
+    } if (is_tau_image()) {
         tau_inverse();
         if (is_flip_tree_tau()) {
             return true;
@@ -155,7 +149,8 @@ bool MidTree::flip_tree() {
 }
 
 void MidTree::root_canonically() {
-    int c1, c2;
+    int c1;
+    int c2;
     compute_center(c1, c2);
     if (c2 != -1) {
         const int num_bits = 2 * (this->num_vertices_ - 1);
@@ -220,11 +215,10 @@ void MidTree::compute_center(int& c1, int& c2) const {
     while (num_vertices_remaining > 2) {
         for (int i = 0; i < num_leaves; ++i) {
             const int u = leaves[i];
-            for (std::list<int>::const_iterator it = this->children_[u].begin();
-                 it != this->children_[u].end(); ++it) {
-                --degs[*it];
-                if (degs[*it] == 1) {
-                    leaves[num_new_leaves++] = *it;
+            for (int it : this->children_[u]) {
+                --degs[it];
+                if (degs[it] == 1) {
+                    leaves[num_new_leaves++] = it;
                 }
             }
             if (u != this->root_) {
@@ -298,19 +292,12 @@ bool MidTree::is_flip_tree_tau() {
         rotate_children();
     }
 
-    if (bitstrings_equal(this_bitstring.data(), canon_bitstring.data(), num_bits)) {
-        return true;
-    } else {
-        return false;
-    }
+    return bitstrings_equal(this_bitstring.data(), canon_bitstring.data(), num_bits);
 }
 
 bool MidTree::is_star() const {
-    if ((this->num_vertices_ <= 3) || (deg(this->root_) == this->num_vertices_ - 1)
-        || (deg(ith_child(root_, 0)) == this->num_vertices_ - 1)) {
-        return true;
-    }
-    return false;
+    return (this->num_vertices_ <= 3) || (deg(this->root_) == this->num_vertices_ - 1)
+        || (deg(ith_child(root_, 0)) == this->num_vertices_ - 1);
 }
 
 bool MidTree::is_light_dumbbell() const {
@@ -320,21 +307,13 @@ bool MidTree::is_light_dumbbell() const {
     const int u = ith_child(root_, 0);
     const int k = num_children(u);
     const int l = num_children(this->root_) - 1;
-    if ((k + l + 1 < this->num_vertices_ - 1) || (k <= l)) {
-        return false;
-    } else {
-        return true;
-    }
+    return !((k + l + 1 < this->num_vertices_ - 1) || (k <= l));
 }
 
 bool MidTree::is_thin_leaf(int u) const {
     if (deg(u) > 1) return false;
-    if (((u == this->root_) && (deg(ith_child(u, 0)) == 2))
-        || ((u != this->root_) && (deg(this->parent_[u]) == 2))) {
-        return true;
-    } else {
-        return false;
-    }
+    return ((u == this->root_) && (deg(ith_child(u, 0)) == 2))
+        || ((u != this->root_) && (deg(this->parent_[u]) == 2));
 }
 
 bool MidTree::has_thin_leaf() const {
@@ -367,14 +346,14 @@ void MidTree::to_bitstring(int x[]) const {
 void MidTree::to_bitstring_rec(int x[], int u, int& pos) const {
     if (num_children(u) == 0) {
         return;
-    } else {
+    } 
         for (std::list<int>::const_iterator it = this->children_[u].begin();
              it != this->children_[u].end(); ++it) {
             x[pos++] = 1;
             to_bitstring_rec(x, *it, pos);
             x[pos++] = 0;
         }
-    }
+   
 }
 
 int MidTree::min_string_rotation(int x[], int length) {
