@@ -23,10 +23,7 @@ set_target_properties(${PROJECT_NAME}Tests PROPERTIES CXX_STANDARD 20)
 # enable compiler warnings
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   # target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wpedantic -Wextra -Werror)
-  target_compile_options(
-    ${PROJECT_NAME} PUBLIC -Wall -Wextra
-                           -Wno-unqualified-std-cast-call
-  )
+  target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wextra -Werror)
 elseif(MSVC)
   target_compile_options(${PROJECT_NAME} PUBLIC /utf-8 /W4 /WX)
   # target_compile_definitions(${PROJECT_NAME}Tests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
