@@ -116,7 +116,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ab6f86fbe74a542914da92b4d23e7b001" class="m-doc">select</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt; -&gt; auto</span>
             </dt>
-            <dd>Selects a set of moves to perform on the given partition.</dd>
+            <dd>Selects a vertex to move and computes the associated gain.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#abc9aff0504d5fdcd18ae45cdf6d241a2" class="m-doc">select_togo</a>(</span><span class="m-doc-wrap">uint8_t to_part) -&gt; std::pair&lt; node_t, int &gt; -&gt; auto</span>
             </dt>
@@ -261,7 +261,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto FMGainMgr&lt;Gnl, GainCalc, Derived&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab6f86fbe74a542914da92b4d23e7b001" class="m-doc-self">select</a>(</span><span class="m-doc-wrap">std::span&lt;const std::uint8_t&gt; part) -&gt; std::pair&lt; MoveInfoV&lt; node_t &gt;, int &gt;</span></span>
             </h3>
-            <p>Selects a set of moves to perform on the given partition.</p>
+            <p>Selects a vertex to move and computes the associated gain.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -275,10 +275,11 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>std::pair&lt;MoveInfoV&lt;node_t&gt;, int&gt; A pair containing the selected moves and the total gain of the moves.</td>
+                  <td>Pair containing the selected move info and the total gain</td>
                 </tr>
               </tfoot>
             </table>
+<p>Evaluates candidate vertices across all partitions, applies constraint checking, and returns the best legal move with its gain value.</p>
           </div></section>
           <section class="m-doc-details" id="abc9aff0504d5fdcd18ae45cdf6d241a2"><div>
             <h3>

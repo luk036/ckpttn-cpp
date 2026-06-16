@@ -51,7 +51,7 @@
         <h1>
           transrangers_ext.hpp <span class="m-thin">file</span>
         </h1>
-        <p><span></span></p>
+        <p>Extended transranger adaptors (skip_first, skip_last, enumerate, etc.)</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -65,6 +65,7 @@
             </li>
           </ul>
         </nav>
+<p>Transrangers: an efficient, composable design pattern for range processing.</p><p>Copyright 2021 Joaquin M Lopez Munoz. Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_<wbr />1_<wbr />0.txt</a>)</p><p>See <a href="https://github.com/joaquintides/transrangers">https:/<wbr />/<wbr />github.com/<wbr />joaquintides/<wbr />transrangers</a> for project home page.</p>
         <section id="namespaces">
           <h2><a href="#namespaces">Namespaces</a></h2>
           <dl class="m-doc">
@@ -79,37 +80,37 @@
               <div class="m-doc-template">template&lt;typename Range&gt;</div>
               struct <a href="structtransrangers_1_1skip__first__copy.html" class="m-doc">transrangers::skip_first_copy</a>
             </dt>
-            <dd></dd>
+            <dd>Owning copy adaptor for skip_first on rvalue ranges.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Range&gt;</div>
               struct <a href="structtransrangers_1_1skip__last__copy.html" class="m-doc">transrangers::skip_last_copy</a>
             </dt>
-            <dd></dd>
+            <dd>Owning copy adaptor for skip_last on rvalue ranges.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Range&gt;</div>
               struct <a href="structtransrangers_1_1skip__both__copy.html" class="m-doc">transrangers::skip_both_copy</a>
             </dt>
-            <dd></dd>
+            <dd>Owning copy adaptor for skip_both on rvalue ranges.</dd>
             <dt>
               <div class="m-doc-template">template&lt;std::size_t I, typename Ranger, typename... Rangers&gt;</div>
               class <a href="classtransrangers_1_1____lambda__255__33.html" class="m-doc">transrangers::__lambda_255_33</a>
             </dt>
-            <dd>zip</dd>
+            <dd>Internal lambda for zip cursor element assignment.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Ranger, typename... Rangers&gt;</div>
               class <a href="classtransrangers_1_1____lambda__249__18.html" class="m-doc">transrangers::__lambda_249_18</a>
             </dt>
-            <dd></dd>
+            <dd>Internal lambda for zip cursor expansion via index sequence.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename type_parameter_1_0, typename Ranger, typename... Rangers&gt;</div>
               class <a href="classtransrangers_1_1____lambda__246__16.html" class="m-doc">transrangers::__lambda_246_16</a>
             </dt>
-            <dd></dd>
+            <dd><span></span></dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Ranger, typename... Rangers&gt;</div>
               class <a href="classtransrangers_1_1____lambda__244__25.html" class="m-doc">transrangers::__lambda_244_25</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Internal lambda for the zip ranger combinator.</dd>
           </dl>
         </section>
         <section id="define-members">

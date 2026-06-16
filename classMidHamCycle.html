@@ -52,7 +52,7 @@
           MidHamCycle <span class="m-thin">class</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="hamcycle_8hpp.html">&lt;ckpttn/midlevel/hamcycle.hpp&gt;</a></div>
         </h1>
-        <p><span></span></p>
+        <p>Hamiltonian cycle generation for middle-levels Gray code.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -65,15 +65,16 @@
             </li>
           </ul>
         </nav>
+<p>Uses tree-based flip sequences to generate a Hamiltonian cycle through the middle-levels graph. Supports an optional visit callback and iteration limit for partial traversal.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a7704cd5eb2bd893992143bf370ec7a4f">
-              <span class="m-doc-wrap-bumper"><a href="#a7704cd5eb2bd893992143bf370ec7a4f" class="m-doc-self">MidHamCycle</a>(</span><span class="m-doc-wrap">const <a href="classMidVertex.html" class="m-doc">MidVertex</a>&amp; x,
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a7704cd5eb2bd893992143bf370ec7a4f" class="m-doc">MidHamCycle</a>(</span><span class="m-doc-wrap">const <a href="classMidVertex.html" class="m-doc">MidVertex</a>&amp; x,
               long long limit,
               <a href="hamcycle_8hpp.html#a429b4803b3c5592d69db9d893604e474" class="m-doc">MidVisitFunc</a> visit_f) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Construct a <a href="classMidHamCycle.html" class="m-doc">MidHamCycle</a> with given vertex, limit, and visit callback.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -82,8 +83,38 @@
             <dt id="a4d905ca07373c13e89ecb99c4c211b8c">
               <span class="m-doc-wrap-bumper">auto <a href="#a4d905ca07373c13e89ecb99c4c211b8c" class="m-doc-self">get_length</a>(</span><span class="m-doc-wrap">) const -&gt; long long</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Get the length of the Hamiltonian cycle.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a7704cd5eb2bd893992143bf370ec7a4f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> MidHamCycle::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7704cd5eb2bd893992143bf370ec7a4f" class="m-doc-self">MidHamCycle</a>(</span><span class="m-doc-wrap">const <a href="classMidVertex.html" class="m-doc">MidVertex</a>&amp; x,
+              long long limit,
+              <a href="hamcycle_8hpp.html#a429b4803b3c5592d69db9d893604e474" class="m-doc">MidVisitFunc</a> visit_f) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Construct a <a href="classMidHamCycle.html" class="m-doc">MidHamCycle</a> with given vertex, limit, and visit callback.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The starting vertex</td>
+                </tr>
+                <tr>
+                  <td>limit&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Maximum number of steps</td>
+                </tr>
+                <tr>
+                  <td>visit_f&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Callback invoked for each visited vertex</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

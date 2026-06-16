@@ -52,7 +52,7 @@
           MidTree <span class="m-thin">class</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="tree_8hpp.html">&lt;ckpttn/midlevel/tree.hpp&gt;</a></div>
         </h1>
-        <p><span></span></p>
+        <p>Tree data structure for mid-level Gray code algorithm.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -65,13 +65,14 @@
             </li>
           </ul>
         </nav>
+<p>Represents a rooted tree with children lists used in the middle-levels Gray code algorithm. Supports tree rotations, flip operations, and bitstring conversion for generating Hamiltonian cycles.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a54e2104955aa41db91584a1b97a6e543">
-              <span class="m-doc-wrap-bumper"><a href="#a54e2104955aa41db91584a1b97a6e543" class="m-doc-self">MidTree</a>(</span><span class="m-doc-wrap">const <a href="classMidVertex.html" class="m-doc">MidVertex</a>&amp; x) <span class="m-label m-flat m-info">explicit</span> </span>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a54e2104955aa41db91584a1b97a6e543" class="m-doc">MidTree</a>(</span><span class="m-doc-wrap">const <a href="classMidVertex.html" class="m-doc">MidVertex</a>&amp; x) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Construct a <a href="classMidTree.html" class="m-doc">MidTree</a> from a <a href="classMidVertex.html" class="m-doc">MidVertex</a> bitstring.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -80,16 +81,53 @@
             <dt id="aafcf14e642d8b3be2814d508cd8fb4cb">
               <span class="m-doc-wrap-bumper">auto <a href="#aafcf14e642d8b3be2814d508cd8fb4cb" class="m-doc-self">flip_tree</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Perform a flip-tree operation (tau transformation)</dd>
             <dt id="a16e332638c9d71d44d936b0b45122211">
               <span class="m-doc-wrap-bumper">void <a href="#a16e332638c9d71d44d936b0b45122211" class="m-doc-self">rotate</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd><span></span></dd>
-            <dt id="ac5ee6be5e03db4e772e0b261cba9c906">
-              <span class="m-doc-wrap-bumper">void <a href="#ac5ee6be5e03db4e772e0b261cba9c906" class="m-doc-self">to_bitstring</a>(</span><span class="m-doc-wrap">int x[]) const</span>
+            <dd>Rotate the tree to a canonical form.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac5ee6be5e03db4e772e0b261cba9c906" class="m-doc">to_bitstring</a>(</span><span class="m-doc-wrap">int x[]) const</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Convert the tree to a bitstring representation.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a54e2104955aa41db91584a1b97a6e543"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> MidTree::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a54e2104955aa41db91584a1b97a6e543" class="m-doc-self">MidTree</a>(</span><span class="m-doc-wrap">const <a href="classMidVertex.html" class="m-doc">MidVertex</a>&amp; x) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Construct a <a href="classMidTree.html" class="m-doc">MidTree</a> from a <a href="classMidVertex.html" class="m-doc">MidVertex</a> bitstring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The input <a href="classMidVertex.html" class="m-doc">MidVertex</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac5ee6be5e03db4e772e0b261cba9c906"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void MidTree::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5ee6be5e03db4e772e0b261cba9c906" class="m-doc-self">to_bitstring</a>(</span><span class="m-doc-wrap">int x[]) const</span></span>
+            </h3>
+            <p>Convert the tree to a bitstring representation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td>Output bitstring array</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

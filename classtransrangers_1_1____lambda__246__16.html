@@ -53,25 +53,7 @@
           <div class="m-doc-template">template&lt;typename type_parameter_1_0, typename Ranger, typename... Rangers&gt;</div>
           <span class="m-breadcrumb"><a href="namespacetransrangers.html">transrangers</a>::<wbr/></span>__lambda_246_16 <span class="m-thin">class</span>
         </h1>
-        <table class="m-table m-fullwidth m-flat">
-          <thead>
-            <tr><th colspan="2">Template parameters</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="width: 1%">type_parameter_1_0</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Ranger</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Rangers</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <p><span></span></p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -87,13 +69,13 @@
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a5e97aee4e9339ca48c4f2667867200c7">
-              <span class="m-doc-wrap-bumper"><a href="#a5e97aee4e9339ca48c4f2667867200c7" class="m-doc-self">__lambda_246_16</a>(</span><span class="m-doc-wrap">bool&amp; _finished,
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a5e97aee4e9339ca48c4f2667867200c7" class="m-doc">__lambda_246_16</a>(</span><span class="m-doc-wrap">bool&amp; _finished,
               type_parameter_1_0&amp; _dst,
               <a href="structtransrangers_1_1zip__cursor.html" class="m-doc">cursor</a>&amp; _zp,
               std::tuple&lt;Rangers...&gt;&amp; _rgrs)</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Construct with references to shared state.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -103,11 +85,46 @@
               <div class="m-doc-template">template&lt;class type_parameter_2_0&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a819ede83b8b50eb475a9f7a28a71084d" class="m-doc">operator()</a>(</span><span class="m-doc-wrap">const type_parameter_2_0&amp; p) const -&gt; <a href="transrangers_8hpp.html#a0fdade8d847cb65264a7168f15ece203" class="m-doc">TRANSRANGERS_<wbr />HOT</a> auto</span>
             </dt>
-            <dd></dd>
+            <dd>Process each element from the first ranger, gathering remaining ranger elements.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a5e97aee4e9339ca48c4f2667867200c7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename type_parameter_1_0, typename Ranger, typename... Rangers&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> transrangers::<wbr />__lambda_246_16&lt;type_parameter_1_0, Ranger, Rangers&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e97aee4e9339ca48c4f2667867200c7" class="m-doc-self">__lambda_246_16</a>(</span><span class="m-doc-wrap">bool&amp; _finished,
+              type_parameter_1_0&amp; _dst,
+              <a href="structtransrangers_1_1zip__cursor.html" class="m-doc">cursor</a>&amp; _zp,
+              std::tuple&lt;Rangers...&gt;&amp; _rgrs)</span></span>
+            </h3>
+            <p>Construct with references to shared state.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">_finished&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Completion flag</td>
+                </tr>
+                <tr>
+                  <td>_dst&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Destination callback</td>
+                </tr>
+                <tr>
+                  <td>_zp&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Zip cursor</td>
+                </tr>
+                <tr>
+                  <td>_rgrs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Rangers tuple</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="a819ede83b8b50eb475a9f7a28a71084d"><div>
             <h3>
               <div class="m-doc-template">
@@ -116,6 +133,7 @@
               </div>
               <span class="m-doc-wrap-bumper"><a href="transrangers_8hpp.html#a0fdade8d847cb65264a7168f15ece203" class="m-doc">TRANSRANGERS_<wbr />HOT</a> auto transrangers::<wbr />__lambda_246_16&lt;type_parameter_1_0, Ranger, Rangers&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a819ede83b8b50eb475a9f7a28a71084d" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">const type_parameter_2_0&amp; p) const</span></span>
             </h3>
+            <p>Process each element from the first ranger, gathering remaining ranger elements.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -123,7 +141,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">type_parameter_2_0</td>
-                  <td></td>
+                  <td>The cursor type from the first ranger</td>
                 </tr>
               </tbody>
               <thead>
@@ -132,7 +150,7 @@
               <tbody>
                 <tr>
                   <td>p&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The cursor value</td>
                 </tr>
               </tbody>
             </table>
