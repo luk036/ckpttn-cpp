@@ -40,7 +40,7 @@ endforeach()
 # enable compiler warnings
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_options(
-    CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-literal-operator
+    CkPttn PUBLIC -Wall -Wpedantic -Wextra -Werror
   )
 elseif(MSVC)
   target_compile_options(CkPttn PUBLIC /utf-8 /W4 /WX)
