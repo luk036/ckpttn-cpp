@@ -19,7 +19,7 @@ class MidVertex {
     int& operator[](int i) { return this->bits_[i]; }
     const int& operator[](int i) const { return this->bits_[i]; }
     int size() { return static_cast<int>(this->bits_.size()); }
-    const int size() const { return static_cast<int>(this->bits_.size()); }
+    int size() const { return static_cast<int>(this->bits_.size()); }
 
     void rev_inv();
     bool is_first_vertex() const;
