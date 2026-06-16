@@ -1,3 +1,8 @@
+/**
+ * @file FMKWayConstrMgr.hpp
+ * @brief K-way FM constraint manager
+ */
+
 #pragma once
 
 #include <cstdint>  // for uint8_t

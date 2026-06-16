@@ -1,3 +1,8 @@
+/**
+ * @file netlist.hpp
+ * @brief Netlist data structure for circuit partitioning
+ */
+
 #pragma once
 
 #include <cstddef>           // for size_t
@@ -193,6 +198,14 @@ using graph_t = xnetwork::SimpleGraph;
 using index_t = uint32_t;
 using SimpleNetlist = Netlist<graph_t>;
 
+/**
+ * @brief Snapshot of partition state for rollback
+ *
+ * Stores the external nets and modules at a given point during
+ * the FM algorithm, used to revert to the best-known partition.
+ *
+ * @tparam Node The node type (typically representing a module)
+ */
 template <typename Node> struct Snapshot {
     /// @brief Set of external nets (nets crossing partition boundaries)
     py::set<Node> extern_nets;

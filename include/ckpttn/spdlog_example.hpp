@@ -1,3 +1,8 @@
+/**
+ * @file spdlog_example.hpp
+ * @brief Demonstration of spdlog integration
+ */
+
 #pragma once
 
 /**

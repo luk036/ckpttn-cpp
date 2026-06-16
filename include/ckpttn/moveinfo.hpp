@@ -1,3 +1,8 @@
+/**
+ * @file moveinfo.hpp
+ * @brief Move information structures for FM partitioning algorithm
+ */
+
 #pragma once
 
 #include <cstdint>  // for uint32_t, uint8_t

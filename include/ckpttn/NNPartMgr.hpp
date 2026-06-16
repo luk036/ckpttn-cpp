@@ -1,3 +1,8 @@
+/**
+ * @file NNPartMgr.hpp
+ * @brief No-Nonsense partitioning algorithm manager
+ */
+
 #pragma once
 
 // **Special code for two-pin nets**

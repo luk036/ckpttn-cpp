@@ -1,4 +1,7 @@
-/*
+/**
+ * @file tree.hpp
+ * @brief Mid-level Gray code tree data structure
+ *
  * Adapted from: Torsten Muetze, Jerri Nummenpalo (2018)
  * Original license: GPL v2+
  */
@@ -11,11 +14,28 @@
 
 #include "vertex.hpp"
 
+/**
+ * @brief Tree data structure for mid-level Gray code algorithm
+ *
+ * Represents a rooted tree with children lists used in the middle-levels
+ * Gray code algorithm. Supports tree rotations, flip operations, and
+ * bitstring conversion for generating Hamiltonian cycles.
+ */
 class MidTree {
   public:
+    /**
+     * @brief Construct a MidTree from a MidVertex bitstring
+     * @param[in] x The input MidVertex
+     */
     explicit MidTree(const MidVertex& x);
+    /// @brief Perform a flip-tree operation (tau transformation)
     bool flip_tree();
+    /// @brief Rotate the tree to a canonical form
     void rotate();
+    /**
+     * @brief Convert the tree to a bitstring representation
+     * @param[out] x Output bitstring array
+     */
     void to_bitstring(int x[]) const;
 
   private:

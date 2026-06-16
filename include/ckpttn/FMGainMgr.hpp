@@ -1,3 +1,8 @@
+/**
+ * @file FMGainMgr.hpp
+ * @brief CRTP base class for FM gain management
+ */
+
 #pragma once
 
 // #include <algorithm> // for all_of
@@ -83,11 +88,13 @@ template <typename Gnl, typename GainCalc, class Derived> class FMGainMgr {
     auto is_empty() const -> bool;
 
     /**
-     * @brief Selects a set of moves to perform on the given partition.
+     * @brief Selects a vertex to move and computes the associated gain.
+     *
+     * Evaluates candidate vertices across all partitions, applies constraint
+     * checking, and returns the best legal move with its gain value.
      *
      * @param[in] part The current partition information.
-     * @return std::pair<MoveInfoV<node_t>, int> A pair containing the selected moves and the total
-     * gain of the moves.
+     * @return Pair containing the selected move info and the total gain
      */
     auto select(std::span<const std::uint8_t> part) -> std::pair<MoveInfoV<node_t>, int>;
 

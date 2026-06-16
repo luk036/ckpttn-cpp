@@ -1,3 +1,8 @@
+/**
+ * @file MidLvlKWayPartMgr.hpp
+ * @brief Mid-level exhaustive k-way partition manager
+ */
+
 #pragma once
 
 #include <cstdint>

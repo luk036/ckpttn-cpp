@@ -1,3 +1,8 @@
+/**
+ * @file FMKWayGainMgr.hpp
+ * @brief K-way FM gain manager
+ */
+
 #pragma once
 
 #include <span>

@@ -1,3 +1,8 @@
+/**
+ * @file FMPartMgr.hpp
+ * @brief Fiduccia-Mattheyses partitioning algorithm manager
+ */
+
 #pragma once
 
 // **Special code for two-pin nets**

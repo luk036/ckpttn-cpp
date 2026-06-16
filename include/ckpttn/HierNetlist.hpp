@@ -1,3 +1,8 @@
+/**
+ * @file HierNetlist.hpp
+ * @brief Hierarchical netlist supporting multi-level partitioning
+ */
+
 #pragma once
 
 #include <ckpttn/array_like.hpp>  // for ShiftArray

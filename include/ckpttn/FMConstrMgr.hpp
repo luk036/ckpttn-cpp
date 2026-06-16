@@ -1,3 +1,8 @@
+/**
+ * @file FMConstrMgr.hpp
+ * @brief FM partition constraint manager
+ */
+
 #pragma once
 
 #include <cstdint>  // for uint8_t

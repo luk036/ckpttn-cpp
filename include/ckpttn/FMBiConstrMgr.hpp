@@ -1,3 +1,8 @@
+/**
+ * @file FMBiConstrMgr.hpp
+ * @brief Binary FM constraint manager for 2-way partitioning
+ */
+
 #pragma once
 
 #include "FMConstrMgr.hpp"  // import FMConstrMgr

@@ -1,3 +1,8 @@
+/**
+ * @file MidLvlPartMgr.hpp
+ * @brief Mid-level exhaustive partition manager for 2-way partitioning
+ */
+
 #pragma once
 
 #include <cstdint>

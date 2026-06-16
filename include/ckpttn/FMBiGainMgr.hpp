@@ -1,3 +1,8 @@
+/**
+ * @file FMBiGainMgr.hpp
+ * @brief Binary FM gain manager for 2-way partitioning
+ */
+
 #pragma once
 
 #include <span>

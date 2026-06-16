@@ -1,3 +1,8 @@
+/**
+ * @file FMPmrConfig.hpp
+ * @brief PMR configuration and constants for FM algorithm
+ */
+
 #pragma once
 
 // #include <boost/container/pmr/memory_resource.hpp>

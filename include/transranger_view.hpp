@@ -1,4 +1,8 @@
-/* Copyright 2021 Joaquin M Lopez Munoz.
+/**
+ * @file transranger_view.hpp
+ * @brief Range-v3 view adaptors for transrangers
+ *
+ * Copyright 2021 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -130,11 +134,30 @@ namespace transrangers {
 
     }  // namespace detail::view
 
+    /**
+     * @brief Create an input view from a ranger
+     *
+     * Wraps a ranger into a range-v3 compatible input view.
+     *
+     * @tparam Ranger The ranger type
+     * @param[in] rgr The ranger to wrap
+     * @return An input view over the ranger
+     */
     template <typename Ranger> auto input_view(Ranger rgr) {
         using namespace detail::view;
         return view<Ranger, input_iterator<Ranger>>{std::move(rgr)};
     }
 
+    /**
+     * @brief Create a forward view from a ranger
+     *
+     * Wraps a ranger into a range-v3 compatible forward view with
+     * iterator equality comparison based on visit count.
+     *
+     * @tparam Ranger The ranger type
+     * @param[in] rgr The ranger to wrap
+     * @return A forward view over the ranger
+     */
     template <typename Ranger> auto forward_view(Ranger rgr) {
         using namespace detail::view;
         return view<Ranger, forward_iterator<Ranger>>{std::move(rgr)};

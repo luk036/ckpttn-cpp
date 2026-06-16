@@ -1,4 +1,8 @@
-/* Transrangers: an efficient, composable design pattern for range processing.
+/**
+ * @file transrangers_ext.hpp
+ * @brief Extended transranger adaptors (skip_first, skip_last, enumerate, etc.)
+ *
+ * Transrangers: an efficient, composable design pattern for range processing.
  *
  * Copyright 2021 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
@@ -56,9 +60,9 @@ namespace transrangers {
     }
 
     /**
-     * @brief
+     * @brief Owning copy adaptor for skip_first on rvalue ranges
      *
-     * @tparam Range
+     * @tparam Range The range type to skip the first element of
      */
     template <typename Range> struct skip_first_copy {
         using ranger = decltype(skip_first(std::declval<Range&>()));
@@ -78,12 +82,11 @@ namespace transrangers {
     };
 
     /**
-     * @brief
+     * @brief Overload for rvalue references that returns an owning copy adaptor
      *
-     * @tparam Range
-     * @param[in] rng
-     * @return std::enable_if<std::is_rvalue_reference<Range &&>::value,
-     * skip_first_copy<Range>>::type
+     * @tparam Range The range type
+     * @param[in] rng The rvalue range to skip
+     * @return owning copy adaptor
      */
     template <typename Range>
     typename std::enable_if<std::is_rvalue_reference<Range&&>::value, skip_first_copy<Range>>::type
@@ -117,9 +120,9 @@ namespace transrangers {
     }
 
     /**
-     * @brief
+     * @brief Owning copy adaptor for skip_last on rvalue ranges
      *
-     * @tparam Range
+     * @tparam Range The range type to skip the last element of
      */
     template <typename Range> struct skip_last_copy {
         using ranger = decltype(skip_last(std::declval<Range&>()));
@@ -179,9 +182,9 @@ namespace transrangers {
     }
 
     /**
-     * @brief
+     * @brief Owning copy adaptor for skip_both on rvalue ranges
      *
-     * @tparam Range
+     * @tparam Range The range type to skip the first and last elements of
      */
     template <typename Range> struct skip_both_copy {
         using ranger = decltype(skip_both(std::declval<Range&>()));
@@ -250,11 +253,11 @@ namespace transrangers {
     }
 
     /**
-     * @brief zip
+     * @brief Internal lambda for zip cursor element assignment
      *
-     * @tparam I
-     * @tparam Ranger
-     * @tparam Rangers
+     * @tparam I The index in the cursor tuple to assign
+     * @tparam Ranger The first ranger type
+     * @tparam Rangers The remaining ranger types
      */
     template <std::size_t I, typename Ranger, typename... Rangers> class __lambda_255_33 {
         using cursor = zip_cursor<Ranger, Rangers...>;
@@ -277,18 +280,18 @@ namespace transrangers {
 
       public:
         /**
-         * @brief Construct a new lambda 255 33 object
+         * @brief Construct with reference to zip cursor
          *
-         * @param[in] _zp
+         * @param[in] _zp Reference to the zip cursor
          */
         __lambda_255_33(cursor& _zp) : zp{_zp} {}
     };
 
     /**
-     * @brief
+     * @brief Internal lambda for zip cursor expansion via index sequence
      *
-     * @tparam Ranger
-     * @tparam Rangers
+     * @tparam Ranger The first ranger type
+     * @tparam Rangers The remaining ranger types
      */
     template <typename Ranger, typename... Rangers> class __lambda_249_18 {
         using cursor = zip_cursor<Ranger, Rangers...>;
@@ -310,31 +313,24 @@ namespace transrangers {
 
       public:
         /**
-         * @brief Construct a new lambda 249 18 object
+         * @brief Construct with references to zip cursor and ranger tuple
          *
-         * @param[in] _zp
-         * @param[in] _rgrs
+         * @param[in] _zp Reference to the zip cursor
+         * @param[in] _rgrs Reference to the rangers tuple
          */
         __lambda_249_18(cursor& _zp, std::tuple<Rangers...>& _rgrs) : zp{_zp}, rgrs{_rgrs} {}
     };
 
-    /**
-     * @brief
-     *
-     * @tparam type_parameter_1_0
-     * @tparam Ranger
-     * @tparam Rangers
-     */
     template <typename type_parameter_1_0, typename Ranger, typename... Rangers>
     class __lambda_246_16 {
         using cursor = zip_cursor<Ranger, Rangers...>;
 
       public:
         /**
-         * @brief
+         * @brief Process each element from the first ranger, gathering remaining ranger elements
          *
-         * @tparam type_parameter_2_0
-         * @param[in] p
+         * @tparam type_parameter_2_0 The cursor type from the first ranger
+         * @param[in] p The cursor value
          */
         template <class type_parameter_2_0>
         TRANSRANGERS_HOT inline auto operator()(const type_parameter_2_0& p) const {
@@ -354,15 +350,36 @@ namespace transrangers {
         std::tuple<Rangers...>& rgrs;
 
       public:
+        /**
+         * @brief Construct with references to shared state
+         *
+         * @param[in] _finished Completion flag
+         * @param[in] _dst Destination callback
+         * @param[in] _zp Zip cursor
+         * @param[in] _rgrs Rangers tuple
+         */
         __lambda_246_16(bool& _finished, type_parameter_1_0& _dst, cursor& _zp,
                         std::tuple<Rangers...>& _rgrs)
             : finished{_finished}, dst{_dst}, zp{_zp}, rgrs{_rgrs} {}
     };
 
+    /**
+     * @brief Internal lambda for the zip ranger combinator
+     *
+     * @tparam Ranger The first ranger type
+     * @tparam Rangers The remaining ranger types
+     */
     template <typename Ranger, typename... Rangers> class __lambda_244_25 {
         using cursor = zip_cursor<Ranger, Rangers...>;
 
       public:
+        /**
+         * @brief Invoke the zip ranger with a destination callback
+         *
+         * @tparam type_parameter_1_0 The destination callback type
+         * @param[in] dst The destination callback
+         * @return true if all rangers exhausted, false if stopped early
+         */
         template <class type_parameter_1_0>
         TRANSRANGERS_HOT inline auto operator()(type_parameter_1_0 dst) {
             bool finished = false;
@@ -375,18 +392,28 @@ namespace transrangers {
         std::tuple<Rangers...> rgrs;
 
       public:
+        /**
+         * @brief Construct with initial cursor and ranger copies
+         *
+         * @param[in] _zp Initial zip cursor
+         * @param[in] _rgr First ranger
+         * @param[in] _rgrs Remaining rangers
+         */
         __lambda_244_25(cursor _zp, const Ranger& _rgr, const Rangers&... _rgrs)
             : zp{_zp}, rgr{_rgr}, rgrs{_rgrs...} {}
     };
 
     /**
-     * @brief
+     * @brief Zip multiple rangers together, advancing them in lockstep
      *
-     * @tparam Ranger
-     * @tparam Rangers
-     * @param[in] rgr
-     * @param[in] rgrs
-     * @return auto
+     * Produces a ranger whose cursor dereferences to a tuple of
+     * the individual cursor values. Stops when any ranger is exhausted.
+     *
+     * @tparam Ranger The first ranger type
+     * @tparam Rangers The remaining ranger types
+     * @param[in] rgr The first ranger
+     * @param[in] rgrs The remaining rangers
+     * @return A zipped ranger
      */
     template <typename Ranger, typename... Rangers> auto zip(Ranger rgr, Rangers... rgrs) {
         using cursor = zip_cursor<Ranger, Rangers...>;

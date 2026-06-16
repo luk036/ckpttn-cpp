@@ -1,3 +1,8 @@
+/**
+ * @file FMBiGainCalc.hpp
+ * @brief Binary FM gain calculator for 2-way partitioning
+ */
+
 #pragma once
 
 // #include <cstddef>   // for byte

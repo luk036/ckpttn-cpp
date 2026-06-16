@@ -1,4 +1,7 @@
-/*
+/**
+ * @file vertex.hpp
+ * @brief Bitstring vertex representation for middle-levels Gray code
+ *
  * Adapted from: Torsten Muetze, Jerri Nummenpalo (2018)
  * Middle levels Gray code algorithm, adapted for MSVC/ckpttn-cpp.
  *
@@ -11,8 +14,19 @@
 #include <iostream>
 #include <vector>
 
+/**
+ * @brief Bitstring vertex for middle-levels Gray code algorithm
+ *
+ * Represents a vertex in the middle-levels graph as a bitstring.
+ * Provides methods for flip sequence computation, vertex comparison,
+ * and conversion operations used in Hamiltonian cycle generation.
+ */
 class MidVertex {
   public:
+    /**
+     * @brief Construct a MidVertex from a bitstring vector
+     * @param[in] x The input bitstring
+     */
     explicit MidVertex(const std::vector<int>& x);
 
     const std::vector<int>& get_bits() const { return bits_; }
@@ -47,13 +61,18 @@ class MidVertex {
     void aux_pointers(int a, int b, int* next_step) const;
 };
 
+/// @brief Equality comparison for MidVertex
 inline bool operator==(const MidVertex& lhs, const MidVertex& rhs) {
     return lhs.get_bits() == rhs.get_bits();
 }
+/// @brief Inequality comparison for MidVertex
 inline bool operator!=(const MidVertex& lhs, const MidVertex& rhs) { return !operator==(lhs, rhs); }
+/// @brief Stream output operator for MidVertex
 std::ostream& operator<<(std::ostream& os, const MidVertex& v);
 
+/// @brief Lexicographic comparison of bitstrings
 bool bitstrings_less_than(const int* x, const int* y, int length);
+/// @brief Equality comparison of bitstrings
 bool bitstrings_equal(const int* x, const int* y, int length);
 
 #endif

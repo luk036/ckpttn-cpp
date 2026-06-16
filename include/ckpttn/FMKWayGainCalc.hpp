@@ -1,3 +1,8 @@
+/**
+ * @file FMKWayGainCalc.hpp
+ * @brief K-way FM gain calculator
+ */
+
 #pragma once
 
 // #include <algorithm>   // for fill

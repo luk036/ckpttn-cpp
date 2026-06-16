@@ -1,3 +1,8 @@
+/**
+ * @file logger.hpp
+ * @brief Logging utilities for the ckpttn library
+ */
+
 #pragma once
 
 #include <string>

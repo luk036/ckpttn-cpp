@@ -1,4 +1,8 @@
-/* Transrangers: an efficient, composable design pattern for range processing.
+/**
+ * @file transrangers.hpp
+ * @brief Transrangers: an efficient, composable design pattern for range processing
+ *
+ * Transrangers: an efficient, composable design pattern for range processing.
  *
  * Copyright 2021 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.

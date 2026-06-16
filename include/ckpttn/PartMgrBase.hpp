@@ -1,3 +1,8 @@
+/**
+ * @file PartMgrBase.hpp
+ * @brief Base class for Fiduccia-Mattheyses Partitioning Algorithm Manager
+ */
+
 #pragma once
 
 // **Special code for two-pin nets**

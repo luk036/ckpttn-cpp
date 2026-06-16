@@ -1,3 +1,8 @@
+/**
+ * @file MLPartMgr.hpp
+ * @brief Multi-level partition manager
+ */
+
 #pragma once
 
 // **Special code for two-pin nets**

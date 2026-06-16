@@ -1,3 +1,8 @@
+/**
+ * @file array_like.hpp
+ * @brief ShiftArray container with shifted index access
+ */
+
 #pragma once
 
 // #include <any>
@@ -30,22 +35,14 @@
 // }
 
 /**
- * @brief
+ * @brief Shift Array container with shifted index access
  *
- * @tparam Container
- */
-
-/**
- * @brief Shift Array
+ * The `ShiftArray` class extends a given container type to allow accessing
+ * elements using shifted indices. The shift value is set using `set_start`,
+ * and shifted indices are calculated by subtracting the shift value from
+ * the original index.
  *
- * The `ShiftArray` class is a template class that extends a given container
- * type. It allows accessing elements of the container using shifted indices.
- * The shift value is set using the `set_start` method, and the shifted indices
- * are calculated by subtracting the shift value from the original index. The
- * class provides `operator[]` overloads to access elements using shifted
- * indices.
- *
- * @tparam Container
+ * @tparam Container The underlying container type (e.g. std::vector)
  */
 template <typename Container> class ShiftArray : public Container {
     using value_type = typename Container::value_type;
