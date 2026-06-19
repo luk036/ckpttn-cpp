@@ -163,7 +163,7 @@ int MidVertex::to_last_vertex() {
     assert(is_first_vertex());
 
     const int b = first_touchdown(0);
-    // Left-shift copy: [1,b) → [0,b-1). Use manual loop to avoid memcpy UB.
+    // Left-shift copy: [1,b) -> [0,b-1). Use manual loop to avoid memcpy UB.
     for (int i = 0; i < b - 1; ++i) {
         this->bits_[i] = this->bits_[i + 1];
     }

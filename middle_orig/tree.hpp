@@ -157,7 +157,7 @@ class Tree {
     // The input array x should be allocated on the stack for speed reasons.
     // The reference to the original paper is:
     // [K. Booth, Lexicographically least circular substrings,
-    //  Inf. Proc. Letters, 10 (4-5): 240–242]
+    //  Inf. Proc. Letters, 10 (4-5): 240-242]
     int min_string_rotation(int x[], int length);
 };
 
