@@ -79,33 +79,14 @@
             <li>
               Reference
               <ul>
-                <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
-                <li><a href="#pub-attribs">Public variables</a></li>
                 <li><a href="#pro-attribs">Protected variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
 <p><code><a href="classNNPartMgr.html" class="m-doc">NNPartMgr</a></code> is a class for managing the No-Nonsense Partitioning Algorithm. It takes three template parameters: <code>Gnl</code> (graph type), <code>GainMgr</code> (gain manager type), and <code>ConstrMgr</code> (constraint manager type).</p><p>In this partitioning method, the next solution $s&#x27;$ considered after solution $s$ is dervied by first applying a sequence of $t$ changes (moves) to $s$ (with $t$ dependent from $s$ and from the specific heuristic method), thus obtaining a sequence of solution $s,...,s_t$ and by successively choosing the best among these solutions.</p><p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p><p>Reference: gr. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
-        <section id="pub-types">
-          <h2><a href="#pub-types">Public types</a></h2>
-          <dl class="m-doc">
-            <dt id="a6748643c46114413dd1b2dc4fb12f37a">
-              using <a href="#a6748643c46114413dd1b2dc4fb12f37a" class="m-doc-self">GainCalc_</a> = typename GainMgr::GainCalc_
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a5495b36435abc190ce89b3da800e6d4f">
-              using <a href="#a5495b36435abc190ce89b3da800e6d4f" class="m-doc-self">GainMgr_</a> = GainMgr
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa46703e44d6c13f24b44a32269f39308">
-              using <a href="#aa46703e44d6c13f24b44a32269f39308" class="m-doc-self">ConstrMgr_</a> = ConstrMgr
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
@@ -133,15 +114,6 @@
               <span class="m-doc-wrap-bumper">void <a href="#af6da413203f87ad92d8c0d79f36d8d5a" class="m-doc">optimize</a>(</span><span class="m-doc-wrap">std::span&lt;std::uint8_t&gt; part)</span>
             </dt>
             <dd>Optimizes the partition using the FM algorithm.</dd>
-          </dl>
-        </section>
-        <section id="pub-attribs">
-          <h2><a href="#pub-attribs">Public variables</a></h2>
-          <dl class="m-doc">
-            <dt id="a7da7420f884a059a1ca38f87af7c7f66">
-              int <a href="#a7da7420f884a059a1ca38f87af7c7f66" class="m-doc-self">total_cost</a>
-            </dt>
-            <dd><span></span></dd>
           </dl>
         </section>
         <section id="pro-attribs">
