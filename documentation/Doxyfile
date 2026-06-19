@@ -26,6 +26,8 @@ GENERATE_LATEX = NO
 XML_PROGRAMLISTING = NO
 CREATE_SUBDIRS = NO
 
+# Exclude external dependencies fetched by CPM.cmake
+EXCLUDE_PATTERNS = */build/_deps/* */build/deps/*
+
 # Include all directories, files and namespaces in the documentation
 # Disable to include only explicitly documented objects
-M_SHOW_UNDOCUMENTED = YES

@@ -96,7 +96,7 @@ Eventually, you can remove any unused files, such as the standalone directory or
 Feel free to replace the License with one suited for your project.
 
 To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
-During development it is usually convenient to [build all subprojects at once](#build-everything-at-once).
+During development it is usually convenient to build all subprojects at once.
 
 ### Build and run the standalone target
 
@@ -155,7 +155,7 @@ open build/documentation/doxygen/html/index.html
 
 To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.
 
-### Additional tools
+### Additional tools {#additional-tools}
 
 The test and standalone subprojects include the [tools.cmake](cmake/tools.cmake) file which is used to import additional tools on-demand through CMake configuration arguments.
 The following are currently supported.

@@ -92,7 +92,6 @@ template <typename Gnl> class FMKWayGainMgr
     /**
      * @brief Locks the vertex link for the given vertex in all partitions.
      *
-     * @param[in] from_part The partition to exclude from locking.
      * @param[in] v The vertex to lock the link for.
      */
     auto lock_all(uint8_t /*from_part*/, const node_t& v) -> void {

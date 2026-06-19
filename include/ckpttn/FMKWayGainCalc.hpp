@@ -91,17 +91,6 @@ template <typename Gnl> class FMKWayGainCalc {
         }
     }
 
-    // /**
-    //  * @brief
-    //  *
-    //  * @param[in] to_part
-    //  * @return Dllink*
-    //  */
-    // auto start_ptr(uint8_t to_part) -> Dllink<std::pair<node_t, int32_t>>*
-    // {
-    //     return &this->vertex_list[to_part][0];
-    // }
-
     /**
      * @brief Initializes the FMKWayGainCalc object.
      *
@@ -189,13 +178,7 @@ template <typename Gnl> class FMKWayGainCalc {
      * @param[in] move_info The information about the move that was performed.
      * @return The updated gain for the general net.
      */
-    /**
-     * @brief
-     *
-     * @param[in] part
-     * @param[in] move_info
-     * @return ret_info
-     */
+    /** @overload */
     auto update_move_general_net(std::span<const std::uint8_t> part,
                                  const MoveInfo<node_t>& move_info) -> ret_info;
 
