@@ -2,15 +2,8 @@ name: Documentation
 
 on:
   push:
-    branches:
-      - master
-      - main
-      - dev
-  pull_request:
-    branches:
-      - master
-      - main
-      - dev
+    tags:
+      - "*"
 
 env:
   CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
@@ -22,31 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/cache@v3
-        with:
-          path: "**/cpm_modules"
-          key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
-
-      # - name: Before Install
-      #   run: |
-      #     sudo apt-get install g++-10
-      #     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90
-
-      # - name: install dependency
-      #   run: sudo apt-get install libboost-dev libboost-container-dev
-
       - name: Install dependencies
         run: |
-          sudo apt-get install doxygen
-          pip3 install jinja2 Pygments
+          sudo apt-get install -y --no-install-recommends doxygen
 
       - name: Build
         run: |
-          cmake -S. -Bbuild
+          cmake -S documentation -B build
           cmake --build build --target GenerateDocs
 
       - name: Publish
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/documentation/doxygen/html
+          publish_dir: ./build/doxygen/html
