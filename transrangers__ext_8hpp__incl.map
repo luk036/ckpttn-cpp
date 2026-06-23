@@ -1,0 +1,13 @@
+<map id="transrangers_ext.hpp" name="transrangers_ext.hpp">
+<area shape="rect" id="Node000001" title="Extended transranger adaptors (skip_first, skip_last, enumerate, etc.)" alt="" coords="95,5,255,31"/>
+<area shape="rect" id="Node000002" href="$transrangers_8hpp.html" title="Transrangers: an efficient, composable design pattern for range processing." alt="" coords="109,79,241,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,31,178,65,173,65,173,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,76,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="155,106,76,148,74,143,152,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="100,152,155,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="170,106,145,142,140,139,165,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="179,152,271,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="186,103,211,139,207,142,181,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="295,152,355,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="200,102,289,144,287,148,198,106"/>
+</map>

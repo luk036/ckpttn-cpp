@@ -1,0 +1,17 @@
+<map id="ckpttn/netlist.hpp" name="ckpttn/netlist.hpp">
+<area shape="rect" id="Node000001" title="Netlist data structure for circuit partitioning." alt="" coords="342,5,478,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="343,33,90,81,89,76,342,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,79,167,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="366,33,181,81,180,76,365,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="191,79,317,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="386,33,293,75,291,70,384,28"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="341,79,479,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="413,31,413,65,407,65,407,31"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="504,79,625,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="436,28,528,70,526,75,434,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="649,79,712,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="455,28,637,76,635,81,453,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="736,79,940,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="479,28,756,74,755,79,478,33"/>
+</map>

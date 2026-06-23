@@ -1,0 +1,15 @@
+<map id="ckpttn/FMGainMgr.hpp" name="ckpttn/FMGainMgr.hpp">
+<area shape="rect" id="Node000001" title="CRTP base class for FM gain management." alt="" coords="341,5,510,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="351,33,231,53,86,81,85,76,230,48,350,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,79,267,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="387,33,235,77,233,72,385,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="291,79,437,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="417,33,385,70,381,66,413,29"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="461,79,515,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="438,29,471,66,467,70,434,33"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="539,79,599,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="450,28,535,70,532,75,447,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="623,79,686,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="463,28,611,74,609,79,461,33"/>
+</map>

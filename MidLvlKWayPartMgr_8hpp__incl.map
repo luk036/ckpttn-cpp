@@ -1,0 +1,9 @@
+<map id="ckpttn/MidLvlKWayPartMgr.hpp" name="ckpttn/MidLvlKWayPartMgr.hpp">
+<area shape="rect" id="Node000001" title="Mid&#45;level exhaustive k&#45;way partition manager." alt="" coords="57,5,279,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,33,73,74,71,69,146,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,79,240,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,31,171,65,165,65,165,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="264,79,317,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,28,260,69,258,74,186,33"/>
+</map>

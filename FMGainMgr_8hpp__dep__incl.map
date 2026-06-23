@@ -1,0 +1,7 @@
+<map id="ckpttn/FMGainMgr.hpp" name="ckpttn/FMGainMgr.hpp">
+<area shape="rect" id="Node000001" title="CRTP base class for FM gain management." alt="" coords="121,5,291,31"/>
+<area shape="rect" id="Node000002" href="$FMBiGainMgr_8hpp.html" title="Binary FM gain manager for 2&#45;way partitioning." alt="" coords="5,79,188,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,40,116,81,113,76,176,36"/>
+<area shape="rect" id="Node000003" href="$FMKWayGainMgr_8hpp.html" title="K&#45;way FM gain manager." alt="" coords="213,79,418,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,36,299,76,296,81,234,40"/>
+</map>

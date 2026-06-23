@@ -1,0 +1,12 @@
+<map id="ckpttn/midlevel/tree.hpp" name="ckpttn/midlevel/tree.hpp">
+<area shape="rect" id="Node000001" title="Mid&#45;level Gray code tree data structure." alt="" coords="5,5,188,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="17,79,59,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,33,58,70,54,67,85,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="65,152,128,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="99,31,99,138,94,138,94,31"/>
+<area shape="rect" id="Node000004" href="$vertex_8hpp.html" title="Bitstring vertex representation for middle&#45;levels Gray code." alt="" coords="135,79,227,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="112,29,158,67,155,72,108,33"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="169,106,123,145,119,141,165,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="153,152,233,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="185,104,191,138,186,139,180,105"/>
+</map>

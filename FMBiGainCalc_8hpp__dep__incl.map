@@ -1,0 +1,7 @@
+<map id="ckpttn/FMBiGainCalc.hpp" name="ckpttn/FMBiGainCalc.hpp">
+<area shape="rect" id="Node000001" title="Binary FM gain calculator for 2&#45;way partitioning." alt="" coords="107,5,294,31"/>
+<area shape="rect" id="Node000002" href="$FMBiGainMgr_8hpp.html" title="Binary FM gain manager for 2&#45;way partitioning." alt="" coords="5,79,188,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,41,115,81,112,76,171,36"/>
+<area shape="rect" id="Node000003" href="$MidLvlPartMgr_8hpp.html" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="213,79,399,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,36,290,76,287,81,228,41"/>
+</map>

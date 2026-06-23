@@ -1,0 +1,7 @@
+<map id="ckpttn/midlevel/vertex.hpp" name="ckpttn/midlevel/vertex.hpp">
+<area shape="rect" id="Node000001" title="Bitstring vertex representation for middle&#45;levels Gray code." alt="" coords="127,5,326,31"/>
+<area shape="rect" id="Node000002" href="$hamcycle_8hpp.html" title="Hamiltonian cycle generation for middle&#45;levels Gray code." alt="" coords="5,79,224,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,40,134,81,132,76,195,36"/>
+<area shape="rect" id="Node000003" href="$tree_8hpp.html" title="Mid&#45;level Gray code tree data structure." alt="" coords="249,79,431,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,36,323,76,320,81,255,40"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="ckpttn/FMPmrConfig.hpp" name="ckpttn/FMPmrConfig.hpp">
+<area shape="rect" id="Node000001" title="PMR configuration and constants for FM algorithm." alt="" coords="324,5,507,31"/>
+<area shape="rect" id="Node000002" href="$FMBiGainCalc_8hpp.html" title="Binary FM gain calculator for 2&#45;way partitioning." alt="" coords="211,79,398,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="387,40,324,81,321,76,385,36"/>
+<area shape="rect" id="Node000005" href="$FMKWayGainCalc_8hpp.html" title="K&#45;way FM gain calculator." alt="" coords="423,79,632,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="447,36,510,76,508,81,444,40"/>
+<area shape="rect" id="Node000003" href="$FMBiGainMgr_8hpp.html" title="Binary FM gain manager for 2&#45;way partitioning." alt="" coords="5,152,188,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="259,111,131,154,129,149,257,106"/>
+<area shape="rect" id="Node000004" href="$MidLvlPartMgr_8hpp.html" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="213,152,399,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="308,118,308,152,303,152,302,118"/>
+<area shape="rect" id="Node000006" href="$FMKWayGainMgr_8hpp.html" title="K&#45;way FM gain manager." alt="" coords="425,152,630,177"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="530,118,530,152,525,152,525,118"/>
+</map>

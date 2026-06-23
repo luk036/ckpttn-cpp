@@ -1,0 +1,12 @@
+<map id="ckpttn/midlevel/hamcycle.hpp" name="ckpttn/midlevel/hamcycle.hpp">
+<area shape="rect" id="Node000001" title="Hamiltonian cycle generation for middle&#45;levels Gray code." alt="" coords="21,5,239,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,92,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,33,74,72,70,68,115,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="99,152,161,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="133,31,133,138,127,138,127,31"/>
+<area shape="rect" id="Node000004" href="$vertex_8hpp.html" title="Bitstring vertex representation for middle&#45;levels Gray code." alt="" coords="168,79,260,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="145,29,191,67,188,72,142,33"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="202,106,156,145,153,141,199,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="186,152,266,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="219,104,224,138,219,139,213,105"/>
+</map>
