@@ -1,6 +1,4 @@
 #include <cstdint>  // for uint8_t
-// #include <__config>                 // for std
-// #include <__hash_table>             // for __hash_const_iterator, operator!=
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item
 #include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, part, FMBiGainMgr::Base
 #include <mywheel/bpqueue.hpp>      // for BPQueue
