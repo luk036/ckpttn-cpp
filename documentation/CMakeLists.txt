@@ -27,7 +27,7 @@ if(DOXYGEN_FOUND)
   )
 else()
   add_custom_target(
-    GenerateDocs
-    COMMAND ${CMAKE_COMMAND} -E echo "Doxygen not found — skipping documentation generation"
+    GenerateDocs COMMAND ${CMAKE_COMMAND} -E echo
+                         "Doxygen not found — skipping documentation generation"
   )
 endif()
