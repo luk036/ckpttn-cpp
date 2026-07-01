@@ -22,7 +22,7 @@ MidTree::MidTree(const MidVertex& x) {
 
     int u = this->root_;
     int n = 1;
-    int height = 0;
+    [[maybe_unused]] int height = 0;
     for (int i = 0; i < static_cast<int>(xv.size()) - 1; ++i) {
         if (x[i] == 1) {
             this->children_[u].push_back(n);
