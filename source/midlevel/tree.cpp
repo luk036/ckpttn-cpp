@@ -72,8 +72,8 @@ bool MidTree::is_tau_preimage() const {
 }
 
 bool MidTree::is_tau_image() const {
-    return !((this->num_vertices_ < 3) || (num_children(this->root_) < 2)
-             || (num_children(ith_child(root_, 0)) > 0));
+    return (this->num_vertices_ >= 3) && (num_children(this->root_) >= 2)
+             && (num_children(ith_child(root_, 0)) <= 0);
 }
 
 void MidTree::tau() {
@@ -149,8 +149,8 @@ bool MidTree::flip_tree() {
 }
 
 void MidTree::root_canonically() {
-    int c1;
-    int c2;
+    int c1 = 0;
+    int c2 = 0;
     compute_center(c1, c2);
     if (c2 != -1) {
         const int num_bits = 2 * (this->num_vertices_ - 1);
@@ -307,7 +307,7 @@ bool MidTree::is_light_dumbbell() const {
     const int u = ith_child(root_, 0);
     const int k = num_children(u);
     const int l = num_children(this->root_) - 1;
-    return !((k + l + 1 < this->num_vertices_ - 1) || (k <= l));
+    return (k + l + 1 >= this->num_vertices_ - 1) && (k > l);
 }
 
 bool MidTree::is_thin_leaf(int u) const {
@@ -347,10 +347,9 @@ void MidTree::to_bitstring_rec(int x[], int u, int& pos) const {
     if (num_children(u) == 0) {
         return;
     }
-    for (std::list<int>::const_iterator it = this->children_[u].begin();
-         it != this->children_[u].end(); ++it) {
+    for (int it : this->children_[u]) {
         x[pos++] = 1;
-        to_bitstring_rec(x, *it, pos);
+        to_bitstring_rec(x, it, pos);
         x[pos++] = 0;
     }
 }

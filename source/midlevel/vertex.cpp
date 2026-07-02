@@ -122,13 +122,16 @@ int MidVertex::to_first_vertex() {
         this->bits_[b + 1] = 0;
         return (2 * b + 2);
     }
-    std::vector<std::vector<int>> usteps_neg, dsteps_neg, usteps_pos, dsteps_pos;
+    std::vector<std::vector<int>> usteps_neg;
+    std::vector<std::vector<int>> dsteps_neg;
+    std::vector<std::vector<int>> usteps_pos;
+    std::vector<std::vector<int>> dsteps_pos;
     steps_height(usteps_neg, usteps_pos, dsteps_neg, dsteps_pos);
-    bool min_zero = (usteps_neg.size() == 0);
-    bool unique_min;
+    bool min_zero = (usteps_neg.empty());
+    bool unique_min = false;
     unique_min = (min_zero ? (usteps_pos.front().size() == 1) : (usteps_neg.back().size() == 1));
     bool middle_level = (2 * count_ones() + 1 == static_cast<int>(this->bits_.size()));
-    int to;
+    int to = 0;
     if ((!unique_min && middle_level) || (unique_min && !middle_level)) {
         to = (min_zero ? usteps_pos.front().front() : usteps_neg.back().front()) - 1;
     } else {
