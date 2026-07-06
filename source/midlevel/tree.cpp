@@ -73,7 +73,7 @@ bool MidTree::is_tau_preimage() const {
 
 bool MidTree::is_tau_image() const {
     return (this->num_vertices_ >= 3) && (num_children(this->root_) >= 2)
-             && (num_children(ith_child(root_, 0)) <= 0);
+           && (num_children(ith_child(root_, 0)) <= 0);
 }
 
 void MidTree::tau() {
