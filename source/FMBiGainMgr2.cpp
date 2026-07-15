@@ -1,6 +1,6 @@
-#include <cstdint>  // for uint8_t
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, FMBiGainCalc<>::Item
 #include <ckpttn/FMBiGainMgr.hpp>   // for FMBiGainMgr, part, FMBiGainMgr::Base
+#include <cstdint>                  // for uint8_t
 #include <mywheel/bpqueue.hpp>      // for BPQueue
 #include <py2cpp/range.hpp>         // for _iterator
 #include <py2cpp/set.hpp>           // for set

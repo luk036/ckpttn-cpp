@@ -1,5 +1,5 @@
 // #include <__config>                    // for std
-#include <array>  // for array
+#include <array>                    // for array
 #include <ckpttn/FMBiGainCalc.hpp>  // for FMBiGainCalc, part, net
 #include <ckpttn/FMPmrConfig.hpp>   // for FM_MAX_DEGREE
 #include <ckpttn/moveinfo.hpp>      // for MoveInfo
