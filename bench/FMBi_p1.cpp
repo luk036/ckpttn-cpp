@@ -16,7 +16,8 @@ void run_FMBiPartMgr(const SimpleNetlist& hyprgraph, bool option) {
     FMBiGainMgr<SimpleNetlist> gain_mgr{hyprgraph};
     gain_mgr.gain_calc.special_handle_2pin_nets = option;
     FMBiConstrMgr<SimpleNetlist> constr_mgr{hyprgraph, 0.45};
-    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> part_mgr{hyprgraph, gain_mgr, constr_mgr};
+    FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>> part_mgr{
+        hyprgraph, gain_mgr, constr_mgr};
     std::vector<std::uint8_t> part(hyprgraph.number_of_modules(), 0);
     part_mgr.legalize(part);
     part_mgr.optimize(part);
