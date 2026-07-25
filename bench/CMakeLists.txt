@@ -1,16 +1,11 @@
 # ---- Dependencies ----
 
+# nanobench is a header-only library for microbenchmarking
 CPMAddPackage(
-  NAME benchmark
-  GITHUB_REPOSITORY google/benchmark
-  VERSION 1.5.2
-  OPTIONS "BENCHMARK_ENABLE_TESTING Off"
+  NAME nanobench
+  GITHUB_REPOSITORY martinus/nanobench
+  GIT_TAG v4.3.11
 )
-
-if(benchmark_ADDED)
-  # enable c++11 to avoid compilation errors
-  set_target_properties(benchmark PROPERTIES CXX_STANDARD 20)
-endif()
 
 # ---- Create binary ----
 
@@ -30,10 +25,9 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 20)
 
   target_link_libraries(
-    ${TARGET_NAME} benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
+    ${TARGET_NAME} nanobench ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
   )
 
-  # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
   add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
 endforeach()
 

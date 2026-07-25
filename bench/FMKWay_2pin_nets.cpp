@@ -6,7 +6,9 @@
 #include <string_view>                 // for std::string_view
 #include <vector>                      // for vector
 
-#include "benchmark/benchmark.h"      // for BENCHMARK, State, BENCHMARK_MAIN
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
+
 #include "ckpttn/FMKWayGainCalc.hpp"  // for FMKWayGainCalc
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
@@ -43,41 +45,26 @@ void run_FMKWayPartMgr(SimpleNetlist& hyprgraph, std::uint8_t num_parts, bool op
     // CHECK_GE(part_mgr.total_cost, 0);
 }
 
-/**
- * @brief
- *
- * @param[in] state
- */
-static void BM_with_2pin_nets(benchmark::State& state) {
-    auto hyprgraph = readNetD("../../testcases/ibm03.net");
-    readAre(hyprgraph, "../../testcases/ibm03.are");
+int main() {
+    ankerl::nanobench::Bench bench;
+    bench.title("FMKWay 2-pin nets").unit("op").warmup(10).epochs(10);
 
-    while (state.KeepRunning()) {
-        run_FMKWayPartMgr(hyprgraph, 3, true);
-    }
+    auto hyprgraph_with = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph_with, "../../testcases/ibm03.are");
+
+    auto hyprgraph_without = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph_without, "../../testcases/ibm03.are");
+
+    bench.run("BM_with_2pin_nets", [&] {
+        run_FMKWayPartMgr(hyprgraph_with, 3, true);
+        ankerl::nanobench::doNotOptimizeAway(hyprgraph_with);
+    });
+
+    bench.run("BM_without_2pin_nets", [&] {
+        run_FMKWayPartMgr(hyprgraph_without, 3, false);
+        ankerl::nanobench::doNotOptimizeAway(hyprgraph_without);
+    });
 }
-
-// Register the function as a benchmark
-BENCHMARK(BM_with_2pin_nets);
-
-//~~~~~~~~~~~~~~~~
-
-/**
- * @brief Define another benchmark
- *
- * @param[in] state
- */
-static void BM_without_2pin_nets(benchmark::State& state) {
-    auto hyprgraph = readNetD("../../testcases/ibm03.net");
-    readAre(hyprgraph, "../../testcases/ibm03.are");
-
-    while (state.KeepRunning()) {
-        run_FMKWayPartMgr(hyprgraph, 3, false);
-    }
-}
-BENCHMARK(BM_without_2pin_nets);
-
-BENCHMARK_MAIN();
 
 /*
 3: ---------------------------------------------------------------
