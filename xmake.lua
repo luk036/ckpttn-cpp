@@ -6,6 +6,7 @@ add_requires("nlohmann_json", {alias = "nlohmann_json"})
 -- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("cxxopts", {system = false})
+add_requires("nanobench", { alias = "nanobench" })
 
 set_languages("c++20")
 
@@ -73,6 +74,63 @@ target("ckpttn")
     add_includedirs("../netlistx-cpp/include", {public = true})
     add_files("standalone/source/*.cpp")
     add_packages("cxxopts")
+    add_packages("ms-gsl")
+    add_packages("spdlog")
+    add_packages("nlohmann_json")
+    if is_plat("linux") then
+        set_rundir("./build/linux/")
+    elseif is_plat("windows") then
+        set_rundir("./build/windows/")
+    end
+
+target("bench_fmbi_2pin_nets")
+    set_kind("binary")
+    add_deps("CkPttn")
+    add_includedirs("include", {public = true})
+    add_includedirs("../py2cpp/include", {public = true})
+    add_includedirs("../xnetwork-cpp/include", {public = true})
+    add_includedirs("../mywheel-cpp/include", {public = true})
+    add_includedirs("../netlistx-cpp/include", {public = true})
+    add_files("bench/FMBi_2pin_nets.cpp")
+    add_packages("nanobench")
+    add_packages("ms-gsl")
+    add_packages("spdlog")
+    add_packages("nlohmann_json")
+    if is_plat("linux") then
+        set_rundir("./build/linux/")
+    elseif is_plat("windows") then
+        set_rundir("./build/windows/")
+    end
+
+target("bench_fmbi_p1")
+    set_kind("binary")
+    add_deps("CkPttn")
+    add_includedirs("include", {public = true})
+    add_includedirs("../py2cpp/include", {public = true})
+    add_includedirs("../xnetwork-cpp/include", {public = true})
+    add_includedirs("../mywheel-cpp/include", {public = true})
+    add_includedirs("../netlistx-cpp/include", {public = true})
+    add_files("bench/FMBi_p1.cpp")
+    add_packages("nanobench")
+    add_packages("ms-gsl")
+    add_packages("spdlog")
+    add_packages("nlohmann_json")
+    if is_plat("linux") then
+        set_rundir("./build/linux/")
+    elseif is_plat("windows") then
+        set_rundir("./build/windows/")
+    end
+
+target("bench_fmkway_2pin_nets")
+    set_kind("binary")
+    add_deps("CkPttn")
+    add_includedirs("include", {public = true})
+    add_includedirs("../py2cpp/include", {public = true})
+    add_includedirs("../xnetwork-cpp/include", {public = true})
+    add_includedirs("../mywheel-cpp/include", {public = true})
+    add_includedirs("../netlistx-cpp/include", {public = true})
+    add_files("bench/FMKWay_2pin_nets.cpp")
+    add_packages("nanobench")
     add_packages("ms-gsl")
     add_packages("spdlog")
     add_packages("nlohmann_json")
