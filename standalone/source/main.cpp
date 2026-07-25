@@ -245,9 +245,8 @@ Compatible with hMetis and KaHyPar CLI.
     }
 
     if (hypergraph_file.empty()) {
-        std::cerr << "Error: hypergraph_file is required.\n";
-        std::cerr << "Use --help for usage information.\n";
-        return 1;
+        std::cout << options.help() << '\n';
+        return 0;
     }
 
     if (k < 2) {
