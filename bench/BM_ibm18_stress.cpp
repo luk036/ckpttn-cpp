@@ -25,9 +25,9 @@ int main() {
         MLPartMgr part_mgr{0.45};
         part_mgr.set_limitsize(24000);
         std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
-        part_mgr.run_Partition<SimpleNetlist,
-                               FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
-                                         FMBiConstrMgr<SimpleNetlist>>>(hyprgraph, part);
+        part_mgr.run_Partition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
+                                                        FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
+                                                                                       part);
         ankerl::nanobench::doNotOptimizeAway(part);
     });
 }

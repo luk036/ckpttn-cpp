@@ -10,16 +10,19 @@ find_package(fmt CONFIG QUIET)
 
 if(fmt_FOUND)
   message(STATUS "Found system fmt: ${fmt_DIR}")
-  # Tell CPM that fmt is already handled. MUST write the CACHE variable directly:
-  # list(APPEND ...) would create a normal-variable shadow that does not propagate
-  # into FetchContent subdirectory scopes (see CPM 0.32 cpm_check_if_package_already_added).
+  # Tell CPM that fmt is already handled. MUST write the CACHE variable directly: list(APPEND ...)
+  # would create a normal-variable shadow that does not propagate into FetchContent subdirectory
+  # scopes (see CPM 0.32 cpm_check_if_package_already_added).
   if(NOT fmt IN_LIST CPM_PACKAGES)
-    set(CPM_PACKAGES "${CPM_PACKAGES};fmt" CACHE INTERNAL "" FORCE)
+    set(CPM_PACKAGES
+        "${CPM_PACKAGES};fmt"
+        CACHE INTERNAL "" FORCE
+    )
   endif()
 else()
   # Add fmt explicitly as a dependency. This must come BEFORE XNetwork and NetlistX so that fmt::fmt
-  # target is always available when their CMakeLists.txt process. Both XNetwork and NetlistX also add
-  # fmt internally, but CPM deduplication ensures it's only added once.
+  # target is always available when their CMakeLists.txt process. Both XNetwork and NetlistX also
+  # add fmt internally, but CPM deduplication ensures it's only added once.
   CPMAddPackage(
     NAME fmt
     GIT_TAG 12.1.0
@@ -28,14 +31,18 @@ else()
   )
 endif()
 
-# Try system-installed spdlog first (Ubuntu: libspdlog-dev, macOS: brew install spdlog, Termux: spdlog)
+# Try system-installed spdlog first (Ubuntu: libspdlog-dev, macOS: brew install spdlog, Termux:
+# spdlog)
 find_package(spdlog CONFIG QUIET)
 
 if(spdlog_FOUND)
   message(STATUS "Found system spdlog: ${spdlog_DIR}")
   # Tell CPM that spdlog is already handled (write CACHE directly, see fmt above)
   if(NOT spdlog IN_LIST CPM_PACKAGES)
-    set(CPM_PACKAGES "${CPM_PACKAGES};spdlog" CACHE INTERNAL "" FORCE)
+    set(CPM_PACKAGES
+        "${CPM_PACKAGES};spdlog"
+        CACHE INTERNAL "" FORCE
+    )
   endif()
 else()
   # Add spdlog for logging functionality - use external fmt (added above) to avoid duplicate symbol
@@ -44,8 +51,8 @@ else()
     NAME spdlog
     GIT_TAG v1.17.0
     GITHUB_REPOSITORY gabime/spdlog
-    OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_EXTERNAL ON" # create an installable target, use external
-                                                          # fmt
+    OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_EXTERNAL ON" # create an installable target, use
+                                                          # external fmt
   )
 endif()
 

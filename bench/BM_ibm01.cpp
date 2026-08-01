@@ -31,8 +31,7 @@ static constexpr double BAL_TOL = 0.45;
 static constexpr size_t LIMIT = 10;
 
 using BiPM = FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>;
-using KwPM =
-    FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
+using KwPM = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
 
 static auto run_fm(const SimpleNetlist& h, span<uint8_t> p, uint8_t k) -> pair<int, double> {
     auto t0 = chrono::steady_clock::now();
@@ -40,8 +39,7 @@ static auto run_fm(const SimpleNetlist& h, span<uint8_t> p, uint8_t k) -> pair<i
         FMBiGainMgr<SimpleNetlist> gm(h);
         FMBiConstrMgr<SimpleNetlist> cm(h, BAL_TOL);
         BiPM pm(h, gm, cm);
-        if (pm.legalize(p) != LegalCheck::AllSatisfied)
-            return {-1, 0};
+        if (pm.legalize(p) != LegalCheck::AllSatisfied) return {-1, 0};
         pm.optimize(p);
         auto t1 = chrono::steady_clock::now();
         return {pm.total_cost, chrono::duration<double>(t1 - t0).count()};
@@ -49,8 +47,7 @@ static auto run_fm(const SimpleNetlist& h, span<uint8_t> p, uint8_t k) -> pair<i
     FMKWayGainMgr<SimpleNetlist> gm(h, k);
     FMKWayConstrMgr<SimpleNetlist> cm(h, BAL_TOL, k);
     KwPM pm(h, gm, cm, k);
-    if (pm.legalize(p) != LegalCheck::AllSatisfied)
-        return {-1, 0};
+    if (pm.legalize(p) != LegalCheck::AllSatisfied) return {-1, 0};
     pm.optimize(p);
     auto t1 = chrono::steady_clock::now();
     return {pm.total_cost, chrono::duration<double>(t1 - t0).count()};
@@ -61,15 +58,13 @@ static auto run_ml(const SimpleNetlist& h, span<uint8_t> p, uint8_t k) -> pair<i
     if (k == 2) {
         MLPartMgr pm{BAL_TOL};
         pm.set_limitsize(LIMIT);
-        if (pm.run_Partition<SimpleNetlist, BiPM>(h, p) != LegalCheck::AllSatisfied)
-            return {-1, 0};
+        if (pm.run_Partition<SimpleNetlist, BiPM>(h, p) != LegalCheck::AllSatisfied) return {-1, 0};
         auto t1 = chrono::steady_clock::now();
         return {pm.total_cost, chrono::duration<double>(t1 - t0).count()};
     }
     MLPartMgr pm{BAL_TOL, k};
     pm.set_limitsize(LIMIT);
-    if (pm.run_Partition<SimpleNetlist, KwPM>(h, p) != LegalCheck::AllSatisfied)
-        return {-1, 0};
+    if (pm.run_Partition<SimpleNetlist, KwPM>(h, p) != LegalCheck::AllSatisfied) return {-1, 0};
     auto t1 = chrono::steady_clock::now();
     return {pm.total_cost, chrono::duration<double>(t1 - t0).count()};
 }
@@ -84,28 +79,22 @@ int main() {
 
     for (auto& c : cs) {
         auto h = readNetD(c.net);
-        if (c.are != nullptr)
-            readAre(h, c.are);
+        if (c.are != nullptr) readAre(h, c.are);
 
         for (auto k : {2, 3, 5}) {
             auto N = h.number_of_modules();
             ankerl::nanobench::Bench bench;
-            bench.title(string("BM ibm01 k=") + to_string(k))
-                .unit("op")
-                .warmup(1)
-                .epochs(RUNS);
+            bench.title(string("BM ibm01 k=") + to_string(k)).unit("op").warmup(1).epochs(RUNS);
 
             bench.run("FM", [&] {
                 mt19937 rg(SEED);
                 auto pt = vector<uint8_t>(N, 0);
                 if (k == 2) {
                     bernoulli_distribution d(0.5);
-                    for (size_t i = 0; i < N; ++i)
-                        pt[i] = static_cast<uint8_t>(d(rg));
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 } else {
                     uniform_int_distribution<int> d(0, k - 1);
-                    for (size_t i = 0; i < N; ++i)
-                        pt[i] = static_cast<uint8_t>(d(rg));
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 }
                 auto result = run_fm(h, pt, k);
                 ankerl::nanobench::doNotOptimizeAway(result);
@@ -116,12 +105,10 @@ int main() {
                 auto pt = vector<uint8_t>(N, 0);
                 if (k == 2) {
                     bernoulli_distribution d(0.5);
-                    for (size_t i = 0; i < N; ++i)
-                        pt[i] = static_cast<uint8_t>(d(rg));
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 } else {
                     uniform_int_distribution<int> d(0, k - 1);
-                    for (size_t i = 0; i < N; ++i)
-                        pt[i] = static_cast<uint8_t>(d(rg));
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 }
                 auto result = run_ml(h, pt, k);
                 ankerl::nanobench::doNotOptimizeAway(result);
