@@ -103,9 +103,9 @@ During development it is usually convenient to build all subprojects at once.
 Use the following command to build and run the executable target.
 
 ```bash
-cmake -S. -B build
+cmake -B build
 cmake --build build
-./build/standalone/CkPttn --help
+./build/CkPttn --help
 ```
 
 ### Build and run test suite
@@ -113,13 +113,12 @@ cmake --build build
 Use the following commands from the project's root directory to run the test suite.
 
 ```bash
-cmake -S. -B build
+cmake -B build
 cmake --build build
-cd build/test
-CTEST_OUTPUT_ON_FAILURE=1 ctest
+CTEST_OUTPUT_ON_FAILURE=1 ctest --test-dir build
 
 # or maybe simply call the executable:
-./build/test/CkPttnTests
+./build/CkPttnTests
 ```
 
 To collect code coverage information, run CMake with the `-DENABLE_TEST_COVERAGE=1` option.
@@ -130,7 +129,7 @@ Use the following commands from the project's root directory to check and fix C+
 This requires _clang-format_, _cmake-format_ and _pyyaml_ to be installed on the current system.
 
 ```bash
-cmake -S . -B build/test
+cmake -B build
 
 # view changes
 cmake --build build --target format
@@ -150,7 +149,7 @@ To manually build documentation, call the following command.
 cmake -S . -B build
 cmake --build build --target GenerateDocs
 # view the docs
-open build/documentation/doxygen/html/index.html
+open build/doxygen/html/index.html
 ```
 
 To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.
