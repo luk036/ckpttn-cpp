@@ -284,7 +284,11 @@ if(CKPTTN_BUILD_BENCHMARKS)
     set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC} CXX_STANDARD 20)
     target_link_libraries(${TARGET_NAME} PRIVATE nanobench CkPttn::CkPttn ${SPECIFIC_LIBS})
     target_enable_warnings(${TARGET_NAME})
+    # Benchmarks reference testcases via ../../testcases/*, so run them from <build>/test.
     add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
+    set_tests_properties(${ONE_BENCH_EXEC} PROPERTIES WORKING_DIRECTORY
+                                                  "${CMAKE_CURRENT_BINARY_DIR}/test"
+    )
   endforeach()
 endif()
 
