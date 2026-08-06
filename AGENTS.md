@@ -12,27 +12,26 @@ This is a C++20 circuit partitioning library using CMake as the build system and
 
 ```bash
 # Full build
-cmake -S. -B build
+cmake -B build
 cmake --build build
 
 # Build and run tests
-cd build/test
-CTEST_OUTPUT_ON_FAILURE=1 ctest
+CTEST_OUTPUT_ON_FAILURE=1 ctest --test-dir build
 # Or run executable directly
-./build/test/CkPttnTests
+./build/CkPttnTests
 ```
 
 ### Run a Single Test (doctest)
 
 ```bash
 # Run specific test case by name (partial match)
-./build/test/CkPttnTests -tc="Test FMBiPartMgr"
+./build/CkPttnTests -tc="Test FMBiPartMgr"
 
 # List all test cases
-./build/test/CkPttnTests --list-test-cases
+./build/CkPttnTests --list-test-cases
 
 # Run with strict mode
-./build/test/CkPttnTests -s
+./build/CkPttnTests -s
 ```
 
 ### xmake (Alternative)
@@ -46,7 +45,7 @@ xmake run test_ckpttn   # build and run tests
 
 ```bash
 # View changes (requires clang-format, cmake-format, pyyaml)
-cmake -S . -B build/test
+cmake -B build
 cmake --build build --target format
 
 # Apply changes
@@ -57,7 +56,7 @@ cmake --build build --target fix-format
 
 ```bash
 # clang-tidy
-cmake -S . -B build -DUSE_STATIC_ANALYZER=clang-tidy
+cmake -B build -DCKPTTN_ENABLE_CLANG_TIDY=ON
 cmake --build build
 
 # Include What You Use (iwyu)

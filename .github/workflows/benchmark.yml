@@ -1,4 +1,4 @@
-name: MacOS
+name: Benchmarks
 
 on:
   push:
@@ -11,13 +11,13 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCKPTTN_BUILD_BENCHMARKS=ON
 
       - name: Build
         run: cmake --build build -j4

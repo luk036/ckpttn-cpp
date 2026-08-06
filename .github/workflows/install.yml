@@ -2,51 +2,35 @@ name: Install
 
 on:
   push:
-    branches:
-      - master
-      - main
-      - dev
+    branches: [master, main, dev]
   pull_request:
-    branches:
-      - master
-      - main
-      - dev
+    branches: [master, main, dev]
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1
-  CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
-        with:
-          path: "**/cpm_modules"
-          key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
-
-      # - name: Before Install
-      #   run: |
-      #     sudo apt-get install g++-10
-      #     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 90
-
-      # - name: install dependency
-      #   run: sudo apt-get install libboost-dev libboost-container-dev
-
-      - name: build and install library
+      - name: Build and install library
         run: |
-          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DINSTALL_ONLY=ON
-          sudo cmake --build build --target install
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCKPTTN_BUILD_TESTS=OFF
+          cmake --build build
+          sudo cmake --install build
           rm -rf build
 
-      - name: configure
-        run: cmake -Stest_installed -Bbuild
+      - name: Install system dependencies for consumer
+        run: sudo apt-get install -y libfmt-dev
 
-      - name: build
-        run: cmake --build build --config Debug -j4
+      - name: Configure consumer
+        run: cmake -Stest_installed -B build_installed -DCMAKE_BUILD_TYPE=Release
 
-      - name: run
-        run: ./build/test_installed/CkPttn -v
+      - name: Build consumer
+        run: cmake --build build_installed
+
+      - name: Test
+        run: ctest --test-dir build_installed --output-on-failure

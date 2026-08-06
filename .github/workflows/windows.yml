@@ -2,52 +2,25 @@ name: Windows
 
 on:
   push:
-    branches:
-      - master
-      - main
-      - dev
+    branches: [master, main, dev]
   pull_request:
-    branches:
-      - master
-      - main
-      - dev
+    branches: [master, main, dev]
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1
-  CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
-        with:
-          path: "**/cpm_modules"
-          key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
-      - name: Setup Miniconda
-        # You may pin to the exact commit or the version.
-        # uses: conda-incubator/setup-miniconda@35d1405e78aa3f784fe3ce9a2eb378d5eeb62169
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: true
-          conda-remove-defaults: true
+      - name: Build
+        run: cmake --build build --config Release
 
-      - name: Install dependent software
-        run: |
-          conda info
-          conda install -c conda-forge cmake boost=1.74 fmt
-
-      - name: configure
-        run: cmake -S. -Bbuild -DCMAKE_POLICY_VERSION_MINIMUM="3.5" -Wno-dev
-
-      - name: build
-        run: cmake --build build --config Debug -j4
-
-      - name: test
-        run: |
-          cd build/test
-          ctest --build-config Debug
+      - name: Test
+        run: ctest --test-dir build --output-on-failure -C Release

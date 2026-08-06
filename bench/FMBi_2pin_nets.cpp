@@ -6,7 +6,9 @@
 #include <string_view>               // for std::string_view
 #include <vector>                    // for vector
 
-#include "benchmark/benchmark.h"    // for BENCHMARK, State, BENCHMARK_MAIN
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
+
 #include "ckpttn/FMBiGainCalc.hpp"  // for FMBiGainCalc
 
 extern auto create_test_netlist() -> SimpleNetlist;  // import create_test_netlist
@@ -40,41 +42,26 @@ void run_FMBiPartMgr(const SimpleNetlist& hyprgraph, bool option) {
     // CHECK_GE(part_mgr.total_cost, 0);
 }
 
-/**
- * @brief
- *
- * @param[in] state
- */
-static void BM_with_2pin_nets(benchmark::State& state) {
-    auto hyprgraph = readNetD("../../testcases/ibm03.net");
-    readAre(hyprgraph, "../../testcases/ibm03.are");
+int main() {
+    ankerl::nanobench::Bench bench;
+    bench.title("FMBi 2-pin nets").unit("op").warmup(10).epochs(10);
 
-    while (state.KeepRunning()) {
-        run_FMBiPartMgr(hyprgraph, true);
-    }
+    auto hyprgraph_with = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph_with, "../../testcases/ibm03.are");
+
+    auto hyprgraph_without = readNetD("../../testcases/ibm03.net");
+    readAre(hyprgraph_without, "../../testcases/ibm03.are");
+
+    bench.run("BM_with_2pin_nets", [&] {
+        run_FMBiPartMgr(hyprgraph_with, true);
+        ankerl::nanobench::doNotOptimizeAway(hyprgraph_with);
+    });
+
+    bench.run("BM_without_2pin_nets", [&] {
+        run_FMBiPartMgr(hyprgraph_without, false);
+        ankerl::nanobench::doNotOptimizeAway(hyprgraph_without);
+    });
 }
-
-// Register the function as a benchmark
-BENCHMARK(BM_with_2pin_nets);
-
-//~~~~~~~~~~~~~~~~
-
-/**
- * @brief Define another benchmark
- *
- * @param[in] state
- */
-static void BM_without_2pin_nets(benchmark::State& state) {
-    auto hyprgraph = readNetD("../../testcases/ibm03.net");
-    readAre(hyprgraph, "../../testcases/ibm03.are");
-
-    while (state.KeepRunning()) {
-        run_FMBiPartMgr(hyprgraph, false);
-    }
-}
-BENCHMARK(BM_without_2pin_nets);
-
-BENCHMARK_MAIN();
 
 /*
 2: ---------------------------------------------------------------

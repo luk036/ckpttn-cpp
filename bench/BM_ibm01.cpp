@@ -1,4 +1,5 @@
-#include <doctest/doctest.h>
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
 
 #include <algorithm>
 #include <chrono>
@@ -16,15 +17,19 @@
 #include <random>
 #include <string_view>
 #include <vector>
+
 using namespace std;
 #ifdef _MSC_VER
 #    pragma warning(disable : 4244)
 #endif
+
 extern auto readNetD(string_view) -> SimpleNetlist;
 extern void readAre(SimpleNetlist&, string_view);
+
 static constexpr int SEED = 47, RUNS = 5;
 static constexpr double BAL_TOL = 0.45;
 static constexpr size_t LIMIT = 10;
+
 using BiPM = FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>;
 using KwPM = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
 
@@ -64,28 +69,25 @@ static auto run_ml(const SimpleNetlist& h, span<uint8_t> p, uint8_t k) -> pair<i
     return {pm.total_cost, chrono::duration<double>(t1 - t0).count()};
 }
 
-TEST_CASE("Benchmark all") {
+int main() {
     struct TC {
         const char* net;
         const char* are;
     };
     TC cs[] = {{.net = "../../testcases/ibm01.net", .are = "../../testcases/ibm01.are"},
                {.net = "../../testcases/p1.net", .are = nullptr}};
-    cout << "\n=== ML vs FM (bal_tol=" << BAL_TOL << " limit=" << LIMIT << " runs=" << RUNS
-         << ") ===\n";
+
     for (auto& c : cs) {
         auto h = readNetD(c.net);
         if (c.are != nullptr) readAre(h, c.are);
-        cout << "\n--- " << c.net << " ---\n";
+
         for (auto k : {2, 3, 5}) {
             auto N = h.number_of_modules();
-            cout << "  K=" << static_cast<int>(k) << " (" << N << " mods)\n";
-            vector<int> fc;
-            vector<int> mc;
-            vector<double> ft;
-            vector<double> mt;
-            for (int r = 0; r < RUNS; ++r) {
-                mt19937 rg(SEED + r);
+            ankerl::nanobench::Bench bench;
+            bench.title(string("BM ibm01 k=") + to_string(k)).unit("op").warmup(1).epochs(RUNS);
+
+            bench.run("FM", [&] {
+                mt19937 rg(SEED);
                 auto pt = vector<uint8_t>(N, 0);
                 if (k == 2) {
                     bernoulli_distribution d(0.5);
@@ -94,21 +96,23 @@ TEST_CASE("Benchmark all") {
                     uniform_int_distribution<int> d(0, k - 1);
                     for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
                 }
-                auto p = pt;
-                auto cr = run_fm(h, p, k);
-                fc.push_back(cr.first);
-                ft.push_back(cr.second);
-                p = pt;
-                cr = run_ml(h, p, k);
-                mc.push_back(cr.first);
-                mt.push_back(cr.second);
-            }
-            auto a = [](auto& v) { return accumulate(v.begin(), v.end(), 0.0) / v.size(); };
-            double af = a(fc);
-            double am = a(mc);
-            cout << "    FM=" << af << "(" << a(ft) << "s) ML=" << am << "(" << a(mt)
-                 << "s) impr=" << (af - am) / af * 100 << "%\n";
+                auto result = run_fm(h, pt, k);
+                ankerl::nanobench::doNotOptimizeAway(result);
+            });
+
+            bench.run("ML", [&] {
+                mt19937 rg(SEED);
+                auto pt = vector<uint8_t>(N, 0);
+                if (k == 2) {
+                    bernoulli_distribution d(0.5);
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
+                } else {
+                    uniform_int_distribution<int> d(0, k - 1);
+                    for (size_t i = 0; i < N; ++i) pt[i] = static_cast<uint8_t>(d(rg));
+                }
+                auto result = run_ml(h, pt, k);
+                ankerl::nanobench::doNotOptimizeAway(result);
+            });
         }
     }
-    CHECK(true);
 }

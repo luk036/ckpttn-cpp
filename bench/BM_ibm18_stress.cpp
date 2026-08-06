@@ -1,31 +1,33 @@
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
+
 #include <ckpttn/FMBiConstrMgr.hpp>
 #include <ckpttn/FMBiGainMgr.hpp>
 #include <ckpttn/FMPartMgr.hpp>
 #include <ckpttn/MLPartMgr.hpp>
+#include <cstdint>
 #include <iostream>
+#include <netlistx/netlist.hpp>
+#include <string_view>
+#include <vector>
 
-#include "test_common.hpp"
+extern auto readNetD(std::string_view) -> SimpleNetlist;
+extern void readAre(SimpleNetlist&, std::string_view);
 
-TEST_CASE("Stress Test MLBiPartMgr ibm18") {
+int main() {
     auto hyprgraph = readNetD("../../testcases/ibm18.net");
     readAre(hyprgraph, "../../testcases/ibm18.are");
 
-    MLPartMgr part_mgr{0.45};
-    part_mgr.set_limitsize(24000);
+    ankerl::nanobench::Bench bench;
+    bench.title("Stress MLBiPartMgr ibm18").unit("op").warmup(1).epochs(2);
 
-    const int num_iterations = 2;
-    int total_cost_sum = 0;
-
-    for (int idx = 0; idx < num_iterations; ++idx) {
+    bench.run("MLBiPartMgr ibm18", [&] {
+        MLPartMgr part_mgr{0.45};
+        part_mgr.set_limitsize(24000);
         std::vector<uint8_t> part(hyprgraph.number_of_modules(), 0);
         part_mgr.run_Partition<SimpleNetlist, FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>,
                                                         FMBiConstrMgr<SimpleNetlist>>>(hyprgraph,
                                                                                        part);
-        total_cost_sum += part_mgr.total_cost;
-    }
-
-    double average_cost = static_cast<double>(total_cost_sum) / num_iterations;
-    std::cout << "Average cost over " << num_iterations << " iterations: " << average_cost << '\n';
-
-    CHECK_GT(average_cost, 0);
+        ankerl::nanobench::doNotOptimizeAway(part);
+    });
 }
