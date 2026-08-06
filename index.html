@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.3;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
    </div>
   </td>
  </tr>
@@ -158,24 +158,23 @@ Adjust the template to your needs</h3>
 <h3><a class="anchor" id="autotoc_md6"></a>
 Build and run the standalone target</h3>
 <p>Use the following command to build and run the executable target.</p>
-<div class="fragment"><div class="line">cmake -S. -B build</div>
+<div class="fragment"><div class="line">cmake -B build</div>
 <div class="line">cmake --build build</div>
-<div class="line">./build/standalone/CkPttn --help</div>
+<div class="line">./build/CkPttn --help</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
 Build and run test suite</h3>
 <p>Use the following commands from the project's root directory to run the test suite.</p>
-<div class="fragment"><div class="line">cmake -S. -B build</div>
+<div class="fragment"><div class="line">cmake -B build</div>
 <div class="line">cmake --build build</div>
-<div class="line">cd build/test</div>
-<div class="line">CTEST_OUTPUT_ON_FAILURE=1 ctest</div>
+<div class="line">CTEST_OUTPUT_ON_FAILURE=1 ctest --test-dir build</div>
 <div class="line"> </div>
 <div class="line"># or maybe simply call the executable:</div>
-<div class="line">./build/test/CkPttnTests</div>
+<div class="line">./build/CkPttnTests</div>
 </div><!-- fragment --><p>To collect code coverage information, run CMake with the <code>-DENABLE_TEST_COVERAGE=1</code> option.</p>
 <h3><a class="anchor" id="autotoc_md8"></a>
 Run clang-format</h3>
 <p>Use the following commands from the project's root directory to check and fix C++ and CMake source style. This requires <em>clang-format</em>, <em>cmake-format</em> and <em>pyyaml</em> to be installed on the current system.</p>
-<div class="fragment"><div class="line">cmake -S . -B build/test</div>
+<div class="fragment"><div class="line">cmake -B build</div>
 <div class="line"> </div>
 <div class="line"># view changes</div>
 <div class="line">cmake --build build --target format</div>
@@ -189,7 +188,7 @@ Build the documentation</h3>
 <div class="fragment"><div class="line">cmake -S . -B build</div>
 <div class="line">cmake --build build --target GenerateDocs</div>
 <div class="line"># view the docs</div>
-<div class="line">open build/documentation/doxygen/html/index.html</div>
+<div class="line">open build/doxygen/html/index.html</div>
 </div><!-- fragment --><p>To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.</p>
 <h3><a class="anchor" id="additional-tools"></a>
 Additional tools</h3>
