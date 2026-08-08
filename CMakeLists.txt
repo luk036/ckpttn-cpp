@@ -83,6 +83,12 @@ find_package(spdlog CONFIG QUIET)
 if(spdlog_FOUND)
   message(STATUS "Found system spdlog: ${spdlog_DIR}")
   set(CPM_spdlog_ADDED YES)
+  # Some system spdlog packages (e.g. conda) only export the namespaced spdlog::spdlog
+  # target, while this project and NetlistX query the bare `spdlog` target for its
+  # interface definitions. Provide an alias so both work whichever spdlog is used.
+  if(NOT TARGET spdlog AND TARGET spdlog::spdlog)
+    add_library(spdlog ALIAS spdlog::spdlog)
+  endif()
 else()
   CPMAddPackage(
     NAME spdlog
