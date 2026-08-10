@@ -226,7 +226,7 @@ namespace transrangers {
      */
     template <typename Ranger> auto enumerate(Ranger rgr) {
         return transform(
-            [index = std::size_t(0)](auto&& value) TRANSRANGERS_HOT_MUTABLE {
+            [index = std::size_t{0}](auto&& value) TRANSRANGERS_HOT_MUTABLE {
                 auto old = index;
                 index += 1;
                 return std::make_pair(old, std::move(value));

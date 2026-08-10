@@ -40,7 +40,7 @@ class MinHash {
                 "with the same hash functions.");
         }
         // Calculate the Jaccard similarity
-        return std::accumulate(_hashes.begin(), _hashes.end(), 0) / float(_k);
+        return std::accumulate(_hashes.begin(), _hashes.end(), 0) / static_cast<float>(_k);
     }
 
   private:
