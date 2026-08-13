@@ -1,38 +1,46 @@
+/**
+ * @file logger.cpp
+ * @brief Implementation of logging utilities using spdlog
+ *
+ * This file implements the logging functionality for the ckpttn library
+ * using the spdlog library as the backend.
+ */
+
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
 #include <ckpttn/logger.hpp>
+#include <memory>
 
 namespace ckpttn {
 
+    /// @brief Create and configure the file logger
+    /// @details Extracted into a noexcept helper so the one-time static
+    ///          initialization in log_with_spdlog cannot throw.
+    /// @return The configured file logger
+    auto make_file_logger() noexcept -> std::shared_ptr<spdlog::logger> {
+        auto l = spdlog::basic_logger_mt("file_logger", "ckpttn.log");
+        spdlog::set_default_logger(l);
+        spdlog::set_level(spdlog::level::info);
+        spdlog::flush_on(spdlog::level::info);
+        return l;
+    }
+
     /**
-     * @brief Logs a message to "ckpttn.log" using spdlog.
+     * @brief Log a message using spdlog to a file
      *
-     * Creates or re-creates a file logger called "file_logger" and writes
-     * the given message at the INFO level. The log pattern includes
-     * timestamps and severity.
+     * This function creates a file logger that writes to "ckpttn.log",
+     * sets it as the default logger, and logs the provided message with
+     * an info level. The logger is configured to flush on info level
+     * messages to ensure they are written to disk immediately.
      *
      * @param[in] message The message to log
      */
     void log_with_spdlog(const std::string& message) {
-        // Always create a fresh logger to ensure proper file handling
-        std::shared_ptr<spdlog::logger> logger;
-        try {
-            // Try to drop the existing logger first
-            spdlog::drop("file_logger");
-        } catch (...) {
-            // Ignore if logger doesn't exist
-        }
+        // One-time initialization of file logger
+        static const auto logger = make_file_logger();
 
-        // Create a new logger
-        logger = spdlog::basic_logger_mt("file_logger", "ckpttn.log");
-        if (logger) {
-            logger->set_level(spdlog::level::info);
-            logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%n] [%^%l%$] %v");
-            logger->flush_on(spdlog::level::info);
-            logger->info("CkPttn message: {}", message);
-            logger->flush();
-        }
+        spdlog::info("CkPttn message: {}", message);
     }
 
 }  // namespace ckpttn
