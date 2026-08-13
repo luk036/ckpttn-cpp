@@ -84,8 +84,8 @@ if(spdlog_FOUND)
   message(STATUS "Found system spdlog: ${spdlog_DIR}")
   set(CPM_spdlog_ADDED YES)
   # Some system spdlog packages (e.g. conda) only export the namespaced spdlog::spdlog
-  # target, while this project and NetlistX query the bare `spdlog` target for its
-  # interface definitions. Provide an alias so both work whichever spdlog is used.
+  # target, while the NetlistX dependency queries the bare `spdlog` target for its
+  # interface definitions. Provide an alias so it works whichever spdlog is used.
   if(NOT TARGET spdlog AND TARGET spdlog::spdlog)
     add_library(spdlog ALIAS spdlog::spdlog)
   endif()
@@ -164,7 +164,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC ${SPECIFIC_LIBS})
 
 # Any TU using spdlog must compile with spdlog's own interface definitions (SPDLOG_COMPILED_LIB,
 # SPDLOG_FMT_EXTERNAL) or the header-only and compiled registries diverge.
-get_target_property(SPDLOG_COMPILE_DEFS spdlog INTERFACE_COMPILE_DEFINITIONS)
+get_target_property(SPDLOG_COMPILE_DEFS spdlog::spdlog INTERFACE_COMPILE_DEFINITIONS)
 if(SPDLOG_COMPILE_DEFS)
   target_compile_definitions(${PROJECT_NAME} PRIVATE ${SPDLOG_COMPILE_DEFS})
 endif()
@@ -200,14 +200,20 @@ packageProject(
 # ---------------------------------------------------------------------------
 
 if(CKPTTN_BUILD_STANDALONE)
-  # cxxopts is a header-only CLI parser used by the standalone example
-  CPMAddPackage(
-    GITHUB_REPOSITORY jarro2783/cxxopts
-    VERSION 3.2.1
-    OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
-  )
+  # cxxopts is a header-only CLI parser used by the standalone example. Prefer a consumer- or
+  # system-provided cxxopts; only fall back to CPM when no cxxopts target is available.
+  find_package(cxxopts CONFIG QUIET)
+  if(NOT cxxopts_FOUND AND NOT TARGET cxxopts::cxxopts)
+    CPMAddPackage(
+      GITHUB_REPOSITORY jarro2783/cxxopts
+      VERSION 3.2.1
+      OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
+    )
+  endif()
   # keep third-party headers out of our -Werror scope
-  get_target_property(CXXOPTS_INCLUDE_DIRS cxxopts::cxxopts INTERFACE_INCLUDE_DIRECTORIES)
+  if(TARGET cxxopts::cxxopts)
+    get_target_property(CXXOPTS_INCLUDE_DIRS cxxopts::cxxopts INTERFACE_INCLUDE_DIRECTORIES)
+  endif()
 
   file(GLOB CKPTTN_STANDALONE_SOURCES CONFIGURE_DEPENDS "standalone/source/*.cpp")
   add_executable(CkPttnStandalone ${CKPTTN_STANDALONE_SOURCES})
