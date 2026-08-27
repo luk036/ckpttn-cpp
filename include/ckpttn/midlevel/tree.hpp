@@ -17,6 +17,11 @@
 /**
  * @brief Tree data structure for mid-level Gray code algorithm
  *
+ * Implements the **Composite pattern**: `MidTree` is a rooted tree in which
+ * every node can serve as the root of a subtree. The tree structure is
+ * realized by the `children_` list (each node's child list) and the `parent_`
+ * vector (each node's parent pointer).
+ *
  * Represents a rooted tree with children lists used in the middle-levels
  * Gray code algorithm. Supports tree rotations, flip operations, and
  * bitstring conversion for generating Hamiltonian cycles.

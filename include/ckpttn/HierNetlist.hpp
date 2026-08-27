@@ -26,6 +26,13 @@
 /**
  * @brief Hierarchical Netlist
  *
+ * Implements the **Composite pattern**: `HierNetlist` organizes netlists into
+ * a tree of parent/child netlists, where each netlist in the hierarchy is
+ * itself a netlist and can be treated uniformly. The tree structure is
+ * realized by the `parent` pointer and the `node_up_map`/`node_down_map`/
+ * `cluster_down_map` mappings, which connect a netlist level to its parent
+ * and its children.
+ *
  * HierNetlist extends the Netlist class to support multi-level partitioning algorithms.
  * It maintains additional mappings and weights for hierarchical (coarsening) representations
  * of the netlist during the partitioning process.
