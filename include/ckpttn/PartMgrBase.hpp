@@ -23,6 +23,14 @@ enum class LegalCheck;
 /**
  * @brief Fiduccia-Mattheyses Partitioning Algorithm Manager Base
  *
+ * Implements the **Template Method pattern**: `PartMgrBase` defines the
+ * algorithm skeleton (`optimize` → `_optimize_1pass`) while the actual
+ * move-selection steps are overridden by derived manager classes. This is
+ * combined with **Strategy** via template policy (policy-based design): the
+ * `GainMgr` and `ConstrMgr` are injected as template parameters, so the
+ * gain-computation and constraint-validation strategies can be swapped at
+ * compile time.
+ *
  * `PartMgrBase` is a base class for managing the Fiduccia-Mattheyses
  * Partitioning Algorithm. It takes three template parameters: `Gnl` (graph
  * type), `GainMgr` (gain manager type), and `ConstrMgr` (constraint manager
@@ -44,6 +52,12 @@ enum class LegalCheck;
  * Reference:
  *   gr. Ausiello et al., Complexity and Approximation: Combinatorial
  * Optimization Problems and Their Approximability Properties, Section 10.3.2.
+ *
+ * @note Design patterns: **Template Method** (algorithm skeleton in base,
+ * move-selection steps overridden by derived classes) combined with
+ * **Strategy** via template policy (policy-based design: `GainMgr`/`ConstrMgr`
+ * injected as template parameters; realized by the `gain_mgr` and `validator`
+ * members).
  *
  * @tparam Gnl
  * @tparam GainMgr
@@ -127,6 +141,10 @@ class PartMgrBase {
     /**
      * @brief Takes a snapshot of the current partition state.
      *
+     * **Memento pattern**: `take_snapshot` captures the partition state for
+     * rollback; `restore_part` rolls back to it (used for backtracking when a
+     * move yields negative gain).
+     *
      * @param[in] part The current partition to snapshot.
      * @return std::vector<std::uint8_t> The snapshot data.
      */
@@ -144,6 +162,10 @@ class PartMgrBase {
 
     /**
      * @brief Restores the partition from a previously saved snapshot.
+     *
+     * **Memento pattern**: `restore_part` rolls the partition back to a state
+     * previously captured by `take_snapshot` (used for backtracking when a move
+     * yields negative gain).
      *
      * @param[in] snapshot The snapshot data to restore from.
      * @param[in,out] part The partition to restore.
