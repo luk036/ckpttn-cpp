@@ -25,7 +25,7 @@
 // py::set<node_t>&)
 //     -> std::unique_ptr<SimpleHierNetlist>;
 
-enum class LegalCheck;
+#include "LegalCheck.hpp"  // for LegalCheck
 
 /**
  * @brief Multilevel Partition Manager

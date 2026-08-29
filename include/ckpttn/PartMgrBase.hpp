@@ -14,11 +14,11 @@
 #include <vector>   // for vector
 // #include <xnetwork/classes/graph.hpp>
 
+#include "LegalCheck.hpp"  // for LegalCheck
+
 // forward declare
 // template <typename graph_t> struct Netlist;
 // using SimpleNetlist = Netlist<xnetwork::SimpleGraph>;
-
-enum class LegalCheck;
 
 /**
  * @brief Fiduccia-Mattheyses Partitioning Algorithm Manager Base
@@ -121,14 +121,19 @@ class PartMgrBase {
      */
     void optimize(std::span<std::uint8_t> part);
 
-  private:
+  protected:
     /**
      * @brief Performs a single pass of the FM optimization algorithm.
      *
+     * Overridable hook of the Template Method: derived managers vary the
+     * pass behaviour (e.g. `NNPartMgr` stops at the first negative-gain
+     * move instead of snapshotting and rolling back).
+     *
      * @param[in,out] part The partition to optimize.
      */
-    void _optimize_1pass(std::span<std::uint8_t> part);
+    virtual void _optimize_1pass(std::span<std::uint8_t> part);
 
+  private:
     /**
      * @brief Performs a final check on the partitioning based on the given partition information.
      *

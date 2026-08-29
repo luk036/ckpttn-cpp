@@ -9,17 +9,13 @@
 #include <span>     // for span
 #include <vector>   // for vector
 
+#include "LegalCheck.hpp"  // for LegalCheck
+
 // #include "moveinfo.hpp"  // for MoveInfo
 
 // forward declare
 template <typename Node> struct MoveInfo;
 template <typename Node> struct MoveInfoV;
-
-/**
- * @brief Check if the move of v can satisfied, GetBetter, or NotSatisfied
- *
- */
-enum class LegalCheck { NotSatisfied, GetBetter, AllSatisfied };
 
 /**
  * @brief Fiduccia-Mattheyses Partition Constraint Manager

@@ -1,14 +1,14 @@
-#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::AllSatisfied
-#include <ckpttn/MLPartMgr.hpp>    // for MLPartMgr
-#include <cstdint>                 // for uint8_t
-#include <iostream>                // for std::cerr
-#include <memory>                  // for unique_ptr
-#include <netlistx/netlist.hpp>    // for SimpleNetlist
-#include <new>                     // for std::bad_alloc
-#include <py2cpp/set.hpp>          // for set
-#include <span>                    // for span
-#include <utility>                 // for pair
-#include <vector>                  // for vector
+#include <ckpttn/LegalCheck.hpp>  // for LegalCheck
+#include <ckpttn/MLPartMgr.hpp>   // for MLPartMgr
+#include <cstdint>                // for uint8_t
+#include <iostream>               // for std::cerr
+#include <memory>                 // for unique_ptr
+#include <netlistx/netlist.hpp>   // for SimpleNetlist
+#include <new>                    // for std::bad_alloc
+#include <py2cpp/set.hpp>         // for set
+#include <span>                   // for span
+#include <utility>                // for pair
+#include <vector>                 // for vector
 
 #include "ckpttn/HierNetlist.hpp"  // for HierNetlist, SimpleHierNetlist
 
