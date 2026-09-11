@@ -55,6 +55,10 @@ template <typename Gnl> class FMKWayGainCalc {
     std::vector<std::vector<Item>> vertex_list{};
     /// @brief Initial gain lists for each partition
     std::vector<std::vector<int>> init_gain_list;
+    /// @brief Reusable per-move delta-gain buffer (avoids heap allocations per call)
+    std::vector<std::vector<int>> delta_gain_buf;
+    /// @brief Reusable per-partition pin counter (avoids a heap allocation per call)
+    std::vector<std::uint8_t> num_buf;
     /// @brief Delta gain vector for vertices
     FMPmr::vector<int> delta_gain_v;
 
@@ -151,7 +155,7 @@ template <typename Gnl> class FMKWayGainCalc {
      */
     void init_idx_vec(const node_t& v, const node_t& net);
 
-    using ret_info = std::vector<std::vector<int>>;
+    using ret_info = std::span<const std::vector<int>>;
 
     /**
      * @brief Updates the gain for a 3-pin net after a move.

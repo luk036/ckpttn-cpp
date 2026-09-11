@@ -43,6 +43,8 @@ template <typename Gnl> class FMBiGainCalc {
     std::vector<Item> vertex_list;
     /// @brief Initial gain values for each vertex
     std::vector<int> init_gain_list;
+    /// @brief Reusable per-move delta-gain buffer (avoids a heap allocation per call)
+    std::vector<int> delta_gain_buf;
     /// @brief Total cost of the current partitioning
     int total_cost{0};
     /// @brief Stack buffer size for PMR memory resource (tunable per workload)
@@ -142,10 +144,10 @@ template <typename Gnl> class FMBiGainCalc {
      *
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move being performed.
-     * @return A vector of integers representing the updated gain values for the net.
+     * @return A view of the updated gain values for the net (backed by a reusable buffer).
      */
     auto update_move_3pin_net(std::span<const std::uint8_t> part, const MoveInfo<node_t>& move_info)
-        -> std::vector<int>;
+        -> std::span<const int>;
 
     /**
      * @brief Update the gain values for a general net during a move operation.
@@ -155,10 +157,10 @@ template <typename Gnl> class FMBiGainCalc {
      *
      * @param[in] part The current partition information.
      * @param[in] move_info The information about the move being performed.
-     * @return A vector of integers representing the updated gain values for the net.
+     * @return A view of the updated gain values for the net (backed by a reusable buffer).
      */
     auto update_move_general_net(std::span<const std::uint8_t> part,
-                                 const MoveInfo<node_t>& move_info) -> std::vector<int>;
+                                 const MoveInfo<node_t>& move_info) -> std::span<const int>;
 
   private:
     /**
