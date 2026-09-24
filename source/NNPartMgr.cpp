@@ -11,8 +11,10 @@
 /**
  * @brief Performs a single pass of the No-Nonsense optimization algorithm.
  *
- * Similar to FM but stops as soon as a negative gain move is encountered
- * (no look-ahead / rollback mechanism). Only selects positive gain moves.
+ * Pure greedy local search: repeatedly takes the highest-gain move from the
+ * gain buckets while its gain is strictly positive, and stops at the first
+ * non-positive-gain move. It performs no snapshotting/rollback and does not
+ * lock moved vertices.
  *
  * @tparam Gnl The hypergraph type
  * @tparam GainMgr The gain manager type
@@ -30,7 +32,7 @@ void NNPartMgr<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_t>
         auto move_info_v = result.first;
         auto gainmax = result.second;
 
-        if (gainmax < 0) {
+        if (gainmax <= 0) {
             break;
         }
         // Check if the move of v can satisfied or NotSatisfied
@@ -41,7 +43,6 @@ void NNPartMgr<Gnl, GainMgr, ConstrMgr>::_optimize_1pass(std::span<std::uint8_t>
         // Update v and its neigbours (even they are in waiting_list);
         // Put neigbours to bucket
         // const auto& [v, _, to_part] = move_info_v;
-        this->gain_mgr.lock(move_info_v.to_part, move_info_v.v);
         this->gain_mgr.update_move(part, move_info_v);
         this->gain_mgr.update_move_v(move_info_v, gainmax);
         this->validator.update_move(move_info_v);

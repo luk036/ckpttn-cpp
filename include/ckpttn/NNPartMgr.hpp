@@ -20,10 +20,10 @@
  *
  * `NNPartMgr` reuses the shared FM algorithm skeleton from `PartMgrBase`
  * (Template Method pattern: `init`/`legalize`/`optimize`) and overrides
- * only the single-pass behaviour: unlike FM it stops at the first
- * negative-gain move (no look-ahead / snapshot / rollback). The
- * gain-computation and constraint-validation strategies remain injected
- * as template parameters.
+ * only the single-pass behaviour: unlike FM it is a pure greedy local search
+ * that stops at the first non-positive-gain move (no look-ahead / snapshot /
+ * rollback) and never locks a moved vertex. The gain-computation and
+ * constraint-validation strategies remain injected as template parameters.
  *
  * @tparam Gnl
  * @tparam GainMgr
@@ -49,8 +49,10 @@ class NNPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
     /**
      * @brief Performs a single pass of the No-Nonsense optimization algorithm.
      *
-     * Similar to FM but stops as soon as a negative gain move is encountered
-     * (no look-ahead / rollback mechanism). Only selects positive gain moves.
+     * Pure greedy local search: repeatedly takes the highest-gain move from the
+     * gain buckets while its gain is strictly positive, and stops at the first
+     * non-positive-gain move. It performs no snapshotting/rollback and does not
+     * lock moved vertices.
      *
      * @param[in,out] part The partition vector to optimize
      */
