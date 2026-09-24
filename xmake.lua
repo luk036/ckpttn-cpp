@@ -141,6 +141,24 @@ target("bench_fmkway_2pin_nets")
         set_rundir("./build/windows/")
     end
 
+target("bench_fmnn")
+    set_kind("binary")
+    add_deps("CkPttn")
+    add_includedirs("include", {public = true})
+    add_includedirs("../py2cpp/include", {public = true})
+    add_includedirs("../xnetwork-cpp/include", {public = true})
+    add_includedirs("../mywheel-cpp/include", {public = true})
+    add_includedirs("../netlistx-cpp/include", {public = true})
+    add_files("bench/BenchFMNN.cpp")
+    add_packages("ms-gsl")
+    add_packages("spdlog")
+    add_packages("nlohmann_json")
+    if is_plat("linux") then
+        set_rundir("./build/linux/")
+    elseif is_plat("windows") then
+        set_rundir("./build/windows/")
+    end
+
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
 --
