@@ -29,8 +29,9 @@ FMConstrMgr<Gnl>::FMConstrMgr(const Gnl& hyprgraph, double bal_tol, uint8_t num_
     for (const auto& v : hyprgraph) {
         this->total_weight += hyprgraph.get_module_weight(v);
     }
-    const auto totalweightK = this->total_weight * (2.0 / this->num_parts);
-    this->lowerbound = uint32_t(round(totalweightK * this->bal_tol));
+    const auto ideal_block_weight =
+        static_cast<double>(this->total_weight) / static_cast<double>(this->num_parts);
+    this->lowerbound = uint32_t(round((1.0 - this->bal_tol) * ideal_block_weight));
 }
 
 /**
