@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -81,8 +81,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle"><div class="title">FMConstrMgr.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -92,18 +91,21 @@ $(function() {
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;span&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &quot;<a class="el" href="LegalCheck_8hpp_source.html">LegalCheck.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for FMConstrMgr.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="FMConstrMgr_8hpp__incl.png" border="0" usemap="#ackpttn_2FMConstrMgr_8hpp" alt=""/></div>
 <map name="ackpttn_2FMConstrMgr_8hpp" id="ackpttn_2FMConstrMgr_8hpp">
-<area shape="rect" title="FM partition constraint manager." alt="" coords="32,5,213,31"/>
+<area shape="rect" title="FM partition constraint manager." alt="" coords="73,5,255,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,72,104"/>
-<area shape="poly" title=" " alt="" coords="111,33,65,72,61,67,107,29"/>
+<area shape="poly" title=" " alt="" coords="145,33,72,74,70,69,143,28"/>
 <area shape="rect" title=" " alt="" coords="96,79,149,104"/>
-<area shape="poly" title=" " alt="" coords="125,31,125,65,120,65,120,31"/>
+<area shape="poly" title=" " alt="" coords="159,32,139,68,134,65,155,30"/>
 <area shape="rect" title=" " alt="" coords="174,79,237,104"/>
-<area shape="poly" title=" " alt="" coords="138,29,183,67,180,72,134,33"/>
+<area shape="poly" title=" " alt="" coords="173,30,194,65,189,68,169,32"/>
+<area shape="rect" href="LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="261,79,387,104"/>
+<area shape="poly" title=" " alt="" coords="191,28,286,71,284,75,189,33"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -128,49 +130,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMConstrMgr.html">FMConstrMgr&lt; Gnl &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fiduccia-Mattheyses Partition Constraint Manager.  <a href="classFMConstrMgr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a4add05ea0ff560e61ee764a606768d80" id="r_a4add05ea0ff560e61ee764a606768d80"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a> { <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80ac5056dcce56a9184920fa7242e7af8de">NotSatisfied</a>
-, <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80a9b8717477d3a83b5dee8619ed9311a63">GetBetter</a>
-, <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80a6d6a3fd00ff591b89ea63facfda76a5f">AllSatisfied</a>
- }</td></tr>
-<tr class="memdesc:a4add05ea0ff560e61ee764a606768d80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the move of v can satisfied, GetBetter, or NotSatisfied.  <a href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">More...</a><br /></td></tr>
-<tr class="separator:a4add05ea0ff560e61ee764a606768d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>FM partition constraint manager. </p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a4add05ea0ff560e61ee764a606768d80" name="a4add05ea0ff560e61ee764a606768d80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4add05ea0ff560e61ee764a606768d80">&#9670;&#160;</a></span>LegalCheck</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Check if the move of v can satisfied, GetBetter, or NotSatisfied. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4add05ea0ff560e61ee764a606768d80ac5056dcce56a9184920fa7242e7af8de" name="a4add05ea0ff560e61ee764a606768d80ac5056dcce56a9184920fa7242e7af8de"></a>NotSatisfied&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4add05ea0ff560e61ee764a606768d80a9b8717477d3a83b5dee8619ed9311a63" name="a4add05ea0ff560e61ee764a606768d80a9b8717477d3a83b5dee8619ed9311a63"></a>GetBetter&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4add05ea0ff560e61ee764a606768d80a6d6a3fd00ff591b89ea63facfda76a5f" name="a4add05ea0ff560e61ee764a606768d80a6d6a3fd00ff591b89ea63facfda76a5f"></a>AllSatisfied&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

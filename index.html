@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -135,7 +135,6 @@ Additional Information</h2>
 <li>Reproducible dependency management via <a href="https://github.com/TheLartians/CPM.cmake">CPM.cmake</a></li>
 <li>Installable target with automatic versioning information and header generation via <a href="https://github.com/TheLartians/PackageProject.cmake">PackageProject.cmake</a></li>
 <li>Automatic <a href="https://thelartians.github.io/ModernCppStarter">documentation</a> and deployment with <a href="https://www.doxygen.nl">Doxygen</a> and <a href="https://pages.github.com">GitHub Pages</a></li>
-<li>Support for <a class="el" href="index.html#additional-tools">sanitizer tools, and more</a></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Usage</h2>
@@ -190,19 +189,12 @@ Build the documentation</h3>
 <div class="line"># view the docs</div>
 <div class="line">open build/doxygen/html/index.html</div>
 </div><!-- fragment --><p>To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.</p>
-<h3><a class="anchor" id="additional-tools"></a>
-Additional tools</h3>
-<p>The test and standalone subprojects include the <a href="cmake/tools.cmake">tools.cmake</a> file which is used to import additional tools on-demand through CMake configuration arguments. The following are currently supported.</p>
-<h4><a class="anchor" id="autotoc_md10"></a>
-Sanitizers</h4>
-<p>Sanitizers can be enabled by configuring CMake with &lsquo;-DUSE_SANITIZER=&lt;Address | Memory | MemoryWithOrigins | Undefined | Thread | Leak | 'Address;Undefined&rsquo;&gt;`.</p>
-<h4><a class="anchor" id="autotoc_md11"></a>
-Static Analyzers</h4>
-<p>Static Analyzers can be enabled by setting <code>-DUSE_STATIC_ANALYZER=&lt;clang-tidy | iwyu | cppcheck&gt;</code>, or a combination of those in quotation marks, separated by semicolons. By default, analyzers will automatically find configuration files such as <code>.clang-format</code>. Additional arguments can be passed to the analyzers by setting the <code>CLANG_TIDY_ARGS</code>, <code>IWYU_ARGS</code> or <code>CPPCHECK_ARGS</code> variables.</p>
-<h4><a class="anchor" id="autotoc_md12"></a>
-Ccache</h4>
-<p>Ccache can be enabled by configuring with <code>-DUSE_CCACHE=&lt;ON | OFF&gt;</code>.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Static analysis</h3>
+<p>clang-tidy can be enabled by configuring CMake with <code>-DCKPTTN_ENABLE_CLANG_TIDY=ON</code> and building the <code>clang-tidy</code> target. It analyzes the public headers using the checks configured in <code>.clang-tidy</code>.</p>
+<div class="fragment"><div class="line">cmake -B build -DCKPTTN_ENABLE_CLANG_TIDY=ON</div>
+<div class="line">cmake --build build --target clang-tidy</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
 Related projects and alternatives</h2>
 <ul>
 <li><a href="https://github.com/viva64/pvs-studio-cmake-examples/tree/master/modern-cpp-starter"><b>ModernCppStarter &amp; PVS-Studio Static Code Analyzer</b></a>: Official instructions on how to use the ModernCppStarter with the PVS-Studio Static Code Analyzer.</li>

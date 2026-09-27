@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -94,7 +94,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;span&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="LegalCheck_8hpp.html">LegalCheck.hpp</a>&quot;</span>  <span class="comment">// for LegalCheck</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classMLMidLvlPartMgr.html">   22</a></span><span class="keyword">class </span><a class="code hl_class" href="classMLMidLvlPartMgr.html">MLMidLvlPartMgr</a> {</div>
@@ -108,7 +108,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classMLMidLvlPartMgr.html#ad59f67cb5a0a7ed5b6a1d4b819bf4a9a">   47</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMLMidLvlPartMgr.html#ad59f67cb5a0a7ed5b6a1d4b819bf4a9a">set_limitsize</a>(<span class="keywordtype">size_t</span> limit) { this-&gt;limitsize = limit; }</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classMLMidLvlPartMgr.html#acdcef9fafd86becfcf9db654945063f2">   57</a></span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Gnl&gt; <span class="keyword">auto</span> <a class="code hl_function" href="classMLMidLvlPartMgr.html#acdcef9fafd86becfcf9db654945063f2">run_Partition</a>(<span class="keyword">const</span> Gnl&amp; hyprgraph, std::span&lt;std::uint8_t&gt; part)</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        -&gt; <a class="code hl_enumeration" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        -&gt; <a class="code hl_enumeration" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a>;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">double</span> bal_tol;</div>
@@ -116,7 +116,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> exhaustive_limit{25U};</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>};</div>
 </div>
-<div class="ttc" id="aFMConstrMgr_8hpp_html_a4add05ea0ff560e61ee764a606768d80"><div class="ttname"><a href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></div><div class="ttdeci">LegalCheck</div><div class="ttdoc">Check if the move of v can satisfied, GetBetter, or NotSatisfied.</div><div class="ttdef"><b>Definition</b> FMConstrMgr.hpp:22</div></div>
+<div class="ttc" id="aLegalCheck_8hpp_html"><div class="ttname"><a href="LegalCheck_8hpp.html">LegalCheck.hpp</a></div><div class="ttdoc">Result of a partition legality check.</div></div>
+<div class="ttc" id="aLegalCheck_8hpp_html_a4add05ea0ff560e61ee764a606768d80"><div class="ttname"><a href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></div><div class="ttdeci">LegalCheck</div><div class="ttdoc">Check if the move of v can be satisfied, get better, or not satisfied.</div><div class="ttdef"><b>Definition</b> LegalCheck.hpp:11</div></div>
 <div class="ttc" id="aclassMLMidLvlPartMgr_html"><div class="ttname"><a href="classMLMidLvlPartMgr.html">MLMidLvlPartMgr</a></div><div class="ttdoc">Multi-Level Mid-Level Partition Manager (2-way)</div><div class="ttdef"><b>Definition</b> MLMidLvlPartMgr.hpp:22</div></div>
 <div class="ttc" id="aclassMLMidLvlPartMgr_html_a83c1c8d892c536772ab270c7762635c8"><div class="ttname"><a href="classMLMidLvlPartMgr.html#a83c1c8d892c536772ab270c7762635c8">MLMidLvlPartMgr::MLMidLvlPartMgr</a></div><div class="ttdeci">MLMidLvlPartMgr(double bal_tol, std::uint8_t num_parts)</div><div class="ttdoc">Constructs a new MLMidLvlPartMgr object.</div></div>
 <div class="ttc" id="aclassMLMidLvlPartMgr_html_aaebdd2703c3e3509492411752fd50c25"><div class="ttname"><a href="classMLMidLvlPartMgr.html#aaebdd2703c3e3509492411752fd50c25">MLMidLvlPartMgr::MLMidLvlPartMgr</a></div><div class="ttdeci">MLMidLvlPartMgr(double bal_tol)</div><div class="ttdoc">Constructs a new MLMidLvlPartMgr object (default 2 partitions)</div></div>

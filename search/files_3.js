@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['logger_2ehpp_0',['logger.hpp',['../logger_8hpp.html',1,'']]]
+  ['legalcheck_2ehpp_0',['LegalCheck.hpp',['../LegalCheck_8hpp.html',1,'']]],
+  ['logger_2ehpp_1',['logger.hpp',['../logger_8hpp.html',1,'']]]
 ];

@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -93,8 +93,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a51da918028bcbaa42cdf1bad84a5b66e" id="r_a51da918028bcbaa42cdf1bad84a5b66e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a51da918028bcbaa42cdf1bad84a5b66e">ret_info</a> = std::vector&lt; std::vector&lt; int &gt; &gt;</td></tr>
-<tr class="separator:a51da918028bcbaa42cdf1bad84a5b66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70296ae54fa28c75006bc5809813a60f" id="r_a70296ae54fa28c75006bc5809813a60f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a70296ae54fa28c75006bc5809813a60f">ret_info</a> = std::span&lt; const std::vector&lt; int &gt; &gt;</td></tr>
+<tr class="separator:a70296ae54fa28c75006bc5809813a60f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -113,10 +113,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a389b36c7daf9c2028fd82573fd2307cc" id="r_a389b36c7daf9c2028fd82573fd2307cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a389b36c7daf9c2028fd82573fd2307cc">init_idx_vec</a> (const node_t &amp;v, const node_t &amp;net)</td></tr>
 <tr class="memdesc:a389b36c7daf9c2028fd82573fd2307cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the index vector for a given vertex and net.  <br /></td></tr>
 <tr class="separator:a389b36c7daf9c2028fd82573fd2307cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c42994203bfea5a5f5d0ca85a3e9e64" id="r_a4c42994203bfea5a5f5d0ca85a3e9e64"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a4c42994203bfea5a5f5d0ca85a3e9e64">update_move_3pin_net</a> (std::span&lt; const std::uint8_t &gt; part, const <a class="el" href="structMoveInfo.html">MoveInfo</a>&lt; node_t &gt; &amp;move_info) -&gt; <a class="el" href="classFMKWayGainCalc.html#a51da918028bcbaa42cdf1bad84a5b66e">ret_info</a></td></tr>
+<tr class="memitem:a4c42994203bfea5a5f5d0ca85a3e9e64" id="r_a4c42994203bfea5a5f5d0ca85a3e9e64"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a4c42994203bfea5a5f5d0ca85a3e9e64">update_move_3pin_net</a> (std::span&lt; const std::uint8_t &gt; part, const <a class="el" href="structMoveInfo.html">MoveInfo</a>&lt; node_t &gt; &amp;move_info) -&gt; <a class="el" href="classFMKWayGainCalc.html#a70296ae54fa28c75006bc5809813a60f">ret_info</a></td></tr>
 <tr class="memdesc:a4c42994203bfea5a5f5d0ca85a3e9e64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the gain for a 3-pin net after a move.  <br /></td></tr>
 <tr class="separator:a4c42994203bfea5a5f5d0ca85a3e9e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ac876d792f16a47000606e3d4b9283" id="r_a89ac876d792f16a47000606e3d4b9283"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a89ac876d792f16a47000606e3d4b9283">update_move_general_net</a> (std::span&lt; const std::uint8_t &gt; part, const <a class="el" href="structMoveInfo.html">MoveInfo</a>&lt; node_t &gt; &amp;move_info) -&gt; <a class="el" href="classFMKWayGainCalc.html#a51da918028bcbaa42cdf1bad84a5b66e">ret_info</a></td></tr>
+<tr class="memitem:a89ac876d792f16a47000606e3d4b9283" id="r_a89ac876d792f16a47000606e3d4b9283"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFMKWayGainCalc.html#a89ac876d792f16a47000606e3d4b9283">update_move_general_net</a> (std::span&lt; const std::uint8_t &gt; part, const <a class="el" href="structMoveInfo.html">MoveInfo</a>&lt; node_t &gt; &amp;move_info) -&gt; <a class="el" href="classFMKWayGainCalc.html#a70296ae54fa28c75006bc5809813a60f">ret_info</a></td></tr>
 <tr class="memdesc:a89ac876d792f16a47000606e3d4b9283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the gain for a general net after a move.  <br /></td></tr>
 <tr class="separator:a89ac876d792f16a47000606e3d4b9283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -148,8 +148,8 @@ class FMKWayGainCalc&lt; Gnl &gt;</div><p>K-Way Fiduccia-Mattheyses Gain Calcula
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a51da918028bcbaa42cdf1bad84a5b66e" name="a51da918028bcbaa42cdf1bad84a5b66e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51da918028bcbaa42cdf1bad84a5b66e">&#9670;&#160;</a></span>ret_info</h2>
+<a id="a70296ae54fa28c75006bc5809813a60f" name="a70296ae54fa28c75006bc5809813a60f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70296ae54fa28c75006bc5809813a60f">&#9670;&#160;</a></span>ret_info</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -157,7 +157,7 @@ class FMKWayGainCalc&lt; Gnl &gt;</div><p>K-Way Fiduccia-Mattheyses Gain Calcula
 template&lt;typename Gnl &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classFMKWayGainCalc.html">FMKWayGainCalc</a>&lt; Gnl &gt;::ret_info =  std::vector&lt;std::vector&lt;int&gt; &gt;</td>
+          <td class="memname">using <a class="el" href="classFMKWayGainCalc.html">FMKWayGainCalc</a>&lt; Gnl &gt;::ret_info =  std::span&lt;const std::vector&lt;int&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -355,7 +355,7 @@ template&lt;typename Gnl &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt;  <a class="el" href="classFMKWayGainCalc.html#a51da918028bcbaa42cdf1bad84a5b66e">ret_info</a></td>
+          <td></td><td> -&gt;  <a class="el" href="classFMKWayGainCalc.html#a70296ae54fa28c75006bc5809813a60f">ret_info</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -396,7 +396,7 @@ template&lt;typename Gnl &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt;  <a class="el" href="classFMKWayGainCalc.html#a51da918028bcbaa42cdf1bad84a5b66e">ret_info</a></td>
+          <td></td><td> -&gt;  <a class="el" href="classFMKWayGainCalc.html#a70296ae54fa28c75006bc5809813a60f">ret_info</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

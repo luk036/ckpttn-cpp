@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -80,6 +80,7 @@ $(function() {
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classPartMgrBase-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">PartMgrBase&lt; Gnl, GainMgr, ConstrMgr &gt; Class Template Reference</div></div>
@@ -95,9 +96,11 @@ Inheritance diagram for PartMgrBase&lt; Gnl, GainMgr, ConstrMgr &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classPartMgrBase__inherit__graph.png" border="0" usemap="#aPartMgrBase_3_01Gnl_00_01GainMgr_00_01ConstrMgr_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="aPartMgrBase_3_01Gnl_00_01GainMgr_00_01ConstrMgr_01_4_inherit__map" id="aPartMgrBase_3_01Gnl_00_01GainMgr_00_01ConstrMgr_01_4_inherit__map">
-<area shape="rect" title="Fiduccia&#45;Mattheyses Partitioning Algorithm Manager Base." alt="" coords="5,5,213,45"/>
-<area shape="rect" href="classFMPartMgr.html" title="Fiduccia&#45;Mattheyses Partitioning Algorithm Manager." alt="" coords="11,93,207,133"/>
-<area shape="poly" title=" " alt="" coords="112,59,112,93,107,93,107,59"/>
+<area shape="rect" title="Fiduccia&#45;Mattheyses Partitioning Algorithm Manager Base." alt="" coords="109,5,317,45"/>
+<area shape="rect" href="classFMPartMgr.html" title="Fiduccia&#45;Mattheyses Partitioning Algorithm Manager." alt="" coords="5,93,201,133"/>
+<area shape="poly" title=" " alt="" coords="179,56,129,95,126,91,176,52"/>
+<area shape="rect" href="classNNPartMgr.html" title="No&#45;Nonsense Partitioning Algorithm Manager." alt="" coords="225,93,421,133"/>
+<area shape="poly" title=" " alt="" coords="250,52,300,91,297,95,247,56"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -118,7 +121,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab137211b607d923b14ceac08ea49130a" id="r_ab137211b607d923b14ceac08ea49130a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#ab137211b607d923b14ceac08ea49130a">init</a> (std::span&lt; std::uint8_t &gt; part)</td></tr>
 <tr class="memdesc:ab137211b607d923b14ceac08ea49130a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the partition manager with the given partition.  <br /></td></tr>
 <tr class="separator:ab137211b607d923b14ceac08ea49130a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a481739e49b70e0dbfacee86fcae48814" id="r_a481739e49b70e0dbfacee86fcae48814"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a481739e49b70e0dbfacee86fcae48814">legalize</a> (std::span&lt; std::uint8_t &gt; part) -&gt; <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td></tr>
+<tr class="memitem:a481739e49b70e0dbfacee86fcae48814" id="r_a481739e49b70e0dbfacee86fcae48814"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a481739e49b70e0dbfacee86fcae48814">legalize</a> (std::span&lt; std::uint8_t &gt; part) -&gt; <a class="el" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td></tr>
 <tr class="memdesc:a481739e49b70e0dbfacee86fcae48814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legalizes the partition to satisfy balance constraints.  <br /></td></tr>
 <tr class="separator:a481739e49b70e0dbfacee86fcae48814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53f137ac40413ba43cefc2efd96af0fa" id="r_a53f137ac40413ba43cefc2efd96af0fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a53f137ac40413ba43cefc2efd96af0fa">optimize</a> (std::span&lt; std::uint8_t &gt; part)</td></tr>
@@ -129,6 +132,12 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a1c553fb8bdb04e62e1c43db5177109a2" id="r_a1c553fb8bdb04e62e1c43db5177109a2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a1c553fb8bdb04e62e1c43db5177109a2">total_cost</a> {}</td></tr>
 <tr class="separator:a1c553fb8bdb04e62e1c43db5177109a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ad3ced52847daf3d61453944f27c06d54" id="r_ad3ced52847daf3d61453944f27c06d54"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#ad3ced52847daf3d61453944f27c06d54">_optimize_1pass</a> (std::span&lt; std::uint8_t &gt; part)</td></tr>
+<tr class="memdesc:ad3ced52847daf3d61453944f27c06d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a single pass of the FM optimization algorithm.  <br /></td></tr>
+<tr class="separator:ad3ced52847daf3d61453944f27c06d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -148,10 +157,12 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Gnl, typename GainMgr, typename ConstrMgr&gt;<br />
 class PartMgrBase&lt; Gnl, GainMgr, ConstrMgr &gt;</div><p>Fiduccia-Mattheyses Partitioning Algorithm Manager Base. </p>
+<p>Implements the <b>Template Method pattern</b>: <code><a class="el" href="classPartMgrBase.html" title="Fiduccia-Mattheyses Partitioning Algorithm Manager Base.">PartMgrBase</a></code> defines the algorithm skeleton (<code>optimize</code> → <code>_optimize_1pass</code>) while the actual move-selection steps are overridden by derived manager classes. This is combined with <b>Strategy</b> via template policy (policy-based design): the <code>GainMgr</code> and <code>ConstrMgr</code> are injected as template parameters, so the gain-computation and constraint-validation strategies can be swapped at compile time.</p>
 <p><code><a class="el" href="classPartMgrBase.html" title="Fiduccia-Mattheyses Partitioning Algorithm Manager Base.">PartMgrBase</a></code> is a base class for managing the Fiduccia-Mattheyses Partitioning Algorithm. It takes three template parameters: <code>Gnl</code> (graph type), <code>GainMgr</code> (gain manager type), and <code>ConstrMgr</code> (constraint manager type).</p>
 <p>In this partitioning method, the next solution $s'$ considered after solution $s$ is dervied by first applying a sequence of $t$ changes (moves) to $s$ (with $t$ dependent from $s$ and from the specific heuristic method), thus obtaining a sequence of solution $s,...,s_t$ and by successively choosing the best among these solutions.</p>
 <p>In order to do that, heuristics refer to a measure of the gain (and balance condition) associated to any sequence of changes performed on the current solution. Moreover, the length of the sequence generated is determined by evaluting a suitably defined $stopping rule$ at each iteration.</p>
 <p>Reference: gr. Ausiello et al., Complexity and Approximation: Combinatorial Optimization Problems and Their Approximability Properties, Section 10.3.2.</p>
+<dl class="section note"><dt>Note</dt><dd>Design patterns: <b>Template Method</b> (algorithm skeleton in base, move-selection steps overridden by derived classes) combined with <b>Strategy</b> via template policy (policy-based design: <code>GainMgr</code>/<code>ConstrMgr</code> injected as template parameters; realized by the <code>gain_mgr</code> and <code>validator</code> members).</dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Gnl</td><td></td></tr>
@@ -273,6 +284,45 @@ template&lt;typename Gnl , typename GainMgr , typename ConstrMgr &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad3ced52847daf3d61453944f27c06d54" name="ad3ced52847daf3d61453944f27c06d54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3ced52847daf3d61453944f27c06d54">&#9670;&#160;</a></span>_optimize_1pass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Gnl , typename GainMgr , typename ConstrMgr &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classPartMgrBase.html">PartMgrBase</a>&lt; Gnl, GainMgr, ConstrMgr &gt;::_optimize_1pass </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; std::uint8_t &gt;&#160;</td>
+          <td class="paramname"><em>part</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs a single pass of the FM optimization algorithm. </p>
+<p>Overridable hook of the Template Method: derived managers vary the pass behaviour (e.g. <code><a class="el" href="classNNPartMgr.html" title="No-Nonsense Partitioning Algorithm Manager.">NNPartMgr</a></code> stops at the first negative-gain move instead of snapshotting and rolling back).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">part</td><td>The partition to optimize. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classNNPartMgr.html#a1d9da7c1612ae99e685f631789b0537f">NNPartMgr&lt; Gnl, GainMgr, ConstrMgr &gt;</a>.</p>
+
+</div>
+</div>
 <a id="ab137211b607d923b14ceac08ea49130a" name="ab137211b607d923b14ceac08ea49130a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab137211b607d923b14ceac08ea49130a">&#9670;&#160;</a></span>init()</h2>
 
@@ -314,7 +364,7 @@ template&lt;typename Gnl , typename GainMgr , typename ConstrMgr &gt; </div>
           <td>(</td>
           <td class="paramtype">std::span&lt; std::uint8_t &gt;&#160;</td>
           <td class="paramname"><em>part</em></td><td>)</td>
-          <td> -&gt;  <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td>
+          <td> -&gt;  <a class="el" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,28 +1,30 @@
 <map id="ckpttn/MidLvlPartMgr.hpp" name="ckpttn/MidLvlPartMgr.hpp">
-<area shape="rect" id="Node000001" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="77,5,264,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,225,72,251"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,33,62,51,45,64,30,80,18,112,16,148,22,182,31,212,26,213,17,184,11,148,12,111,26,77,41,60,60,46,101,28"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="96,225,149,251"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,30,194,51,204,78,209,128,207,156,201,179,183,202,160,220,157,216,179,199,196,176,202,155,203,128,199,79,189,54,176,32"/>
-<area shape="rect" id="Node000004" href="$FMBiConstrMgr_8hpp.html" title="Binary FM constraint manager for 2&#45;way partitioning." alt="" coords="40,79,189,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="164,33,134,69,130,66,159,29"/>
-<area shape="rect" id="Node000007" href="$FMBiGainCalc_8hpp.html" title="Binary FM gain calculator for 2&#45;way partitioning." alt="" coords="264,152,405,177"/>
-<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="188,29,247,77,315,140,311,144,244,81,184,33"/>
-<area shape="rect" id="Node000005" href="$FMConstrMgr_8hpp.html" title="FM partition constraint manager." alt="" coords="51,152,187,177"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="118,104,120,138,115,139,113,104"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="108,179,64,218,60,214,104,175"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="122,178,124,212,119,212,117,178"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="174,225,237,251"/>
-<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="134,175,182,214,179,219,131,179"/>
-<area shape="poly" id="edge9_Node000007_Node000002" title=" " alt="" coords="286,180,86,228,85,222,285,175"/>
-<area shape="poly" id="edge11_Node000007_Node000003" title=" " alt="" coords="301,180,163,226,162,221,300,175"/>
-<area shape="poly" id="edge13_Node000007_Node000006" title=" " alt="" coords="315,180,240,221,238,216,313,175"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="261,225,408,251"/>
-<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="337,178,337,212,332,212,332,178"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="433,225,493,251"/>
-<area shape="poly" id="edge12_Node000007_Node000009" title=" " alt="" coords="357,175,431,216,428,221,354,180"/>
-<area shape="rect" id="Node000010" href="$FMPmrConfig_8hpp.html" title="PMR configuration and constants for FM algorithm." alt="" coords="517,225,654,251"/>
-<area shape="poly" id="edge14_Node000007_Node000010" title=" " alt="" coords="376,175,532,219,531,224,374,180"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="515,299,655,324"/>
-<area shape="poly" id="edge15_Node000010_Node000011" title=" " alt="" coords="588,251,588,285,583,285,583,251"/>
+<area shape="rect" id="Node000001" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="219,5,405,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="155,225,221,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="245,33,204,51,186,64,172,80,164,96,160,113,160,148,168,183,179,212,174,214,163,184,154,149,154,112,159,94,167,77,182,60,201,46,243,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="333,225,387,251"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="322,30,334,51,345,78,359,150,363,212,357,212,354,151,340,79,330,54,317,32"/>
+<area shape="rect" id="Node000004" href="$FMBiConstrMgr_8hpp.html" title="Binary FM constraint manager for 2&#45;way partitioning." alt="" coords="181,79,331,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="305,33,276,69,271,66,301,29"/>
+<area shape="rect" id="Node000008" href="$FMBiGainCalc_8hpp.html" title="Binary FM gain calculator for 2&#45;way partitioning." alt="" coords="405,152,547,177"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="329,29,388,77,456,140,452,144,385,81,326,33"/>
+<area shape="rect" id="Node000005" href="$FMConstrMgr_8hpp.html" title="FM partition constraint manager." alt="" coords="188,152,324,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="259,104,259,138,253,138,253,104"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="247,180,211,217,207,213,243,176"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="274,175,333,215,330,219,271,180"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="246,225,309,251"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="262,177,273,211,267,213,257,178"/>
+<area shape="rect" id="Node000007" href="$LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="5,225,131,251"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="227,180,112,223,111,218,225,175"/>
+<area shape="poly" id="edge10_Node000008_Node000002" title=" " alt="" coords="430,180,235,228,234,222,428,175"/>
+<area shape="poly" id="edge12_Node000008_Node000003" title=" " alt="" coords="459,180,392,220,389,216,456,175"/>
+<area shape="poly" id="edge14_Node000008_Node000006" title=" " alt="" coords="445,180,323,223,321,218,443,175"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="411,225,557,251"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="480,177,484,212,479,212,475,178"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="582,225,642,251"/>
+<area shape="poly" id="edge13_Node000008_Node000010" title=" " alt="" coords="499,175,579,217,577,221,497,180"/>
+<area shape="rect" id="Node000011" href="$FMPmrConfig_8hpp.html" title="PMR configuration and constants for FM algorithm." alt="" coords="666,225,803,251"/>
+<area shape="poly" id="edge15_Node000008_Node000011" title=" " alt="" coords="518,175,680,219,679,224,517,180"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="665,299,805,324"/>
+<area shape="poly" id="edge16_Node000011_Node000012" title=" " alt="" coords="737,251,737,285,732,285,732,251"/>
 </map>

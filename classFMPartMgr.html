@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -123,7 +123,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab137211b607d923b14ceac08ea49130a inherit pub_methods_classPartMgrBase" id="r_ab137211b607d923b14ceac08ea49130a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#ab137211b607d923b14ceac08ea49130a">init</a> (std::span&lt; std::uint8_t &gt; part)</td></tr>
 <tr class="memdesc:ab137211b607d923b14ceac08ea49130a inherit pub_methods_classPartMgrBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the partition manager with the given partition.  <br /></td></tr>
 <tr class="separator:ab137211b607d923b14ceac08ea49130a inherit pub_methods_classPartMgrBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a481739e49b70e0dbfacee86fcae48814 inherit pub_methods_classPartMgrBase" id="r_a481739e49b70e0dbfacee86fcae48814"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a481739e49b70e0dbfacee86fcae48814">legalize</a> (std::span&lt; std::uint8_t &gt; part) -&gt; <a class="el" href="FMConstrMgr_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td></tr>
+<tr class="memitem:a481739e49b70e0dbfacee86fcae48814 inherit pub_methods_classPartMgrBase" id="r_a481739e49b70e0dbfacee86fcae48814"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a481739e49b70e0dbfacee86fcae48814">legalize</a> (std::span&lt; std::uint8_t &gt; part) -&gt; <a class="el" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td></tr>
 <tr class="memdesc:a481739e49b70e0dbfacee86fcae48814 inherit pub_methods_classPartMgrBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Legalizes the partition to satisfy balance constraints.  <br /></td></tr>
 <tr class="separator:a481739e49b70e0dbfacee86fcae48814 inherit pub_methods_classPartMgrBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53f137ac40413ba43cefc2efd96af0fa inherit pub_methods_classPartMgrBase" id="r_a53f137ac40413ba43cefc2efd96af0fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a53f137ac40413ba43cefc2efd96af0fa">optimize</a> (std::span&lt; std::uint8_t &gt; part)</td></tr>
@@ -142,6 +142,10 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_classPartMgrBase"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classPartMgrBase')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classPartMgrBase.html">PartMgrBase&lt; Gnl, GainMgr, ConstrMgr &gt;</a></td></tr>
 <tr class="memitem:a1c553fb8bdb04e62e1c43db5177109a2 inherit pub_attribs_classPartMgrBase" id="r_a1c553fb8bdb04e62e1c43db5177109a2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#a1c553fb8bdb04e62e1c43db5177109a2">total_cost</a> {}</td></tr>
 <tr class="separator:a1c553fb8bdb04e62e1c43db5177109a2 inherit pub_attribs_classPartMgrBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classPartMgrBase"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classPartMgrBase')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classPartMgrBase.html">PartMgrBase&lt; Gnl, GainMgr, ConstrMgr &gt;</a></td></tr>
+<tr class="memitem:ad3ced52847daf3d61453944f27c06d54 inherit pro_methods_classPartMgrBase" id="r_ad3ced52847daf3d61453944f27c06d54"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#ad3ced52847daf3d61453944f27c06d54">_optimize_1pass</a> (std::span&lt; std::uint8_t &gt; part)</td></tr>
+<tr class="memdesc:ad3ced52847daf3d61453944f27c06d54 inherit pro_methods_classPartMgrBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a single pass of the FM optimization algorithm.  <br /></td></tr>
+<tr class="separator:ad3ced52847daf3d61453944f27c06d54 inherit pro_methods_classPartMgrBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classPartMgrBase"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classPartMgrBase')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classPartMgrBase.html">PartMgrBase&lt; Gnl, GainMgr, ConstrMgr &gt;</a></td></tr>
 <tr class="memitem:af30c16d03d9c4083391cdfc500f103ea inherit pro_attribs_classPartMgrBase" id="r_af30c16d03d9c4083391cdfc500f103ea"><td class="memItemLeft" align="right" valign="top">const Gnl &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPartMgrBase.html#af30c16d03d9c4083391cdfc500f103ea">hyprgraph</a></td></tr>
 <tr class="memdesc:af30c16d03d9c4083391cdfc500f103ea inherit pro_attribs_classPartMgrBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the hypergraph being partitioned.  <br /></td></tr>

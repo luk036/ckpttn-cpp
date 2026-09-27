@@ -1,5 +1,9 @@
 <map id="ckpttn/MLPartMgr.hpp" name="ckpttn/MLPartMgr.hpp">
-<area shape="rect" id="Node000001" title="Multi&#45;level partition manager." alt="" coords="5,5,168,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="60,79,113,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,31,89,65,84,65,84,31"/>
+<area shape="rect" id="Node000001" title="Multi&#45;level partition manager." alt="" coords="41,5,204,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,33,65,72,61,67,107,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,79,149,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="125,31,125,65,120,65,120,31"/>
+<area shape="rect" id="Node000004" href="$LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="173,79,299,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="142,28,208,69,205,74,139,33"/>
 </map>
