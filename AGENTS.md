@@ -52,16 +52,12 @@ cmake --build build --target format
 cmake --build build --target fix-format
 ```
 
-### Static Analysis
+### Static Analyzers
 
 ```bash
-# clang-tidy
-cmake -B build -DCKPTTN_ENABLE_CLANG_TIDY=ON
-cmake --build build
-
-# Include What You Use (iwyu)
-cmake -S . -B build -DUSE_STATIC_ANALYZER=iwyu
-cmake --build build
+# clang-tidy over the public headers (uses the checks in .clang-tidy)
+cmake -S . -B build -DCKPTTN_ENABLE_CLANG_TIDY=ON
+cmake --build build --target clang-tidy
 ```
 
 ### Sanitizers

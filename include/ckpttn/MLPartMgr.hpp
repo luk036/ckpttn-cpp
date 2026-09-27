@@ -11,7 +11,8 @@
 // #include "FMPartMgr.hpp" // import FMPartMgr
 // #include <netlistx/netlist.hpp>
 // #include <memory>  // std::unique_ptr
-#include <span>  // for span
+#include <cstdint>  // for uint8_t
+#include <span>     // for span
 // #include <py2cpp/range.hpp>  // for range
 // #include <ckpttn/FMConstrMgr.hpp>   // import LegalCheck
 
@@ -25,7 +26,7 @@
 // py::set<node_t>&)
 //     -> std::unique_ptr<SimpleHierNetlist>;
 
-enum class LegalCheck;
+#include "LegalCheck.hpp"  // for LegalCheck
 
 /**
  * @brief Multilevel Partition Manager

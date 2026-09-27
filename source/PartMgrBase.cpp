@@ -1,5 +1,5 @@
 #include <cassert>                 // for assert
-#include <ckpttn/FMConstrMgr.hpp>  // for LegalCheck, LegalCheck::notsat...
+#include <ckpttn/LegalCheck.hpp>   // for LegalCheck
 #include <ckpttn/PartMgrBase.hpp>  // for PartMgrBase, part, SimpleNetlist
 #include <ckpttn/moveinfo.hpp>     // for MoveInfoV
 #include <cstdint>                 // for uint8_t

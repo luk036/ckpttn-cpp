@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <span>
 
-enum class LegalCheck;
+#include "LegalCheck.hpp"  // for LegalCheck
 
 /**
  * @brief Multi-Level Mid-Level Partition Manager (2-way)

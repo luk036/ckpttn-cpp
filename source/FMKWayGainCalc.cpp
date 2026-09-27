@@ -171,7 +171,8 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
     //                                            sizeof StackBufLocal);
     // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
-    auto num = std::vector<uint8_t>(this->num_parts, 0);
+    auto& num = this->num_buf;
+    num.assign(this->num_parts, 0);
     // for (const auto &w : this->hyprgraph.gr[net]) {
     //   num[part[w]] += 1;
     // }
@@ -204,7 +205,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net
             // }
             rng([&](const auto& wc) {
                 // this->vertex_list[part_idx][*wc].data.second -= weight;
-                this->init_gain_list[part_idx][*wc] -= int(weight);
+                this->init_gain_list[part_idx][*wc] -= static_cast<int>(weight);
                 return true;
             });
         } else if (c == 1) {
@@ -274,7 +275,7 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
     // const auto& [net, v, from_part, to_part] = move_info;
     assert(part[move_info.v] == move_info.from_part);
 
-    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
+    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
     // auto delta_gain_w = vector<int>(this->num_parts, 0);
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
@@ -347,8 +348,14 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
                                                const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
-    auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
-    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
+    auto& delta_gain = this->delta_gain_buf;
+    if (delta_gain.size() < degree) {
+        delta_gain.resize(degree);
+    }
+    for (auto i = 0U; i < degree; ++i) {
+        delta_gain[i].assign(this->num_parts, 0);
+    }
+    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
     const auto part_w = part[this->idx_vec[0]];
     const auto part_u = part[this->idx_vec[1]];
     auto l = move_info.from_part;
@@ -374,7 +381,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
             gain = -gain;
             swap(l, u);
         }
-        return delta_gain;
+        return std::span<const std::vector<int>>{delta_gain.data(), degree};
     }
 
     auto rng0 = all(delta_gain[0]);
@@ -405,7 +412,7 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
         gain = -gain;
         swap(l, u);
     }
-    return delta_gain;
+    return std::span<const std::vector<int>>{delta_gain.data(), degree};
     // return this->update_move_general_net(part, move_info);
 }
 
@@ -430,7 +437,8 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
     //                                            sizeof StackBufLocal);
     // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
-    auto num = std::vector<uint8_t>(this->num_parts, 0);
+    auto& num = this->num_buf;
+    num.assign(this->num_parts, 0);
     auto rng1 = all(this->idx_vec);
     rng1([&](const auto& wc) {
         num[part[*wc]] += 1;
@@ -438,23 +446,26 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
     });
 
     const auto degree = idx_vec.size();
-    auto delta_gain = vector<vector<int>>(degree, vector<int>(this->num_parts, 0));
-    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
+    auto& delta_gain = this->delta_gain_buf;
+    if (delta_gain.size() < degree) {
+        delta_gain.resize(degree);
+    }
+    for (auto i = 0U; i < degree; ++i) {
+        delta_gain[i].assign(this->num_parts, 0);
+    }
+    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
 
     auto l = move_info.from_part;
     auto u = move_info.to_part;
 
-    auto rng2 = all(delta_gain);
-    // auto rng3 = zip2(rng1, rng2);
     auto rng4 = all(this->delta_gain_v);
 
     // #pragma unroll
     for (auto idx = 0; idx != 2; ++idx) {
         if (num[l] == 0) {
-            rng2([&gain, &l](const auto& dgc) {
-                (*dgc)[l] -= gain;
-                return true;
-            });
+            for (auto i = 0U; i < degree; ++i) {
+                delta_gain[i][l] -= gain;
+            }
 
             if (num[u] > 0) {
                 rng4([&gain](const auto& dgvc) {
@@ -488,7 +499,7 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
         gain = -gain;
         swap(l, u);
     };
-    return delta_gain;
+    return std::span<const std::vector<int>>{delta_gain.data(), degree};
 }
 
 // instantiation

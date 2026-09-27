@@ -172,7 +172,7 @@ auto FMBiGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
     -> Gnl::node_t {
     auto net_cur = this->hyprgraph.gr[move_info.net].begin();
     auto node_w = (*net_cur != move_info.v) ? *net_cur : *++net_cur;
-    const auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
+    const auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
     const int delta = (part[node_w] == move_info.from_part) ? gain : -gain;
     this->delta_gain_w = 2 * delta;
     return node_w;
@@ -215,11 +215,12 @@ template <typename Gnl> void FMBiGainCalc<Gnl>::init_idx_vec(const typename Gnl:
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
                                              const MoveInfo<typename Gnl::node_t>& move_info)
-    -> vector<int> {
+    -> std::span<const int> {
     // const auto& [net, v, from_part, _] = move_info;
 
-    auto delta_gain = vector<int>{0, 0};
-    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
+    auto& delta_gain = this->delta_gain_buf;
+    delta_gain.assign(2, 0);
+    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
     const auto part_w = part[this->idx_vec[0]];
 
     if (part_w != move_info.from_part) {
@@ -249,7 +250,7 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
                                                 const MoveInfo<typename Gnl::node_t>& move_info)
-    -> vector<int> {
+    -> std::span<const int> {
     // const auto& [net, v, from_part, to_part] = move_info;
     auto num = array<size_t, 2>{0, 0};
     auto range1 = all(this->idx_vec);
@@ -259,8 +260,9 @@ auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
     });
 
     const auto degree = this->idx_vec.size();
-    auto delta_gain = vector<int>(degree, 0);
-    auto gain = int(this->hyprgraph.get_net_weight(move_info.net));
+    auto& delta_gain = this->delta_gain_buf;
+    delta_gain.assign(degree, 0);
+    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
     auto range2 = all(delta_gain);
     // auto range3 = zip2(range1, range2);
 
