@@ -133,6 +133,10 @@ void FMBiGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
         return true;
     });
 
+    const auto cnt_base = static_cast<std::size_t>(net) * 2;
+    this->net_pin_count[cnt_base] = static_cast<std::uint16_t>(num[0]);
+    this->net_pin_count[cnt_base + 1] = static_cast<std::uint16_t>(num[1]);
+
     const uint32_t weight = this->hyprgraph.get_net_weight(net);
 
     // #pragma unroll
@@ -250,48 +254,65 @@ auto FMBiGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
 template <typename Gnl>
 auto FMBiGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
                                                 const MoveInfo<typename Gnl::node_t>& move_info)
-    -> std::span<const int> {
-    // const auto& [net, v, from_part, to_part] = move_info;
-    auto num = array<size_t, 2>{0, 0};
-    auto range1 = all(this->idx_vec);
-    range1([&](const auto& weighted_cell) {
-        num[part[*weighted_cell]] += 1;
-        return true;
-    });
+    -> std::span<const SparseDelta<typename Gnl::node_t>> {
+    const auto cnt_base = static_cast<std::size_t>(move_info.net) * 2;
+    const auto cnt_from = this->net_pin_count[cnt_base + move_info.from_part];
+    const auto cnt_to = this->net_pin_count[cnt_base + move_info.to_part];
+    const auto num_from = static_cast<int>(cnt_from) - 1;
+    const auto num_to = static_cast<int>(cnt_to);
+    this->net_pin_count[cnt_base + move_info.from_part] = static_cast<std::uint16_t>(cnt_from - 1);
+    this->net_pin_count[cnt_base + move_info.to_part] = static_cast<std::uint16_t>(cnt_to + 1);
 
-    const auto degree = this->idx_vec.size();
-    auto& delta_gain = this->delta_gain_buf;
-    delta_gain.assign(degree, 0);
-    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
-    auto range2 = all(delta_gain);
-    // auto range3 = zip2(range1, range2);
-
-    // #pragma unroll
-    for (const auto& target_part : {move_info.from_part, move_info.to_part}) {
-        if (num[target_part] == 0) {
-            range2([&](const auto& delta_gain_cell) {
-                *delta_gain_cell -= gain;
-                return true;
-            });
-        } else if (num[target_part] == 1) {
-            auto iter1 = this->idx_vec.begin();
-            auto iter2 = delta_gain.begin();
-            for (; part[*iter1] != target_part; ++iter1, ++iter2) {
-            }
-            *iter2 += gain;
-
-            // range3([&](const auto &zipped_cell) {
-            //     auto part_w = part[std::get<0>(*zipped_cell)];
-            //     if (part_w == target_part) {
-            //         std::get<1>(*zipped_cell) += gain;
-            //         return false;
-            //     }
-            //     return true;
-            // });
-        }
-        gain = -gain;
+    auto& sparse = this->sparse_buf;
+    sparse.clear();
+    if (num_from >= 2 && num_to >= 2) {
+        return {sparse.data(), sparse.size()};
     }
-    return delta_gain;
+
+    this->init_idx_vec(move_info.v, move_info.net);
+    const auto degree = this->idx_vec.size();
+    const auto weight = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
+    const auto gain_from = weight;
+    const auto gain_to = -weight;
+
+    auto uniq_from = degree;
+    auto uniq_to = degree;
+    if (num_from == 1) {
+        for (std::size_t i = 0; i < degree; ++i) {
+            if (part[this->idx_vec[i]] == move_info.from_part) {
+                uniq_from = i;
+                break;
+            }
+        }
+    }
+    if (num_to == 1) {
+        for (std::size_t i = 0; i < degree; ++i) {
+            if (part[this->idx_vec[i]] == move_info.to_part) {
+                uniq_to = i;
+                break;
+            }
+        }
+    }
+
+    for (std::size_t i = 0; i < degree; ++i) {
+        int delta = 0;
+        if (num_from == 0) {
+            delta -= gain_from;
+        } else if (i == uniq_from) {
+            delta += gain_from;
+        }
+        if (num_to == 0) {
+            delta -= gain_to;
+        } else if (i == uniq_to) {
+            delta += gain_to;
+        }
+        if (delta != 0) {
+            const auto w = this->idx_vec[i];
+            sparse.push_back(SparseDelta<typename Gnl::node_t>{
+                w, static_cast<std::uint8_t>(1 - part[w]), delta});
+        }
+    }
+    return {sparse.data(), sparse.size()};
 }
 
 // instantiation
