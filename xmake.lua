@@ -10,6 +10,9 @@ add_requires("nanobench", { alias = "nanobench" })
 
 set_languages("c++20")
 
+local toolchain = get_config("toolchain")
+local is_msvc_like = (toolchain == nil) or (toolchain == "msvc") or (toolchain == "clang-cl") or (toolchain == "clang_cl")
+
 if is_plat("linux") then
     set_warnings("all", "error")
     add_cxflags("-Wconversion", {force = true})
@@ -20,12 +23,23 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include/c++/v1", {public = true})
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
-elseif is_plat("windows") then
+elseif is_plat("windows") and is_msvc_like then
     add_cxflags("/EHsc /W4 /WX /openmp /wd4702 /wd4996", {force = true})
+elseif is_plat("windows") then
+    add_cxflags("-Wall", "-Wextra", {force = true})
 end
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
+end
+
+if is_mode("profile") then
+    set_optimize("fastest")
+    set_symbols("debug")
+    if not is_msvc_like then
+        add_cxflags("-pg", "-fno-omit-frame-pointer", {force = true})
+        add_ldflags("-pg", {force = true})
+    end
 end
 
 target("CkPttn")
