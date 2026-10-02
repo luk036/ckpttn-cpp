@@ -27,7 +27,7 @@ compile-time caps.
 | `num_parts` | `2` | `FMConstrMgr.hpp:53`, `FMBiGainMgr.hpp:37`, `FMPartMgr.hpp:57` | `FMBiConstrMgr` forces 2 regardless of the argument (`FMBiConstrMgr.hpp:25,33`). |
 | `limitsize` | `50U` | `MLPartMgr.hpp:42`, `MLMidLvlPartMgr.hpp:64`, `MLMidLvlKWayPartMgr.hpp:55` | Set via `set_limitsize(size_t)`. |
 | `max_passes` (FM optimize loop) | `100` (hardcoded) | `source/PartMgrBase.cpp:159` | `for (int iter = 0; iter < 100; ++iter)`. |
-| contraction ratio | `> 3/2` reduction (hardcoded) | `source/MLPartMgr.cpp:66` | `hgr2->modules * 3 / 2 < hyprgraph.modules`. |
+| contraction ratio | `1.5` (binary) / `1.05` (k-way) | `include/ckpttn/MLPartMgr.hpp` (settable via `set_contraction_ratio`) | A contraction is accepted only when `hgr2->modules * ratio < hyprgraph.modules`. |
 
 ### Constructors
 
@@ -178,6 +178,7 @@ File: `middle/main_cli.cpp`.
 | `bal_tol` | required (CLI preset: `0.03` / `0.01` / `0.005`) | ctor / CLI | `include/ckpttn/FMConstrMgr.hpp:53`, `standalone/source/main.cpp:36-51` |
 | `num_parts` | `2` | ctor / CLI | `include/ckpttn/FMConstrMgr.hpp:53`, `standalone/source/main.cpp:136` |
 | `limitsize` | `50U` | setter | `include/ckpttn/MLPartMgr.hpp:42`, `include/ckpttn/MLMidLvl*PartMgr.hpp` |
+| contraction ratio | `1.5` (binary) / `1.05` (k-way) | setter | `include/ckpttn/MLPartMgr.hpp` (`set_contraction_ratio`) |
 | `max_passes` (FM optimize) | `100` (hardcoded) | const | `source/PartMgrBase.cpp:159` |
 | `MidLvlKWayPartMgr::max_passes` | `5` | const | `include/ckpttn/MidLvlKWayPartMgr.hpp:47` |
 | `MidLvlKWayPartMgr::max_pair_modules` | `15` | const | `include/ckpttn/MidLvlKWayPartMgr.hpp:49` |
