@@ -90,10 +90,10 @@ File: `source/min_cover.cpp`.
 
 | Constant | Default | Location |
 | --- | --- | --- |
-| `LOW_PIN_NET_THRESHOLD` | `5` | `min_cover.cpp:19` |
-| `MINHASH_SIG_SIZE` | `64` | `min_cover.cpp:20` |
-| `MINHASH_SIMILARITY` | `0.8` | `min_cover.cpp:21` |
-| `MINHASH_MAX_DEGREE` | `200` | `min_cover.cpp:22` |
+| `MINHASH_SIG_SIZE` | `64` | `min_cover.cpp:19` |
+| `MINHASH_SIMILARITY` | `0.8` | `min_cover.cpp:20` |
+| `MINHASH_MAX_DEGREE` | `200` | `min_cover.cpp:21` |
+| `LOW_PIN_NET_THRESHOLD` | `200` (= `MINHASH_MAX_DEGREE`) | `min_cover.cpp:25` |
 
 ---
 
@@ -187,10 +187,10 @@ File: `middle/main_cli.cpp`.
 | `FM_MAX_DEGREE` | `500U` | const | `include/ckpttn/FMPmrConfig.hpp:27` |
 | `stack_buf_size` | `32768` (bi) / `65536` (k-way) | const | `include/ckpttn/FMBiGainCalc.hpp:56`, `include/ckpttn/FMKWayGainCalc.hpp:52` |
 | `special_handle_2pin_nets` | `true` | public flag | `include/ckpttn/FMBiGainCalc.hpp:68`, `include/ckpttn/FMKWayGainCalc.hpp:78` |
-| `LOW_PIN_NET_THRESHOLD` | `5` | const | `source/min_cover.cpp:19` |
-| `MINHASH_SIG_SIZE` | `64` | const | `source/min_cover.cpp:20` |
-| `MINHASH_SIMILARITY` | `0.8` | const | `source/min_cover.cpp:21` |
-| `MINHASH_MAX_DEGREE` | `200` | const | `source/min_cover.cpp:22` |
+| `MINHASH_SIG_SIZE` | `64` | const | `source/min_cover.cpp:19` |
+| `MINHASH_SIMILARITY` | `0.8` | const | `source/min_cover.cpp:20` |
+| `MINHASH_MAX_DEGREE` | `200` | const | `source/min_cover.cpp:21` |
+| `LOW_PIN_NET_THRESHOLD` | `200` (= `MINHASH_MAX_DEGREE`) | const | `source/min_cover.cpp:25` |
 | CLI `k` / `epsilon` / `--threads` / `--seed` / `--mode` / `--preset` | `2` / `0.05` / `1` / `0` / `recursive` / `default` | CLI | `standalone/source/main.cpp:136, 138, 159, 162, 157, 153` |
 
 Everything else is problem data (hypergraph, module weights, fixed-module set,
