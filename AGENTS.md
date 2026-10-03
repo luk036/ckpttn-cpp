@@ -41,6 +41,18 @@ xmake                    # build
 xmake run test_ckpttn   # build and run tests
 ```
 
+### Benchmarking (use xmake, not CMake)
+
+All `bench_*` targets are declared in `xmake.lua`. Build and run them with
+xmake; CMake is not used for benchmarking.
+
+```bash
+xmake f -m release -y
+xmake build bench_param_sweep   # or bench_fmnn, bench_ibm01, bench_minhash_probe, ...
+# xmake run can pick the wrong rundir on Windows; invoke the binary directly:
+./build/windows/x64/release/bench_param_sweep <net> <are|-> <k> <nn:0|1> <limitsizes> <ratios> <seeds>
+```
+
 ### Code Formatting
 
 ```bash
