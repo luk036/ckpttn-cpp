@@ -314,7 +314,14 @@ if(CKPTTN_BUILD_BENCHMARKS)
     target_link_libraries(${TARGET_NAME} PRIVATE nanobench CkPttn::CkPttn ${SPECIFIC_LIBS})
     target_enable_warnings(${TARGET_NAME})
     # Benchmarks reference testcases via ../../testcases/*, so run them from <build>/test.
-    add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
+    # Benches that require CLI arguments get a minimal smoke-test invocation.
+    set(BENCH_ARGS "")
+    if(ONE_BENCH_EXEC STREQUAL "MinhashProbe")
+      set(BENCH_ARGS ../../testcases/ibm01.net ../../testcases/ibm01.are 3)
+    elseif(ONE_BENCH_EXEC STREQUAL "ParamSweep")
+      set(BENCH_ARGS ../../testcases/ibm01.net ../../testcases/ibm01.are 2 0 10 1.05 0)
+    endif()
+    add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME} ${BENCH_ARGS})
     set_tests_properties(
       ${ONE_BENCH_EXEC} PROPERTIES WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test"
     )
