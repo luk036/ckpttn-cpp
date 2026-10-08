@@ -1,5 +1,14 @@
 <map id="ckpttn/moveinfo.hpp" name="ckpttn/moveinfo.hpp">
-<area shape="rect" id="Node000001" title="Move information structures for FM partitioning algorithm." alt="" coords="18,5,175,31"/>
-<area shape="rect" id="Node000002" href="$FMBiGainMgr_8hpp.html" title="Binary FM gain manager for 2&#45;way partitioning." alt="" coords="5,79,188,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,44,99,79,94,79,94,44"/>
+<area shape="rect" id="Node000001" title="Move information structures for FM partitioning algorithm." alt="" coords="205,5,362,31"/>
+<area shape="rect" id="Node000002" href="$FMBiGainCalc_8hpp.html" title="Binary FM gain calculator for 2&#45;way partitioning." alt="" coords="190,79,377,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="286,44,286,79,281,79,281,44"/>
+<area shape="rect" id="Node000003" href="$FMBiGainMgr_8hpp.html" title="Binary FM gain manager for 2&#45;way partitioning." alt="" coords="5,152,188,177"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="247,39,213,58,180,81,138,119,108,154,104,150,134,115,176,77,211,53,245,35"/>
+<area shape="rect" id="Node000005" href="$FMKWayGainCalc_8hpp.html" title="K&#45;way FM gain calculator." alt="" coords="411,79,620,104"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="334,32,479,76,477,81,333,37"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,111,128,154,126,149,240,106"/>
+<area shape="rect" id="Node000004" href="$MidLvlPartMgr_8hpp.html" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="213,152,399,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="294,117,305,151,300,153,289,118"/>
+<area shape="rect" id="Node000006" href="$FMKWayGainMgr_8hpp.html" title="K&#45;way FM gain manager." alt="" coords="423,152,629,177"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="522,117,527,151,522,152,516,118"/>
 </map>

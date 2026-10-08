@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.6</span>
    </div>
   </td>
  </tr>
@@ -110,6 +110,14 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">// node_t v;</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>};</div>
 </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="};">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structSparseDelta.html">   54</a></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Node&gt; <span class="keyword">struct </span><a class="code hl_struct" href="structSparseDelta.html">SparseDelta</a> {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="structSparseDelta.html#a2f812a51589aeb82f93ac6dd0806b992">   56</a></span>    Node <a class="code hl_variable" href="structSparseDelta.html#a2f812a51589aeb82f93ac6dd0806b992">w</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="structSparseDelta.html#ab6388ad5fb9c0acf6221989b70e8015c">   58</a></span>    std::uint8_t <a class="code hl_variable" href="structSparseDelta.html#ab6388ad5fb9c0acf6221989b70e8015c">part</a>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="structSparseDelta.html#a26a77121a4700a84da4ff33acd99cd0a">   60</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structSparseDelta.html#a26a77121a4700a84da4ff33acd99cd0a">delta</a>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+</div>
 <div class="ttc" id="astructMoveInfoV_html"><div class="ttname"><a href="structMoveInfoV.html">MoveInfoV</a></div><div class="ttdoc">Move information for a single vertex (without net reference)</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:37</div></div>
 <div class="ttc" id="astructMoveInfoV_html_a0b471bab9b34d69193066603f9837e79"><div class="ttname"><a href="structMoveInfoV.html#a0b471bab9b34d69193066603f9837e79">MoveInfoV::to_part</a></div><div class="ttdeci">std::uint8_t to_part</div><div class="ttdoc">The partition the vertex is moving to.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:43</div></div>
 <div class="ttc" id="astructMoveInfoV_html_ad26c0030fbbd91222328889d36f62008"><div class="ttname"><a href="structMoveInfoV.html#ad26c0030fbbd91222328889d36f62008">MoveInfoV::from_part</a></div><div class="ttdeci">std::uint8_t from_part</div><div class="ttdoc">The partition the vertex is moving from.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:41</div></div>
@@ -119,6 +127,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="astructMoveInfo_html_a6aaff2026ae6920e58e3c3e019519d77"><div class="ttname"><a href="structMoveInfo.html#a6aaff2026ae6920e58e3c3e019519d77">MoveInfo::net</a></div><div class="ttdeci">Node net</div><div class="ttdoc">The net being processed.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:20</div></div>
 <div class="ttc" id="astructMoveInfo_html_a72c6115733d2467f2d0f52fbd94613cc"><div class="ttname"><a href="structMoveInfo.html#a72c6115733d2467f2d0f52fbd94613cc">MoveInfo::v</a></div><div class="ttdeci">Node v</div><div class="ttdoc">The vertex being moved.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:22</div></div>
 <div class="ttc" id="astructMoveInfo_html_ac8ed36eb580d8c79250e057d2fdc1fd1"><div class="ttname"><a href="structMoveInfo.html#ac8ed36eb580d8c79250e057d2fdc1fd1">MoveInfo::from_part</a></div><div class="ttdeci">std::uint8_t from_part</div><div class="ttdoc">The partition the vertex is moving from.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:24</div></div>
+<div class="ttc" id="astructSparseDelta_html"><div class="ttname"><a href="structSparseDelta.html">SparseDelta</a></div><div class="ttdoc">One non-zero gain-key change produced by a general-net move.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:54</div></div>
+<div class="ttc" id="astructSparseDelta_html_a26a77121a4700a84da4ff33acd99cd0a"><div class="ttname"><a href="structSparseDelta.html#a26a77121a4700a84da4ff33acd99cd0a">SparseDelta::delta</a></div><div class="ttdeci">int delta</div><div class="ttdoc">The signed key change.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:60</div></div>
+<div class="ttc" id="astructSparseDelta_html_a2f812a51589aeb82f93ac6dd0806b992"><div class="ttname"><a href="structSparseDelta.html#a2f812a51589aeb82f93ac6dd0806b992">SparseDelta::w</a></div><div class="ttdeci">Node w</div><div class="ttdoc">The neighbouring vertex whose key changes.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:56</div></div>
+<div class="ttc" id="astructSparseDelta_html_ab6388ad5fb9c0acf6221989b70e8015c"><div class="ttname"><a href="structSparseDelta.html#ab6388ad5fb9c0acf6221989b70e8015c">SparseDelta::part</a></div><div class="ttdeci">std::uint8_t part</div><div class="ttdoc">The target partition whose gain bucket changes.</div><div class="ttdef"><b>Definition</b> moveinfo.hpp:58</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

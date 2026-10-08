@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.6</span>
    </div>
   </td>
  </tr>
@@ -97,50 +97,68 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// #include &quot;FMPartMgr.hpp&quot; // import FMPartMgr</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// #include &lt;netlistx/netlist.hpp&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// #include &lt;memory&gt;  // std::unique_ptr</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;cstdint&gt;</span>  <span class="comment">// for uint8_t</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;span&gt;</span>     <span class="comment">// for span</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">// #include &lt;py2cpp/range.hpp&gt;  // for range</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// #include &lt;ckpttn/FMConstrMgr.hpp&gt;   // import LegalCheck</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">// forward declare</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// template &lt;typename nodeview_t, typename nodemap_t&gt; struct Netlist;</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// using RngIter = decltype(py::range(1));</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">// using SimpleNetlist = Netlist&lt;RngIter, RngIter&gt;;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">// using node_t = typename SimpleNetlist::node_t;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">// extern auto create_contracted_subgraph(const SimpleNetlist&amp;, const</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">// py::set&lt;node_t&gt;&amp;)</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">//     -&gt; std::unique_ptr&lt;SimpleHierNetlist&gt;;</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &quot;<a class="code" href="LegalCheck_8hpp.html">LegalCheck.hpp</a>&quot;</span>  <span class="comment">// for LegalCheck</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="foldopen" id="foldopen00035" data-start="{" data-end="};">
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classMLPartMgr.html">   35</a></span><span class="keyword">class </span><a class="code hl_class" href="classMLPartMgr.html">MLPartMgr</a> {</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">double</span> bal_tol;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    std::uint8_t num_parts;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">size_t</span> limitsize{50U};</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#a13fb9a8f99c2f97668bbefb0655ed744">   46</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classMLPartMgr.html#a13fb9a8f99c2f97668bbefb0655ed744">total_cost</a>{};</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#a127f585031cc9a36e0e8b54ee300b942">   54</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classMLPartMgr.html#a127f585031cc9a36e0e8b54ee300b942">MLPartMgr</a>(<span class="keywordtype">double</span> bal_tol) : <a class="code hl_class" href="classMLPartMgr.html">MLPartMgr</a>(bal_tol, 2) {}</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#ab9280baff113f8ebbdcf38492f265e88">   63</a></span>    <a class="code hl_function" href="classMLPartMgr.html#ab9280baff113f8ebbdcf38492f265e88">MLPartMgr</a>(<span class="keywordtype">double</span> bal_tol, std::uint8_t num_parts) : bal_tol{bal_tol}, num_parts{num_parts} {}</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">   70</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">set_limitsize</a>(<span class="keywordtype">size_t</span> limit) { this-&gt;limitsize = limit; }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Gnl, <span class="keyword">typename</span> PartMgr&gt;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#afacfbc7cc77cac018ee2b20f56f0b2be">   82</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classMLPartMgr.html#afacfbc7cc77cac018ee2b20f56f0b2be">run_Partition</a>(<span class="keyword">const</span> Gnl&amp; hyprgraph, std::span&lt;std::uint8_t&gt; part) -&gt; <a class="code hl_enumeration" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a>;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>};</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;cassert&gt;</span>  <span class="comment">// for assert</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;cstdint&gt;</span>  <span class="comment">// for uint8_t</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;span&gt;</span>     <span class="comment">// for span</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// #include &lt;py2cpp/range.hpp&gt;  // for range</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">// #include &lt;ckpttn/FMConstrMgr.hpp&gt;   // import LegalCheck</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// forward declare</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// template &lt;typename nodeview_t, typename nodemap_t&gt; struct Netlist;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">// using RngIter = decltype(py::range(1));</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// using SimpleNetlist = Netlist&lt;RngIter, RngIter&gt;;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">// using node_t = typename SimpleNetlist::node_t;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">// extern auto create_contracted_subgraph(const SimpleNetlist&amp;, const</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// py::set&lt;node_t&gt;&amp;)</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">//     -&gt; std::unique_ptr&lt;SimpleHierNetlist&gt;;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &quot;<a class="code" href="LegalCheck_8hpp.html">LegalCheck.hpp</a>&quot;</span>  <span class="comment">// for LegalCheck</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classMLPartMgr.html">   36</a></span><span class="keyword">class </span><a class="code hl_class" href="classMLPartMgr.html">MLPartMgr</a> {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">double</span> bal_tol;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    std::uint8_t num_parts;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">size_t</span> limitsize{50U};</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">double</span> contraction_ratio{3.0 / 2.0};</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#a13fb9a8f99c2f97668bbefb0655ed744">   49</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classMLPartMgr.html#a13fb9a8f99c2f97668bbefb0655ed744">total_cost</a>{};</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#a127f585031cc9a36e0e8b54ee300b942">   57</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classMLPartMgr.html#a127f585031cc9a36e0e8b54ee300b942">MLPartMgr</a>(<span class="keywordtype">double</span> bal_tol) : <a class="code hl_class" href="classMLPartMgr.html">MLPartMgr</a>(bal_tol, 2) {}</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#ab9280baff113f8ebbdcf38492f265e88">   66</a></span>    <a class="code hl_function" href="classMLPartMgr.html#ab9280baff113f8ebbdcf38492f265e88">MLPartMgr</a>(<span class="keywordtype">double</span> bal_tol, std::uint8_t num_parts) : bal_tol{bal_tol}, num_parts{num_parts} {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">// k-way partitioning benefits from more aggressive contraction (measured</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// 27-41% lower cut on IBM benchmarks at the cost of ~2-3x runtime).</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">if</span> (num_parts &gt; 2) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            this-&gt;contraction_ratio = 21.0 / 20.0;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    }</div>
+</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">   79</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">set_limitsize</a>(<span class="keywordtype">size_t</span> limit) { this-&gt;limitsize = limit; }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="foldopen" id="foldopen00092" data-start="{" data-end="}">
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#ac55711a4653dcdcc68d496630a86244d">   92</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMLPartMgr.html#ac55711a4653dcdcc68d496630a86244d">set_contraction_ratio</a>(<span class="keywordtype">double</span> ratio) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        assert(ratio &gt;= 1.0);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        this-&gt;contraction_ratio = ratio;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    }</div>
+</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Gnl, <span class="keyword">typename</span> PartMgr&gt;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classMLPartMgr.html#afacfbc7cc77cac018ee2b20f56f0b2be">  107</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classMLPartMgr.html#afacfbc7cc77cac018ee2b20f56f0b2be">run_Partition</a>(<span class="keyword">const</span> Gnl&amp; hyprgraph, std::span&lt;std::uint8_t&gt; part) -&gt; <a class="code hl_enumeration" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>};</div>
 </div>
 <div class="ttc" id="aLegalCheck_8hpp_html"><div class="ttname"><a href="LegalCheck_8hpp.html">LegalCheck.hpp</a></div><div class="ttdoc">Result of a partition legality check.</div></div>
 <div class="ttc" id="aLegalCheck_8hpp_html_a4add05ea0ff560e61ee764a606768d80"><div class="ttname"><a href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></div><div class="ttdeci">LegalCheck</div><div class="ttdoc">Check if the move of v can be satisfied, get better, or not satisfied.</div><div class="ttdef"><b>Definition</b> LegalCheck.hpp:11</div></div>
-<div class="ttc" id="aclassMLPartMgr_html"><div class="ttname"><a href="classMLPartMgr.html">MLPartMgr</a></div><div class="ttdoc">Multilevel Partition Manager.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:35</div></div>
-<div class="ttc" id="aclassMLPartMgr_html_a127f585031cc9a36e0e8b54ee300b942"><div class="ttname"><a href="classMLPartMgr.html#a127f585031cc9a36e0e8b54ee300b942">MLPartMgr::MLPartMgr</a></div><div class="ttdeci">MLPartMgr(double bal_tol)</div><div class="ttdoc">Constructs a new MLPartMgr object with the given balance tolerance and a default number of partitions...</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:54</div></div>
-<div class="ttc" id="aclassMLPartMgr_html_a13fb9a8f99c2f97668bbefb0655ed744"><div class="ttname"><a href="classMLPartMgr.html#a13fb9a8f99c2f97668bbefb0655ed744">MLPartMgr::total_cost</a></div><div class="ttdeci">int total_cost</div><div class="ttdoc">Total cost of the current partitioning solution.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:46</div></div>
-<div class="ttc" id="aclassMLPartMgr_html_ab9280baff113f8ebbdcf38492f265e88"><div class="ttname"><a href="classMLPartMgr.html#ab9280baff113f8ebbdcf38492f265e88">MLPartMgr::MLPartMgr</a></div><div class="ttdeci">MLPartMgr(double bal_tol, std::uint8_t num_parts)</div><div class="ttdoc">Constructs a new MLPartMgr object with the given balance tolerance and number of partitions.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:63</div></div>
-<div class="ttc" id="aclassMLPartMgr_html_ac3ce2c4d7d158795d9fd565260ab6571"><div class="ttname"><a href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">MLPartMgr::set_limitsize</a></div><div class="ttdeci">void set_limitsize(size_t limit)</div><div class="ttdoc">Sets the limit size for the partitioning.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:70</div></div>
+<div class="ttc" id="aclassMLPartMgr_html"><div class="ttname"><a href="classMLPartMgr.html">MLPartMgr</a></div><div class="ttdoc">Multilevel Partition Manager.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:36</div></div>
+<div class="ttc" id="aclassMLPartMgr_html_a127f585031cc9a36e0e8b54ee300b942"><div class="ttname"><a href="classMLPartMgr.html#a127f585031cc9a36e0e8b54ee300b942">MLPartMgr::MLPartMgr</a></div><div class="ttdeci">MLPartMgr(double bal_tol)</div><div class="ttdoc">Constructs a new MLPartMgr object with the given balance tolerance and a default number of partitions...</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:57</div></div>
+<div class="ttc" id="aclassMLPartMgr_html_a13fb9a8f99c2f97668bbefb0655ed744"><div class="ttname"><a href="classMLPartMgr.html#a13fb9a8f99c2f97668bbefb0655ed744">MLPartMgr::total_cost</a></div><div class="ttdeci">int total_cost</div><div class="ttdoc">Total cost of the current partitioning solution.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:49</div></div>
+<div class="ttc" id="aclassMLPartMgr_html_ab9280baff113f8ebbdcf38492f265e88"><div class="ttname"><a href="classMLPartMgr.html#ab9280baff113f8ebbdcf38492f265e88">MLPartMgr::MLPartMgr</a></div><div class="ttdeci">MLPartMgr(double bal_tol, std::uint8_t num_parts)</div><div class="ttdoc">Constructs a new MLPartMgr object with the given balance tolerance and number of partitions.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:66</div></div>
+<div class="ttc" id="aclassMLPartMgr_html_ac3ce2c4d7d158795d9fd565260ab6571"><div class="ttname"><a href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">MLPartMgr::set_limitsize</a></div><div class="ttdeci">void set_limitsize(size_t limit)</div><div class="ttdoc">Sets the limit size for the partitioning.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:79</div></div>
+<div class="ttc" id="aclassMLPartMgr_html_ac55711a4653dcdcc68d496630a86244d"><div class="ttname"><a href="classMLPartMgr.html#ac55711a4653dcdcc68d496630a86244d">MLPartMgr::set_contraction_ratio</a></div><div class="ttdeci">void set_contraction_ratio(double ratio)</div><div class="ttdoc">Sets the minimum required module-count reduction for a contraction.</div><div class="ttdef"><b>Definition</b> MLPartMgr.hpp:92</div></div>
 <div class="ttc" id="aclassMLPartMgr_html_afacfbc7cc77cac018ee2b20f56f0b2be"><div class="ttname"><a href="classMLPartMgr.html#afacfbc7cc77cac018ee2b20f56f0b2be">MLPartMgr::run_Partition</a></div><div class="ttdeci">auto run_Partition(const Gnl &amp;hyprgraph, std::span&lt; std::uint8_t &gt; part) -&gt; LegalCheck</div><div class="ttdoc">Runs the Fiduccia-Mattheyses (FM) partitioning algorithm on the given hypergraph.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

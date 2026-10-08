@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.5</span>
+   <div id="projectname">CkPttn<span id="projectnumber">&#160;1.2.6</span>
    </div>
   </td>
  </tr>
@@ -100,6 +100,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac3ce2c4d7d158795d9fd565260ab6571" id="r_ac3ce2c4d7d158795d9fd565260ab6571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMLPartMgr.html#ac3ce2c4d7d158795d9fd565260ab6571">set_limitsize</a> (size_t limit)</td></tr>
 <tr class="memdesc:ac3ce2c4d7d158795d9fd565260ab6571"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the limit size for the partitioning.  <br /></td></tr>
 <tr class="separator:ac3ce2c4d7d158795d9fd565260ab6571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac55711a4653dcdcc68d496630a86244d" id="r_ac55711a4653dcdcc68d496630a86244d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMLPartMgr.html#ac55711a4653dcdcc68d496630a86244d">set_contraction_ratio</a> (double ratio)</td></tr>
+<tr class="memdesc:ac55711a4653dcdcc68d496630a86244d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the minimum required module-count reduction for a contraction.  <br /></td></tr>
+<tr class="separator:ac55711a4653dcdcc68d496630a86244d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afacfbc7cc77cac018ee2b20f56f0b2be" id="r_afacfbc7cc77cac018ee2b20f56f0b2be"><td class="memTemplParams" colspan="2">template&lt;typename Gnl , typename PartMgr &gt; </td></tr>
 <tr class="memitem:afacfbc7cc77cac018ee2b20f56f0b2be"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMLPartMgr.html#afacfbc7cc77cac018ee2b20f56f0b2be">run_Partition</a> (const Gnl &amp;hyprgraph, std::span&lt; std::uint8_t &gt; part) -&gt; <a class="el" href="LegalCheck_8hpp.html#a4add05ea0ff560e61ee764a606768d80">LegalCheck</a></td></tr>
 <tr class="memdesc:afacfbc7cc77cac018ee2b20f56f0b2be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the Fiduccia-Mattheyses (FM) partitioning algorithm on the given hypergraph.  <br /></td></tr>
@@ -238,6 +241,41 @@ template&lt;typename Gnl , typename PartMgr &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>LegalCheck The legality check result of the partitioning. </dd></dl>
+
+</div>
+</div>
+<a id="ac55711a4653dcdcc68d496630a86244d" name="ac55711a4653dcdcc68d496630a86244d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac55711a4653dcdcc68d496630a86244d">&#9670;&#160;</a></span>set_contraction_ratio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MLPartMgr::set_contraction_ratio </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ratio</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the minimum required module-count reduction for a contraction. </p>
+<p>A contraction is only accepted when the contracted hypergraph has fewer than <code>hyprgraph.number_of_modules() / ratio</code> modules, i.e. a reduction of at least <code>ratio</code> times. The default is 1.5 for binary partitioning and 1.05 for k-way (<code>num_parts &gt; 2</code>).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ratio</td><td>The required reduction factor (must be at least 1; a value of 1 accepts any contraction that strictly reduces the module count). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

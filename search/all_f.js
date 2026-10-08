@@ -5,7 +5,7 @@ var searchData=
   ['readme_2emd_2',['README.md',['../README_8md.html',1,'']]],
   ['readwrite_2ehpp_3',['readwrite.hpp',['../readwrite_8hpp.html',1,'']]],
   ['related_20projects_20and_20alternatives_4',['Related projects and alternatives',['../index.html#autotoc_md11',1,'']]],
-  ['ret_5finfo_5',['ret_info',['../classFMKWayGainCalc.html#a70296ae54fa28c75006bc5809813a60f',1,'FMKWayGainCalc']]],
+  ['ret_5finfo_5',['ret_info',['../classFMKWayGainCalc.html#a18bd64ce94ce455f3e4c19310183294a',1,'FMKWayGainCalc']]],
   ['rev_5finv_6',['rev_inv',['../classMidVertex.html#a3545cd5efa935c8c94dd5895df2948b7',1,'MidVertex']]],
   ['rgr_7',['rgr',['../structtransrangers_1_1all__copy.html#ac171b950418dce8df61a331488d7805a',1,'transrangers::all_copy::rgr'],['../structtransrangers_1_1skip__both__copy.html#a2cb9a14358f9cc28384ee42ef52ddfed',1,'transrangers::skip_both_copy::rgr'],['../structtransrangers_1_1skip__last__copy.html#a3abc59196620113f86c55619223eeba5',1,'transrangers::skip_last_copy::rgr'],['../structtransrangers_1_1skip__first__copy.html#a82daa38cea0932421b22fd3fbbcd3d1a',1,'transrangers::skip_first_copy::rgr'],['../classtransrangers_1_1detail_1_1view_1_1iterator__base.html#a9311b27f739809e3e99072f7bd3b1a72',1,'transrangers::detail::view::iterator_base::rgr']]],
   ['rng_8',['rng',['../structtransrangers_1_1all__copy.html#a370d08cfbfe19b38199031a3e8ffdd97',1,'transrangers::all_copy::rng'],['../structtransrangers_1_1skip__first__copy.html#a95ad63518a4b595737ffd53b059d33f7',1,'transrangers::skip_first_copy::rng'],['../structtransrangers_1_1skip__last__copy.html#aebacc4784f9f19f5d7d9f1b8bc1c810b',1,'transrangers::skip_last_copy::rng'],['../structtransrangers_1_1skip__both__copy.html#a8625f405dd636db1a3381d411863de9c',1,'transrangers::skip_both_copy::rng']]],
