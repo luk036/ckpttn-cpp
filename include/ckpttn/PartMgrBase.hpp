@@ -67,6 +67,7 @@
 template <typename Gnl, typename GainMgr, typename ConstrMgr>  //
 class PartMgrBase {
   public:
+    virtual ~PartMgrBase() = default;
     using GainCalc_ = typename GainMgr::GainCalc_;
     using GainMgr_ = GainMgr;
     using ConstrMgr_ = ConstrMgr;

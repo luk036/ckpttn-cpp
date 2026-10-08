@@ -13,6 +13,7 @@
 #include <vector>              // for vector
 
 #include "FMPmrConfig.hpp"
+#include "moveinfo.hpp"  // for SparseDelta
 // #include "moveinfo.hpp"  // for MoveInfo
 
 // forward declare
@@ -45,6 +46,10 @@ template <typename Gnl> class FMBiGainCalc {
     std::vector<int> init_gain_list;
     /// @brief Reusable per-move delta-gain buffer (avoids a heap allocation per call)
     std::vector<int> delta_gain_buf;
+    /// @brief Pin count of each net in each partition, flat [net_id * 2 + part]
+    std::vector<std::uint16_t> net_pin_count;
+    /// @brief Reusable sparse delta list for the general-net kernel
+    std::vector<SparseDelta<node_t>> sparse_buf;
     /// @brief Total cost of the current partitioning
     int total_cost{0};
     /// @brief Stack buffer size for PMR memory resource (tunable per workload)
@@ -74,6 +79,7 @@ template <typename Gnl> class FMBiGainCalc {
         : hyprgraph{hyprgraph},
           vertex_list(hyprgraph.number_of_modules()),
           init_gain_list(hyprgraph.number_of_modules(), 0),
+          net_pin_count((hyprgraph.number_of_modules() + hyprgraph.number_of_nets()) * 2, 0),
           rsrc(stack_buf, sizeof stack_buf),
           idx_vec(&rsrc) {
         for (const auto& v : this->hyprgraph) {
@@ -160,7 +166,8 @@ template <typename Gnl> class FMBiGainCalc {
      * @return A view of the updated gain values for the net (backed by a reusable buffer).
      */
     auto update_move_general_net(std::span<const std::uint8_t> part,
-                                 const MoveInfo<node_t>& move_info) -> std::span<const int>;
+                                 const MoveInfo<node_t>& move_info)
+        -> std::span<const SparseDelta<node_t>>;
 
   private:
     /**

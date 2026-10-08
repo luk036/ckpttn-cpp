@@ -16,10 +16,13 @@
 
 using node_t = SimpleNetlist::node_t;
 
-static constexpr uint32_t LOW_PIN_NET_THRESHOLD = 5;
 static constexpr uint32_t MINHASH_SIG_SIZE = 64;
 static constexpr double MINHASH_SIMILARITY = 0.8;
 static constexpr uint32_t MINHASH_MAX_DEGREE = 200;
+// Exact set comparison is faster than the MinHash pre-filter on all benchmarked
+// graphs (ibm01/02/03/18), so use it directly up to the degree cap by default.
+// The pre-filter still engages if LOW_PIN_NET_THRESHOLD is lowered.
+static constexpr uint32_t LOW_PIN_NET_THRESHOLD = MINHASH_MAX_DEGREE;
 
 using minhash_sig_t = std::array<uint64_t, MINHASH_SIG_SIZE>;
 

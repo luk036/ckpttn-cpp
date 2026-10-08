@@ -78,13 +78,13 @@ template <typename Gnl> void MidLvlPartMgr<Gnl>::optimize(std::span<std::uint8_t
                 gc.init_idx_vec(v, net);
                 if (degree == 3) {
                     const auto deltas = gc.update_move_3pin_net(current_part, move_info);
-                    for (size_t i = 0; i < gc.idx_vec.size(); ++i) {
+                    for (size_t i = 0; i < deltas.size(); ++i) {
                         current_gain[gc.idx_vec[i]] += deltas[i];
                     }
                 } else {
                     const auto deltas = gc.update_move_general_net(current_part, move_info);
-                    for (size_t i = 0; i < gc.idx_vec.size(); ++i) {
-                        current_gain[gc.idx_vec[i]] += deltas[i];
+                    for (const auto& d : deltas) {
+                        current_gain[d.w] += d.delta;
                     }
                 }
             }

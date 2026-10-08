@@ -43,3 +43,19 @@ template <typename Node> struct MoveInfoV {
     std::uint8_t to_part;
     // node_t v;
 };
+
+/**
+ * @brief One non-zero gain-key change produced by a general-net move.
+ *
+ * The general-net kernel emits only the (vertex, target partition, delta)
+ * triples that actually change, so the manager applies them directly instead
+ * of scanning a dense degree x num_parts matrix.
+ */
+template <typename Node> struct SparseDelta {
+    /// @brief The neighbouring vertex whose key changes
+    Node w;
+    /// @brief The target partition whose gain bucket changes
+    std::uint8_t part;
+    /// @brief The signed key change
+    int delta;
+};

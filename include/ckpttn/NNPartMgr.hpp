@@ -34,6 +34,7 @@ class NNPartMgr : public PartMgrBase<Gnl, GainMgr, ConstrMgr> {
     using Base = PartMgrBase<Gnl, GainMgr, ConstrMgr>;
 
   public:
+    virtual ~NNPartMgr() = default;
     /**
      * @brief Constructs a new NNPartMgr object
      *

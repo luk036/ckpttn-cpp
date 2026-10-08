@@ -14,6 +14,7 @@
 #include <vector>              // for vector
 
 #include "FMPmrConfig.hpp"  // for FMPmr::monotonic_buffer_resource, FMPmr::vector
+#include "moveinfo.hpp"     // for SparseDelta
 
 // forward declare
 template <typename Gnl> class FMKWayGainMgr;
@@ -42,6 +43,8 @@ template <typename Gnl> class FMKWayGainCalc {
     std::uint8_t num_parts;
     /// @brief Round-robin iterator for excluding partitions
     fun::Robin<std::uint8_t> rr;
+    /// @brief Pin count of each net in each partition, flat [net_id * num_parts + part]
+    std::vector<std::uint16_t> net_pin_count;
     // size_t num_modules;
     /// @brief Total cost of the current partitioning
     int total_cost{0};
@@ -55,10 +58,14 @@ template <typename Gnl> class FMKWayGainCalc {
     std::vector<std::vector<Item>> vertex_list{};
     /// @brief Initial gain lists for each partition
     std::vector<std::vector<int>> init_gain_list;
-    /// @brief Reusable per-move delta-gain buffer (avoids heap allocations per call)
-    std::vector<std::vector<int>> delta_gain_buf;
+    /// @brief Reusable per-move delta-gain buffer, flat: degree rows of num_parts ints
+    std::vector<int> delta_flat;
+    /// @brief Row views into delta_flat, one per neighbour
+    std::vector<std::span<const int>> delta_rows;
     /// @brief Reusable per-partition pin counter (avoids a heap allocation per call)
-    std::vector<std::uint8_t> num_buf;
+    std::vector<std::uint16_t> num_buf;
+    /// @brief Reusable sparse delta list for the general-net kernel
+    std::vector<SparseDelta<node_t>> sparse_buf;
     /// @brief Delta gain vector for vertices
     FMPmr::vector<int> delta_gain_v;
 
@@ -80,6 +87,8 @@ template <typename Gnl> class FMKWayGainCalc {
         : hyprgraph{hyprgraph},
           num_parts{num_parts},
           rr{num_parts},
+          net_pin_count((hyprgraph.number_of_modules() + hyprgraph.number_of_nets()) * num_parts,
+                        0),
           rsrc(stack_buf, sizeof stack_buf),
           init_gain_list(num_parts, std::vector<int>(hyprgraph.number_of_modules(), 0)),
           delta_gain_v(num_parts, 0, &rsrc),
@@ -155,7 +164,7 @@ template <typename Gnl> class FMKWayGainCalc {
      */
     void init_idx_vec(const node_t& v, const node_t& net);
 
-    using ret_info = std::span<const std::vector<int>>;
+    using ret_info = std::span<const std::span<const int>>;
 
     /**
      * @brief Updates the gain for a 3-pin net after a move.
@@ -184,7 +193,8 @@ template <typename Gnl> class FMKWayGainCalc {
      */
     /** @overload */
     auto update_move_general_net(std::span<const std::uint8_t> part,
-                                 const MoveInfo<node_t>& move_info) -> ret_info;
+                                 const MoveInfo<node_t>& move_info)
+        -> std::span<const SparseDelta<node_t>>;
 
   private:
     /**

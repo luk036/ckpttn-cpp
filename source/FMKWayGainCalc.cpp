@@ -30,8 +30,8 @@ using namespace transrangers;
  * @param[in] net The net to initialize gains for
  * @param[in] part The current partition assignment
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net,
-                                                             std::span<const uint8_t> part) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::_init_gain(const Gnl::node_t& net, std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -65,7 +65,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
  * @param[in] part The current partition assignment
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
+void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const Gnl::node_t& net,
                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -98,7 +98,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
  * @param[in] part The current partition assignment
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
+void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const Gnl::node_t& net,
                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -165,7 +165,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
  * @param[in] part The current partition assignment
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
+void FMKWayGainCalc<Gnl>::_init_gain_general_net(const Gnl::node_t& net,
                                                  std::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
@@ -181,6 +181,11 @@ void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net
         num[part[*wc]] += 1;
         return true;
     });
+
+    const auto cnt_base = static_cast<std::size_t>(net) * this->num_parts;
+    for (auto p = 0U; p < this->num_parts; ++p) {
+        this->net_pin_count[cnt_base + p] = num[p];
+    }
 
     const uint32_t weight = this->hyprgraph.get_net_weight(net);
     // for (const auto &c : num) {
@@ -319,8 +324,8 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] v The vertex to exclude from the index vector
  * @param[in] net The net whose other vertices are collected
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
-                                                               const typename Gnl::node_t& net) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::init_idx_vec(const Gnl::node_t& v, const Gnl::node_t& net) {
     this->idx_vec.clear();
     auto degree = this->hyprgraph.gr.degree(net);
     this->idx_vec.reserve(degree - 1);
@@ -348,72 +353,65 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
                                                const MoveInfo<typename Gnl::node_t>& move_info)
     -> FMKWayGainCalc<Gnl>::ret_info {
     const auto degree = this->idx_vec.size();
-    auto& delta_gain = this->delta_gain_buf;
-    if (delta_gain.size() < degree) {
-        delta_gain.resize(degree);
+    const auto needed = degree * this->num_parts;
+    auto& delta = this->delta_flat;
+    if (delta.size() < needed) {
+        delta.resize(needed);
+    }
+    std::fill(delta.begin(), delta.begin() + needed, 0);
+    auto& rows = this->delta_rows;
+    if (rows.size() < degree) {
+        rows.resize(degree);
     }
     for (auto i = 0U; i < degree; ++i) {
-        delta_gain[i].assign(this->num_parts, 0);
+        rows[i] = std::span<const int>(delta.data() + i * this->num_parts, this->num_parts);
     }
+
     auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
     const auto part_w = part[this->idx_vec[0]];
     const auto part_u = part[this->idx_vec[1]];
     auto l = move_info.from_part;
     auto u = move_info.to_part;
-    auto rngv = all(this->delta_gain_v);
 
     if (part_w == part_u) {
-        // #pragma unroll
         for (auto idx = 0; idx != 2; ++idx) {
             if (part_w != l) {
-                delta_gain[0][l] -= gain;
-                delta_gain[1][l] -= gain;
+                delta[l] -= gain;
+                delta[this->num_parts + l] -= gain;
                 if (part_w == u) {
-                    // for (auto &dgv : this->delta_gain_v) {
-                    //   dgv -= weight;
-                    // }
-                    rngv([&gain](const auto& dgcv) {
-                        *dgcv -= gain;
-                        return true;
-                    });
+                    for (auto& dgv : this->delta_gain_v) {
+                        dgv -= gain;
+                    }
                 }
             }
             gain = -gain;
             swap(l, u);
         }
-        return std::span<const std::vector<int>>{delta_gain.data(), degree};
+        return ret_info{rows.data(), degree};
     }
 
-    auto rng0 = all(delta_gain[0]);
-    auto rng1 = all(delta_gain[1]);
-
-    // #pragma unroll
     for (auto i = 0; i != 2; ++i) {
         if (part_w == l) {
-            rng0([&gain](const auto& dgc0) {
-                *dgc0 += gain;
-                return true;
-            });
+            for (auto p = 0U; p < this->num_parts; ++p) {
+                delta[p] += gain;
+            }
         } else if (part_u == l) {
-            rng1([&gain](const auto& dgc1) {
-                *dgc1 += gain;
-                return true;
-            });
+            for (auto p = 0U; p < this->num_parts; ++p) {
+                delta[this->num_parts + p] += gain;
+            }
         } else {
-            delta_gain[0][l] -= gain;
-            delta_gain[1][l] -= gain;
+            delta[l] -= gain;
+            delta[this->num_parts + l] -= gain;
             if (part_w == u || part_u == u) {
-                rngv([&gain](const auto& dgcv) {
-                    *dgcv -= gain;
-                    return true;
-                });
+                for (auto& dgv : this->delta_gain_v) {
+                    dgv -= gain;
+                }
             }
         }
         gain = -gain;
         swap(l, u);
     }
-    return std::span<const std::vector<int>>{delta_gain.data(), degree};
-    // return this->update_move_general_net(part, move_info);
+    return ret_info{rows.data(), degree};
 }
 
 /**
@@ -431,75 +429,103 @@ auto FMKWayGainCalc<Gnl>::update_move_3pin_net(std::span<const uint8_t> part,
 template <typename Gnl>
 auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
                                                   const MoveInfo<typename Gnl::node_t>& move_info)
-    -> FMKWayGainCalc<Gnl>::ret_info {
-    // const auto& [net, v, from_part, to_part] = move_info;
-    // uint8_t StackBufLocal[FM_MAX_NUM_PARTITIONS];
-    // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
-    //                                            sizeof StackBufLocal);
-    // auto num = FMPmr::vector<uint8_t>(this->num_parts, 0, &rsrcLocal);
-    auto& num = this->num_buf;
-    num.assign(this->num_parts, 0);
-    auto rng1 = all(this->idx_vec);
-    rng1([&](const auto& wc) {
-        num[part[*wc]] += 1;
-        return true;
-    });
+    -> std::span<const SparseDelta<typename Gnl::node_t>> {
+    const auto cnt_base = static_cast<std::size_t>(move_info.net) * this->num_parts;
+    const auto cnt_from = this->net_pin_count[cnt_base + move_info.from_part];
+    const auto cnt_to = this->net_pin_count[cnt_base + move_info.to_part];
+    const auto num_from = static_cast<int>(cnt_from) - 1;
+    const auto num_to = static_cast<int>(cnt_to);
+    this->net_pin_count[cnt_base + move_info.from_part] = static_cast<std::uint16_t>(cnt_from - 1);
+    this->net_pin_count[cnt_base + move_info.to_part] = static_cast<std::uint16_t>(cnt_to + 1);
 
-    const auto degree = idx_vec.size();
-    auto& delta_gain = this->delta_gain_buf;
-    if (delta_gain.size() < degree) {
-        delta_gain.resize(degree);
+    auto& sparse = this->sparse_buf;
+    sparse.clear();
+    if (num_from >= 2 && num_to >= 2) {
+        return {sparse.data(), sparse.size()};
     }
-    for (auto i = 0U; i < degree; ++i) {
-        delta_gain[i].assign(this->num_parts, 0);
-    }
-    auto gain = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
 
-    auto l = move_info.from_part;
-    auto u = move_info.to_part;
+    this->init_idx_vec(move_info.v, move_info.net);
+    const auto degree = this->idx_vec.size();
+    const auto weight = static_cast<int>(this->hyprgraph.get_net_weight(move_info.net));
+    const auto gain_from = weight;
+    const auto gain_to = -weight;
+    const auto l = move_info.from_part;
+    const auto u = move_info.to_part;
 
-    auto rng4 = all(this->delta_gain_v);
-
-    // #pragma unroll
-    for (auto idx = 0; idx != 2; ++idx) {
-        if (num[l] == 0) {
-            for (auto i = 0U; i < degree; ++i) {
-                delta_gain[i][l] -= gain;
+    auto uniq_from = degree;
+    auto uniq_to = degree;
+    if (num_from == 1) {
+        for (std::size_t i = 0; i < degree; ++i) {
+            if (part[this->idx_vec[i]] == l) {
+                uniq_from = i;
+                break;
             }
-
-            if (num[u] > 0) {
-                rng4([&gain](const auto& dgvc) {
-                    *dgvc -= gain;
-                    return true;
-                });
-            }
-        } else if (num[l] == 1) {
-            auto it1 = this->idx_vec.begin();
-            auto it2 = delta_gain.begin();
-            for (; part[*it1] != l; ++it1, ++it2);
-            auto rng = all(*it2);
-            rng([&gain](const auto& dgc) {
-                *dgc += gain;
-                return true;
-            });
-
-            // rng3([&gain, &l, &part](const auto &zc) {
-            //     auto part_w = part[std::get<0>(*zc)];
-            //     if (part_w == l) {
-            //         auto rng = all(std::get<1>(*zc));
-            //         rng([&gain](const auto &dgc) {
-            //             *dgc += gain;
-            //             return true;
-            //         });
-            //         return false;
-            //     }
-            //     return true;
-            // });
         }
-        gain = -gain;
-        swap(l, u);
-    };
-    return std::span<const std::vector<int>>{delta_gain.data(), degree};
+    }
+    if (num_to == 1) {
+        for (std::size_t i = 0; i < degree; ++i) {
+            if (part[this->idx_vec[i]] == u) {
+                uniq_to = i;
+                break;
+            }
+        }
+    }
+
+    if (num_from == 0 && num_to > 0) {
+        for (auto& dgv : this->delta_gain_v) {
+            dgv -= gain_from;
+        }
+    }
+    if (num_to == 0 && num_from > 0) {
+        for (auto& dgv : this->delta_gain_v) {
+            dgv -= gain_to;
+        }
+    }
+
+    for (std::size_t i = 0; i < degree; ++i) {
+        const auto w = this->idx_vec[i];
+        const auto pw = part[w];
+        if (i == uniq_from || i == uniq_to) {
+            const auto base_uniq
+                = ((i == uniq_from) ? gain_from : 0) + ((i == uniq_to) ? gain_to : 0);
+            for (const auto& p : this->rr.exclude(pw)) {
+                auto delta = base_uniq;
+                if (p == l && num_from == 0) {
+                    delta -= gain_from;
+                }
+                if (p == u && num_to == 0) {
+                    delta -= gain_to;
+                }
+                if (delta != 0) {
+                    sparse.push_back(SparseDelta<typename Gnl::node_t>{w, p, delta});
+                }
+            }
+            continue;
+        }
+        const auto d_l = (num_from == 0) ? -gain_from : 0;
+        const auto d_u = (num_to == 0) ? -gain_to : 0;
+        if (d_l == 0 && d_u == 0) {
+            continue;
+        }
+        const auto rel_l = (static_cast<unsigned>(l) + this->num_parts - pw) % this->num_parts;
+        const auto rel_u = (static_cast<unsigned>(u) + this->num_parts - pw) % this->num_parts;
+        if (rel_l < rel_u) {
+            if (rel_l != 0 && d_l != 0) {
+                sparse.push_back(SparseDelta<typename Gnl::node_t>{w, l, d_l});
+            }
+            if (rel_u != 0 && d_u != 0) {
+                sparse.push_back(SparseDelta<typename Gnl::node_t>{w, u, d_u});
+            }
+        } else {
+            if (rel_u != 0 && d_u != 0) {
+                sparse.push_back(SparseDelta<typename Gnl::node_t>{w, u, d_u});
+            }
+            if (rel_l != 0 && d_l != 0) {
+                sparse.push_back(SparseDelta<typename Gnl::node_t>{w, l, d_l});
+            }
+        }
+    }
+    return {sparse.data(), sparse.size()};
 }
 
 // instantiation

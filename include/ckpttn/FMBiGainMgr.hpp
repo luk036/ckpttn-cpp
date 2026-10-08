@@ -66,6 +66,14 @@ template <typename Gnl> class FMBiGainMgr
         this->gain_bucket[1 - part_w].modify_key(item, key);
     }
 
+    auto modify_key_one(const node_t& w, std::uint8_t p, int delta) -> void {
+        auto& item = this->gain_calc.vertex_list[w];
+        if (item.is_locked()) {
+            return;
+        }
+        this->gain_bucket[p].modify_key(item, delta);
+    }
+
     /**
      * @brief Updates the move information for the given vertex and gain.
      *

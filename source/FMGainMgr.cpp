@@ -157,7 +157,6 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
         const auto move_info
             = MoveInfo<typename Gnl::node_t>{net, v, move_info_v.from_part, move_info_v.to_part};
         if (!this->gain_calc.special_handle_2pin_nets) {
-            this->gain_calc.init_idx_vec(v, net);
             this->_update_move_general_net(part, move_info);
             continue;
         }
@@ -165,8 +164,8 @@ void FMGainMgr<Gnl, GainCalc, Derived>::update_move(
             this->_update_move_2pin_net(part, move_info);
             continue;
         }
-        this->gain_calc.init_idx_vec(v, net);
         if (degree == 3) {
+            this->gain_calc.init_idx_vec(v, net);
             this->_update_move_3pin_net(part, move_info);
         } else {
             this->_update_move_general_net(part, move_info);
@@ -243,18 +242,10 @@ void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_3pin_net(
 template <typename Gnl, typename GainCalc, class Derived>
 void FMGainMgr<Gnl, GainCalc, Derived>::_update_move_general_net(
     std::span<const uint8_t> part, const MoveInfo<typename Gnl::node_t>& move_info) {
-    const auto delta_gain = this->gain_calc.update_move_general_net(part, move_info);
-
-    auto dGw_it = delta_gain.begin();
-    for (const auto& w : this->gain_calc.idx_vec) {
-        if constexpr (std::is_same_v<std::decay_t<decltype(*dGw_it)>, int>) {
-            if (*dGw_it != 0) {
-                self.modify_key(w, part[w], *dGw_it);
-            }
-        } else {
-            self.modify_key(w, part[w], *dGw_it);
-        }
-        ++dGw_it;
+    (void)part;
+    const auto deltas = this->gain_calc.update_move_general_net(part, move_info);
+    for (const auto& d : deltas) {
+        self.modify_key_one(d.w, d.part, d.delta);
     }
 }
 

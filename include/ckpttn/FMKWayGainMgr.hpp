@@ -69,6 +69,14 @@ template <typename Gnl> class FMKWayGainMgr
         }
     }
 
+    auto modify_key_one(const node_t& w, std::uint8_t p, int delta) -> void {
+        auto& item = this->gain_calc.vertex_list[p][w];
+        if (item.is_locked()) {
+            return;
+        }
+        this->gain_bucket[p].modify_key(item, delta);
+    }
+
     /**
      * @brief Updates the move information for a vertex.
      *
