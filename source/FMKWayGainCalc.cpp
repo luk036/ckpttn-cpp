@@ -30,8 +30,8 @@ using namespace transrangers;
  * @param[in] net The net to initialize gains for
  * @param[in] part The current partition assignment
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl::node_t& net,
-                                                             std::span<const uint8_t> part) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::_init_gain(const Gnl::node_t& net, std::span<const uint8_t> part) {
     const auto degree = this->hyprgraph.gr.degree(net);
     if (degree < 2 || degree > FM_MAX_DEGREE)  // [[unlikely]]
     {
@@ -65,7 +65,7 @@ template <typename Gnl> void FMKWayGainCalc<Gnl>::_init_gain(const typename Gnl:
  * @param[in] part The current partition assignment
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
+void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const Gnl::node_t& net,
                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -98,7 +98,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_2pin_net(const typename Gnl::node_t& net,
  * @param[in] part The current partition assignment
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
+void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const Gnl::node_t& net,
                                               std::span<const uint8_t> part) {
     auto net_cur = this->hyprgraph.gr[net].begin();
     const auto node_w = *net_cur;
@@ -165,7 +165,7 @@ void FMKWayGainCalc<Gnl>::_init_gain_3pin_net(const typename Gnl::node_t& net,
  * @param[in] part The current partition assignment
  */
 template <typename Gnl>
-void FMKWayGainCalc<Gnl>::_init_gain_general_net(const typename Gnl::node_t& net,
+void FMKWayGainCalc<Gnl>::_init_gain_general_net(const Gnl::node_t& net,
                                                  std::span<const uint8_t> part) {
     // uint8_t StackBufLocal[2048];
     // FMPmr::monotonic_buffer_resource rsrcLocal(StackBufLocal,
@@ -324,8 +324,8 @@ auto FMKWayGainCalc<Gnl>::update_move_2pin_net(std::span<const uint8_t> part,
  * @param[in] v The vertex to exclude from the index vector
  * @param[in] net The net whose other vertices are collected
  */
-template <typename Gnl> void FMKWayGainCalc<Gnl>::init_idx_vec(const typename Gnl::node_t& v,
-                                                               const typename Gnl::node_t& net) {
+template <typename Gnl>
+void FMKWayGainCalc<Gnl>::init_idx_vec(const Gnl::node_t& v, const Gnl::node_t& net) {
     this->idx_vec.clear();
     auto degree = this->hyprgraph.gr.degree(net);
     this->idx_vec.reserve(degree - 1);
