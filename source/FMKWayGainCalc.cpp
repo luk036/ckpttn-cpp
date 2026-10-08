@@ -486,8 +486,8 @@ auto FMKWayGainCalc<Gnl>::update_move_general_net(std::span<const uint8_t> part,
         const auto w = this->idx_vec[i];
         const auto pw = part[w];
         if (i == uniq_from || i == uniq_to) {
-            const auto base_uniq =
-                ((i == uniq_from) ? gain_from : 0) + ((i == uniq_to) ? gain_to : 0);
+            const auto base_uniq
+                = ((i == uniq_from) ? gain_from : 0) + ((i == uniq_to) ? gain_to : 0);
             for (const auto& p : this->rr.exclude(pw)) {
                 auto delta = base_uniq;
                 if (p == l && num_from == 0) {

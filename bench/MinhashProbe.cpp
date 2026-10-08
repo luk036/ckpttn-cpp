@@ -6,16 +6,15 @@
  */
 
 #include <chrono>
+#include <ckpttn/HierNetlist.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <memory>
-#include <string_view>
-
-#include <ckpttn/HierNetlist.hpp>
 #include <netlistx/netlist.hpp>
 #include <py2cpp/set.hpp>
+#include <string_view>
 
 using node_t = SimpleNetlist::node_t;
 

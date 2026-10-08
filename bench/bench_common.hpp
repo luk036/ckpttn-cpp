@@ -9,15 +9,6 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <cstdint>  // for uint8_t
-#include <future>   // for future
-#include <limits>   // for numeric_limits
-#include <optional>  // for optional
-#include <string_view>
-#include <vector>  // for vector
-#include <span>     // for span
-
 #include <ckpttn/FMBiConstrMgr.hpp>
 #include <ckpttn/FMBiGainMgr.hpp>
 #include <ckpttn/FMKWayConstrMgr.hpp>
@@ -26,13 +17,23 @@
 #include <ckpttn/LegalCheck.hpp>
 #include <ckpttn/MLPartMgr.hpp>
 #include <ckpttn/NNPartMgr.hpp>
+#include <cstddef>  // for size_t
+#include <cstdint>  // for uint8_t
+#include <future>   // for future
+#include <limits>   // for numeric_limits
 #include <netlistx/netlist.hpp>
+#include <optional>  // for optional
+#include <span>      // for span
+#include <string_view>
+#include <vector>                    // for vector
 #include <xnetwork/thread_pool.hpp>  // for thread_pool
 
 using BiFmPM = FMPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>;
 using BiNnPM = NNPartMgr<SimpleNetlist, FMBiGainMgr<SimpleNetlist>, FMBiConstrMgr<SimpleNetlist>>;
-using KwFmPM = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
-using KwNnPM = NNPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
+using KwFmPM
+    = FMPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
+using KwNnPM
+    = NNPartMgr<SimpleNetlist, FMKWayGainMgr<SimpleNetlist>, FMKWayConstrMgr<SimpleNetlist>>;
 
 extern auto readNetD(std::string_view netDFileName) -> SimpleNetlist;
 extern void readAre(SimpleNetlist& hyprgraph, std::string_view areFileName);
@@ -92,8 +93,9 @@ inline auto partition_ml(const SimpleNetlist& hyprgraph, std::span<std::uint8_t>
         MLPartMgr part_mgr{bal_tol};
         part_mgr.set_limitsize(limitsize);
         if (contraction_ratio) part_mgr.set_contraction_ratio(*contraction_ratio);
-        const auto legal_check = nn ? part_mgr.run_Partition<SimpleNetlist, BiNnPM>(hyprgraph, part)
-                                    : part_mgr.run_Partition<SimpleNetlist, BiFmPM>(hyprgraph, part);
+        const auto legal_check
+            = nn ? part_mgr.run_Partition<SimpleNetlist, BiNnPM>(hyprgraph, part)
+                 : part_mgr.run_Partition<SimpleNetlist, BiFmPM>(hyprgraph, part);
         return legal_check == LegalCheck::AllSatisfied ? part_mgr.total_cost : -1;
     }
     MLPartMgr part_mgr{bal_tol, k};
@@ -147,8 +149,8 @@ inline auto multi_start_cost(const SimpleNetlist& hyprgraph, std::uint8_t k, boo
     futures.reserve(num_starts);
     for (auto i = 0U; i < num_starts; ++i) {
         const auto start_seed = static_cast<std::uint64_t>(base_seed) + i * kStartSeedStride;
-        futures.push_back(pool.enqueue([&hyprgraph, k, nn, ml, bal_tol, limitsize, contraction_ratio,
-                                        start_seed, n]() -> int {
+        futures.push_back(pool.enqueue([&hyprgraph, k, nn, ml, bal_tol, limitsize,
+                                        contraction_ratio, start_seed, n]() -> int {
             auto part = bench_make_init(n, k, start_seed);
             return ml ? partition_ml(hyprgraph, part, k, nn, bal_tol, limitsize, contraction_ratio)
                       : partition_flat(hyprgraph, part, k, nn, bal_tol);

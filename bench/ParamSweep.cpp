@@ -28,30 +28,30 @@
 
 namespace {
 
-constexpr double BAL_TOL = 0.45;
+    constexpr double BAL_TOL = 0.45;
 
-auto split_csv(const char* text) -> std::vector<std::string> {
-    auto out = std::vector<std::string>{};
-    auto current = std::string{};
-    for (const char* p = text; *p != '\0'; ++p) {
-        if (*p == ',') {
-            if (!current.empty()) out.push_back(current);
-            current.clear();
-        } else {
-            current.push_back(*p);
+    auto split_csv(const char* text) -> std::vector<std::string> {
+        auto out = std::vector<std::string>{};
+        auto current = std::string{};
+        for (const char* p = text; *p != '\0'; ++p) {
+            if (*p == ',') {
+                if (!current.empty()) out.push_back(current);
+                current.clear();
+            } else {
+                current.push_back(*p);
+            }
         }
+        if (!current.empty()) out.push_back(current);
+        return out;
     }
-    if (!current.empty()) out.push_back(current);
-    return out;
-}
 
-auto basename_no_ext(std::string_view path) -> std::string {
-    const auto slash = path.find_last_of("/\\");
-    auto name = std::string{slash == std::string_view::npos ? path : path.substr(slash + 1)};
-    const auto dot = name.find_last_of('.');
-    if (dot != std::string::npos) name.resize(dot);
-    return name;
-}
+    auto basename_no_ext(std::string_view path) -> std::string {
+        const auto slash = path.find_last_of("/\\");
+        auto name = std::string{slash == std::string_view::npos ? path : path.substr(slash + 1)};
+        const auto dot = name.find_last_of('.');
+        if (dot != std::string::npos) name.resize(dot);
+        return name;
+    }
 
 }  // namespace
 

@@ -54,8 +54,7 @@ void run_PartMgr_impl(const SimpleNetlist& hyprgraph, uint8_t num_parts) {
     CHECK_EQ(part_mgr.total_cost, totalcostbefore);
 }
 
-template <typename GainMgr, typename ConstrMgr>
-void run_PartMgr(const SimpleNetlist& hyprgraph) {
+template <typename GainMgr, typename ConstrMgr> void run_PartMgr(const SimpleNetlist& hyprgraph) {
     run_PartMgr_impl<FMPartMgr, GainMgr, ConstrMgr>(hyprgraph);
 }
 
@@ -64,8 +63,7 @@ void run_PartMgr(const SimpleNetlist& hyprgraph, uint8_t num_parts) {
     run_PartMgr_impl<FMPartMgr, GainMgr, ConstrMgr>(hyprgraph, num_parts);
 }
 
-template <typename GainMgr, typename ConstrMgr>
-void run_NNPartMgr(const SimpleNetlist& hyprgraph) {
+template <typename GainMgr, typename ConstrMgr> void run_NNPartMgr(const SimpleNetlist& hyprgraph) {
     run_PartMgr_impl<NNPartMgr, GainMgr, ConstrMgr>(hyprgraph);
 }
 

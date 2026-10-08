@@ -30,9 +30,9 @@ void bench_case(const char* name, const SimpleNetlist& hyprgraph, xnetwork::thre
                     for (unsigned starts : STARTS) {
                         const auto c0 = std::clock();
                         const auto t0 = std::chrono::steady_clock::now();
-                        const auto cost
-                            = multi_start_cost(hyprgraph, k, nn, ml, BAL_TOL, LIMIT_SIZE, std::nullopt,
-                                               starts, static_cast<std::uint32_t>(seed), pool);
+                        const auto cost = multi_start_cost(hyprgraph, k, nn, ml, BAL_TOL,
+                                                           LIMIT_SIZE, std::nullopt, starts,
+                                                           static_cast<std::uint32_t>(seed), pool);
                         const auto t1 = std::chrono::steady_clock::now();
                         const auto c1 = std::clock();
                         const auto secs = std::chrono::duration<double>{t1 - t0}.count();
