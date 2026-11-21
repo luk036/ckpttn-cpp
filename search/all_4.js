@@ -6,5 +6,6 @@ var searchData=
   ['deref_5ffun_3c_20cursor_2c_20f_2c_20typename_20std_3a_3aenable_5fif_3c_20std_3a_3ais_5ftrivially_5fdefault_5fconstructible_3c_20f_20_3e_3a_3avalue_20_26_26std_3a_3ais_5fempty_3c_20f_20_3e_3a_3avalue_20_3e_3a_3atype_20_3e_3',['deref_fun&lt; Cursor, F, typename std::enable_if&lt; std::is_trivially_default_constructible&lt; F &gt;::value &amp;&amp;std::is_empty&lt; F &gt;::value &gt;::type &gt;',['../structtransrangers_1_1deref__fun_3_01Cursor_00_01F_00_01typename_01std_1_1enable__if_3_01std_1_1942d4bea28449611b1003648612d3128.html',1,'transrangers']]],
   ['diff_4',['diff',['../classFMConstrMgr.html#a6d376190b80cdc02bd64f65a0c6f598a',1,'FMConstrMgr']]],
   ['difference_5ftype_5',['difference_type',['../classtransrangers_1_1detail_1_1view_1_1iterator__base.html#a0b0e8c3da8f8dcec035129e788c1e25c',1,'transrangers::detail::view::iterator_base']]],
-  ['documentation_6',['documentation',['../index.html#autotoc_md9',1,'Build the documentation'],['../about.html#doc',1,'ModernCppStarter Documentation']]]
+  ['documentation_6',['ModernCppStarter Documentation',['../about.html#doc',1,'']]],
+  ['documentation_7',['Build the documentation',['../index.html#autotoc_md9',1,'']]]
 ];

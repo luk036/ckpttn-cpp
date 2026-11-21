@@ -1,21 +1,21 @@
 <map id="ckpttn/LegalCheck.hpp" name="ckpttn/LegalCheck.hpp">
-<area shape="rect" id="Node000001" title="Result of a partition legality check." alt="" coords="345,5,516,31"/>
-<area shape="rect" id="Node000002" href="$FMConstrMgr_8hpp.html" title="FM partition constraint manager." alt="" coords="17,79,199,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="366,36,161,81,160,76,365,31"/>
-<area shape="rect" id="Node000006" href="$MLMidLvlPartMgr_8hpp.html" title="Multi&#45;level mid&#45;level partition manager for 2&#45;way partitioning." alt="" coords="223,79,430,104"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="404,41,345,81,342,76,401,36"/>
-<area shape="rect" id="Node000007" href="$MLPartMgr_8hpp.html" title="Multi&#45;level partition manager." alt="" coords="455,79,617,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="461,36,520,76,517,81,458,41"/>
-<area shape="rect" id="Node000008" href="$PartMgrBase_8hpp.html" title="Base class for Fiduccia&#45;Mattheyses Partitioning Algorithm Manager." alt="" coords="642,79,819,104"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="492,31,683,76,681,81,491,36"/>
-<area shape="rect" id="Node000003" href="$FMBiConstrMgr_8hpp.html" title="Binary FM constraint manager for 2&#45;way partitioning." alt="" coords="5,152,200,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,118,106,152,101,152,103,118"/>
-<area shape="rect" id="Node000005" href="$FMKWayConstrMgr_8hpp.html" title="K&#45;way FM constraint manager." alt="" coords="225,152,442,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="158,106,298,149,296,154,156,111"/>
-<area shape="rect" id="Node000004" href="$MidLvlPartMgr_8hpp.html" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="9,225,196,251"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="105,191,105,225,100,225,100,191"/>
-<area shape="rect" id="Node000009" href="$FMPartMgr_8hpp.html" title="Fiduccia&#45;Mattheyses partitioning algorithm manager." alt="" coords="557,152,721,177"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="707,114,655,154,652,150,704,110"/>
-<area shape="rect" id="Node000010" href="$NNPartMgr_8hpp.html" title="No&#45;Nonsense partitioning algorithm manager." alt="" coords="745,152,909,177"/>
-<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="759,110,813,150,809,154,756,114"/>
+<area shape="rect" id="Node000001" title="Result of a partition legality check." alt="" coords="344,5,513,33"/>
+<area shape="rect" id="Node000002" href="$FMConstrMgr_8hpp.html" title="FM partition constraint manager." alt="" coords="17,81,198,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="355,39,166,83,164,78,357,35"/>
+<area shape="rect" id="Node000006" href="$MLMidLvlPartMgr_8hpp.html" title="Multi&#45;level mid&#45;level partition manager for 2&#45;way partitioning." alt="" coords="222,81,427,109"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="400,41,345,83,342,78,396,43"/>
+<area shape="rect" id="Node000007" href="$MLPartMgr_8hpp.html" title="Multi&#45;level partition manager." alt="" coords="452,81,614,109"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="460,39,517,81,512,81,459,45"/>
+<area shape="rect" id="Node000008" href="$PartMgrBase_8hpp.html" title="Base class for Fiduccia&#45;Mattheyses Partitioning Algorithm Manager." alt="" coords="638,81,814,109"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="497,35,675,80,670,81,497,40"/>
+<area shape="rect" id="Node000003" href="$FMBiConstrMgr_8hpp.html" title="Binary FM constraint manager for 2&#45;way partitioning." alt="" coords="5,157,199,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,122,105,157,100,155,104,127"/>
+<area shape="rect" id="Node000005" href="$FMKWayConstrMgr_8hpp.html" title="K&#45;way FM constraint manager." alt="" coords="223,157,440,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="162,111,294,155,289,158,162,117"/>
+<area shape="rect" id="Node000004" href="$MidLvlPartMgr_8hpp.html" title="Mid&#45;level exhaustive partition manager for 2&#45;way partitioning." alt="" coords="9,232,195,260"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="104,198,104,233,100,231,100,202"/>
+<area shape="rect" id="Node000009" href="$FMPartMgr_8hpp.html" title="Fiduccia&#45;Mattheyses partitioning algorithm manager." alt="" coords="554,157,717,184"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="700,118,653,159,650,154,695,120"/>
+<area shape="rect" id="Node000010" href="$NNPartMgr_8hpp.html" title="No&#45;Nonsense partitioning algorithm manager." alt="" coords="742,157,905,184"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="756,116,809,157,803,156,754,121"/>
 </map>

@@ -1,0 +1,28 @@
+var structNetlist =
+[
+    [ "index_t", "structNetlist.html#a10fbbe99297f505e1c58e156973263c7", null ],
+    [ "node_t", "structNetlist.html#a8fbf3e646832343e6cfc2c788e35a669", null ],
+    [ "nodeview_t", "structNetlist.html#a08ef86caa175ac7ce7cec591e3543183", null ],
+    [ "Netlist", "structNetlist.html#af6efb23337903e1708acbaa6ef084827", null ],
+    [ "Netlist", "structNetlist.html#ac7d88c2ad20883d273ce8212c86044c1", null ],
+    [ "begin", "structNetlist.html#a9b291296aff6be252bdbf1ec223780c1", null ],
+    [ "end", "structNetlist.html#a95bcf35a0d80b22bff12404dd953b7ad", null ],
+    [ "get_max_degree", "structNetlist.html#a92e324fe34b3112849da0fe9cb7e1ad1", null ],
+    [ "get_max_net_degree", "structNetlist.html#aebb0557c2d86fdb203d47cf840b1483f", null ],
+    [ "get_module_weight", "structNetlist.html#a6d1a7876e2d62498cb42c2142dc274c3", null ],
+    [ "get_net_weight", "structNetlist.html#a62e16d1c1ac77cbe8f2e587c07b28025", null ],
+    [ "number_of_modules", "structNetlist.html#a995da877a09ce1823a104720f3bdd539", null ],
+    [ "number_of_nets", "structNetlist.html#a93fe2265b67cee9f0047aba206e70125", null ],
+    [ "number_of_nodes", "structNetlist.html#a92dc1c22bf9262f753a4c65796e7677d", null ],
+    [ "gr", "structNetlist.html#ab5d5334506d55effea54712a9c9def7a", null ],
+    [ "has_fixed_modules", "structNetlist.html#a256acc61e0209546de91bd0634bd5874", null ],
+    [ "max_degree", "structNetlist.html#a616ca78f9fdf8aac081166f8c1b28141", null ],
+    [ "max_net_degree", "structNetlist.html#a0dadd0fa16e56f9fa3f108c789a507eb", null ],
+    [ "module_fixed", "structNetlist.html#ab78a880e6c7779fb96eaa4b8ff1efade", null ],
+    [ "module_weight", "structNetlist.html#af7ba33ae5b1a807f0d64311093433ad0", null ],
+    [ "modules", "structNetlist.html#a4d5429a1cac4012bee42baa6af6da465", null ],
+    [ "nets", "structNetlist.html#ae287f5164ee28a97fcc77259be7b0d9e", null ],
+    [ "num_modules", "structNetlist.html#ab038735024d9565b63b93541e95257e6", null ],
+    [ "num_nets", "structNetlist.html#a8d5f506f47c558e26ed25241ba573318", null ],
+    [ "num_pads", "structNetlist.html#a810e2ab434d47f937ea505efebb03bb7", null ]
+];

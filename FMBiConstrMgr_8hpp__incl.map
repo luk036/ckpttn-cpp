@@ -1,13 +1,13 @@
 <map id="ckpttn/FMBiConstrMgr.hpp" name="ckpttn/FMBiConstrMgr.hpp">
-<area shape="rect" id="Node000001" title="Binary FM constraint manager for 2&#45;way partitioning." alt="" coords="67,5,261,31"/>
-<area shape="rect" id="Node000002" href="$FMConstrMgr_8hpp.html" title="FM partition constraint manager." alt="" coords="96,79,232,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,31,167,65,161,65,161,31"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,72,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="145,106,72,147,70,143,143,102"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="96,152,149,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="159,106,139,141,134,139,155,103"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="174,152,237,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="173,103,194,139,189,141,169,106"/>
-<area shape="rect" id="Node000006" href="$LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="261,152,387,177"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="191,102,286,144,284,149,189,106"/>
+<area shape="rect" id="Node000001" title="Binary FM constraint manager for 2&#45;way partitioning." alt="" coords="64,5,257,33"/>
+<area shape="rect" id="Node000002" href="$FMConstrMgr_8hpp.html" title="FM partition constraint manager." alt="" coords="93,81,228,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,31,163,66,158,64,159,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,157,71,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,110,74,151,71,146,136,108"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="94,157,147,184"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="156,108,137,145,133,141,151,111"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="171,157,233,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="169,107,190,143,185,142,167,112"/>
+<area shape="rect" id="Node000006" href="$LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="257,157,382,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="190,107,280,149,275,150,188,112"/>
 </map>

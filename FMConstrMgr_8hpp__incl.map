@@ -1,11 +1,11 @@
 <map id="ckpttn/FMConstrMgr.hpp" name="ckpttn/FMConstrMgr.hpp">
-<area shape="rect" id="Node000001" title="FM partition constraint manager." alt="" coords="73,5,255,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,33,72,74,70,69,143,28"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="96,79,149,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,32,139,68,134,65,155,30"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="174,79,237,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="173,30,194,65,189,68,169,32"/>
-<area shape="rect" id="Node000005" href="$LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="261,79,387,104"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="191,28,286,71,284,75,189,33"/>
+<area shape="rect" id="Node000001" title="FM partition constraint manager." alt="" coords="70,5,251,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,71,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,34,74,75,71,71,136,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="94,81,147,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,32,137,69,133,65,151,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="171,81,233,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="169,31,190,68,185,67,167,36"/>
+<area shape="rect" id="Node000005" href="$LegalCheck_8hpp.html" title="Result of a partition legality check." alt="" coords="257,81,382,109"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="190,31,280,74,275,75,188,36"/>
 </map>

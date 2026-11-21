@@ -3,7 +3,7 @@ var searchData=
   ['gain_5fbucket_0',['gain_bucket',['../classFMGainMgr.html#aa2bb19eb298bf216edef3e36d916722f',1,'FMGainMgr']]],
   ['gain_5fcalc_1',['gain_calc',['../classFMGainMgr.html#a5c502f5b6f304a1fe0e578908c99f602',1,'FMGainMgr']]],
   ['gain_5fmgr_2',['gain_mgr',['../classPartMgrBase.html#a87d6a70db75bcb86cac2fc3fd4fcbbfd',1,'PartMgrBase']]],
-  ['gaincalc_5f_3',['gaincalc_',['../classFMBiGainMgr.html#a4ffb079839f83b15828a5ed1b8ab4389',1,'FMBiGainMgr::GainCalc_'],['../classFMKWayGainMgr.html#a1c766cf35d248590abd2cb565adc7cf0',1,'FMKWayGainMgr::GainCalc_'],['../classPartMgrBase.html#a7700725109e522b101abb88810a9f9fd',1,'PartMgrBase::GainCalc_']]],
+  ['gaincalc_5f_3',['GainCalc_',['../classFMBiGainMgr.html#a4ffb079839f83b15828a5ed1b8ab4389',1,'FMBiGainMgr::GainCalc_'],['../classFMKWayGainMgr.html#a1c766cf35d248590abd2cb565adc7cf0',1,'FMKWayGainMgr::GainCalc_'],['../classPartMgrBase.html#a7700725109e522b101abb88810a9f9fd',1,'PartMgrBase::GainCalc_']]],
   ['gainmgr_5f_4',['GainMgr_',['../classPartMgrBase.html#a895f3cea3c24eb7d294dadb8e3a287fd',1,'PartMgrBase']]],
   ['get_5fbits_5',['get_bits',['../classMidVertex.html#a4474d4b11983700e414ed7e52b7d0b7c',1,'MidVertex']]],
   ['get_5finit_5fgain_5flist_6',['get_init_gain_list',['../classFMBiGainCalc.html#ab1ab49c74be704e4f03df04ecbaca47b',1,'FMBiGainCalc']]],
