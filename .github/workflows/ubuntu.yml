@@ -42,4 +42,14 @@ jobs:
         run: ctest --test-dir build --output-on-failure
 
       - name: Collect code coverage
-        run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+        run: |
+          pip install gcovr
+          gcovr --root . --xml --output coverage.xml --exclude test/ --exclude standalone/ --exclude-unreachable-branches --exclude-throw-branches
+
+      - uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          disable_search: true
+          override_branch: ${{ github.event_name == 'push' && github.ref_name || '' }}
+          files: coverage.xml
+          fail_ci_if_error: false
