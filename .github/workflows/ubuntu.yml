@@ -44,7 +44,7 @@ jobs:
       - name: Collect code coverage
         run: |
           pip install gcovr
-          gcovr --root . --xml --output coverage.xml --exclude test/ --exclude standalone/ --exclude-unreachable-branches --exclude-throw-branches
+          gcovr --root . --xml --output coverage.xml --exclude test/ --exclude build/ --exclude standalone/ --exclude-unreachable-branches --exclude-throw-branches --gcov-ignore-parse-errors=negative_hits.warn --gcov-ignore-parse-errors=suspicious_hits.warn
 
       - uses: codecov/codecov-action@v4
         with:
