@@ -74,10 +74,8 @@ cmake --build build --target clang-tidy
 
 ### Sanitizers
 
-```bash
-cmake -S . -B build -DUSE_SANITIZER=Address
-cmake --build build
-```
+No CMake option; pass the flags yourself, e.g.
+`-DCMAKE_CXX_FLAGS="-fsanitize=address,undefined" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"`.
 
 ---
 

@@ -1,14 +1,17 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("fmt", {alias = "fmt"})
-add_requires("doctest", {alias = "doctest"})
-add_requires("spdlog", {alias = "spdlog"})
-add_requires("nlohmann_json", {alias = "nlohmann_json"})
--- add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
+add_requires("fmt", "spdlog", "nlohmann_json", "doctest", "nanobench")
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("cxxopts", {system = false})
-add_requires("nanobench", { alias = "nanobench" })
 
 set_languages("c++20")
+add_includedirs("include", "../py2cpp/include", "../xnetwork-cpp/include",
+                "../mywheel-cpp/include", "../netlistx-cpp/include")
+
+if is_plat("linux") then
+    set_rundir("./build/linux/")
+elseif is_plat("windows") then
+    set_rundir("./build/windows/")
+end
 
 local toolchain = get_config("toolchain")
 local is_msvc_like = (toolchain == nil) or (toolchain == "msvc") or (toolchain == "clang-cl") or (toolchain == "clang_cl")
@@ -16,12 +19,11 @@ local is_msvc_like = (toolchain == nil) or (toolchain == "msvc") or (toolchain =
 if is_plat("linux") then
     set_warnings("all", "error")
     add_cxflags("-Wconversion", {force = true})
-    -- Check if we're on Termux/Android
-    local termux_prefix = os.getenv("PREFIX")
-    if termux_prefix then
+    -- Termux/Android ships its libc++ headers under $PREFIX
+    local prefix = os.getenv("PREFIX")
+    if prefix then
         add_cxflags("-Wno-unused-command-line-argument", {force = true})
-        add_sysincludedirs(termux_prefix .. "/include/c++/v1", {public = true})
-        add_sysincludedirs(termux_prefix .. "/include", {public = true})
+        add_sysincludedirs(prefix .. "/include/c++/v1", prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") and is_msvc_like then
     add_cxflags("/EHsc /W4 /WX /openmp /wd4702 /wd4996", {force = true})
@@ -44,256 +46,39 @@ end
 
 target("CkPttn")
     set_kind("static")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("source/*.cpp")
-    add_files("source/midlevel/*.cpp")
-    add_files("../netlistx-cpp/source/netlist_algo.cpp")
-    add_files("../netlistx-cpp/source/readwrite.cpp")
-    add_files("../netlistx-cpp/source/reader.cpp")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    -- add_packages("range-v3")
+    add_files("source/*.cpp", "source/midlevel/*.cpp",
+              "../netlistx-cpp/source/netlist_algo.cpp",
+              "../netlistx-cpp/source/readwrite.cpp",
+              "../netlistx-cpp/source/reader.cpp")
+    add_packages("ms-gsl", "spdlog", "nlohmann_json")
 
 target("test_ckpttn")
-    set_kind("binary")
     add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
     add_files("test/source/*.cpp")
-    add_packages("fmt", "doctest")
-    add_packages("spdlog")
-    add_packages("ms-gsl")
+    add_packages("fmt", "doctest", "spdlog", "ms-gsl")
     add_tests("default")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
 
 target("ckpttn")
-    set_kind("binary")
     add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
     add_files("standalone/source/*.cpp")
-    add_packages("cxxopts")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
+    add_packages("cxxopts", "ms-gsl", "spdlog", "nlohmann_json")
 
-target("bench_fmbi_2pin_nets")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/FMBi_2pin_nets.cpp")
-    add_packages("nanobench")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
-target("bench_fmbi_p1")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/FMBi_p1.cpp")
-    add_packages("nanobench")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
-target("bench_fmkway_2pin_nets")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/FMKWay_2pin_nets.cpp")
-    add_packages("nanobench")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
-target("bench_fmnn")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/BenchFMNN.cpp")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
-target("bench_ibm01")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/BM_ibm01.cpp")
-    add_packages("nanobench")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
-target("bench_param_sweep")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/ParamSweep.cpp")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
-target("bench_minhash_probe")
-    set_kind("binary")
-    add_deps("CkPttn")
-    add_includedirs("include", {public = true})
-    add_includedirs("../py2cpp/include", {public = true})
-    add_includedirs("../xnetwork-cpp/include", {public = true})
-    add_includedirs("../mywheel-cpp/include", {public = true})
-    add_includedirs("../netlistx-cpp/include", {public = true})
-    add_files("bench/MinhashProbe.cpp")
-    add_packages("ms-gsl")
-    add_packages("spdlog")
-    add_packages("nlohmann_json")
-    if is_plat("linux") then
-        set_rundir("./build/linux/")
-    elseif is_plat("windows") then
-        set_rundir("./build/windows/")
-    end
-
---
--- If you want to known more usage about xmake, please see https://xmake.io
---
--- ## FAQ
---
--- You can enter the project directory firstly before building project.
---
---   $ cd projectdir
---
--- 1. How to build project?
---
---   $ xmake
---
--- 2. How to configure project?
---
---   $ xmake f -p [macosx|linux|iphoneos ..] -a [x86_64|i386|arm64 ..] -m [debug|release]
---
--- 3. Where is the build output directory?
---
---   The default output directory is `./build` and you can configure the output directory.
---
---   $ xmake f -o outputdir
---   $ xmake
---
--- 4. How to run and debug target after building project?
---
---   $ xmake run [targetname]
---   $ xmake run -d [targetname]
---
--- 5. How to install target to the system directory or other output directory?
---
---   $ xmake install
---   $ xmake install -o installdir
---
--- 6. Add some frequently-used compilation flags in xmake.lua
---
--- @code
---    -- add debug and release modes
---    add_rules("mode.debug", "mode.release")
---
---    -- add macro defination
---    add_defines("NDEBUG", "_GNU_SOURCE=1")
---
---    -- set warning all as error
---    set_warnings("all", "error")
---
---    -- set language: c99, c++11
---    set_languages("c99", "c++11")
---
---    -- set optimization: none, faster, fastest, smallest
---    set_optimize("fastest")
---
---    -- add include search directories
---    add_includedirs("/usr/include", "/usr/local/include")
---
---    -- add link libraries and search directories
---    add_links("tbox")
---    add_linkdirs("/usr/local/lib", "/usr/lib")
---
---    -- add system link libraries
---    add_syslinks("z", "pthread")
---
---    -- add compilation and link flags
---    add_cxflags("-stdnolib", "-fno-strict-aliasing")
---    add_ldflags("-L/usr/local/lib", "-lpthread", {force = true})
---
--- @endcode
---
-
+-- bench_<target> = bench/<file>, same deps; nanobench only where used
+local benches = {
+    {"bench_fmbi_2pin_nets", "FMBi_2pin_nets.cpp", true},
+    {"bench_fmbi_p1", "FMBi_p1.cpp", true},
+    {"bench_fmkway_2pin_nets", "FMKWay_2pin_nets.cpp", true},
+    {"bench_fmnn", "BenchFMNN.cpp", false},
+    {"bench_ibm01", "BM_ibm01.cpp", true},
+    {"bench_param_sweep", "ParamSweep.cpp", false},
+    {"bench_minhash_probe", "MinhashProbe.cpp", false},
+}
+for _, b in ipairs(benches) do
+    target(b[1])
+        add_deps("CkPttn")
+        add_files("bench/" .. b[2])
+        add_packages("ms-gsl", "spdlog", "nlohmann_json")
+        if b[3] then
+            add_packages("nanobench")
+        end
+end

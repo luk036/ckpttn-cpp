@@ -406,7 +406,7 @@ if(CKPTTN_ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClan
       COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/coverage
       COMMAND
         ${GCOVR_PATH} --root ${PROJECT_SOURCE_DIR} --html-details
-        ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/ ${extra_gcovr_args}
+        ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/ --exclude standalone/ --exclude-unreachable-branches --exclude-throw-branches ${extra_gcovr_args} --gcov-ignore-parse-errors=negative_hits.warn --gcov-ignore-parse-errors=suspicious_hits.warn
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       COMMENT "Generating coverage report in ${CMAKE_BINARY_DIR}/coverage/index.html"
     )
